@@ -41,3 +41,31 @@ flowchart TD
   WS_BROADCAST --> FE6
   FE6 --> G2[Collision & Scoring]:::sveva
   G2 --> G3[Game Over → Calculate Score]:::sveva
+  G3 --> BE6[Save Match to DB]:::luis
+
+  %% AI LOGIC
+  AI_LOGIC --> G1
+  AI_LOGIC --> AI_REFRESH[Refresh every 1 second]:::sveva
+
+  %% DISCONNECT HANDLING
+  WS1 -->|Disconnect| FE4
+  FE6 -->|Player leaves| G3
+
+  %% SHARED MODULES
+  FE1 --> SH1[Shared: constants.js]:::shared
+  BE1 --> SH1
+  G1 --> SH1
+  WS1 --> SH2[Shared: socket_events.js]:::shared
+
+  %% PROJECT FILES
+  subgraph ProjectFiles[Project Files]
+    Docs[docs/: system, auth, sockets, ai...]
+    Tasks[tasks/: TODO, DONE, PLAN per teammate]
+  end
+
+  %% CLASS ASSIGNMENTS
+  class ChatUI,WS1,WS2,WS3,WS_BROADCAST,INVITE alena
+  class BE1,BE2,BE3,BE6 luis
+  class G1,G2,G3,FE6,AI_LOGIC,AI_REFRESH sveva
+  class SH1,SH2 shared
+```
