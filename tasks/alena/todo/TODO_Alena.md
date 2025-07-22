@@ -32,3 +32,12 @@ I’ve set everything up so you can work independently while I’m away. Here’
 
     Feature-specific docs:
     docs/sockets.md, docs/chat.md, docs/ai.md, docs/auth.md
+
+
+#### ✅ STARTUP TODO
+
+- [ ] **Check `/shared/` before starting**
+  - Use `constants.ts` for paddle speed, tick rate, canvas size
+  - Use `events.ts` for all socket event names
+  - Use `types.ts` for User, Match, ChatMessage structures
+  - Use `api_routes.md` for any backend/REST API interactions
