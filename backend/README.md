@@ -1,6 +1,10 @@
 # Local development
 
-1. Install latest `node` (24+)
+1. Install latest `node`Node.js (version 24 or higher)
+
+→ Download from https://nodejs.org/en
+
+### Then continue with:
 2. Install dependencies:
 
 ```sh

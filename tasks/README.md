@@ -1,5 +1,17 @@
 # 📋 ft_transcendence – Team Plan (3 Members)
 
+# ft_transcendence
+
+Welcome to the team project!
+
+👉 **Setup instructions for running the project** are available in:
+
+- [`/frontend/README.md`](./frontend/README.md) – How to install and run the frontend (React + Tailwind + Socket.IO)
+- [`/backend/README.md`](./backend/README.md) – How to install and run the backend (Fastify + Socket.IO + Docker)
+
+Please follow these guides before starting development.
+
+
 ## 🧑‍🤝‍🧑 Team Members & Roles
 
 | Name   | Role                  | Responsibilities |

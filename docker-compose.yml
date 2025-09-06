@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "start"]
+
+  frontend:
+    build: 
+      context: ./frontend
+    
