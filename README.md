@@ -1,6 +1,3 @@
-Perfect 🚀 Here’s a **final, subject/eval-compliant `README.md`**, ready to commit.
-I corrected all wording (removed “Vanilla”), aligned to **subject & eval sheet**, included **roles overview + detailed tables**, and kept the **clean folder structure** you currently have.
-
 
 # 🏓 ft_transcendence
 
@@ -227,7 +224,4 @@ Open: **[https://localhost](https://localhost)**
 
 ---
 
-Built with ❤️ by **Alena**, **Luis**, and **Sveva**.
-
-```
 Crafted with teamwork by Alena, Luis & Sveva.
