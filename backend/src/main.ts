@@ -1,5 +1,5 @@
 import Fastify from 'fastify';
-import { registerRoutes as registerLuisRoutes } from '../luis_routes/routes';
+import { registerRoutes as registerLuisRoutes } from './routes/routes.ts';
 
 const fastify = Fastify();
 registerLuisRoutes(fastify); // <- plug in your routes
