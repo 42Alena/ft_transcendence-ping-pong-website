@@ -1,4 +1,3 @@
-
 # 🏓 ft_transcendence
 
 A real-time Pong web app with **secure auth (JWT + 2FA)**, **remote multiplayer** over **WSS**, **live chat**, **AI opponent**, and a **TypeScript SPA** styled with **Tailwind**.  

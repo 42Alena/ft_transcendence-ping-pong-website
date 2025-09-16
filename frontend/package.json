@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "create new project(node package): npm init",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "serve": "http-server public/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "typescript": "^5.9.2"
+  }
+}

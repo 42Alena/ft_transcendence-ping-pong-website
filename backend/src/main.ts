@@ -1,8 +1,10 @@
 import Fastify from 'fastify';
-import { registerRoutes as registerLuisRoutes } from './routes/routes.ts';
+import { registerRoutes as registerMainRoutes } from './routes/routes';
+import { registerRoutes as registerChatRoutes } from './routes/chat';
 
 const fastify = Fastify();
-registerLuisRoutes(fastify); // <- plug in your routes
+registerMainRoutes(fastify);
+registerChatRoutes(fastify);
 
 fastify.get('/hola', async () => {
 	return { opt: 'hi hola', date: new Date() }
