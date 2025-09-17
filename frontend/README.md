@@ -19,6 +19,7 @@ npm run serve
 npm init -y
 
 #install typescript and http-server
+# https://github.com/http-party/http-server
 npm install --dev typescript http-server
 
 # add "compile" script to package.json to invoke tsc
