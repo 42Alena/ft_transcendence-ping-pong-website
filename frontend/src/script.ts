@@ -19,6 +19,35 @@ let ballR : number = 5;
 let dx : number = 2;
 let dy : number = -2;
 let intervalId : number;
+let scorePlayer1: number = 0;
+let scorePlayer2: number = 0;
+
+function drawScore()
+{
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(`${scorePlayer1} : ${scorePlayer2}`, 8, 20);
+}
+
+function drawMiddleLine()
+{
+	let len : number = 0;
+	let count : number = 0;
+	let rectHeight : number = 0;
+	for (; len < canvas.height;)
+	{
+		if (count % 2 == 0)
+		{
+			ctx.beginPath();
+			ctx.rect(canvas.width / 2 - 2, len, 4, 10);
+			ctx.fillStyle = "white";
+			ctx.fill();
+			ctx.closePath();
+		}
+		len += 10;
+		count++;
+	}
+}
 
 function drawPlayer1() : void
 {
@@ -54,6 +83,8 @@ function draw() : void {
 	drawBall();
 	drawPlayer1();
 	drawPlayer2();
+	drawScore();
+	drawMiddleLine();
 	if (upPressedPlayer1 && player1 > 0) {
 		player1 -= 7;
 	}
@@ -75,6 +106,7 @@ function draw() : void {
 		else {
 			ballX = canvas.width / 2;
 			ballY = canvas.height / 2;
+			scorePlayer2++;
 		}
 	}
 	else if (ballX + dx > canvas.width - ballR)
@@ -84,6 +116,7 @@ function draw() : void {
 		else {
 			ballX = canvas.width / 2;
 			ballY = canvas.height / 2;
+			scorePlayer1++;
 		}
 	}
 	if (ballY + dy < ballR)
