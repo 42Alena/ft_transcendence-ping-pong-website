@@ -11,7 +11,6 @@ frontend:
 	cd frontend; npm run compile; npm run serve
 
 
-
-chat-test:
-	cd backend; npm run chat-test
+backend-test:
+	cd backend; npm run backend-test
 

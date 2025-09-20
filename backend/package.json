@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/main.ts",
-    "chat-test": "ts-node src/lib/Chat.ts",
+    "backend-tests": "ts-node tests/*.ts",
     "tsc": "tsc --noEmit"
   },
   "keywords": [],
