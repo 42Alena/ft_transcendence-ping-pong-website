@@ -9,3 +9,9 @@ backend:
 
 frontend:
 	cd frontend; npm run compile; npm run serve
+
+
+
+chat-test:
+	cd backend; npm run chat-test
+
