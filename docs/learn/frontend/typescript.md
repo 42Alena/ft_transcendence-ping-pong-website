@@ -8,14 +8,18 @@ It’s like JavaScript with safety gear! 🦺
 
 👉 Official site: [https://www.typescriptlang.org](https://www.typescriptlang.org)
 
+Classes:
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html
+
 ---
 
 ## 💡 Why We Use TypeScript in ft_transcendence
 
-- ✅ Type safety = fewer bugs during development  
-- ✅ Works great with React and Vite  
-- ✅ Helps document your code (you know what type everything is)  
-- ✅ Required by our chosen setup (React + Tailwind + Vite use it)  
+- ✅ Type safety = fewer bugs during development
+- ✅ Works great with React and Vite
+- ✅ Helps document your code (you know what type everything is)
+- ✅ Required by our chosen setup (React + Tailwind + Vite use it)
 
 TypeScript helps teams understand the code better, and avoid small mistakes that cause big problems.
 
@@ -25,7 +29,7 @@ TypeScript helps teams understand the code better, and avoid small mistakes that
 
 ### 1. Types for Variables
 
-```ts
+````ts
 let name: string = "Player";
 let score: number = 100;
 let isReady: boolean = true;
@@ -37,21 +41,25 @@ let isReady: boolean = true;
 function addScore(a: number, b: number): number {
   return a + b;
 }
-
+````
 
 ### 3. Interfaces (like blueprints for objects)
 
+```ts
 interface Player {
   id: number;
   username: string;
   isOnline: boolean;
 }
+```
 
 ### 4. Optional and Default Values
 
+```ts
 function greet(name: string = "guest") {
   console.log("Hello " + name);
 }
+```
 
 ## ⚙️ Where We Use TypeScript in Our Project
 

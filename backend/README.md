@@ -34,3 +34,10 @@ docker compose up backend
 # run service in background
 docker compose up -d backend
 ```
+
+## TEST!
+added command in make file to run all tests in backend/src/tests/*
+run:
+```bash
+make backend-tests
+```
