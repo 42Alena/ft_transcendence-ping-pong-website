@@ -26,11 +26,12 @@ export type MatchResult = {
 };
 
 //_____________CHAT___________
-export type SystemId = "ThisIsSystemID";
+export const SYSTEM_ID = "ThisIsSystemID" as const;
+export type SystemId = typeof SYSTEM_ID;
 
 
 export type MessageType =
-	| 'PublicChatMsg'      
+	| 'PublicMsg'      
 	| 'PrivateMsg'       
 	| 'PrivateGameInviteMsg'   
 	| 'TournamentMsg';   
