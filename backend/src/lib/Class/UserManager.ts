@@ -1,15 +1,23 @@
+// Used information from links
+//  https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 import *  as Types from '../types/types';
 import { User } from './User';
 
 export class UserManager{
 
-	users: User[];
+	users: Map<Types.UserId, User>;
 
 	constructor(){
-		this.users = [];
+		this.users = new Map<Types.UserId, User>;
 	}
 
-	get userById(userId: Types.UserId)   {
-		return this.users.has(userId);
+	getUserById(userId: Types.UserId):  User | null {
+		return this.users.get(userId) ?? null;
 	}
+
+	saveUser(newUser: User){
+		this.users.set(newUser.id, newUser);
+	}
+
+	
 }

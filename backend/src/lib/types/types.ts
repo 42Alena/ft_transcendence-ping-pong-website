@@ -40,7 +40,7 @@ export type Receiver = UserId | 'all';
 export type Message = {
 
 	senderId: UserId | SystemId;       
-	receiver: Receiver;    
+	receiverId: Receiver;    
 	content: string;
 	type: MessageType;
 };
