@@ -11,6 +11,7 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
+//___________USER
 export type UserStatus = 'online' | 'offline';
 export type GameResult = 'won' | 'lost';
 export type UserId = string;
@@ -22,4 +23,24 @@ export type MatchResult = {
 	opponentId: UserId;
 	date: Date;
 	result: GameResult;
-  };
+};
+
+//_____________CHAT___________
+export type SystemId = "ThisIsSystemID";
+
+
+export type MessageType =
+	| 'PublicChatMsg'      
+	| 'PrivateMsg'       
+	| 'PrivateGameInviteMsg'   
+	| 'TournamentMsg';   
+
+export type Receiver = UserId | 'all';
+
+export type Message = {
+
+	senderId: UserId | SystemId;       
+	receiver: Receiver;    
+	content: string;
+	type: MessageType;
+};

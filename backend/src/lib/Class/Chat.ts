@@ -1,9 +1,22 @@
-let name = "Alena";
+import *  as Types from '../types/types';
+import { User } from './User';
+
+export class Chat {
 
 
-function sayHello(name: string) {
-  console.log("Hello, " + name.toUpperCase()); 
+
+
+  chatMessages: Types.Message[];
+
+  constructor() {
+
+    this.chatMessages = [];
+  }
+
+  sendPrivateMsg(message: Types.Message) {
+    // if(message.type == 'PrivateMsg' || message.type == 'PrivateGameInviteMsg'){
+    // if(user is bocked...)
+
+  }
 }
-sayHello(name);
-let car = { car: 'Toyota', brand: 2024 };
-console.log(car);
+
