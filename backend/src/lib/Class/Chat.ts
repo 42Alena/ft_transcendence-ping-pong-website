@@ -20,88 +20,50 @@ export class Chat {
   }
 
 
-
-  /*  private checkPrivateSender(obj: HasPrivateSender): User {
-  private checkPrivateSender(object: HasPrivateSender): User {
-   const sender = this.userManager.getUserById(object.senderId);
- 
-   if (!sender) {
-     throw new Error("sender is not registered in UserManager");
-   }
- 
-   if (sender.id === Types.SYSTEM_ID) {
-     throw new Error("SystemId cannot be sender");
-   }
- 
-   return sender;
- }
-   } */
-
   /* 
-  not system ID, must exist
+  For private messages (user to user)
+  sender must exist, not system
    */
   private checkPrivateSender(object: Types.HasPrivateSender): User {
 
 
     Validate.ensureNonEmptyString(object.senderId, "sender");
 
-    const sender = this.userManager.getUserById(object.senderId);
+    const sender = this.userManager.getUserByIdOrThrow(object.senderId);
 
-    if (!sender) {
-      throw new Error("sender is not registered in UserManager");
-    }
+    Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
 
-    // if (sender.id === Types.SYSTEM_ID) {
-    //   throw new Error("SystemId cannot be sender");
-    // }changed to:
-Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
     return sender;
   }
 
   /* 
-  receiver must exist, not system, not blocking sender
+  For private messages (user to user)
+   receiver must exist, not system, not blocking sender
    */
-  private checkPrivateReceiver(message: Types.MessagePrivate, sender: User): User {
-    
-    Validate.ensureNonEmptyString(sender.id, "sender");
+  private checkPrivateReceiver(message: Types.HasPrivateReceiver, sender: User): User {
 
-    const receiver = this.userManager.getUserById(message.receiverId);
+    Validate.ensureNonEmptyString(message.receiverId, "receiver");
 
+    const receiver = this.userManager.getUserByIdOrThrow(message.receiverId);
 
-    if (!receiver) {
-      throw new Error("receiver is not registered in UserManager");
-    }
-
-    if (receiver.id === Types.SYSTEM_ID) {
-      throw new Error("SystemId cannot be receiver");
-    }
-
-    if (receiver.isBlocked(sender.id)) {
-      throw new Error("blocked sender by receiver");
-    }
+    Validate.ensureNotSystemId(receiver.id, Types.SYSTEM_ID);
+    receiver.ensureNotBlockedByOrThrow(sender.id);
 
     return receiver;
   }
 
 
-  private checkPublicReceiver(message: Types.Message): void {
-    if (message.receiverId !== 'all') {
-      throw new Error("public message must have receiverId = 'all'");
-    }
-  }
-
-
 
   /* 
-   User sends  private msg to private chat, if not blocked by another user
+   Send  private msg to private chat, if not blocked by another user
     senderId: UserId //(not SystemId);       
     receiverId: UserId(if not blocked senderId);    
     content: string; //not empty
     type: PrivateMsg;
   */
-  sendPrivateMsg(message: Types.MessagePrivate) {
+  sendPrivateMessage(message: Types.MessagePrivate) {
 
-    Validate.ensureNonEmptyString(message.content, "message content");
+    Validate.ensureNonEmptyString(message.content, "[sendPrivateMsg] message content");
 
     const sender = this.checkPrivateSender(message);
 
@@ -115,20 +77,16 @@ Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
   /* 
  User sends public msg to public chat
     senderId: UserId //(not SystemId);       
-    receiverId: UserId;    
+    receiverId: 'all';    
     content: string; //not empty
     type: PyblicMsg;
   
   */
-  sendPublicMsg(message: Types.PublicMessage) {
+  sendPublicMessage(message: Types.MessagePublic) {
 
-    Validate.ensureNonEmptyString(message.content, "public message");
+    Validate.ensureNonEmptyString(message.content, "[sendPublicMsg] public message");
 
-    if (message.type !== 'PublicMsg')
-      throw new Error("not public msg");
-
-    if (message.receiverId !== 'all')
-      throw new Error("public msg must receiverId='all'");
+    Validate.ensureReceiverIsAll(message.receiverId);
 
     const sender = this.checkPrivateSender(message);
 
@@ -139,24 +97,19 @@ Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
 
   /* 
    User sends  private msg to private chat, if not blocked by another user
-    senderId: UserId //(not SystemId);       
-    receiverId: UserId(if not blocked senderId);    
-    content: string; //not empty
+    senderId: UserId      //from interface(not SystemId);       
+    receiverId: UserId;   //from interface  (if not blocked senderId)  
+    content: string;      //not empty
     type: 'PrivateGameInviteMsg';
   */
-  sendPrivateGameInviteMsg(message: Types.Message) {
+  sendPrivateGameInviteMessage(message: Types.MessagePrivateGameInvite) {
 
-    Validate.ensureNonEmptyString(message.content, "invite message");
-
-    if (message.type !== 'PrivateGameInviteMsg')
-      throw new Error("type not 'PrivateGameInviteMsg' msg");
-
-    if (message.receiverId === 'all')
-      throw new Error("must be UserId(private msg)");
 
     const sender = this.checkPrivateSender(message);
+    const receiver = this.checkPrivateReceiver(message, sender);
 
-    this.checkPrivateReceiver(message, sender);
+    if (Validate.isEmptyString(message.content))
+      message.content = Types.MESSAGE_GAME_INVITE;
 
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
 
@@ -166,27 +119,20 @@ Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
 
   /* 
    User sends  private msg to private chat, if not blocked by another user
-    senderId: UserId //(not SystemId);       
-    receiverId: UserId(if not blocked senderId);    
-    content: string; //not empty
-    type: 'PrivateGameInviteMsg';
+    senderId: SystemId    //from interface     
+    receiverId: UserId    //from interface(who are scheduled to play next)   
+    content: string;        //not empty
+    type: 'Tournamentmsg'; //from interface
   */
-  sendTournamentMsg(message: Types.Message) {
+  sendTournamentMessage(message: Types.MessageTournament) {
 
-    Validate.ensureNonEmptyString(message.content, "tounament message");
-  
+    Validate.ensureIsSystemId(message.senderId, Types.SYSTEM_ID);
 
-    if (message.type !== 'PrivateGameInviteMsg')
-      throw new Error("type not 'PrivateGameInviteMsg' msg");
+    Validate.ensureNotSystemId(message.receiverId, Types.SYSTEM_ID);
 
-    if (message.receiverId === 'all')
-      throw new Error("must be UserId(private msg)");
-
-    const sender = this.checkPrivateSender(message);
-
-    this.checkPrivateReceiver(message, sender);
+    if (Validate.isEmptyString(message.content))
+      message.content = Types.MESSAGE_TOURNAMENT_INVITE;
 
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
-
   }
 }

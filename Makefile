@@ -11,6 +11,6 @@ frontend:
 	cd frontend; npm run compile; npm run serve
 
 
-backend-test:
-	cd backend; npm run backend-test
+backend-tests:
+	cd backend; npm run backend-tests
 

@@ -29,6 +29,8 @@ export type MatchResult = {
 export const SYSTEM_ID = "ThisIsSystemID" as const;
 export type SystemId = typeof SYSTEM_ID;
 
+export type Message = string;
+
 
 
 export type MessageType =
@@ -72,7 +74,7 @@ interface= object
 export interface MessageBase  {
 
 	senderId: SenderId;          
-	content: string;
+	content: Message;
 };
 
 export interface MessagePrivate extends MessageBase{
@@ -93,5 +95,13 @@ export interface MessagePrivateGameInvite extends MessageBase{
 export interface MessageTournament extends MessageBase{
 	type: 'TournamentMsg';
 	senderId: SystemId;   
-	receiverId: 'all';  
+	receiverId: UserId;  //who will play in tournament
 }
+
+//__________________GAME______________
+
+export const MESSAGE_GAME_INVITE = "Let`s play Ping Pong together! :)" as const;
+export type MessageGameInvite = typeof MESSAGE_GAME_INVITE;
+
+export const MESSAGE_TOURNAMENT_INVITE = "Your tournament starts now! :)" as const;
+export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
