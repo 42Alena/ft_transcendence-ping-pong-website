@@ -10,16 +10,94 @@
     </style>
 </head>
 <body>
-    <header class="header" id="page-title"><h1>Pong Game</h1></header>
-    <main>
-        <canvas class="game-window" id="canva" width="600px" height="450px"> </canvas>
-    </main>
-    <footer>
-		<h2>Pong Game</h2>
-		<p>Copyright</p>
-	</footer>
-    <script src="./dist/script.js"></script>
+    <div class="layout">
+        <header class="header" id="page-title"><h1>Pong Game</h1></header>
+        <main>
+            <canvas class="game-window" id="canva" width="600px" height="450px"> </canvas>
+        </main>
+        <footer class="footer">
+            <h2>Pong Game</h2>
+            <p>Copyright</p>
+        </footer>
+    </div>
+    <script src="/dist/script.js"></script>
     
 </body>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+        /* GLOBAL */
+        * {
+            box-sizing: border-box; /*margin and padding included in the box size*/
+        }
+
+        .border {
+            border: 1px solid black; /*only for testing*/
+        }
+
+        /* LAYOUT */
+        .max-width {
+            width: 100%;
+            width: 1024px;
+        }
+
+        .max-width-container {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 10px;
+
+        }
+
+        .section-grid > * {
+            grid-column: 1 / -1;
+        }
+
+        @media (width >= 600px) {
+            .chat {
+                grid-column: 8 / 13;
+            }
+
+            .canva {
+                grid-column: 1 / 8;
+                grid-row: 2 / 3;
+            }
+        }
+
+        .canva {
+            width: 100%;
+            background-color: black;
+
+        }
+
+        </style>
+    </head>
+    <body>
+        <main class="main">
+        <section class="page-heading max-width-container border">
+            <div class="section-grid max-width border">
+                <h1 class="page-heading__heading border">page-heading__heading</h1>
+            </div>
+        </section>
+        <section class="game-board max-width-container border">
+            <div class="section-grid max-width border">
+                <h2 class="game-board__heading border">game board heading</h2>
+                <canvas class="canva border"></canvas>
+                <div class="chat border">chat </div>
+            </div>
+        </section>
+    </main>
+    </body>
+</html> -->
