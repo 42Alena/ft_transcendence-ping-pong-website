@@ -30,18 +30,68 @@ export const SYSTEM_ID = "ThisIsSystemID" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 
-export type MessageType =
-	| 'PublicMsg'      
-	| 'PrivateMsg'       
-	| 'PrivateGameInviteMsg'   
-	| 'TournamentMsg';   
 
+export type MessageType =
+| 'PublicMsg'      
+| 'PrivateMsg'       
+| 'PrivateGameInviteMsg'   
+| 'TournamentMsg';   
+
+
+export type SenderId = UserId | SystemId;
 export type Receiver = UserId | 'all';
 
-export type Message = {
+export interface HasPrivateReceiver{
+	receiverId: UserId;	
+}
+export interface HasPublicReceiver{
+	receiverId: 'all';			
+}
 
-	senderId: UserId | SystemId;       
-	receiverId: Receiver;    
+export interface HasPrivateSender{
+	senderId: UserId;	
+}
+export interface HasServerSender{
+	senderrId: SystemId;			
+}
+
+
+// export type Message = {
+
+// 	senderId: UserId | SystemId;       
+// 	receiverId: Receiver;    
+// 	content: string;
+// 	type: MessageType;
+// };
+
+/* 
+used info for interface:
+https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
+interface= object
+*/
+export interface MessageBase  {
+
+	senderId: SenderId;          
 	content: string;
-	type: MessageType;
 };
+
+export interface MessagePrivate extends MessageBase{
+	type: 'PrivateMsg';
+	senderId: UserId; 	 //override MessageBase: must be a real user
+	receiverId: UserId;  
+}
+export interface MessagePublic extends MessageBase{
+	type: 'PublicMsg';
+	senderId: UserId;   
+	receiverId: 'all';  
+}
+export interface MessagePrivateGameInvite extends MessageBase{
+	type: 'PrivateGameInviteMsg';
+	senderId: UserId;   
+	receiverId: UserId;  
+}
+export interface MessageTournament extends MessageBase{
+	type: 'TournamentMsg';
+	senderId: SystemId;   
+	receiverId: 'all';  
+}

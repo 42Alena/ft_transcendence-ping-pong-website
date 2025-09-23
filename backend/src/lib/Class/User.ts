@@ -7,6 +7,7 @@
 
 
 import *  as Types from '../types/types';
+import * as Validate from '../utils/validators';
 
 export class User {
 
@@ -19,6 +20,9 @@ export class User {
 	matchHistory: Types.MatchResult[];
 
 	constructor(name: string, id: string) {
+		
+		Validate.ensureNonEmptyString(name, "name");
+		Validate.ensureNonEmptyString(id, "name");
 
 		this.name = name;
 		this.id = id;
