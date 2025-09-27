@@ -6,6 +6,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 
 
+
 import *  as Types from '../types/types';
 import * as Validate from '../utils/validators';
 
@@ -31,6 +32,10 @@ export class User {
 		this.friendsIds = new Set();
 		this.blockedIds = new Set();
 		this.matchHistory = [];
+	}
+
+	profile() {
+		return { name: this.name, id: this.id }
 	}
 
 	//________Game
@@ -97,5 +102,7 @@ export class User {
 			throw new Error(`User ${userId} is blocked by ${this.id}`);
 		}
 	}
+
+	// TOD get UserProfile
 
 }
