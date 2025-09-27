@@ -9,3 +9,7 @@ for pullrequests:
 -backend/src/main
 
 []Must create new user with unique name (or error if duplicate).
+[]profile
+
+[] UserManager: addFriend
+[] UserManager: removeFriend

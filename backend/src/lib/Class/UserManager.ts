@@ -12,6 +12,7 @@ export class UserManager {
 	}
 
 
+	//___________ID__________
 	async getUserById(userId: Types.UserId): Promise<User | null> {
 		return this.users.get(userId) ?? null;
 	}
@@ -25,9 +26,9 @@ export class UserManager {
 	}
 
 
-
+	//____________SAVE
 	async saveUser(newUser: User) {
-		if(await this.isNameTaken(newUser.name)){
+		if (await this.isNameTaken(newUser.name)) {
 			throw new Error(`user "${newUser.name}" already exist`)
 		}
 
@@ -35,9 +36,42 @@ export class UserManager {
 		this.users.set(newUser.id, newUser);
 	}
 
+	//___________________GET
 	async getAllUsers() {
 		return Array.from(this.users.values())
 	}
+
+	//_________________FRIENDS______________________
+	async addFriend(userId: Types.UserId, friendId: Types.UserId) {
+
+		if(userId == friendId)
+			throw new Error (" Types.UserId and friendId must be different");
+		
+
+		const user = await this.getUserByIdOrThrow(userId);
+		const friend = await this.getUserByIdOrThrow(friendId);
+
+		if(user.isFriend(friendId))
+			throw new Error (`Error: "${userId}" and "${friendId}" already friends`);
+
+		user.addFriend(friendId);
+		friend.addFriend(userId);
+	}
+
+	async removeFriend(userId: Types.UserId, friendId: Types.UserId) {
+
+		const user = await this.getUserByIdOrThrow(userId);
+		const friend = await this.getUserByIdOrThrow(friendId);
+
+		if(!user.isFriend(friendId))
+			throw new Error (`Error: "${userId}" dont have "${friendId}"`);
+
+		user.removeFriend(friendId);
+		friend.removeFriend(userId);
+	}
+	
+
+
 
 	//_________check
 	/* 
@@ -46,14 +80,14 @@ export class UserManager {
 	 */
 	async isNameTaken(name: string): Promise<boolean> {
 		const usersArray = Array.from(this.users.values());
-	  
+
 		const found = usersArray.some((user) => {
-		  return user.name === name;
+			return user.name === name;
 		});
-	  
+
 		return found;
-	  }
-	  
+	}
+
 
 
 }
