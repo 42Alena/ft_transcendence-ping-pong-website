@@ -7,3 +7,5 @@ for pullrequests:
 	- to test with curl/brouser
 - backend/routes/user.ts for http requests from frontend
 -backend/src/main
+
+[]Must create new user with unique name (or error if duplicate).
