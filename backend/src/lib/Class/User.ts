@@ -4,6 +4,8 @@
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set  
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
 
 
 import *  as Types from '../types/types';
@@ -32,6 +34,29 @@ export class User {
 		this.blockedIds = new Set();
 		this.matchHistory = [];
 	}
+
+	/* return a clean object for frontend (id, name, wins, losses, friends, online)
+	This is needed for /user/register and /user/profile
+	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
+	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+ */
+	profile() {
+		return { 
+			name: this.name,
+			id: this.id,
+
+			//TODO: uncomment latter. Dont need now
+			// avatarUrl: this.avatarUrl,
+			// userStatus: this.userStatus,  
+			// friends: [...this.friendsIds],
+			// blocked: [...this.blockedIds],
+			// wins:	this.resultWon,
+			// lost:	this.resultLost,
+			// matchHistory: this.matchHistory  
+		
+		}
+	}
+
 
 	//________Game
 	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
@@ -75,7 +100,7 @@ export class User {
 		return this.friendsIds.has(userId);
 	}
 
-	//_______ Blocked Id____________
+	//_______ Un/Blocked____________
 
 	blockId(userId: Types.UserId) {
 
@@ -97,5 +122,7 @@ export class User {
 			throw new Error(`User ${userId} is blocked by ${this.id}`);
 		}
 	}
+
+	// TOD get UserProfile
 
 }

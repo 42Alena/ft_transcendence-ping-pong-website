@@ -1,11 +1,18 @@
+/* liked used:
+https://www.freecodecamp.org/news/learn-async-programming-in-typescript-promises-asyncawait-and-callbacks/
+
+https://fastify.dev/docs/latest/Reference/TypeScript/
+*/
 import type { FastifyInstance } from 'fastify';
 
-const Chat = {
-	channels: [],
-	users: [],
-}
+// const Chat = {
+// 	channels: [],
+// 	users: [],
+// }
 
-export function registerRoutes(fastify: FastifyInstance) {
+export function registerChatRoutes(fastify: FastifyInstance) {
+// um 
+
   fastify.get('/chat', async () => {
 	return { msg: 'it doesnt work yet!' };
   });
@@ -40,6 +47,7 @@ export function registerRoutes(fastify: FastifyInstance) {
 
   fastify.post('/chat/channel/:channel/join', async (req, res) => {
 	const channel = (req.params as any).channel;
+	// um..
 	// sample
 	// Chat.channels[channel].users.push(currentuser)
   });

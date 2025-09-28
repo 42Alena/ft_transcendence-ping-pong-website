@@ -24,12 +24,12 @@ export class Chat {
   For private messages (user to user)
   sender must exist, not system
    */
-  private checkPrivateSender(object: Types.HasPrivateSender): User {
+  private async checkPrivateSender(object: Types.HasPrivateSender): Promise<User> {
 
 
     Validate.ensureNonEmptyString(object.senderId, "sender");
 
-    const sender = this.userManager.getUserByIdOrThrow(object.senderId);
+    const sender = await this.userManager.getUserByIdOrThrow(object.senderId);
 
     Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
 
@@ -40,11 +40,11 @@ export class Chat {
   For private messages (user to user)
    receiver must exist, not system, not blocking sender
    */
-  private checkPrivateReceiver(message: Types.HasPrivateReceiver, sender: User): User {
+  private async checkPrivateReceiver(message: Types.HasPrivateReceiver, sender: User): Promise<User> {
 
     Validate.ensureNonEmptyString(message.receiverId, "receiver");
 
-    const receiver = this.userManager.getUserByIdOrThrow(message.receiverId);
+    const receiver = await this.userManager.getUserByIdOrThrow(message.receiverId);
 
     Validate.ensureNotSystemId(receiver.id, Types.SYSTEM_ID);
     receiver.ensureNotBlockedByOrThrow(sender.id);
@@ -54,18 +54,18 @@ export class Chat {
 
 
 
-  /* 
+  /* chan
    Send  private msg to private chat, if not blocked by another user
     senderId: UserId //(not SystemId);       
     receiverId: UserId(if not blocked senderId);    
     content: string; //not empty
     type: PrivateMsg;
   */
-  sendPrivateMessage(message: Types.MessagePrivate) {
+  async sendPrivateMessage(message: Types.MessagePrivate) {
 
     Validate.ensureNonEmptyString(message.content, "[sendPrivateMsg] message content");
 
-    const sender = this.checkPrivateSender(message);
+    const sender = await this.checkPrivateSender(message);
 
     this.checkPrivateReceiver(message, sender);
 
@@ -82,13 +82,13 @@ export class Chat {
     type: PyblicMsg;
   
   */
-  sendPublicMessage(message: Types.MessagePublic) {
+  async sendPublicMessage(message: Types.MessagePublic) {
 
     Validate.ensureNonEmptyString(message.content, "[sendPublicMsg] public message");
 
     Validate.ensureReceiverIsAll(message.receiverId);
 
-    const sender = this.checkPrivateSender(message);
+    const sender = await this.checkPrivateSender(message);
 
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
 
@@ -102,11 +102,11 @@ export class Chat {
     content: string;      //not empty
     type: 'PrivateGameInviteMsg';
   */
-  sendPrivateGameInviteMessage(message: Types.MessagePrivateGameInvite) {
+  async sendPrivateGameInviteMessage(message: Types.MessagePrivateGameInvite) {
 
 
-    const sender = this.checkPrivateSender(message);
-    const receiver = this.checkPrivateReceiver(message, sender);
+    const sender = await this.checkPrivateSender(message);
+    const receiver = await this.checkPrivateReceiver(message, sender);
 
     if (Validate.isEmptyString(message.content))
       message.content = Types.MESSAGE_GAME_INVITE;
