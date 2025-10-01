@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pong</title>
+		<link rel="stylesheet" href="public/styles/reset.css">
+		<style>
+			/* GLOBAL */
+
+			* {
+				box-sizing: border-box;
+			}
+
+			.border {
+				border: 1px solid black;
+			}
+
+			body {
+				min-height: 100vh;
+				margin: 0;
+				display: grid;
+				grid-template-rows: auto 1fr auto;
+				}
+
+			/* LAYOUT */
+
+			.max-width {
+				width: 100%;
+				max-width: 1024px;
+				padding: 1em;
+			}
+
+			.max-width-container {
+				display: flex;
+				justify-content: center;
+				flex: 1;
+			}
+
+			.section-grid {
+				display: grid;
+				grid-template-columns: repeat(12, 1fr);
+				grid-template-rows: 1fr;
+				gap: 10px;
+				padding: 10px;
+				 height: 100%;
+			}
+
+			.section-grid > * {
+				grid-column: 1 / -1;
+			}
+
+			.main-header, .main-footer {
+				background-color: lightcyan;
+			}
+
+			.nav {
+				background-color: lightcoral;
+			}
+
+			.board {
+				background-color: lightyellow;
+			}
+
+			/* HEADER LAYOUT */
+
+			.main-header-nav__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "logo profile";
+				
+			}
+
+			.main-header-nav__logo {
+				grid-area: logo;
+			}
+
+			.main-header-nav__profile {
+				grid-area: profile;
+			}
+
+			/* MAIN BOARD LAYOUT */
+
+			.main {
+					display: grid; 
+					grid-template-rows: auto 1fr;
+					/* height: 100vh; */
+			}
+
+			.nav {
+				display: grid; 
+				gap: 2em;
+				grid-template-areas: "chat game leaderboard";
+			}
+
+			.chat {
+					grid: chat;
+			}
+
+			.game {
+				grid: game;
+			}
+
+			.leaderboard {
+				grid: leaderboard;
+			}
+
+			@media (width >= 600px) {
+
+				.main {
+					display: grid; 
+					grid-template-rows: 1fr;
+				}
+
+				.nav {
+					grid-column: span 1;
+					grid-template-areas: "chat"
+											"game"
+											"leaderboard";
+				}
+
+				.board {
+					grid-column: span 11;
+				}
+			}
+
+			/* FOOTER LAYOUT */
+			.main-footer__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "copyright"
+									"links";
+			}
+
+			.main-footer__copyright {
+				grid-area: copyright;
+			}
+
+			.main-footer__links {
+				grid-area: links;
+			}
+
+			@media (width >= 600px) {
+				.main-footer__grid {
+					grid-template-areas: "links copyright";     
+				}
+			}
+
+		</style>
+	</head>
+	<body>
+		<header class="main-header max-width-container border">
+			<div class="main-header-nav__grid max-width border">
+				<p class="main-header-nav__logo border">main-header-nav__logo</p>
+				<div class="main-header-nav__profile border">main-header-nav_profile</div>
+        	</div>
+		</header>
+		<main class="main border">
+			<section class="main-section max-width-container border">
+				<div class="section-grid max-width border">
+					<nav class="nav border">
+						<div class="chat border">chat</div>
+						<div class="game border">game</div>
+						<div class="leaderboard border">leaderboard</div>
+
+					</nav>
+					<div class="board border">
+						<p class="main-section-board__board border">main-section-board</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="main-footer max-width-container border">
+			<div class="main-footer__grid max-width border">
+				<p class="main-footer__copyright border">main-footer__copyright</p>
+				<ul class="main-footer__links border">main-footer__links</ul>
+			</div>
+		</footer>
+		<!-- insert scripts  here like this -->
+		<!-- <script src="/dist/script.js"></script> -->
+		<!-- <script src=""></script> -->
+	</body>
+</html>
