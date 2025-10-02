@@ -5,92 +5,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Pong</title>
 		<link rel="stylesheet" href="public/styles/reset.css">
+		<link rel="stylesheet" href="public/styles/style.css">
 		<style>
-			/* GLOBAL */
-
-			* {
-				box-sizing: border-box;
-			}
-
-			.border {
-				border: 1px solid black;
-			}
-
-			body {
-				min-height: 100vh;
-				margin: 0;
-				display: grid;
-				grid-template-rows: auto 1fr auto;
-				}
-
-			/* LAYOUT */
-
-			.max-width {
-				width: 100%;
-				max-width: 1024px;
-				padding: 1em;
-			}
-
-			.max-width-container {
-				display: flex;
-				justify-content: center;
-				flex: 1;
-			}
-
-			.section-grid {
-				display: grid;
-				grid-template-columns: repeat(12, 1fr);
-				grid-template-rows: 1fr;
-				gap: 10px;
-				padding: 10px;
-				 height: 100%;
-			}
-
-			.section-grid > * {
-				grid-column: 1 / -1;
-			}
-
-			.main-header, .main-footer {
-				background-color: lightcyan;
-			}
-
-			.nav {
-				background-color: lightcoral;
-			}
-
-			.board {
-				background-color: lightyellow;
-			}
-
-			/* HEADER LAYOUT */
-
-			.main-header-nav__grid {
-				display: grid;
-				gap: 2em;
-				grid-template-areas: "logo profile";
-				
-			}
-
-			.main-header-nav__logo {
-				grid-area: logo;
-			}
-
-			.main-header-nav__profile {
-				grid-area: profile;
-			}
-
+			
 			/* MAIN BOARD LAYOUT */
+			.main-section {
+				display: grid;
+				grid-template-rows: 60px 1fr; /*check min-content when inserting icons*/
+				gap: 10px;
 
-			.main {
-					display: grid; 
-					grid-template-rows: auto 1fr;
-					/* height: 100vh; */
 			}
 
 			.nav {
-				display: grid; 
-				gap: 2em;
-				grid-template-areas: "chat game leaderboard";
+				display: grid;
+				grid-template-columns: 1fr;
+			}
+
+			.nav ul {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.nav li {
+				flex: 1;
+				text-align: center;
 			}
 
 			.chat {
@@ -106,13 +45,7 @@
 			}
 
 			@media (width >= 600px) {
-
-				.main {
-					display: grid; 
-					grid-template-rows: 1fr;
-				}
-
-				.nav {
+				/* .nav {
 					grid-column: span 1;
 					grid-template-areas: "chat"
 											"game"
@@ -121,31 +54,8 @@
 
 				.board {
 					grid-column: span 11;
-				}
+				} */
 			}
-
-			/* FOOTER LAYOUT */
-			.main-footer__grid {
-				display: grid;
-				gap: 2em;
-				grid-template-areas: "copyright"
-									"links";
-			}
-
-			.main-footer__copyright {
-				grid-area: copyright;
-			}
-
-			.main-footer__links {
-				grid-area: links;
-			}
-
-			@media (width >= 600px) {
-				.main-footer__grid {
-					grid-template-areas: "links copyright";     
-				}
-			}
-
 		</style>
 	</head>
 	<body>
@@ -155,19 +65,19 @@
 				<div class="main-header-nav__profile border">main-header-nav_profile</div>
         	</div>
 		</header>
-		<main class="main border">
-			<section class="main-section max-width-container border">
-				<div class="section-grid max-width border">
+		<main class="main max-width-container border">
+			<section class="main-section max-width border">
 					<nav class="nav border">
-						<div class="chat border">chat</div>
-						<div class="game border">game</div>
-						<div class="leaderboard border">leaderboard</div>
-
+							<ul>
+								<li><a href="#" onclick="display('chat')">Chat</a></li>
+								<li><a href="#" onclick="display('game')">Game</a></li>
+								<li><a href="#" onclick="display('leaderboard')">Leaderboard</a></li>
+								<li><a href="#" onclick="display('help')">help</a></li>
+							</ul>
 					</nav>
-					<div class="board border">
-						<p class="main-section-board__board border">main-section-board</p>
+					<div class="board border" id="board">
+						<p class="main-section-board__board border">The sun</p>
 					</div>
-				</div>
 			</section>
 		</main>
 		<footer class="main-footer max-width-container border">
@@ -177,7 +87,7 @@
 			</div>
 		</footer>
 		<!-- insert scripts  here like this -->
-		<!-- <script src="/dist/script.js"></script> -->
+		<script src="public/dist/test.js"></script>
 		<!-- <script src=""></script> -->
 	</body>
 </html>

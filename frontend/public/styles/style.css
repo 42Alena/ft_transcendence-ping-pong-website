@@ -1,26 +1,92 @@
-#canva {
-	background-color: #000;
-	border: solid 1px #39f;
-	display: flex;
-	margin: 0 auto;
-}
+		/* GLOBAL */
 
-.header {
-	width: 100%;
-}
+			* {
+				box-sizing: border-box;
+			}
 
-.header h1 {
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-}
+			.border {
+				border: 1px solid black;
+			}
 
-.footer {
-	display: none;
-}
+			body {
+				min-height: 100vh;
+				margin: 0;
+				display: grid;
+				grid-template-rows: 60px 1fr 60px;
+				}
 
-.layout {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5em;
-}
+			/* LAYOUT */
+
+			.max-width {
+				width: 100%;
+				max-width: 1024px;
+				padding: 1em;
+			}
+
+			.max-width-container {
+				display: flex;
+				justify-content: center;
+				/* flex: 1; */
+			}
+
+			.section-grid {
+				display: grid;
+				grid-template-columns: repeat(12, 1fr);
+				gap: 10px;
+				padding: 10px;
+			}
+
+			.section-grid > * {
+				grid-column: 1 / -1;
+			}
+
+			.main-header, .main-footer {
+				background-color: lightcyan;
+			}
+
+			.nav {
+				background-color: lightcoral;
+			}
+
+			.board {
+				background-color: lightyellow;
+			}
+
+			/* HEADER LAYOUT */
+
+			.main-header-nav__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "logo profile";
+				
+			}
+
+			.main-header-nav__logo {
+				grid-area: logo;
+			}
+
+			.main-header-nav__profile {
+				grid-area: profile;
+			}
+
+			/* FOOTER LAYOUT */
+			.main-footer__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "copyright"
+									"links";
+			}
+
+			.main-footer__copyright {
+				grid-area: copyright;
+			}
+
+			.main-footer__links {
+				grid-area: links;
+			}
+
+			@media (width >= 600px) {
+				.main-footer__grid {
+					grid-template-areas: "links copyright";     
+				}
+			}
