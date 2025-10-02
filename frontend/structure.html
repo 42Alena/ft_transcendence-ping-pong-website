@@ -11,7 +11,7 @@
 			/* MAIN BOARD LAYOUT */
 			.main-section {
 				display: grid;
-				grid-template-rows: 60px 1fr; /*check min-content when inserting icons*/
+				grid-template-rows: 60px 1fr;
 				gap: 10px;
 
 			}
@@ -28,33 +28,27 @@
 			}
 
 			.nav li {
-				flex: 1;
 				text-align: center;
-			}
-
-			.chat {
-					grid: chat;
-			}
-
-			.game {
-				grid: game;
-			}
-
-			.leaderboard {
-				grid: leaderboard;
+				padding: 4px 0;
 			}
 
 			@media (width >= 600px) {
-				/* .nav {
-					grid-column: span 1;
-					grid-template-areas: "chat"
-											"game"
-											"leaderboard";
+				.main-section {
+					grid-template-columns: min-content 1fr;
+					grid-template-rows: 1fr;
+					gap: 10px;
 				}
 
-				.board {
-					grid-column: span 11;
-				} */
+				.nav ul {
+					flex-direction: column;
+					justify-content: flex-start;
+				}
+
+				.nav li {
+					padding: 4px 0;
+					line-height: 1;
+				}
+
 			}
 		</style>
 	</head>

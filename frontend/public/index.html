@@ -1,103 +1,87 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game</title>
-    <link rel="stylesheet" href="/styles/style.css">
-    <link rel="icon" type="image/png" href="/images/favicon.png">
-    <style>
-    </style>
-</head>
-<body>
-    <div class="layout">
-        <header class="header" id="page-title"><h1>Pong Game</h1></header>
-        <main>
-            <canvas class="game-window" id="canva" width="600px" height="450px"> </canvas>
-        </main>
-        <footer class="footer">
-            <h2>Pong Game</h2>
-            <p>Copyright</p>
-        </footer>
-    </div>
-    <script src="/dist/script.js"></script>
-    
-</body>
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <style>
-        /* GLOBAL */
-        * {
-            box-sizing: border-box; /*margin and padding included in the box size*/
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pong</title>
+		<link rel="stylesheet" href="public/styles/reset.css">
+		<link rel="stylesheet" href="public/styles/style.css">
+		<style>
+			
+			/* MAIN BOARD LAYOUT */
+			.main-section {
+				display: grid;
+				grid-template-rows: 60px 1fr;
+				gap: 10px;
 
-        .border {
-            border: 1px solid black; /*only for testing*/
-        }
+			}
 
-        /* LAYOUT */
-        .max-width {
-            width: 100%;
-            width: 1024px;
-        }
+			.nav {
+				display: grid;
+				grid-template-columns: 1fr;
+			}
 
-        .max-width-container {
-            display: flex;
-            justify-content: center;
+			.nav ul {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
 
-        }
+			.nav li {
+				text-align: center;
+				padding: 4px 0;
+			}
 
-        .section-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 10px;
+			@media (width >= 600px) {
+				.main-section {
+					grid-template-columns: min-content 1fr;
+					grid-template-rows: 1fr;
+					gap: 10px;
+				}
 
-        }
+				.nav ul {
+					flex-direction: column;
+					justify-content: flex-start;
+				}
 
-        .section-grid > * {
-            grid-column: 1 / -1;
-        }
+				.nav li {
+					padding: 4px 0;
+					line-height: 1;
+				}
 
-        @media (width >= 600px) {
-            .chat {
-                grid-column: 8 / 13;
-            }
-
-            .canva {
-                grid-column: 1 / 8;
-                grid-row: 2 / 3;
-            }
-        }
-
-        .canva {
-            width: 100%;
-            background-color: black;
-
-        }
-
-        </style>
-    </head>
-    <body>
-        <main class="main">
-        <section class="page-heading max-width-container border">
-            <div class="section-grid max-width border">
-                <h1 class="page-heading__heading border">page-heading__heading</h1>
-            </div>
-        </section>
-        <section class="game-board max-width-container border">
-            <div class="section-grid max-width border">
-                <h2 class="game-board__heading border">game board heading</h2>
-                <canvas class="canva border"></canvas>
-                <div class="chat border">chat </div>
-            </div>
-        </section>
-    </main>
-    </body>
-</html> -->
+			}
+		</style>
+	</head>
+	<body>
+		<header class="main-header max-width-container border">
+			<div class="main-header-nav__grid max-width border">
+				<p class="main-header-nav__logo border">main-header-nav__logo</p>
+				<div class="main-header-nav__profile border">main-header-nav_profile</div>
+        	</div>
+		</header>
+		<main class="main max-width-container border">
+			<section class="main-section max-width border">
+					<nav class="nav border">
+							<ul>
+								<li><a href="#" onclick="display('chat')">Chat</a></li>
+								<li><a href="#" onclick="display('game')">Game</a></li>
+								<li><a href="#" onclick="display('leaderboard')">Leaderboard</a></li>
+								<li><a href="#" onclick="display('help')">help</a></li>
+							</ul>
+					</nav>
+					<div class="board border" id="board">
+						<p class="main-section-board__board border">The sun</p>
+					</div>
+			</section>
+		</main>
+		<footer class="main-footer max-width-container border">
+			<div class="main-footer__grid max-width border">
+				<p class="main-footer__copyright border">main-footer__copyright</p>
+				<ul class="main-footer__links border">main-footer__links</ul>
+			</div>
+		</footer>
+		<!-- insert scripts  here like this -->
+		<script src="public/dist/test.js"></script>
+		<!-- <script src=""></script> -->
+	</body>
+</html>
