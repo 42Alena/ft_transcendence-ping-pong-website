@@ -12,7 +12,7 @@
 				min-height: 100vh;
 				margin: 0;
 				display: grid;
-				grid-template-rows: 60px 1fr 60px;
+				grid-template-rows: 70px 1fr 70px;
 				}
 
 			/* LAYOUT */
@@ -54,18 +54,18 @@
 
 			/* HEADER LAYOUT */
 
-			.main-header-nav__grid {
+			.main-header__grid {
 				display: grid;
 				gap: 2em;
 				grid-template-areas: "logo profile";
 				
 			}
 
-			.main-header-nav__logo {
+			.main-header__logo {
 				grid-area: logo;
 			}
 
-			.main-header-nav__profile {
+			.main-header__profile {
 				grid-area: profile;
 			}
 
