@@ -3,6 +3,8 @@
 const canvas : any = document.getElementById('canva'); //always define type, can be not any?
 const ctx = canvas.getContext('2d');
 
+printText("Press Enter to start");
+
 let upPressedPlayer1 : boolean = false;
 let downPressedPlayer1 : boolean = false;
 let upPressedPlayer2 : boolean = false;
@@ -22,11 +24,21 @@ let intervalId : number;
 let scorePlayer1: number = 0;
 let scorePlayer2: number = 0;
 
-function drawScore()
+function printText(text: string) : void
 {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "white";
-  ctx.fillText(`${scorePlayer1} : ${scorePlayer2}`, 8, 20);
+	ctx.fillStyle = "white";
+	ctx.font = "bold 16px Arial";
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.fillText(text, (canvas.width / 2), (canvas.height / 2));
+}
+
+function printScore()
+{
+	ctx.textAlign = 'left';
+	ctx.font = "16px Arial";
+	ctx.fillStyle = "white";
+	ctx.fillText(`${scorePlayer1} : ${scorePlayer2}`, 8, 20);
 }
 
 function drawMiddleLine()
@@ -83,7 +95,7 @@ function draw() : void {
 	drawBall();
 	drawPlayer1();
 	drawPlayer2();
-	drawScore();
+	printScore();
 	drawMiddleLine();
 	if (upPressedPlayer1 && player1 > 0) {
 		player1 -= 7;
@@ -179,4 +191,5 @@ function startGame() : void {
 
 function pauseGame() : void {
 	clearInterval(intervalId);
+	printText("Press Enter to start");
 }

@@ -1,6 +1,92 @@
-#canva {
-	background-color: #000;
-	border: solid 1px #39f;
-	display: block;
-	margin: 0 auto;
-}
+		/* GLOBAL */
+
+			* {
+				box-sizing: border-box;
+			}
+
+			.border {
+				border: 1px solid black;
+			}
+
+			body {
+				min-height: 100vh;
+				margin: 0;
+				display: grid;
+				grid-template-rows: 70px 1fr 70px;
+				}
+
+			/* LAYOUT */
+
+			.max-width {
+				width: 100%;
+				max-width: 1024px;
+				padding: 1em;
+			}
+
+			.max-width-container {
+				display: flex;
+				justify-content: center;
+				/* flex: 1; */
+			}
+
+			.section-grid {
+				display: grid;
+				grid-template-columns: repeat(12, 1fr);
+				gap: 10px;
+				padding: 10px;
+			}
+
+			.section-grid > * {
+				grid-column: 1 / -1;
+			}
+
+			.main-header, .main-footer {
+				background-color: lightcyan;
+			}
+
+			.nav {
+				background-color: lightcoral;
+			}
+
+			.board {
+				background-color: lightyellow;
+			}
+
+			/* HEADER LAYOUT */
+
+			.main-header__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "logo profile";
+				
+			}
+
+			.main-header__logo {
+				grid-area: logo;
+			}
+
+			.main-header__profile {
+				grid-area: profile;
+			}
+
+			/* FOOTER LAYOUT */
+			.main-footer__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "copyright"
+									"links";
+			}
+
+			.main-footer__copyright {
+				grid-area: copyright;
+			}
+
+			.main-footer__links {
+				grid-area: links;
+			}
+
+			@media (width >= 600px) {
+				.main-footer__grid {
+					grid-template-areas: "links copyright";     
+				}
+			}
