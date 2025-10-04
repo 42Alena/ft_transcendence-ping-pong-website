@@ -12,7 +12,7 @@
 				min-height: 100vh;
 				margin: 0;
 				display: grid;
-				grid-template-rows: 70px 1fr 70px;
+				grid-template-rows: auto 1fr 70px;
 				}
 
 			/* LAYOUT */
@@ -41,11 +41,11 @@
 			}
 
 			.main-header, .main-footer {
-				background-color: lightcyan;
+				background-color: lightgreen;
 			}
 
 			.nav {
-				background-color: lightcoral;
+				background-color: lightgreen;
 			}
 
 			.board {
@@ -57,18 +57,33 @@
 			.main-header__grid {
 				display: grid;
 				gap: 2em;
-				grid-template-areas: "logo profile";
+				grid-template-columns: auto 1fr auto;
+				grid-template-areas: "logo name profile";
 				
 			}
 
 			.main-header__logo {
+				display: flex;
+				align-items: center;
 				grid-area: logo;
+				
 			}
 
 			.main-header__profile {
 				grid-area: profile;
 			}
 
+			.main-header__profile_name {
+				grid-area: name;
+				display: flex;
+				justify-content: flex-end; /* Center the content horizontally */
+				align-items: center; /* Align items to the top of the div */
+			}
+
+			.main-header__priofile_name h1{
+				text-align: right;
+			}
+			
 			/* FOOTER LAYOUT */
 			.main-footer__grid {
 				display: grid;
