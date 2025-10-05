@@ -11,8 +11,8 @@
 			/* MAIN BOARD LAYOUT */
 			.main-section {
 				display: grid;
-				grid-template-rows: 60px 1fr;
-				gap: 10px;
+				grid-template-rows: min-content 1fr;
+				/* gap: 10px; */
 
 			}
 
@@ -34,18 +34,19 @@
 
 			@media (width >= 600px) {
 				.main-section {
-					grid-template-columns: min-content 1fr;
+					grid-template-columns: 70px 1fr; /*min-content when correct icon size*/
 					grid-template-rows: 1fr;
-					gap: 10px;
+					gap: 5px;
 				}
 
 				.nav ul {
 					flex-direction: column;
 					justify-content: flex-start;
+					padding: 10px;
 				}
 
 				.nav li {
-					padding: 4px 0;
+					padding: 4px;
 					line-height: 1;
 				}
 
@@ -93,7 +94,3 @@
 		<!-- <script src=""></script> -->
 	</body>
 </html>
-
- <a href="home.html" class="global-nav__logo">
-                <img src="img/bethany-logo.png" alt="back to homepage">
-            </a>

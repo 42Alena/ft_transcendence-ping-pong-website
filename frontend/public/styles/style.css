@@ -12,32 +12,19 @@
 				min-height: 100vh;
 				margin: 0;
 				display: grid;
-				grid-template-rows: auto 1fr 70px;
+				grid-template-rows: auto 1fr auto;
 				}
 
 			/* LAYOUT */
 
 			.max-width {
 				width: 100%;
-				max-width: 1024px;
-				padding: 1em;
+				max-width: 2560px;
 			}
 
 			.max-width-container {
 				display: flex;
 				justify-content: center;
-				/* flex: 1; */
-			}
-
-			.section-grid {
-				display: grid;
-				grid-template-columns: repeat(12, 1fr);
-				gap: 10px;
-				padding: 10px;
-			}
-
-			.section-grid > * {
-				grid-column: 1 / -1;
 			}
 
 			.main-header, .main-footer {
@@ -59,6 +46,7 @@
 				gap: 2em;
 				grid-template-columns: auto 1fr auto;
 				grid-template-areas: "logo name profile";
+				padding: 1em;
 				
 			}
 
@@ -90,18 +78,27 @@
 				gap: 2em;
 				grid-template-areas: "copyright"
 									"links";
+				padding: 1em;
 			}
 
 			.main-footer__copyright {
 				grid-area: copyright;
+				color: darkgreen;
+				font-size: 15px;
+				font-weight: bold;
+				text-align: center;
 			}
 
 			.main-footer__links {
 				grid-area: links;
+				color: darkgreen;
+				font-size: 15px;
+				font-weight: bold;
+				text-align: center;
 			}
 
 			@media (width >= 600px) {
 				.main-footer__grid {
-					grid-template-areas: "links copyright";     
+					grid-template-areas: "copyright links";     
 				}
 			}
