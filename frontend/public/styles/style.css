@@ -1,6 +1,105 @@
-#canva {
-	background-color: #000;
-	border: solid 1px #39f;
-	display: block;
-	margin: 0 auto;
-}
+		/* GLOBAL */
+
+			* {
+				box-sizing: border-box;
+			}
+
+			.border {
+				border: 1px solid black;
+			}
+
+			body {
+				min-height: 100vh;
+				margin: 0;
+				display: grid;
+				grid-template-rows: auto 1fr auto;
+				background-color: lightgreen;
+				}
+
+			/* LAYOUT */
+
+			.max-width {
+				width: 100%;
+				max-width: 2560px;
+			}
+
+			.max-width-container {
+				display: flex;
+				justify-content: center;
+			}
+
+			.main-header, .main-footer {
+				background-color: lightgreen;
+			}
+
+			.nav {
+				background-color: lightgreen;
+			}
+
+			.board {
+				background-color: lightyellow;
+			}
+
+			/* HEADER LAYOUT */
+
+			.main-header__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-columns: auto 1fr auto;
+				grid-template-areas: "logo name profile";
+				padding: 1em;
+				
+			}
+
+			.main-header__logo {
+				display: flex;
+				align-items: center;
+				grid-area: logo;
+				
+			}
+
+			.main-header__profile {
+				grid-area: profile;
+			}
+
+			.main-header__profile_name {
+				grid-area: name;
+				display: flex;
+				justify-content: flex-end; /* Center the content horizontally */
+				align-items: center; /* Align items to the top of the div */
+			}
+
+			.main-header__priofile_name h1{
+				text-align: right;
+			}
+			
+			/* FOOTER LAYOUT */
+			.main-footer__grid {
+				display: grid;
+				gap: 2em;
+				grid-template-areas: "copyright"
+									"links";
+				padding: 1em;
+			}
+
+			.main-footer__copyright {
+				grid-area: copyright;
+				color: darkgreen;
+				font-size: 15px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			.main-footer__links {
+				grid-area: links;
+				color: darkgreen;
+				font-size: 15px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			@media (width >= 600px) {
+				.main-footer__grid {
+					grid-template-areas: "copyright links";     
+				}
+			}
