@@ -1,1 +1,10 @@
+
+# SQLite runtime files (keep out of build context)
+db/*.db
+db/*.db-wal
+db/*.db-shm
+db/*-journal
+
+# Usual noise to exclude
 node_modules
+npm-debug.log*

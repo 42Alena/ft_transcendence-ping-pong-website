@@ -1,20 +1,25 @@
 // Used information from links
 //  https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+import { Knex } from 'knex';
 import *  as Types from '../types/types';
+import { db } from './DB';
 import { User } from './User';
 
 export class UserManager {
 
 	users: Map<Types.UserId, User>;
+	dbTable: any;
 
 	constructor() {
 		this.users = new Map<Types.UserId, User>;
+		this.dbTable = db<User>('users');
 	}
 
 
 	//___________ID__________
 	async getUserById(userId: Types.UserId): Promise<User | null> {
-		return this.users.get(userId) ?? null;
+		return this.dbTable.where({ id: userId }).select() //alena: try connect to DB
+		// return this.users.get(userId) ?? null; //(alena)before try
 	}
 
 	async getUserByIdOrThrow(userId: Types.UserId): Promise<User> {
@@ -34,6 +39,7 @@ export class UserManager {
 
 		console.debug('Saving new user', newUser) //TODO: comment out
 		this.users.set(newUser.id, newUser);
+		await this.dbTable.insert({ id: newUser.id, username: newUser.name });
 	}
 
 	//___________________GET
@@ -44,15 +50,15 @@ export class UserManager {
 	//_________________FRIENDS______________________
 	async addFriend(userId: Types.UserId, friendId: Types.UserId) {
 
-		if(userId == friendId)
-			throw new Error (" Types.UserId and friendId must be different");
-		
+		if (userId == friendId)
+			throw new Error(" Types.UserId and friendId must be different");
+
 
 		const user = await this.getUserByIdOrThrow(userId);
 		const friend = await this.getUserByIdOrThrow(friendId);
 
-		if(user.isFriend(friendId))
-			throw new Error (`Error: "${userId}" and "${friendId}" already friends`);
+		if (user.isFriend(friendId))
+			throw new Error(`Error: "${userId}" and "${friendId}" already friends`);
 
 		user.addFriend(friendId);
 		friend.addFriend(userId);
@@ -63,13 +69,13 @@ export class UserManager {
 		const user = await this.getUserByIdOrThrow(userId);
 		const friend = await this.getUserByIdOrThrow(friendId);
 
-		if(!user.isFriend(friendId))
-			throw new Error (`Error: "${userId}" dont have "${friendId}"`);
+		if (!user.isFriend(friendId))
+			throw new Error(`Error: "${userId}" dont have "${friendId}"`);
 
 		user.removeFriend(friendId);
 		friend.removeFriend(userId);
 	}
-	
+
 
 
 

@@ -4,11 +4,17 @@ services:
       context: ./backend
     environment:
       - PORT=3000
+    volumes:
+      - pong_data:/app/db      
+
     ports:
       - "3000:3000"
-    command: ["npm", "run", "start"]
-
+ 
   frontend:
     build: 
       context: ./frontend
-    
+    ports:
+      - "8080:8080"
+volumes:
+  pong_data:
+# pong_data: with no fields means: create a local volume using the default driver, no special options.
