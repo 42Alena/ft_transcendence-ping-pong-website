@@ -1,16 +1,25 @@
 
+
+
+
 for pullrequests:
 TODO:
-
-
+## DB
+	- found current db fields that now needed and used by Classes
+	-created for it db/current_init_db.sh
+	-created for it docs/current_init_db.md
+## README
+	-updated with current state
 
 DONE:
+
+_______
 ## Backend
 
 	- moved DB code to backend/ from backend/src/
 	- backend/.dockerignore added: ignore db/*.db*, node_modules, logs
 	- add knex to work with DB (is allowed: https://knexjs.org/guide/query-builder.html#where)
-
+	-
 ## Frontend
 	-add Dockerfile
 	-add .dockerignore
