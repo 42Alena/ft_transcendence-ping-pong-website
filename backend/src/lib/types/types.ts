@@ -54,7 +54,7 @@ export interface HasPrivateSender{
 	senderId: UserId;	
 }
 export interface HasServerSender{
-	senderrId: SystemId;			
+	senderId: SystemId;			
 }
 
 

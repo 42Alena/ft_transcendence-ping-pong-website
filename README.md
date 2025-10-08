@@ -65,7 +65,7 @@ Key features include:
 - 🔐 **Privacy by Design** – GDPR endpoints for account deletion & anonymization.  
 - 🚀 **Deployment** – HTTPS/WSS via proxy, reproducible with **one Docker command**.  
 - 🎨 **Frontend** – TypeScript + Tailwind SPA (no framework, History API navigation).  
-- 🧰 **Data reliability (Luis)** — consistent schema, constraints, WAL journaling, DB health checks, safe deletes/anonymization.
+- 🧰 **Data reliability ** — consistent schema, constraints, WAL journaling, DB health checks, safe deletes/anonymization.
 
 **Goal:** Run everything with one Docker command.  
 **Requirement:** Must work in Firefox (also tested in Chrome).  
@@ -87,70 +87,41 @@ ft_transcendence is the **final web project** in the curriculum: it proves skill
 
 ---
 
-## 📌 Modules (Main + 7 majors)
+## 📌 CURRENT Modules (Main + 7 majors)
 
 > **Current plan (subject-compliant) — may change as the project evolves.**  
+Done! I removed the **Status** column and marked undecided items with **?** in the **Counted** column.
 
-| Module (subject name) | Lead | Where (paths) | Tools | Acceptance |
-|---|---|---|---|---|
-| **MAIN (SPA, Docker, HTTPS/WSS)** | **Alena  Luis  Sveva** | `frontend/`, root `docker-compose.yml` | TS SPA + proxy | SPA Back/Forward works; one command boots all; alias-only tournament works. |
-| **[Web — Fastify backend]** | **Alena** | `backend/src/**` | Fastify | REST routes with JSON schemas; `/healthz` returns 200. |
-| **[User Management — Standard User Management]** | **Alena** | `backend/src/lib/Class/**` | TypeScript + Fastify | Register/login; profiles; avatars; friends/online; stats/history; passwords hashed. |
-| **[Gameplay & UX — Remote Players]** | **Alena** | `backend/src/main.ts` (sockets) | Socket.IO | Rooms; paddle/ball/score sync with timestamps; reconnect safety. |
-| **[Gameplay & UX — Live Chat]** | **Alena** | `frontend/src/chat/**`, `backend/src/**` | Socket.IO + TS | DM/block/invite; tournament notifications; profile view from chat. |
-| **[Web (minor) — Tailwind] + [Gameplay & UX (minor) — Game Customization]** | **Sveva** | `frontend/src/ui/**`, `frontend/src/settings/**` | Tailwind + TS | Responsive UI; settings (speed, paddle size, power-ups) applied to game & AI. |
-| **[AI-Algo — AI Opponent]** | **Sveva** | `frontend/src/game/**` | Canvas + TS | Keyboard sim only; refresh every 1s; same paddle speed as humans; can win; uses power-ups. |
-| **[Web (minor) — SQLite: Schema & Init]** *(counts)* | **Luis** | `backend/src/db/**` | SQLite + TS | **Idempotent migrations; foreign keys enforced; WAL mode; unique constraints; indices on hot paths; DB health endpoint green.** |
-| **[Cybersecurity (minor) — GDPR/Account Deletion]** *(counts)* | **Luis** | `backend/src/routes/gdpr.ts` | Fastify | **DELETE → hard-delete user + anonymize match history; POST /anonymize → mask PII (username/avatar/email); audit-safe logs; race-safe with transactions.** |
+| Module (exact subject name)                                                                                             | Lead                 | Where (paths)                                          | Tools            | Evidence                      |  Points | Counted |
+| ----------------------------------------------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------------ | ---------------- | ----------------------------- | ------: | :-----: |
+| **MAIN (Mandatory: SPA, Docker, HTTPS/WSS)**                                                                            | Alena . Luis . Sveva | `frontend/`, `docker-compose.yml`                      | TS SPA + proxy   | `make up`, SPA Back/Forward   |   **0** |    ✓    |
+| **Web — Major: Use a framework to build the backend (Fastify)**                                                         | Alena                | `backend/src/**`                                       | Fastify          | `GET /healthz` = 200          |   **1** |    ✓    |
+| **User Management — Major: Standard user management, authentication, users across tournaments**                         | Alena                | `backend/src/lib/Class/**`                             | TS + Fastify     | `POST /users`, `POST /login`  |   **1** |    ✓    |
+| **Gameplay and user experience — Major: Live chat**                                                                     | Alena                | `frontend/src/chat/**`, `backend/src/**`               | Socket.IO + TS   | chat echo/DM/block            |   **1** |    ✓    |
+| **AI-Algo — Major: Introduce an AI opponent**                                                                           | Sveva                | `frontend/src/game/**`                                 | Canvas + TS      | AI wins a round               |   **1** |    ✓    |
+| **Web — Minor: Use a framework or a toolkit to build the frontend (Tailwind CSS)**                                      | Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | responsive screenshots        | **0.5** |    ✓    |
+| **Web — Minor: Use a database for the backend (SQLite)**                                                                | Luis                 | `backend/src/db/**`                                    | SQLite + TS      | PRAGMAs / health route        | **0.5** |    ✓    |
+| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
+| **Accessibility — Minor: Expanding browser compatibility**                                                              | Sveva                | `docs/compat.md`, e2e                                  | TS + Tailwind    | Chrome+Firefox matrix         | **0.5** |    ✓    |
+| **Gameplay and user experience — Major: Remote players**                                                                | Alena . Sveva                | `backend/src/main.ts`                                  | Socket.IO        | `joinMatch/state/input`       |   **1** |  **?**  |
+| **Gameplay and user experience — Minor: Game customization options**                                                    | ? Sveva                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
+| **Accessibility — Minor: Support on all devices** *(easy add)*                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
+| **AI-Algo — Minor: User and game stats dashboards** *(easy add)*                                                        | ? Luis                 | `backend/src/routes/stats.ts`, `frontend/src/stats/**` | SQLite + TS      | `/me/stats`, `/matches/stats` | **0.5** |  **?**  |
+| **Accessibility — Minor: Multiple language support** *(easy add)*                                                       | ? Sveva                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
 
-**Total:** 5 direct majors + (Tailwind+Customization = 1 major) + (SQLite+GDPR = 1 major) → **7 majors** ✅
+### Totals (Counted ✓ only)
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+* Majors: **4.0** (Backend, User Mgmt, Live Chat, AI)
+* Minors: **2.0** (Tailwind, SQLite, GDPR, Browser Compatibility)
+* **Total = 6.0 majors**
 
----
+ * need  **7.0**  
 
-## 👥 Team & Responsibilities
-
-### 🟣  Alena — Backend & Real-Time Lead  
-**Modules:** Fastify backend · User Management · Remote Players · Live Chat  
-
-| Area | Tasks | Why (subject link) | Acceptance |
-|---|---|---|---|
-| **Fastify backend** | REST skeleton with `/healthz`, `/users`, `/matches`; JSON schema validation; error handling; Docker integration | Required by *Web — Fastify backend* | `curl /healthz` → 200; invalid payload rejected |
-| **User Management** | Domain classes (`User`, `UserManager`, `Chat`); register/login; profiles; avatars; friends/online; stats/history; passwords hashed | Matches *Standard User Management* module | Register/login works; profile shows avatar/stats; password in DB is hashed |
-| **Remote Players** | Socket.IO rooms; join/leave lifecycle; paddle/ball/score sync with timestamps; reconnect = pause/resume | Matches *Remote Players* module | Two browsers play; unplug → game pauses; replug → resumes |
-| **Live Chat** | DM/block/invite; tournament notifications; profile peek from chat; shared DTOs/events with frontend | Matches *Live Chat* module | Blocked DM refused; invite → match created; notification visible |
-
----
-
-### 🟢 Sveva — Game & Frontend Lead  
-**Modules:** Tailwind + Customization · AI Opponent  
-
-| Area | Tasks | Why (subject link) | Acceptance |
-|---|---|---|---|
-| **Tailwind UI** | Responsive SPA layout; resize handling; colors & typography; HUD styled consistently | Required by *Web (minor) — Tailwind* | Resize window → layout adapts; no overflow |
-| **Customization menu** | Paddle size, ball speed, power-ups; settings applied to game + AI | Required by *Gameplay & UX (minor) — Customization* | Change paddle size → affects both player & AI |
-| **Rendering & physics** | Frame-timed render loop (`requestAnimationFrame`); deterministic physics; paddle/ball collisions; scoring; stable under resize/tab-switch | Needed for core gameplay | Game runs smoothly; no tunneling; score updates correctly |
-| **AI Opponent** | Keyboard simulation only; refresh every 1s; same paddle speed as human; uses power-ups; can win | Explicit rules in *AI Opponent* module | AI key presses logged; wins some games |
-| **Tournament (alias)** | Alias entry; bracket flow; “next match” notification | Subject requires alias-only tournament | Start tournament without login → next match displayed |
-
----
-
-### 🔵  Luis — Database & Data Protection Lead  
-**Modules:** SQLite · GDPR/Account Deletion  
-
-| Area | Tasks | Why (subject link) | Acceptance |
-|---|---|---|---|
-| **SQLite schema & integrity** | Design `users`, `matches` (FKs, `ON DELETE SET NULL`/`CASCADE` where sensible), unique constraints (username/email), indices (e.g., `matches(winner_id, created_at)`), **PRAGMA foreign_keys=ON** | Required by *SQLite: Schema & Init* | Schema created idempotently; FKs enforced; inserts violating constraints fail with clear errors |
-| **Migrations & startup** | Idempotent migration scripts at boot; safe re-run; seed for local dev; **WAL journaling** for concurrent reads; **busy timeout** | Operability & stability | Multiple restarts don’t duplicate; WAL active; DB health green |
-| **DB health & observability** | `/db/health` route (returns PRAGMA checks + file size + WAL status); log slow queries (>50ms) | Evaluator clarity | `curl /db/health` → 200 JSON with status: "ok" |
-| **Backups & maintenance** | Document portable backup (`sqlite3 app.db ".backup app.backup.db"`); periodic `VACUUM` and `ANALYZE` guidance; volume path configurable (`SQLITE_PATH`) | Data safety in demo/eval | Backup file created; DB size stable after vacuum |
-| **GDPR endpoints** | `DELETE /users/:id` → hard-delete account, **anonymize** matches (keep gameplay stats but remove PII); `POST /users/:id/anonymize` → mask PII (username/avatar/email) while keeping relationships | Required by *GDPR/Account Deletion* | Hitting endpoints updates DB correctly; subsequent profile fetch shows masked/removed data |
-| **Transaction safety** | Wrap GDPR ops in a single transaction; handle races (e.g., simultaneous match write) via retry/backoff | Consistency under load | No half-deleted state; logs show committed tx |
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
 ---
+
 
 ## 🧪 Tech & Languages
 
@@ -170,9 +141,10 @@ ft_transcendence is the **final web project** in the curriculum: it proves skill
 ```
 
 .
-├─ backend/
+├─ backend/ 
+│  ├─ db/                #  migrations, sqlite helpers, pragmas, health
 │  ├─ src/
-│  │  ├─ db/              # ← (Luis) migrations, sqlite helpers, pragmas, health checks
+│  │  checks
 │  │  ├─ lib/Class/       # User, Chat, UserManager
 │  │  ├─ types/           # Shared backend types
 │  │  ├─ utils/           # Validation helpers
@@ -240,18 +212,6 @@ https://localhost:5173
 | `APP_URL`     | backend | `https://localhost` | CORS/cookie origin |
 | `SQLITE_PATH` | backend | `./data/app.db`     | DB file path       |
 
-**(Luis) Useful DB ops during defense**
-
-```bash
-# Health:
-curl -s https://localhost/db/health | jq
-
-# Safe backup (file-copy friendly):
-sqlite3 ./data/app.db ".backup ./data/app.backup.db"
-
-# Inspect pragmas quickly:
-sqlite3 ./data/app.db "PRAGMA journal_mode; PRAGMA foreign_keys;"
-```
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
