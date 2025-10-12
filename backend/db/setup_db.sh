@@ -20,7 +20,7 @@ fi
 # initialize the database
 if [ ! -f "$DB_PATH" ]; then
     echo "Creating new database..."
-    sqlite3 "$DB_PATH" < "$DB_DIR/create_schema.sql"
+    sqlite3 "$DB_PATH" < "$DB_DIR/current_init_db.sql"
 else
     echo "Database already exists. Skipping creation."
 fi

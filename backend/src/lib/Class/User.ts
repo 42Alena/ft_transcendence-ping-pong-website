@@ -10,6 +10,8 @@
 
 import *  as Types from '../types/types';
 import * as Validate from '../utils/validators';
+// (Luis importing the DTOs to ensure consistency between class and DTOs)
+import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO'; 
 
 export class User {
 
@@ -57,6 +59,16 @@ export class User {
 		}
 	}
 
+	/* (Luis) Suggestion to improve the profile method with DTOs
+	so everytime we change the DTO, we will be forced to change this method
+	to ensure consistency between class and DTOs. Let me know what you think.
+	toBasicDTO(): UserBasicProfileDTO {
+		return {
+			name: this.name,
+			id: this.id
+		};
+	}
+	*/ 
 
 	//________Game
 	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
