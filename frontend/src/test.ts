@@ -13,13 +13,13 @@ const matchTypeButton : any = document.getElementById('matchType');
 function display(text: string) : void
 {
 	console.log(`${text}`);
-	// if (text == "game")
-	// {
-	// 	chatP.style.display = "none";
-	// 	leadP.style.display = "none";
-	// 	welcP.style.display = "none";
-	// 	gameP.style.display = "flex";
-	// }
+	if (text == "game")
+	{
+		chatP.style.display = "none";
+		leadP.style.display = "none";
+		welcP.style.display = "none";
+		gameP.style.display = "flex";
+	}
 	if (text == "chat")
 	{
 		gameP.style.display = "none";
@@ -61,15 +61,15 @@ function setSettingMatchType(button : string)
 //Game
 class Paddle {
 	width: number;
-	height: number;
+	lenght: number;
 	color: string;
 	v: number; //only fixed property?
 	x : number;
 	y : number;
 
 	constructor() {
-	this.height = canva.height * 0.15;
-	this.width = this.height / 4;
+	this.lenght = 16;
+	this.width = this.lenght / 4;
 	this.color = "white";
 	this.v = 7;
 	this.x = 0;
@@ -83,10 +83,41 @@ class Paddle {
 
 	drawPaddle () {
 		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.height);
+		ctx.rect(this.x, this.y, this.width, this.lenght);
 		ctx.fillStyle = this.color;
 		ctx.fill();
 		ctx.closePath();
+	}
+}
+
+class Ball {
+	lenght: number;
+	deltaX : number;
+	deltaY : number;
+	color : string;
+	x : number;
+	y : number;
+
+	constructor () {
+		this.lenght = 4;
+		this.deltaX = 2;
+		this.deltaY = -2;
+		this.color = "white";
+		this.x = 0;
+		this.y = 0;
+	}
+
+	drawBall() {
+		ctx.beginPath();
+		ctx.rect(this.x, this.y, this.lenght, this.lenght);
+		ctx.fillStyle = "white";
+		ctx.fill();
+		ctx.closePath();
+	}
+
+	positionBall(x : number, y : number) {
+		this.x = x;
+		this.y = y;
 	}
 }
 
@@ -101,12 +132,15 @@ function startGame() : void {
 	// canva.width = canva.width*dpi;
     // canva.height = canva.height*dpi;
     // ctx.scale(dpi, dpi);
-	ctx.beginPath();
 	let leftPaddle : Paddle = new Paddle();
 	let rightPaddle : Paddle = new Paddle();
+	let ball : Ball = new Ball();
 	ctx.clearRect(0, 0, canva.width, canva.height);
-	leftPaddle.positionPaddle(0, canva.height / 2 - leftPaddle.height / 2);
-	rightPaddle.positionPaddle(canva.width - rightPaddle.width, canva.height / 2 - leftPaddle.height / 2);
+	leftPaddle.positionPaddle(0, canva.height / 2 - leftPaddle.lenght / 2);
+	rightPaddle.positionPaddle(canva.width - rightPaddle.width, canva.height / 2 - leftPaddle.lenght / 2);
+	ball.positionBall(canva.width / 2, canva.height / 2);
 	leftPaddle.drawPaddle();
 	rightPaddle.drawPaddle();
+	ball.drawBall();
+
 }
