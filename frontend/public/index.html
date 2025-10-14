@@ -37,7 +37,7 @@
 				width: 250px;
 				outline: 0;
 			}
-
+			
 			.playerType {
 				display: flex;
 			}
@@ -54,8 +54,9 @@
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				/* display: none; */
+				display: block; /*to change in none after testing*/
 				background-color: black;
+				image-rendering: pixelated;
 			}
 
 			.chatPage {
@@ -95,7 +96,7 @@
 							<ul>
 								<li><a href="#" onclick="display('chat')">
 									 <img src="images/chat.png" alt="chat page"></a></li>
-								<li><a href="#" onclick="display('game')">
+								<li><a href="#" onclick="startGame()">
 									<img src="images/play.png" alt="game page"></a></li>
 								<li><a href="#" onclick="display('leaderboard')">
 									<img src="images/leaderboard.png" alt="chat page"></a></li>
@@ -104,8 +105,8 @@
 					<div class="board border" id="board">
 						<!-- releated to game -->
 						<div class="gamePage" id="gamePage">
-							<!-- <canvas class="gameCanva" id="gameCanva"></canvas> -->
-							<div class="playerType" id="playerType">
+							<canvas class="gameCanva" id="gameCanva"></canvas>
+							<!-- <div class="playerType" id="playerType">
 								<button type="button" id="guestButton" onclick="setSettingPlayerType(this.id)">Guest</button>
 								<button type="button" id="registeredButton" onclick="setSettingPlayerType(this.id)">Registered</button>
 							</div>
@@ -117,7 +118,7 @@
 								<button type="button" id="singleMButton" onclick="setSettingMatchType(this.id)">Single Game</button>
 								<button type="button" id="TourMButton" onclick="setSettingMatchType(this.id)">Tournament</button>
 							</div>
-						</div>
+						</div> -->
 						<!-- other pages -->
 						<div class="welcomePage" id="welcomePage">Welcome</div>
 						<div class="chatPage" id="chatPage">Chat page</div>
@@ -133,6 +134,7 @@
 		</footer>
 		<!-- insert scripts  here like this -->
 		<script src="dist/test.js"></script>
+		<!-- <script src="dist/script.js"></script> -->
 		<!-- <script src=""></script> -->
 	</body>
 </html>
