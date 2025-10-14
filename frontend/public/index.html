@@ -22,6 +22,7 @@
 				align-items: center;
 				justify-content: center;
 				display: none;
+				background: black;
 			}
 
 			.gamePage button {
@@ -106,7 +107,7 @@
 						<!-- releated to game -->
 						<div class="gamePage" id="gamePage">
 							<canvas class="gameCanva" id="gameCanva"></canvas>
-							<div class="playerType" id="playerType">
+							<div class="playerType" id="playerType" style="display: none;">
 								<button type="button" id="guestButton" onclick="setSettingPlayerType(this.id)">Guest</button>
 								<button type="button" id="registeredButton" onclick="setSettingPlayerType(this.id)">Registered</button>
 							</div>
