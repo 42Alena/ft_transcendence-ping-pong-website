@@ -84,9 +84,8 @@
 
 			.chat-right__list {
 				display: flex;
-				flex-direction: column;
-				overflow: auto;
 				flex-grow: 1;
+				flex-direction: column;
 				padding: 1em;
 				gap: 10px;
 			}
@@ -94,6 +93,9 @@
 			.chat-right__box {
 				display: flex;
 				flex-direction: column;
+				height: 60px;
+				overflow: auto;
+				flex-grow: 1;
 				gap: 10px;
 				padding: 1em;
 			}
@@ -101,30 +103,47 @@
 			.chat-right__bubble {
 				display: flex;
 				flex-direction: column;
+				/* overflow: auto; */
+				flex-grow: 1;
 				padding: 1em;
+				gap: 10px;
+				background-color: white;
+				max-width: 100%;
 			}
 
 			.chat-right__bubble-sent {
 				display: block;
 				position: relative;
-				width: min-content;
 				height: auto;
 				background-color: lightskyblue;
+				max-width: 75%;
 			}
 
 			.chat-right__bubble-received {
 				display: block;
 				margin-left: auto;
 				position: relative;
-				width: min-content;
+				max-width: 75%;
 				height: auto;
 				justify-content: flex-end;
 				background-color: mediumaquamarine;
 			}
 			.chat-right__textArea {
 				display: flex;
+				height: auto;
 				gap: 10px;
 				padding: 1em;
+			}
+
+			.chat-right__textArea-input {
+				display: block;
+				flex-grow: 1;
+
+			}
+
+			.chat-right__textArea-submitIcon {
+				display: block;
+				margin-left: auto;
 			}
 		</style>
 	</head>
@@ -166,13 +185,43 @@
 									<div class="chat-right__box border">box
 										<!-- <div class="chat-right__stamp border">stamp</div> -->
 										<div class="chat-right__bubble border">bubble
-											<div class="chat-right__bubble-sent border">hi</div>
-											<div class="chat-right__bubble-received border">hello
+											<div class="chat-right__bubble-sent border">In a small village bordered by ancient, towering trees, there lay a mystical forest known as the Whispering Woods. The villagers spoke in hushed tones about its secrets, claiming that the trees could share stories of the past, if only one listened closely enough.</div>
+											<div class="chat-right__bubble-received border">One sunny afternoon, a curious girl named Elara ventured into the woods, driven by tales of magic and adventure. As she stepped onto the soft, mossy ground, the leaves rustled above, creating a gentle melody. In the heart of the forest, she found a clearing illuminated by golden sunlight.</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+											<div class="chat-right__bubble-received border">hello</div>
+
 											<!-- <div class="chat-right__bubble-received border"></div> -->
 										</div>
 									</div>
 									<div class="chat-right__textArea border">text area
-										<div class="cvhat-right__textArea-input border">input</div>
+										<div class="chat-right__textArea-input border">input</div>
 										<div class="chat-right__textArea-submitIcon border">submit icon</div>
 									</div>
 								</div>
