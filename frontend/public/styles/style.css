@@ -67,8 +67,8 @@
 			.main-header__profile_name {
 				grid-area: name;
 				display: flex;
-				justify-content: flex-end; /* Center the content horizontally */
-				align-items: center; /* Align items to the top of the div */
+				justify-content: flex-end;
+				align-items: center;
 			}
 
 			.main-header__priofile_name h1{

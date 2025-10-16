@@ -65,8 +65,50 @@
 				background-color: lightpink;
 			}
 			
-			.char-left {
+			.chat-left {
 				display: flex;
+				flex-direction: column;
+			}
+
+			.chat-left__header {
+				display: flex;
+				padding: 1em;
+				align-items: center;
+  				justify-content: center;
+			}
+
+			.chat-left__list {
+				display: flex;
+				flex-grow: 1;
+				flex-direction: column;
+				padding: 1em;
+				gap: 10px;
+			}
+
+			.chat-left__list-search-bar {
+				display: flex;
+				height: auto;
+				gap: 10px;
+				padding: 0.5em;
+				background-color: white;
+			}
+
+			.chat-left__list-dms {
+				display: flex;
+				position: relative;
+				flex-direction: column;
+				height: 60px;
+				overflow: auto;
+				flex-grow: 1;
+				gap: 10px;
+				padding: 1em;
+			}
+
+			.chat-left__list-dms-item {
+				display: block;
+				background-color: white;
+				max-width: 100%;
+				padding: 20px;
 			}
 
 			.chat-right {
@@ -77,9 +119,21 @@
 			.chat-right__header {
 				display: flex;
 				flex: auto auto; /*it could be resized*/
-				height: 70px;
 				padding: 1em;
 				gap: 10px;
+				align-items: center;
+  				justify-content: center;
+			}
+
+			.chat-right__header-avatar {
+				margin-left: auto;
+			}
+
+			.chat-right__header-contact {
+				display: block;
+				flex-grow: 1;
+				/* align-items: center; */
+				text-align: center;
 			}
 
 			.chat-right__list {
@@ -103,7 +157,6 @@
 			.chat-right__bubble {
 				display: flex;
 				flex-direction: column;
-				/* overflow: auto; */
 				flex-grow: 1;
 				padding: 1em;
 				gap: 10px;
@@ -138,12 +191,16 @@
 			.chat-right__textArea-input {
 				display: block;
 				flex-grow: 1;
+				background-color: white;
+				padding: 0.5em;
 
 			}
 
 			.chat-right__textArea-submitIcon {
 				display: block;
 				margin-left: auto;
+				align-content: center;
+				background-color: lightcyan;
 			}
 		</style>
 	</head>
@@ -175,11 +232,32 @@
 					</nav>
 					<div class="board-container border" id="board">
 						<div class="chat chat-container" id="chatPage">
-							<div class="chat-left border">left chat</div>
+							<div class="chat-left border">
+								<div class="chat-left__header border">
+									<div class="border">Messages</div>
+								</div>
+								<div class="chat-left__list border">list
+									<div class="chat-left__list-search-bar border">search bar</div>
+									<div class="chat-left__list-dms border">
+										<div class="chat-left__list-dms-item border">Chat Item 1</div>
+											<div class="chat-left__list-dms-item border">Chat Item 2</div>
+											<div class="chat-left__list-dms-item border">Chat Item 3</div>
+											<div class="chat-left__list-dms-item border">Chat Item 4</div>
+											<div class="chat-left__list-dms-item border">Chat Item 5</div>
+											<div class="chat-left__list-dms-item border">Chat Item 6</div>
+											<div class="chat-left__list-dms-item border">Chat Item 7</div>
+											<div class="chat-left__list-dms-item border">Chat Item 8</div>
+											<div class="chat-left__list-dms-item border">Chat Item 9</div>
+											<div class="chat-left__list-dms-item border">Chat Item 10</div>
+									</div>
+								</div>
+							</div>
 							<div class="chat-right border">
 								<div class="chat-right__header border">header
-									<div class="chat-right__header-contact border">contact name</div>
-									<div class="chat-right__header-avatar border">avatar</div>
+									<div class="chat-right__header-contact border">Pinco Pallo</div>
+									<div class="chat-right__header-avatar border">
+										<img src="images/profile.png" alt="avatar profile">
+									</div>
 								</div>
 								<div class="chat-right__list border">list
 									<div class="chat-right__box border">box
@@ -216,13 +294,13 @@
 											<div class="chat-right__bubble-received border">hello</div>
 											<div class="chat-right__bubble-received border">hello</div>
 											<div class="chat-right__bubble-received border">hello</div>
-
-											<!-- <div class="chat-right__bubble-received border"></div> -->
 										</div>
 									</div>
 									<div class="chat-right__textArea border">text area
-										<div class="chat-right__textArea-input border">input</div>
-										<div class="chat-right__textArea-submitIcon border">submit icon</div>
+										<div class="chat-right__textArea-input border">
+											<div class="chat-right__textArea-input-text">Input message</div>
+										</div>
+										<div class="chat-right__textArea-submitIcon border">Send</div>
 									</div>
 								</div>
 							</div>
