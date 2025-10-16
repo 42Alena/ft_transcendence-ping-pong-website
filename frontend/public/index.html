@@ -52,11 +52,12 @@
 				}
 			}
 
-			.board-container {
-				display: flex;
-			}
+			/* .board-container {
+				
+			} */
+
 			.chat {
-				position: absolute;
+				position: relative;
 				width: 100%;
 				height: 100%;
 				display: grid;
@@ -87,6 +88,7 @@
 				overflow: auto;
 				flex-grow: 1;
 				padding: 1em;
+				gap: 10px;
 			}
 
 			.chat-right__box {
@@ -96,6 +98,29 @@
 				padding: 1em;
 			}
 
+			.chat-right__bubble {
+				display: flex;
+				flex-direction: column;
+				padding: 1em;
+			}
+
+			.chat-right__bubble-sent {
+				display: block;
+				position: relative;
+				width: min-content;
+				height: auto;
+				background-color: lightskyblue;
+			}
+
+			.chat-right__bubble-received {
+				display: block;
+				margin-left: auto;
+				position: relative;
+				width: min-content;
+				height: auto;
+				justify-content: flex-end;
+				background-color: mediumaquamarine;
+			}
 			.chat-right__textArea {
 				display: flex;
 				gap: 10px;
@@ -139,8 +164,12 @@
 								</div>
 								<div class="chat-right__list border">list
 									<div class="chat-right__box border">box
-										<div class="chat-right__stamp border">stamp</div>
-										<div class="chat-right__bubble border">bubble</div>
+										<!-- <div class="chat-right__stamp border">stamp</div> -->
+										<div class="chat-right__bubble border">bubble
+											<div class="chat-right__bubble-sent border">hi</div>
+											<div class="chat-right__bubble-received border">hello
+											<!-- <div class="chat-right__bubble-received border"></div> -->
+										</div>
 									</div>
 									<div class="chat-right__textArea border">text area
 										<div class="cvhat-right__textArea-input border">input</div>
