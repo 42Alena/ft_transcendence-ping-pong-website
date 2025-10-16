@@ -39,13 +39,28 @@ export class UserManager {
 
 		console.debug('Saving new user', newUser) //TODO: comment out
 		this.users.set(newUser.id, newUser);
-		await this.dbTable.insert({ id: newUser.id, username: newUser.name });
+		await this.dbTable.insert(newUser.toDb());
 	}
 
 	//___________________GET
-	async getAllUsers() {
-		return Array.from(this.users.values())
+	async getAllUsers(): Promise<User[]> {
+		// return Array.from(this.users.values()) //old
+
+		const dbUsers = await this.dbTable.select()  //alena: try connect to DB
+		console.log("DB:", dbUsers)
+		// FROM DB:
+		// [{
+		// 	id: 'a0f789ebb4cc48a74fd1bcb9',
+		// 	username: 'user5',
+		// 	passwordHash: '$2a$10$dummyhashdummyhashdummyhashdum',
+		// 	avatarUrl: '',
+		// 	userStatus: 'online',
+		// 	isDeleted: 0
+		// }]
+		// @ts-ignore
+		return dbUsers.map(row => User.fromDb(row));
 	}
+
 
 	//_________________FRIENDS______________________
 	async addFriend(userId: Types.UserId, friendId: Types.UserId) {
