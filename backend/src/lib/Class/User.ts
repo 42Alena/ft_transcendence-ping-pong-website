@@ -23,6 +23,18 @@ export class User {
 	blockedIds: Set<Types.UserId>; //list of users IDs (easy to check)
 	matchHistory: Types.MatchResult[];
 
+
+	static fromDb(row: Record<string, any>): User {
+		return new User(row['username'], row['id'])
+	}
+
+	toDb(): Record<string, any> {
+		return {
+			id: this.id,
+			username: this.name,
+		}
+	}
+
 	constructor(name: string, id: string) {
 
 		Validate.ensureNonEmptyString(name, "name");
@@ -43,9 +55,10 @@ export class User {
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
  */
 	profile() {
-		return { 
+		return {
 			name: this.name,
 			id: this.id,
+			bla: 'blabla',
 
 			//TODO: uncomment latter. Dont need now
 			// avatarUrl: this.avatarUrl,
@@ -55,7 +68,7 @@ export class User {
 			// wins:	this.resultWon,
 			// lost:	this.resultLost,
 			// matchHistory: this.matchHistory  
-		
+
 		}
 	}
 

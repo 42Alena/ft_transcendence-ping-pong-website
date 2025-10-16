@@ -1,10 +1,13 @@
 .PHONY: setup check-tools frontend backend db backend-tests \
-        up down logs reset-db ps rebuild-backend db-tables db-ping
+        up down logs reset-db ps rebuild-backend db-tables db-ping\
+		 db-fill db-wipe-users db-show-users db-count
 SHELL := /bin/bash
 
 FRONTEND_DIR := frontend
 BACKEND_DIR  := backend
 DB_DIR       := backend/db
+DB_FILL 	 := $(DB_DIR)/test_fill_users_dev.sql
+DB         	 := $(DB_DIR)/pong.db
 DC           := docker compose
 
 # Detect lockfiles to prefer reproducible installs
@@ -89,3 +92,18 @@ db-tables:
 # Quick DB ping: show DB path + SQLite version.
 db-ping:
 	$(DC) exec backend sh -lc 'echo "DB=/app/db/pong.db"; sqlite3 /app/db/pong.db "select sqlite_version();"'
+
+# === Database: quick dev/test commands ===
+db-fill:
+	@sqlite3 "$(DB)" < "$(DB_FILL)" && echo "✔ Filled dev users from $(DB_FILL)"
+
+db-wipe-users:
+	@sqlite3 "$(DB)" "DELETE FROM users;" && echo "✔ Wiped users table"
+
+db-show-users:
+	@sqlite3 -header -csv "$(DB)" "SELECT id,username,userStatus,isDeleted FROM users LIMIT 10;"
+
+db-count:
+	@sqlite3 "$(DB)" "SELECT COUNT(*) AS users FROM users;"
+
+# === end Database: quick dev/test commands ===

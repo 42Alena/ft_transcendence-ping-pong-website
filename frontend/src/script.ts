@@ -186,6 +186,9 @@ document.addEventListener("keyup", (event) => {
 
 //functions
 function startGame() : void {
+	//(Alena): added next line to silent:src/script.ts:189:2 - error TS2322: Type 'Timeout' is not assignable to type 'number'
+	
+	 //@ts-ignore
 	intervalId = setInterval(draw, 20);
 }
 
