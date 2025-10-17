@@ -43,11 +43,11 @@ function addBubble(role : string, content : string)
 }
 
 function dispalyConversationHistory(id : string, list : Chat[]) {
+	bubbleDiv.innerHTML = "";
 	for (let step = 0; step < list.length; step++)
 	{
 		if (list[step].id == id)
 		{
-			console.log(`id: ${list[step].id}`);
 			let historyMex : { sender: boolean; receiver: boolean; content: string }[] = list[step].messages;
 			for (let step = 0; step < historyMex.length; step++)
 			{
