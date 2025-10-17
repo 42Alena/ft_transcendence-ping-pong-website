@@ -2,6 +2,7 @@ const listDmsDiv : any = document.getElementById("list-dms");
 const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
+let currChatId : string;
 
 class Chat {
 	id : string;
@@ -45,6 +46,7 @@ function addBubble(role : string, content : string)
 }
 
 function dispalyConversationHistory(id : string, list : Chat[]) {
+	currChatId = id;
 	bubbleDiv.innerHTML = "";
 	for (let step = 0; step < list.length; step++)
 	{
@@ -62,9 +64,24 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 	}
 }
 
+function storeNewMessage(id : string, mess : string)
+{
+	for (let step = 0; step < chatList.length; step++)
+	{
+		if (chatList[step].id == id)
+		{
+			let newMess : { sender: boolean; receiver: boolean; content: string } = {sender : true, receiver : false , content : mess};
+			chatList[step].messages.push(newMess);
+			break;
+		}
+	}
+}
+
 function captureInput() {
-		const mess = inputEl.value;
-		addBubble("recv", mess);
+	const mess = inputEl.value;
+	addBubble("recv", mess);
+	storeNewMessage(currChatId, mess);
+	inputEl.value = '';
 }
 
 let chatList : Chat[] = [];
