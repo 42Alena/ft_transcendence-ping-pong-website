@@ -1,36 +1,12 @@
+//HTML elements
 const listDmsDiv : any = document.getElementById("list-dms");
 const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
 const contactChatEl: any = document.getElementById("contact");
-
 let currChatId : string;
 
-class Chat {
-	id : string;
-	recipientName : string;
-	avatar : string;
-	messages : {sender : boolean; receiver: boolean; content : string}[]
-
-	constructor (id : string, rec : string, avatar : string, messages : {sender : boolean; receiver: boolean; content : string}[]) {
-		this.id = id;
-		this.recipientName = rec;
-		this.avatar = avatar;
-		this.messages = messages;
-	}
-}
-
-function addElement(name : string, id : string) {
-  
-	const newDiv = document.createElement("div");
-    const newContent = document.createTextNode(name);
-	newDiv.setAttribute('id', id);
-	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
-	newDiv.appendChild(newContent);
-    newDiv.className = "chat-left__list-dms-item border";
-    listDmsDiv.append(newDiv);
-}
-
+//display
 function addBubble(role : string, content : string)
 {
 	const newBubble = document.createElement("div");
@@ -71,6 +47,17 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 	}
 }
 
+function addElement(name : string, id : string) {
+  
+	const newDiv = document.createElement("div");
+    const newContent = document.createTextNode(name);
+	newDiv.setAttribute('id', id);
+	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
+	newDiv.appendChild(newContent);
+    newDiv.className = "chat-left__list-dms-item border";
+    listDmsDiv.append(newDiv);
+}
+
 function storeNewMessage(id : string, mess : string)
 {
 	for (let step = 0; step < chatList.length; step++)
@@ -91,6 +78,22 @@ function captureInput() {
 	inputEl.value = '';
 }
 
+
+//fake chat data structure - testing
+class Chat {
+	id : string;
+	recipientName : string;
+	avatar : string;
+	messages : {sender : boolean; receiver: boolean; content : string}[]
+
+	constructor (id : string, rec : string, avatar : string, messages : {sender : boolean; receiver: boolean; content : string}[]) {
+		this.id = id;
+		this.recipientName = rec;
+		this.avatar = avatar;
+		this.messages = messages;
+	}
+}
+
 let chatList : Chat[] = [];
 let messages1: { sender: boolean; receiver: boolean; content: string }[] = [];
 let message1 : { sender: boolean; receiver: boolean; content: string } = {sender : true, receiver : false , content : 'Hello there'};
@@ -109,10 +112,11 @@ messages2.push(message6);
 chatList.push(new Chat('1', "chat " + 1, "url", messages1));
 chatList.push(new Chat('2', "chat " + 2, "url", messages2));
 
+//create chat box in left sidebar
 for (let step = 0; step < chatList.length; step++) {
 	addElement(chatList[step].recipientName, chatList[step].id);
 }
-
+//events
 inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 	if (event.key == "Enter")
 	{
