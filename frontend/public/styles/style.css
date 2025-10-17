@@ -247,6 +247,7 @@
 				flex-grow: 1;
 				gap: 10px;
 				padding: 1em;
+				background-color: white;
 			}
 
 			.chat-right__bubble {
@@ -288,6 +289,7 @@
 				flex-grow: 1;
 				background-color: white;
 				padding: 0.5em;
+				align-content: center;
 
 			}
 
@@ -299,4 +301,6 @@
 				margin-left: auto;
 				align-content: center;
 				background-color: lightcyan;
+				padding: 1em;
+				cursor: pointer
 			}
