@@ -11,7 +11,9 @@
 		<header class="main-header max-width-container border">
 			<div class="main-header__grid max-width border">
 				<div class="main-header__logo border">
-					<img src="images/logo.png" alt="logo of the page">
+					<a href="#" onclick="displayPage('welcome')">
+						<img src="images/logo.png" alt="logo of the page">
+					</a>
 				</div>
 				<div class="main-header__profile_name border">
 					<h1>Hello, you!</h1>
@@ -25,7 +27,7 @@
 			<section class="main-section max-width border">
 					<nav class="nav border">
 							<ul>
-								<li><a href="#" onclick="displayChatPage()">
+								<li><a href="#" onclick="displayPage('chat')">
 									 <img src="images/chat.png" alt="chat page"></a></li>
 								<!-- <li><a href="#" onclick="display('game')">
 									<img src="images/play.png" alt="game page"></a></li></a></li>
@@ -34,6 +36,7 @@
 							</ul>
 					</nav>
 					<div class="board-container border" id="board">
+						<div class="welcome welcome-container" id="welcomePage">Welcome page</div>
 						<div class="chat chat-container" id="chatPage">
 							<div class="chat-left border">
 								<div class="chat-left__header border">
@@ -82,6 +85,7 @@
 			</div>
 		</footer>
 		<!-- insert scripts  here like this -->
+		<script src="dist/contentManager.js"></script>
 		<script src="dist/chat_page.js"></script>
 		<!-- <script src=""></script> -->
 	</body>
