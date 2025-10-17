@@ -2,6 +2,8 @@ const listDmsDiv : any = document.getElementById("list-dms");
 const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
+const contactChatEl: any = document.getElementById("contact");
+
 let currChatId : string;
 
 class Chat {
@@ -48,11 +50,16 @@ function addBubble(role : string, content : string)
 function dispalyConversationHistory(id : string, list : Chat[]) {
 	currChatId = id;
 	bubbleDiv.innerHTML = "";
+	contactChatEl.innerHTML = "";
 	for (let step = 0; step < list.length; step++)
 	{
 		if (list[step].id == id)
 		{
 			let historyMex : { sender: boolean; receiver: boolean; content: string }[] = list[step].messages;
+			const newHeaderContact = document.createElement("h2");
+			const newContent = document.createTextNode(list[step].recipientName);
+			newHeaderContact.append(newContent);
+			contactChatEl.appendChild(newHeaderContact);
 			for (let step = 0; step < historyMex.length; step++)
 			{
 				if (historyMex[step].receiver == true)
