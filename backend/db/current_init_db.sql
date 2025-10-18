@@ -14,8 +14,11 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT UNIQUE NOT NULL,                  -- User.name (display name for login/profile)
   passwordHash TEXT NOT NULL,                     -- hashed password stored securely by backend
   avatarUrl TEXT,                                 -- optional user image (used in User.avatarUrl)
-  userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
-    CHECK (userStatus IN ('online', 'offline')),
+  -- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+  -- userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
+  --   CHECK (userStatus IN ('online', 'offline')),
+  -- add last activity date/time
+  -- add user created timestamp
   isDeleted INTEGER NOT NULL DEFAULT 0            -- GDPR deletion flag (used in account anonymization)
 );
 
@@ -36,6 +39,7 @@ CREATE TABLE IF NOT EXISTS messages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,                         -- unique message ID (used by Chat)
   type TEXT NOT NULL CHECK (type IN                             -- message category: from Types.MessageType
     ('PublicMsg','PrivateMsg','PrivateGameInviteMsg','TournamentMsg')),
+  -- add time of msg send
   senderId TEXT NOT NULL,                                       -- UserId of sender (Chat.checkPrivateSender)
   receiverId TEXT NOT NULL,                                     -- UserId or 'all' (Chat.checkPrivateReceiver)
   content TEXT NOT NULL                                         -- message body (Chat.send*Message methods)
