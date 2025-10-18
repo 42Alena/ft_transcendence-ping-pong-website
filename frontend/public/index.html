@@ -6,59 +6,14 @@
 		<title>Pong</title>
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/style.css">
-		<style>
-			
-			/* MAIN BOARD LAYOUT */
-			.main-section {
-				display: grid;
-				grid-template-rows: min-content 1fr;
-				background-color: white;
-				/* gap: 10px; */
-
-			}
-
-			.nav {
-				display: grid;
-				grid-template-columns: 1fr;
-			}
-
-			.nav ul {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-
-			.nav li {
-				text-align: center;
-				padding: 4px 0;
-			}
-
-			@media (width >= 600px) {
-				.main-section {
-					grid-template-columns: 70px 1fr; /*min-content when correct icon size*/
-					grid-template-rows: 1fr;
-					gap: 5px;
-				}
-
-				.nav ul {
-					flex-direction: column;
-					justify-content: flex-start;
-					padding: 10px;
-				}
-
-				.nav li {
-					padding: 4px;
-					line-height: 1;
-				}
-
-			}
-		</style>
 	</head>
 	<body>
 		<header class="main-header max-width-container border">
 			<div class="main-header__grid max-width border">
 				<div class="main-header__logo border">
-					<img src="images/logo.png" alt="logo of the page">
+					<a href="#" onclick="displayPage('welcome')">
+						<img src="images/logo.png" alt="logo of the page">
+					</a>
 				</div>
 				<div class="main-header__profile_name border">
 					<h1>Hello, you!</h1>
@@ -72,15 +27,54 @@
 			<section class="main-section max-width border">
 					<nav class="nav border">
 							<ul>
-								<li><a href="#" onclick="display('chat')">
+								<li><a href="#" onclick="displayPage('chat')">
 									 <img src="images/chat.png" alt="chat page"></a></li>
-								<li><a href="#" onclick="display('game')">
+								<!-- <li><a href="#" onclick="display('game')">
 									<img src="images/play.png" alt="game page"></a></li></a></li>
 								<li><a href="#" onclick="display('leaderboard')">
-									<img src="images/leaderboard.png" alt="chat page"></a></li></a></li>
+									<img src="images/leaderboard.png" alt="chat page"></a></li></a></li> -->
 							</ul>
 					</nav>
-					<div class="board border" id="board">
+					<div class="board-container border" id="board">
+						<div class="welcome welcome-container" id="welcomePage">Welcome page</div>
+						<div class="chat chat-container" id="chatPage">
+							<div class="chat-left border">
+								<div class="chat-left__header border">
+									<div class="border">Messages</div>
+								</div>
+								<div class="chat-left__list border">
+									<div class="chat-left__list-search-bar border">search bar</div>
+									<div class="chat-left__list-dms border" id="list-dms">
+								</div>
+								</div>
+							</div>
+							<div class="chat-right border">
+								<div class="chat-right__header border">header
+									<div class="chat-right__header-contact border" id="contact">Contact</div>
+									<div class="chat-right__header-avatar border">
+										<img src="images/profile.png" alt="avatar profile">
+									</div>
+								</div>
+								<div class="chat-right__list border">
+									<div class="chat-right__box border">
+										<!-- <div class="chat-right__stamp border">stamp</div> -->
+										<div class="chat-right__bubble border" id="bubble">Click on one of the chats to see the conversation
+										</div>
+									</div>
+									<div class="chat-right__textArea border">
+										<div class="chat-right__textArea-input border">
+											<div class="chat-right__textAreas-input-text border" id="input">
+												<input
+												id="text-box"
+												type="text" class="chat-right__textAreas-input-text border"
+												placeholder="Send message">
+											</div>
+										</div>
+										<div class="chat-right__textArea-submitIcon border" onclick="captureInput()">Send</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 			</section>
 		</main>
@@ -91,6 +85,9 @@
 			</div>
 		</footer>
 		<!-- insert scripts  here like this -->
+		<!-- (Sveva): added these two scripts 
+		<script src="dist/contentManager.js"></script>
+		<script src="dist/chatDisplay.js"></script>-->
 		<script src="dist/test.js"></script>
 		<script src="dist/user.js"></script>
 		<script src="dist/chat.js"></script>
