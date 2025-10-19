@@ -1,37 +1,66 @@
-
 # TEMPLATE FOR PULLREQUESTS
 
-# IDEAS:TODO:
+________NEW_________________________________
 
-## ALL:
+# IDEAS:
+
+# TODO:
+
+# ____ DONE:
+
+## DB
+## BACKEND
+## FRONTEND
+### Makefile 
+
+### ======    OLD PULLREQUESTS   ================================================================
+
+
+_________________________________________
+# IDEAS:
+	make rebuild db after db change
+	make db save in separate file, then easier rebuild after change
+	add to .sh remove and adddb(recreate)
+	9done, need to change?)make autofill db from .csv to db for tests
+# TODO:
+
+- user, gdpr
+
+	`DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
+
+	POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
+
+	registration
+	login. After will return generated secret session acces token/string
+	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
+	update profile/ change pass(check subject)  put method
+	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
+	
+# ____ DONE:
+
 ## DB
 ## README
-## Backend
-## Frontend  make frontend
-### dockercompose
+		made changes in structure and corrected current status
+## BACKEND
+## FRONTEND 
+
 ### Makefile 
-### .gitignore
-DONE:
-_________________________________________
-for pullrequests:
-TODO:
-make rebuild db after db change
-make db save in separate file, then easier rebuild after change
-add to .sh remove and adddb(recreate)
-make autofill db from .csv to db for tests
-
-In progress:
+	Command `make` to start whole project 
 
 
+##TODO:
 
+
+### In progress:
+
+
+### ======    OLD PULLREQUESTS   ================================================================
 
 DONE:
 ## Links helpfull:
 	https://knexjs.org/guide/query-builder.html#knex
 ## DB
 		- add autofill db for test test_fill_users_dev.sql (tmp, fill users, need for dev)
-
-## README
 ## Backend
 	added CORS to fastify :
 			 npm i @fastify/cors --save

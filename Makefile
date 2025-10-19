@@ -1,4 +1,4 @@
-.PHONY: setup check-tools frontend backend db backend-tests \
+.PHONY: all setup check-tools frontend backend db backend-tests \
         up down logs reset-db ps rebuild-backend db-tables db-ping\
 		 db-fill db-wipe-users db-show-users db-count
 SHELL := /bin/bash
@@ -13,6 +13,9 @@ DC           := docker compose
 # Detect lockfiles to prefer reproducible installs
 FRONT_LOCK := $(FRONTEND_DIR)/package-lock.json
 BACK_LOCK  := $(BACKEND_DIR)/package-lock.json
+
+#  builds + runs in detached mode
+all: up 
 
 # Install deps and initialize local SQLite DB (non-Docker flow)
 setup: check-tools
