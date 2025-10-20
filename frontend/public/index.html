@@ -7,6 +7,31 @@
 		<link rel="stylesheet" href="styles/reset.css">
 		<link rel="stylesheet" href="styles/style.css">
 	</head>
+	<style>
+		.profile {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				display: none;
+				background: paleturquoise;
+			}
+
+		.profile button {
+				margin: 0 6px;
+				background-color: black;
+				border: 3px lightgray solid;
+				border-radius: 10px;
+				color: lightgrey;
+				font-size: 28px;
+				font-weight: 700;
+				text-transform: uppercase;
+				padding: 4px 10px;
+				width: 250px;
+				outline: 0;
+			}
+	</style>
 	<body>
 		<header class="main-header max-width-container border">
 			<div class="main-header__grid max-width border">
@@ -19,7 +44,8 @@
 					<h1>Hello, you!</h1>
 				</div>
 				<div class="main-header__profile border">
-					<img src="images/profile.png" alt="avatar profile">
+					<a href="#" onclick="displayPage('profile')">
+					<img src="images/profile.png" alt="avatar profile"></a>
 				</div>
         	</div>
 		</header>
@@ -75,6 +101,12 @@
 								</div>
 							</div>
 						</div>
+						<div class="profile profile-container" id="profilePage">
+							<div class="login-reg-choice" id="pageChoiceForm">
+								<button type="button" id="registerButton" onclick="setProfilePage(this.id)">Register</button>
+								<button type="button" id="loginButton" onclick="setProfilePage(this.id)">Login</button>
+							</div>
+						</div>
 					</div>
 			</section>
 		</main>
@@ -85,12 +117,10 @@
 			</div>
 		</footer>
 		<!-- insert scripts  here like this -->
-		<!-- (Sveva): added these two scripts 
 		<script src="dist/contentManager.js"></script>
-		<script src="dist/chatDisplay.js"></script>-->
-		<script src="dist/test.js"></script>
-		<script src="dist/user.js"></script>
-		<script src="dist/chat.js"></script>
+		<script src="dist/chatDisplay.js"></script>
+		<!-- <script src="dist/user.js"></script>
+		<script src="dist/chat.js"></script> -->
 		<!-- <script src=""></script> -->
 	</body>
 </html>
