@@ -16,7 +16,7 @@
 			}
 
 			.gamePage {
-				position: absolute;
+				position: relative;
 				width: 100%;
 				height: 100%;
 				align-items: center;
@@ -57,6 +57,7 @@
 				height: 80%;
 				display: block; /*to change in none after testing*/
 				background-color: black;
+				/* aspect-ratio: 16/9; */
 				image-rendering: pixelated;
 			}
 
@@ -105,8 +106,8 @@
 					</nav>
 					<div class="board border" id="board">
 						<!-- releated to game -->
-						<div class="gamePage" id="gamePage">
-							<canvas class="gameCanva" id="gameCanva"></canvas>
+						<div class="gamePage border" id="gamePage">
+							<canvas class="gameCanva border" id="gameCanva" width="1024" height="768"></canvas>
 							<div class="playerType" id="playerType" style="display: none;">
 								<button type="button" id="guestButton" onclick="setSettingPlayerType(this.id)">Guest</button>
 								<button type="button" id="registeredButton" onclick="setSettingPlayerType(this.id)">Registered</button>

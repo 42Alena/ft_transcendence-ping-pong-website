@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <!-- <link rel="stylesheet" href="styles/reset.css">
+	<link rel="stylesheet" href="styles/style.css"> -->
+    <style>
+
+        body {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gamePage {
+            position: relative;
+            display: flex;
+            width: 700px;
+            height: 700px;
+            align-items: center;
+            justify-content: center;
+            background-color: green;
+        }
+        .gameCanva {
+            position: absolute;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="gamePage border" id="gamePage">
+        <canvas class="gameCanva border" id="gameCanva" width="600" height="600"></canvas>
+        <!-- <div class="playerType" id="playerType" style="display: none;">
+            <button type="button" id="guestButton" onclick="setSettingPlayerType(this.id)">Guest</button>
+            <button type="button" id="registeredButton" onclick="setSettingPlayerType(this.id)">Registered</button>
+        </div>
+        <div class="playerMode" id="playerMode">
+            <button type="button" id="onePButton" onclick="setSettingPlayerMode(this.id)">One Player</button>
+            <button type="button" id="twoPButton" onclick="setSettingPlayerMode(this.id)">Two Players</button>
+        </div>
+        <div class="matchType" id="matchType">
+            <button type="button" id="singleMButton" onclick="setSettingMatchType(this.id)">Single Game</button>
+            <button type="button" id="TourMButton" onclick="setSettingMatchType(this.id)">Tournament</button>
+        </div> -->
+    </div>   
+    <script src="dist/game.js"></script>
+</body>
+</html>
