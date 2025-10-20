@@ -8,14 +8,15 @@
 
 
 
-import *  as Types from '../types/types';
+import type *  as Types from '../types/types';
 import * as Validate from '../utils/validators';
 // (Luis importing the DTOs to ensure consistency between class and DTOs)
 import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO'; 
 
 export class User {
 
-	name: string;
+	username: string;
+	nickname: string;
 	readonly id: string; 	// set in constructor, read anywhere in programm, not changeable
 	avatarUrl: Types.AvatarUrl; //for .jpg/.phg (later)
 	userStatus: Types.UserStatus;
@@ -40,7 +41,8 @@ export class User {
 		Validate.ensureNonEmptyString(name, "name");
 		Validate.ensureNonEmptyString(id, "name");
 
-		this.name = name;
+		this.username = name;
+		this.nickname = name;
 		this.id = id;
 		this.avatarUrl = "";
 		this.userStatus = "online";

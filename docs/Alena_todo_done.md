@@ -12,6 +12,7 @@ ________NEW_________________________________
 ## BACKEND
 ## FRONTEND
 ### Makefile 
+## LINKS/HELP: 
 
 ### ======    OLD PULLREQUESTS   ================================================================
 
@@ -23,6 +24,9 @@ _________________________________________
 	add to .sh remove and adddb(recreate)
 	9done, need to change?)make autofill db from .csv to db for tests
 # TODO:
+- need ft session key encrypt
+- need ft pass encryption
+- use in routes with shemas
 
 - user, gdpr
 
@@ -36,19 +40,54 @@ _________________________________________
 	update profile/ change pass(check subject)  put method
 	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 	
+	Registration
+	- add crypto hash password https://nodejs.org/api/crypto.
+
+	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 # ____ DONE:
 
 ## DB
+## NPM
+	- added bcrypt for hash passwords: npm install --save bcryptjs
 ## README
 		made changes in structure and corrected current status
 ## BACKEND
+	- add bcrypt to crypto hash ID: https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
+	- add function for create and check hash password  with bcrypt
+
 ## FRONTEND 
 
 ### Makefile 
 	Command `make` to start whole project 
 
+## LINKS/HELP: 
+https://fastify.dev/docs/latest/Reference/Routes/
+https://json-schema.org/overview/what-is-jsonschema
+https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/
+https://en.wikipedia.org/wiki/Query_string
+https://json-schema.org/understanding-json-schema/about
 
-##TODO:
+## Tests:
+https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
+TRANSCENDENCE_public🕒12:16😸 node                                             
+Welcome to Node.js v24.4.1.
+Type ".help" for more information.
+> const crypto = require('crypto')
+undefined
+> const pass = '123&%&%&asdasdf'
+undefined
+> const hasher = crypto.createHash('sha512')
+undefined
+> hasher.update(pass)
+Hash {
+  _options: undefined,
+  Symbol(kHandle): Hash {},
+  Symbol(kState): { Symbol(kFinalized): false }
+}
+> hasher.digest('hex')
+> crypto.createHash('sha256').update("yarikk").digest('hex')
+'b6dc72e1e2414ffc9c188c4876763aaa37a6a4351d00d3be2b2aff3915dc1268'
+> 
 
 
 ### In progress:

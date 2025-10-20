@@ -1,9 +1,12 @@
 import type { FastifyInstance } from 'fastify';
 import { UserManager } from '../lib/Class/UserManager';
+import type *  as Types from '../lib/types/types';
+import type { UserId } from '../lib/types/types';
+
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
 
-
+type GetUserParams = { userId: Types.UserId };
 /* 
 /users (collection, public, read-only for now)
 
@@ -23,14 +26,19 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		return users.map((user) => user.profile());
 	})
 
-	fastify.get("/users/:userId", async (req, res) => {
-		const id = (req.params as any).userId;
-		const user = await userManager.getUserById(id);
+	fastify.get<{Params: GetUserParams }>(
+		"/users/:userId",
+		async (request, reply) => {
+		const {userId} = request.params;   //params: validates the params(https://fastify.dev/docs/latest/Reference/Routes/)
+		// const id = (request.params as any).userId;
+		const user = await userManager.getUserById(userId);
 		if(!user){
-			return res.status(404);
+			return reply.code(404).send({ error: "User not found" });
 		}
 		return user.profile();
 	})
+
+	fastify.get
 
 	/* 
 	TODO:
@@ -43,8 +51,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	// can use cookies to store access tokens:
 	// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
 
-	// encrypt password
-	> crypto.createHash('sha256').update(pass).digest('hex')
+
 
 	fastify.post("/login", async (req) => {
 	   // check usernmae and rawPassword
