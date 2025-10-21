@@ -10,18 +10,24 @@
 
 import type *  as Types from '../types/types';
 import * as Validate from '../utils/validators';
+
+/* 
+(Alena) Declined DTO suggestion — explanation in UserDto.ts
+(Luis) Suggestion to improve the profile method with DTOs
+...
+*/
 // (Luis importing the DTOs to ensure consistency between class and DTOs)
-import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
+// import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
 
-export class User {
+export class User implements Types.User {
 
-	readonly id: Types.UserId; 	// set in constructor, read anywhere in programm, not changeable
-	username:  Types.Username;
+	readonly id: Types.UserId; 				// set in constructor, read anywhere in programm, not changeable
+	username: Types.Username;
 	displayName: Types.DisplayName;
-	avatarUrl: Types.AvatarUrl; 	//for .jpg/.phg (later)
-	wins:	
-	losses:	
-	lastSeenAt:                      //changed from userStatus
+	avatarUrl: Types.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
+	wins: number;
+	losses: number;
+	lastSeenAt: Date | null;                    //changed from userStatus
 
 
 
@@ -32,53 +38,53 @@ export class User {
 	toDb(): Record<string, any> {
 		return {
 			id: this.id,
-			username: this.usname,
+			username: this.username,
 		}
 	}
 
-	constructor(name: string, id: string) {
+	constructor(init: {
+		id: Types.UserId;
+		username: Types.Username;
+		displayName: Types.DisplayName;
+		avatarUrl?: Types.AvatarUrl | null;
+		wins?: number;
+		losses?: number;
+		lastSeenAt?: Date | null;
+	}) {
 
-		Validate.ensureNonEmptyString(name, "name");
-		Validate.ensureNonEmptyString(id, "name");
-
-		this.username = name;
-		this.nickname = name;
-		this.id = id;
-		this.avatarUrl = "";
-		this.userStatus = "online";
-		this.friendsIds = new Set();
-		this.blockedIds = new Set();
-		this.matchHistory = [];
+		this.id = init.id;
+		this.username = init.username;
+		this.displayName = init.displayName;
+		this.avatarUrl = init.avatarUrl ?? null;
+		this.wins = init.wins ?? 0;
+		this.losses = init.losses ?? 0;
+		this.lastSeenAt = init.lastSeenAt ?? null;
 	}
 
-	/* return a clean object for frontend (id, name, wins, losses, friends, online)
+	//for test only
+	static fromName(id: Types.UserId, name: string) { return new User({ id, username: name, displayName: name }); }
+
+	/* return a clean object for frontend (id, name, wins, losses,  online)
 	This is needed for /user/register and /user/profile
 	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
  */
-	profile() {
+	profilePublic(): Types.UserPublic {
 		return {
-			username: this.username,
 			id: this.id,
-			bla: 'blabla',
-
-			//TODO: uncomment latter. Dont need now
-			// avatarUrl: this.avatarUrl,
-			// userStatus: this.userStatus,  
-			// friends: [...this.friendsIds],
-			// blocked: [...this.blockedIds],
-			// wins:	this.resultWon,
-			// lost:	this.resultLost,
-			// matchHistory: this.matchHistory  
-
-		}
+			displayName: this.displayName,
+			avatarUrl: this.avatarUrl,
+			wins: this.wins,
+			losses: this.losses,
+			lastSeenAt: this.lastSeenAt,
+		};
+	}
+	
+	profileBasic(): Types.UserBasic {
+		return { id: this.id, displayName: this.displayName };
 	}
 
-	/* 
-(Alena) Declined DTO suggestion — explanation in UserDto.ts
- (Luis) Suggestion to improve the profile method with DTOs
-...
-	*/
+
 
 	//________Game
 	addMatch(opponentId: Types.UserId, result: Types.GameResult) {

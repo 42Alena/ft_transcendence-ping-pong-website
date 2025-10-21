@@ -20,7 +20,20 @@ export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
 
+export type User = {
+	readonly id: UserId;
+	username: Username;
+	displayName: DisplayName;
+	avatarUrl: AvatarUrl | null;
+	wins: number;
+	losses: number;
+	lastSeenAt: Date | null;
+  };
 
+  // User { id: UserId; displayName: DisplayName }
+  export type UserBasic = Pick<User, 'id' | 'displayName'>; 
+//    User without the private login field
+  export type UserPublic = Omit<User, 'username'>;
 
 export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash  = string;        

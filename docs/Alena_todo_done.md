@@ -26,7 +26,9 @@ _________________________________________
 # TODO:
 - USER: 
 	-lastSeenAt( for online/ offline)
-	
+- ROUTES/USer
+	- add data validation (deleted from User constructor)
+
 - Tournament:
 	- unique alias(insttead displayname) for tournament only, not globally
 - use in routes with shemas
@@ -65,9 +67,19 @@ _________________________________________
 		- added displayName, according UserMng module
 		- moved  from classe User  friends/blocks/match history in separate tables/services.
 		- userStatus changed to lastSeenAt( will do later for online/ offline)
+		- fix(user): align User fields with spec (displayName, wins/losses, lastSeenAt)
+		-	updated costructor with current user fields
+		-added userprofilePublic userProfileBasic 
 
 ### class UserManager: 
 	- moved  from classe User  friends/blocks/match history in separate tables/services.
+
+<!-- ### /services (new)
+	/Classes/User → lean entity + tiny helpers (no persistence, no cross-user logic).
+
+	/services/* → business rules per feature (friends, blocks, matches, presence).
+
+	/repositories/* → data access boundary (you can start in-memory and switch to DB/SQLite -->
 
 ### /DTO
 	- declined /dto DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
