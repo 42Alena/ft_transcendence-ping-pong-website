@@ -25,8 +25,8 @@ export class User implements Types.User {
 	username: Types.Username;
 	displayName: Types.DisplayName;
 	avatarUrl: Types.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
-	wins: number;
-	losses: number;
+	// wins: number;
+	// losses: number;
 	lastSeenAt: Date | null;                    //changed from userStatus
 
 
@@ -47,8 +47,8 @@ export class User implements Types.User {
 		username: Types.Username;
 		displayName: Types.DisplayName;
 		avatarUrl?: Types.AvatarUrl | null;
-		wins?: number;
-		losses?: number;
+		// wins?: number;
+		// losses?: number;
 		lastSeenAt?: Date | null;
 	}) {
 
@@ -56,13 +56,11 @@ export class User implements Types.User {
 		this.username = init.username;
 		this.displayName = init.displayName;
 		this.avatarUrl = init.avatarUrl ?? null;
-		this.wins = init.wins ?? 0;
-		this.losses = init.losses ?? 0;
+		// this.wins = init.wins ?? 0;
+		// this.losses = init.losses ?? 0;
 		this.lastSeenAt = init.lastSeenAt ?? null;
 	}
 
-	//for test only
-	static fromName(id: Types.UserId, name: string) { return new User({ id, username: name, displayName: name }); }
 
 	/* return a clean object for frontend (id, name, wins, losses,  online)
 	This is needed for /user/register and /user/profile
@@ -74,83 +72,15 @@ export class User implements Types.User {
 			id: this.id,
 			displayName: this.displayName,
 			avatarUrl: this.avatarUrl,
-			wins: this.wins,
-			losses: this.losses,
+			// wins: this.wins,
+			// losses: this.losses,
 			lastSeenAt: this.lastSeenAt,
 		};
 	}
-	
+
 	profileBasic(): Types.UserBasic {
 		return { id: this.id, displayName: this.displayName };
 	}
 
-
-
-	//________Game
-	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
-		this.matchHistory.push({
-			opponentId: opponentId,
-			date: new Date(),
-			result: result
-		});
-	}
-
-	get resultWon(): number {
-		const wins = this.matchHistory.filter(match => match.result == "won");
-		return wins.length;
-	}
-
-	get resultLost(): number {
-		const lose = this.matchHistory.filter(match => match.result == "lost");
-		return lose.length;
-	}
-
-
-	//____Status: online | ofline
-
-	setStatus(status: Types.UserStatus) {
-		this.userStatus = status;
-	}
-
-	//_______ Friends____________
-
-	addFriend(userId: Types.UserId) {
-
-		this.friendsIds.add(userId);
-	}
-
-	removeFriend(userId: Types.UserId) {
-		this.friendsIds.delete(userId);
-	}
-
-
-	isFriend(userId: Types.UserId): boolean {
-		return this.friendsIds.has(userId);
-	}
-
-	//_______ Un/Blocked____________
-
-	blockId(userId: Types.UserId) {
-
-		this.blockedIds.add(userId);
-	}
-
-	unblockId(userId: Types.UserId) {
-		this.blockedIds.delete(userId);
-	}
-
-
-
-	isBlocked(userId: Types.UserId): boolean {
-		return this.blockedIds.has(userId);
-	}
-
-	ensureNotBlockedByOrThrow(userId: Types.UserId): void {
-		if (this.isBlocked(userId)) {
-			throw new Error(`User ${userId} is blocked by ${this.id}`);
-		}
-	}
-
-	// TOD get UserProfile
 
 }

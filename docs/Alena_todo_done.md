@@ -35,6 +35,13 @@ _________________________________________
 
 - user, gdpr
 
+  -- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+  -- userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
+  --   CHECK (userStatus IN ('online', 'offline')),
+  -- add last activity date/time
+  -- add user created timestamp
+
+
 	`DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
 
 	POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
@@ -52,6 +59,9 @@ _________________________________________
 # ____ DONE:
 
 ## DB
+	- updated table user for curent User class
+	- added tables for  friends, blocked
+
 ## NPM
 	- added bcrypt for hash passwords: npm install --save bcryptjs
 ## README

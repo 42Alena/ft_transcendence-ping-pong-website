@@ -40,6 +40,7 @@ frontend:
 	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
 
 db: check-tools
+	@rm $(DB_DIR)/pong.db*
 	@chmod +x "$(DB_DIR)/setup_db.sh"
 	cd "$(DB_DIR)" && ./setup_db.sh
 

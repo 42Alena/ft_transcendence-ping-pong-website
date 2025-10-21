@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { UserManager } from '../lib/Class/UserManager';
+import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/types';
 import type { UserId } from '../lib/types/types';
 
@@ -21,22 +21,22 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		// const usr1 = new User('usr' + Math.random(), generateId())
 		// await userManager.saveUser(usr1)
 		//end test created user
-		
+
 		const users = await userManager.getAllUsers();
 		return users.map((user) => user.profile());
 	})
 
-	fastify.get<{Params: GetUserParams }>(
+	fastify.get<{ Params: GetUserParams }>(
 		"/users/:userId",
 		async (request, reply) => {
-		const {userId} = request.params;   //params: validates the params(https://fastify.dev/docs/latest/Reference/Routes/)
-		// const id = (request.params as any).userId;
-		const user = await userManager.getUserById(userId);
-		if(!user){
-			return reply.code(404).send({ error: "User not found" });
-		}
-		return user.profile();
-	})
+			const { userId } = request.params;   //params: validates the params(https://fastify.dev/docs/latest/Reference/Routes/)
+			// const id = (request.params as any).userId;
+			const user = await userManager.getUserById(userId);
+			if (!user) {
+				return reply.code(404).send({ error: "User not found" });
+			}
+			return user.profile();
+		})
 
 	fastify.get
 
@@ -55,7 +55,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	fastify.post("/login", async (req) => {
 	   // check usernmae and rawPassword
-	   	// check if user with (username, encryptPssword(rawPassword))
+			  // check if user with (username, encryptPssword(rawPassword))
 	   // generate acces token
 	   // save acccess token  : set expiry = add Date.now() + 7d
 	   // return access token
@@ -71,7 +71,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	   // OPTIONAL goal: create access token right away and return it
 	   // return access token optional
-       // 
+	   // 
 	})
 
 how frontend will work with access tokens:
@@ -79,7 +79,7 @@ how frontend will work with access tokens:
 /// frontend will have to store access token somehwere.. sessionStorage/localStorage/indexedDb
 fetch('/users/me', {
   headers: {
-    Authorization: `Bearer: ${accessToken}`
+	Authorization: `Bearer: ${accessToken}`
   }
 })
 //2 cookies

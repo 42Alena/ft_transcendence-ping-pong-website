@@ -18,7 +18,11 @@ export class UserManager {
 
 	//___________ID__________
 	async getUserById(userId: Types.UserId): Promise<User | null> {
-		return this.dbTable.where({ id: userId }).select() //alena: try connect to DB
+		const row = await this.dbTable.where({ id: userId }).select() //alena: try connect to DB
+		if (!row) {
+			return null;
+		}
+		return User.fromDb(row)
 		// return this.users.get(userId) ?? null; //(alena)before try
 	}
 
@@ -109,8 +113,79 @@ export class UserManager {
 		return found;
 	}
 
+/* 
+from USER class. Need adapt
 
 
+	//________Game
+	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
+		this.matchHistory.push({
+			opponentId: opponentId,
+			date: new Date(),
+			result: result
+		});
+	}
+
+	get resultWon(): number {
+		const wins = this.matchHistory.filter(match => match.result == "won");
+		return wins.length;
+	}
+
+	get resultLost(): number {
+		const lose = this.matchHistory.filter(match => match.result == "lost");
+		return lose.length;
+	}
+
+
+	//____Status: online | ofline
+
+	setStatus(status: Types.UserStatus) {
+		this.userStatus = status;
+	}
+
+	//_______ Friends____________
+
+	addFriend(userId: Types.UserId) {
+
+		this.friendsIds.add(userId);
+	}
+
+	removeFriend(userId: Types.UserId) {
+		this.friendsIds.delete(userId);
+	}
+
+
+	isFriend(userId: Types.UserId): boolean {
+		return this.friendsIds.has(userId);
+	}
+
+	//_______ Un/Blocked____________
+
+	blockId(userId: Types.UserId) {
+
+		this.blockedIds.add(userId);
+	}
+
+	unblockId(userId: Types.UserId) {
+		this.blockedIds.delete(userId);
+	}
+
+
+
+	isBlocked(userId: Types.UserId): boolean {
+		return this.blockedIds.has(userId);
+	}
+
+	ensureNotBlockedByOrThrow(userId: Types.UserId): void {
+		if (this.isBlocked(userId)) {
+			throw new Error(`User ${userId} is blocked by ${this.id}`);
+		}
+	}
+
+	// TOD get UserProfile
+
+
+*/
 }
 
 /* 

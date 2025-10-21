@@ -1,48 +1,62 @@
 -- ============================================================
--- ft_transcendence — Active Database Schema
 -- (Alena) Final working schema aligned with TypeScript classes
 -- ============================================================
 
 PRAGMA foreign_keys = ON;      -- enable cascade deletes and relational integrity
 PRAGMA journal_mode = WAL;     -- improves performance for concurrent reads/writes
 
--- ============================================
--- USERS TABLE
--- ============================================
+-- =========================
+-- USERS  (User Management)
+-- =========================
 CREATE TABLE IF NOT EXISTS users (
-  id TEXT PRIMARY KEY,                            -- unique string generated in User class (User.id)
-  username TEXT UNIQUE NOT NULL,                  -- User.name (display name for login/profile)
-  passwordHash TEXT NOT NULL,                     -- hashed password stored securely by backend
-  avatarUrl TEXT,                                 -- optional user image (used in User.avatarUrl)
-  -- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-  -- userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
-  --   CHECK (userStatus IN ('online', 'offline')),
-  -- add last activity date/time
-  -- add user created timestamp
-  isDeleted INTEGER NOT NULL DEFAULT 0            -- GDPR deletion flag (used in account anonymization)
+  id            TEXT PRIMARY KEY,                  -- your Types.UserId
+  username      TEXT UNIQUE NOT NULL,              -- login handle
+  passwordHash  TEXT NOT NULL,                     -- hashed password
+  displayName   TEXT UNIQUE NOT NULL,              -- unique public name
+  avatarUrl     TEXT,                              -- optional
+  lastSeenAt    INTEGER,                           -- epoch; derive "online"
+  deletedAt     INTEGER NOT NULL DEFAULT 0,        -- GDPR soft-delete flag
+  createdAt     INTEGER NOT NULL DEFAULT (unixepoch()),
+  updatedAt     INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
--- ============================================
--- RELATIONS TABLE (friends + blocks)
--- ============================================
-CREATE TABLE IF NOT EXISTS relations (
-  userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,  -- main user performing the action
-  otherId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, -- target user (friend or blocked)
-  relation TEXT NOT NULL CHECK (relation IN ('friend','block')), -- 'friend' or 'block' type (UserManager.addFriend / blockId)
-  PRIMARY KEY (userId, otherId, relation)                        -- ensures unique relation pair
+-- =========================
+-- FRIENDS  (friend list)
+-- =========================
+CREATE TABLE IF NOT EXISTS friendships (
+  userId    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  friendId  TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
+  PRIMARY KEY (userId, friendId),
+  CHECK (userId <> friendId)
 );
 
--- ============================================
--- MESSAGES TABLE (live chat)
--- ============================================
+-- =========================
+-- BLOCKS  (block list)
+-- =========================
+CREATE TABLE IF NOT EXISTS blocks (
+  userId     TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  blockedId  TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  createdAt  INTEGER NOT NULL DEFAULT (unixepoch()),
+  PRIMARY KEY (userId, blockedId),
+  CHECK (userId <> blockedId)
+);
+
+-- =========================
+-- CHAT  (public + DMs + invites)
+-- Store everything in one table; “invite to game” is a message
+-- with type='PrivateGameInviteMsg' and optional JSON in meta.
+-- =========================
 CREATE TABLE IF NOT EXISTS messages (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,                         -- unique message ID (used by Chat)
-  type TEXT NOT NULL CHECK (type IN                             -- message category: from Types.MessageType
-    ('PublicMsg','PrivateMsg','PrivateGameInviteMsg','TournamentMsg')),
-  -- add time of msg send
-  senderId TEXT NOT NULL,                                       -- UserId of sender (Chat.checkPrivateSender)
-  receiverId TEXT NOT NULL,                                     -- UserId or 'all' (Chat.checkPrivateReceiver)
-  content TEXT NOT NULL                                         -- message body (Chat.send*Message methods)
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  type        TEXT NOT NULL CHECK (
+                 type IN ('PublicMsg','PrivateMsg','PrivateGameInviteMsg')
+               ),
+  senderId    TEXT NOT NULL,              -- users.id or a fixed SystemId string
+  receiverId  TEXT NOT NULL,              -- 'all' for public, or users.id for DM/invite
+  content     TEXT NOT NULL,              -- message text OR short invite note
+  meta        TEXT,                       -- JSON: { "mode":"classic", "speed":1.2, ... }
+  createdAt   INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
 -- ============================================
@@ -75,7 +89,7 @@ CREATE TABLE IF NOT EXISTS tournamentMatches (
   tournamentId INTEGER NOT NULL REFERENCES tournaments(id) ON DELETE CASCADE, -- link to tournament
   roundNumber INTEGER NOT NULL CHECK (roundNumber >= 1),        -- round index (1-based)
   player1Id TEXT REFERENCES users(id) ON DELETE SET NULL,       -- UserId of player 1 (nullable for alias-only)
-  player2Id TEXT REFERENCES users(id) ON DELETE SET NULL        -- UserId of player 2 (nullable for alias-only)
+  player2Id TEXT REFERENCES users(id) ON DELETE SET NULL,        -- UserId of player 2 (nullable for alias-only)
   -- winnerId is determined by scores
   player1Score INTEGER NOT NULL DEFAULT 0,                      -- score of player 1
   player2Score INTEGER NOT NULL DEFAULT 0                       -- score of player 2

@@ -1,7 +1,7 @@
 import assert from "assert";
-import { Chat } from "../src/lib/Class/Chat";
-import { User } from "../src/lib/Class/User";
-import { UserManager } from "../src/lib/Class/UserManager";
+import { Chat } from "../src/lib/services/Chat";
+import { User } from "../src/lib/services/User";
+import { UserManager } from "../src/lib/services/UserManager";
 import * as Types from "../src/lib/types/types";
 
 function runChatTests() {
