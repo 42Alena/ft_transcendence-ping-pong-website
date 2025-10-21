@@ -105,7 +105,7 @@ db-wipe-users:
 	@sqlite3 "$(DB)" "DELETE FROM users;" && echo "✔ Wiped users table"
 
 db-show-users:
-	@sqlite3 -header -csv "$(DB)" "SELECT id,username,userStatus,isDeleted FROM users LIMIT 10;"
+	@sqlite3 -header -csv "$(DB)" "SELECT id,username FROM users LIMIT 10;"
 
 db-count:
 	@sqlite3 "$(DB)" "SELECT COUNT(*) AS users FROM users;"

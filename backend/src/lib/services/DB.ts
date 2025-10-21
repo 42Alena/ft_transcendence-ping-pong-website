@@ -10,6 +10,7 @@ const config: Knex.Config = {
 	},
 };
 
+
 export const db = knex(config); // will always return obj to work with db
 
 export const getUser = (userId: string) => {

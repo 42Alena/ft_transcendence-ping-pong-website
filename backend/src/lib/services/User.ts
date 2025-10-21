@@ -73,7 +73,6 @@ This is needed for /user/register and /user/profile
 @Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 */
-
 toPublic(): Types.UserPublic {
 	return {
 		id: this.id,

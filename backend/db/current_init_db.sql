@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- =========================
--- FRIENDS  (friend list)
+-- FRIENDS  (User friend list)
 -- =========================
-CREATE TABLE IF NOT EXISTS friendships (
+CREATE TABLE IF NOT EXISTS friends (
   userId    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   friendId  TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS friendships (
 );
 
 -- =========================
--- BLOCKS  (block list)
+-- BLOCKS  (User block list)
 -- =========================
 CREATE TABLE IF NOT EXISTS blocks (
   userId     TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
