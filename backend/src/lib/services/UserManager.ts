@@ -9,10 +9,12 @@ export class UserManager {
 
 	dbTableUser: any
 	dbTableFriends: any
+	dbTableBlocks: any
 
 	constructor() {
 		this.dbTableUser = db<User>('users');
 		this.dbTableFriends = db('friends');
+		this.dbTableBlocks = db('blocks');
 	}
 
 
@@ -74,6 +76,35 @@ export class UserManager {
 
 	async isFriend(viewerId: Types.UserId, targetId: Types.UserId): Promise<boolean> {
 		const row = await this.dbTableFriends.where({ userId: viewerId, friendId: targetId }).first();
+
+		return !!row;
+	}
+
+		//_________________BLOCKED______________________
+
+	//blocked only on 1 site
+	async blockUser(userId: Types.UserId, blockedId: Types.UserId) {
+
+		if (userId === blockedId)
+			throw new Error(" userId and blockedId: must be different");
+
+
+		await this.dbTableBlocks
+			.insert({ userId, blockedId })
+			.onConflict(['userId', 'blockedId'])
+			.ignore();
+
+	}
+
+	async unblockUser(userId: Types.UserId, blockedId: Types.UserId): Promise<number> {
+
+		return await this.dbTableBlocks.where({ userId, blockedId }).del();
+
+	}
+
+	async isBlocked(viewerId: Types.UserId, targetId: Types.UserId): Promise<boolean> {
+
+		const row = await this.dbTableBlocks.where({ userId: viewerId, blockedId: targetId }).first();
 		return !!row;
 	}
 
@@ -85,31 +116,6 @@ export class UserManager {
 // setStatus(status: Types.UserStatus) {
 // 	this.userStatus = status;
 // }
-
-
-
-	
-
-// //_______ Un/Blocked____________
-
-// blockId(userId: Types.UserId) {
-
-// 	this.blockedIds.add(userId);
-// }
-
-// unblockId(userId: Types.UserId) {
-// 	this.blockedIds.delete(userId);
-// }
-
-
-
-// isBlocked(userId: Types.UserId): boolean {
-// 	return this.blockedIds.has(userId);
-// }
-
-
-
-
 
 
 
