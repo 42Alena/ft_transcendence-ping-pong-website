@@ -9,7 +9,7 @@ PRAGMA journal_mode = WAL;     -- improves performance for concurrent reads/writ
 -- USERS  (User Management)
 -- =========================
 CREATE TABLE IF NOT EXISTS users (
-  id            TEXT PRIMARY KEY,                  -- your Types.UserId
+  id            TEXT PRIMARY KEY,                  -- Types.UserId
   username      TEXT UNIQUE NOT NULL,              -- login handle
   passwordHash  TEXT NOT NULL,                     -- hashed password
   displayName   TEXT UNIQUE NOT NULL,              -- unique public name

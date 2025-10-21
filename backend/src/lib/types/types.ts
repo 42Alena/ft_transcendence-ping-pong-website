@@ -1,7 +1,6 @@
 /* 
 https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html
-
-this types can be used for all project
+INFO: this types can be used for all project
 
 Add as header at the top of the file:
 import *  from '../types/UserTypes';
@@ -20,23 +19,28 @@ export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
 
+// Domain (internal)
 export type User = {
 	readonly id: UserId;
 	username: Username;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl | null;
-	wins: number;
-	losses: number;
 	lastSeenAt: Date | null;
-  };
+};
 
-  // User { id: UserId; displayName: DisplayName }
-  export type UserBasic = Pick<User, 'id' | 'displayName'>; 
+
+// User { id: UserId; displayName: DisplayName }
+export type UserBasic = Pick<User, 'id' | 'displayName'>;
+
 //    User without the private login field
-  export type UserPublic = Omit<User, 'username'>;
+export type UserPublic = {
+	id: UserId;
+	displayName: DisplayName;
+	avatarUrl: AvatarUrl | null;
+};
 
 export type PasswordPlain = string;    //user input, not stored/sended
-export type PasswordHash  = string;        
+export type PasswordHash = string;
 
 
 export type MatchResult = {
@@ -44,6 +48,7 @@ export type MatchResult = {
 	date: Date;
 	result: GameResult;
 };
+
 
 //_____________CHAT___________
 export const SYSTEM_ID = "ThisIsSystemID" as const;
@@ -54,27 +59,27 @@ export type Message = string;
 
 
 export type MessageType =
-| 'PublicMsg'      
-| 'PrivateMsg'       
-| 'PrivateGameInviteMsg'   
-| 'TournamentMsg';   
+	| 'PublicMsg'
+	| 'PrivateMsg'
+	| 'PrivateGameInviteMsg'
+	| 'TournamentMsg';
 
 
 export type SenderId = UserId | SystemId;
 export type Receiver = UserId | 'all';
 
-export interface HasPrivateReceiver{
-	receiverId: UserId;	
+export interface HasPrivateReceiver {
+	receiverId: UserId;
 }
-export interface HasPublicReceiver{
-	receiverId: 'all';			
+export interface HasPublicReceiver {
+	receiverId: 'all';
 }
 
-export interface HasPrivateSender{
-	senderId: UserId;	
+export interface HasPrivateSender {
+	senderId: UserId;
 }
-export interface HasServerSender{
-	senderId: SystemId;			
+export interface HasServerSender {
+	senderId: SystemId;
 }
 
 
@@ -91,30 +96,30 @@ used info for interface:
 https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
 interface= object
 */
-export interface MessageBase  {
+export interface MessageBase {
 
-	senderId: SenderId;          
+	senderId: SenderId;
 	content: Message;
 };
 
-export interface MessagePrivate extends MessageBase{
+export interface MessagePrivate extends MessageBase {
 	type: 'PrivateMsg';
 	senderId: UserId; 	 //override MessageBase: must be a real user
-	receiverId: UserId;  
+	receiverId: UserId;
 }
-export interface MessagePublic extends MessageBase{
+export interface MessagePublic extends MessageBase {
 	type: 'PublicMsg';
-	senderId: UserId;   
-	receiverId: 'all';  
+	senderId: UserId;
+	receiverId: 'all';
 }
-export interface MessagePrivateGameInvite extends MessageBase{
+export interface MessagePrivateGameInvite extends MessageBase {
 	type: 'PrivateGameInviteMsg';
-	senderId: UserId;   
-	receiverId: UserId;  
+	senderId: UserId;
+	receiverId: UserId;
 }
-export interface MessageTournament extends MessageBase{
+export interface MessageTournament extends MessageBase {
 	type: 'TournamentMsg';
-	senderId: SystemId;   
+	senderId: SystemId;
 	receiverId: UserId;  //who will play in tournament
 }
 

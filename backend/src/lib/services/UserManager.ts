@@ -116,6 +116,11 @@ export class UserManager {
 /* 
 from USER class. Need adapt
 
+/* 
+
+* 
+from USER class. Need adapt
+
 
 	//________Game
 	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
@@ -135,6 +140,9 @@ from USER class. Need adapt
 		const lose = this.matchHistory.filter(match => match.result == "lost");
 		return lose.length;
 	}
+
+
+*/
 
 
 	//____Status: online | ofline

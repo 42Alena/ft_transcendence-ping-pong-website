@@ -25,7 +25,7 @@ _________________________________________
 	9done, need to change?)make autofill db from .csv to db for tests
 # TODO:
 - USER: 
-	-lastSeenAt( for online/ offline)
+	-lastSeenAt(change logic for  for online/ offline)
 - ROUTES/USer
 	- add data validation (deleted from User constructor)
 
