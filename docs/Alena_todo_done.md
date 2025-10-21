@@ -24,8 +24,11 @@ _________________________________________
 	add to .sh remove and adddb(recreate)
 	9done, need to change?)make autofill db from .csv to db for tests
 # TODO:
-- need ft session key encrypt
-- need ft pass encryption
+- USER: 
+	-lastSeenAt( for online/ offline)
+	
+- Tournament:
+	- unique alias(insttead displayname) for tournament only, not globally
 - use in routes with shemas
 
 - user, gdpr
@@ -52,8 +55,25 @@ _________________________________________
 ## README
 		made changes in structure and corrected current status
 ## BACKEND
-	- add bcrypt to crypto hash ID: https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
-	- add function for create and check hash password  with bcrypt
+	- added bcrypt to crypto hash ID: https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
+	- added functions for create and check hash password  with bcrypt
+	-  ft session key encrypt
+
+
+### class User: 
+		- declined DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
+		- added displayName, according UserMng module
+		- moved  from classe User  friends/blocks/match history in separate tables/services.
+		- userStatus changed to lastSeenAt( will do later for online/ offline)
+
+### class UserManager: 
+	- moved  from classe User  friends/blocks/match history in separate tables/services.
+
+### /DTO
+	- declined /dto DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
+	- /dto can be removed 
+
+
 
 ## FRONTEND 
 

@@ -11,18 +11,18 @@
 import type *  as Types from '../types/types';
 import * as Validate from '../utils/validators';
 // (Luis importing the DTOs to ensure consistency between class and DTOs)
-import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO'; 
+import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
 
 export class User {
 
-	username: string;
-	nickname: string;
-	readonly id: string; 	// set in constructor, read anywhere in programm, not changeable
-	avatarUrl: Types.AvatarUrl; //for .jpg/.phg (later)
-	userStatus: Types.UserStatus;
-	friendsIds: Set<Types.UserId>; //list of users IDs (easy to check)
-	blockedIds: Set<Types.UserId>; //list of users IDs (easy to check)
-	matchHistory: Types.MatchResult[];
+	readonly id: Types.UserId; 	// set in constructor, read anywhere in programm, not changeable
+	username:  Types.Username;
+	displayName: Types.DisplayName;
+	avatarUrl: Types.AvatarUrl; 	//for .jpg/.phg (later)
+	wins:	
+	losses:	
+	lastSeenAt:                      //changed from userStatus
+
 
 
 	static fromDb(row: Record<string, any>): User {
@@ -32,7 +32,7 @@ export class User {
 	toDb(): Record<string, any> {
 		return {
 			id: this.id,
-			username: this.name,
+			username: this.usname,
 		}
 	}
 
@@ -58,7 +58,7 @@ export class User {
  */
 	profile() {
 		return {
-			name: this.name,
+			username: this.username,
 			id: this.id,
 			bla: 'blabla',
 
@@ -74,16 +74,11 @@ export class User {
 		}
 	}
 
-	/* (Luis) Suggestion to improve the profile method with DTOs
-	so everytime we change the DTO, we will be forced to change this method
-	to ensure consistency between class and DTOs. Let me know what you think.
-	toBasicDTO(): UserBasicProfileDTO {
-		return {
-			name: this.name,
-			id: this.id
-		};
-	}
-	*/ 
+	/* 
+(Alena) Declined DTO suggestion — explanation in UserDto.ts
+ (Luis) Suggestion to improve the profile method with DTOs
+...
+	*/
 
 	//________Game
 	addMatch(opponentId: Types.UserId, result: Types.GameResult) {

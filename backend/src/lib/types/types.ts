@@ -14,8 +14,13 @@ import { UserId, UserStatus, MatchResult } from './types/types';
 //___________USER
 export type UserStatus = 'online' | 'offline';
 export type GameResult = 'won' | 'lost';
+
+export type Username = string;
+export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
+
+
 
 export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash  = string;        
