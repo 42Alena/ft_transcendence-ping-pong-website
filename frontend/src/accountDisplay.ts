@@ -40,37 +40,42 @@ function displayProfile(user : FormData)
 	loginPage.style.display = "none";
 	registerPage.style.display = "none";
 }
-//Just to understand how it works
-let usersList : FormData[] = [];
 
-submitButton.addEventListener("click", (event : any) => {
+/*Just to understand how it works - not working to go back to the "choice page"
+flow: choice Page: if register, after submitting should take you to profile page?
+if login it takes you to profile page
+implement logic of logged user*/
 
-	event.preventDefault()
-	if (registerForm == null)
-			console.log("no form");
-	else
-	{
-	let newUser : FormData = new FormData(registerForm);
+// let usersList : FormData[] = [];
 
-	usersList.push(newUser);
- 	displayProfile(newUser);
-	registerForm.reset();
-	}
-});
+// submitButton.addEventListener("click", (event : any) => {
 
-loginButton.addEventListener("click", (event : any) => {
+// 	event.preventDefault()
+// 	if (registerForm == null)
+// 			console.log("no form");
+// 	else
+// 	{
+// 	let newUser : FormData = new FormData(registerForm);
 
-	event.preventDefault()
-	let incomingUser : FormData = new FormData(loginForm);
-	for(const users of usersList) {
-		if (users.get('name') === incomingUser.get('name'))
-		{
-			alert(`${users.get('name')}`);
-			displayProfile(users);
-			break;
-		}
-	}
-	loginForm.reset();
-});
+// 	usersList.push(newUser);
+//  	displayProfile(newUser);
+// 	registerForm.reset();
+// 	}
+// });
+
+// loginButton.addEventListener("click", (event : any) => {
+
+// 	event.preventDefault()
+// 	let incomingUser : FormData = new FormData(loginForm);
+// 	for(const users of usersList) {
+// 		if (users.get('name') === incomingUser.get('name'))
+// 		{
+// 			alert(`${users.get('name')}`);
+// 			displayProfile(users);
+// 			break;
+// 		}
+// 	}
+// 	loginForm.reset();
+// });
 
 
