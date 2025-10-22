@@ -46,6 +46,9 @@ export function registerChatRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/chat/channel/:channel/join', async (req, res) => {
+	// get user from req
+	// const currentUser = await getUserFromRequest(req)
+	// if no user -> 401
 	const channel = (req.params as any).channel;
 	// um..
 	// sample

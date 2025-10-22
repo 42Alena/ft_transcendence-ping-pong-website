@@ -1,3 +1,26 @@
+/* 
+Declined DTO suggestion.
+
+(Alena) I created the data types in types/types.ts at the start of the project 
+and use them everywhere — also in the routes. I don’t add interfaces or DTOs 
+because in TypeScript you don’t really need both; types and interfaces do 
+the same job, it’s just about being consistent. Keeping everything in types.ts 
+makes things cleaner and still fully type-safe.
+*/
+
+        /* (Luis) Suggestion to improve the profile method with DTOs
+        so everytime we change the DTO, we will be forced to change this method
+        to ensure consistency between class and DTOs. Let me know what you think.
+        toBasicDTO(): UserBasicProfileDTO {
+            return {
+                name: this.name,
+                id: this.id
+            };
+        }
+
+        */ 
+
+
 // DTO for database interactions
 export interface UserDbDTO {
     id: string;

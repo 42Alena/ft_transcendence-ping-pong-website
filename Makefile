@@ -1,4 +1,4 @@
-.PHONY: setup check-tools frontend backend db backend-tests \
+.PHONY: all setup check-tools frontend backend db backend-tests \
         up down logs reset-db ps rebuild-backend db-tables db-ping\
 		 db-fill db-wipe-users db-show-users db-count
 SHELL := /bin/bash
@@ -13,6 +13,9 @@ DC           := docker compose
 # Detect lockfiles to prefer reproducible installs
 FRONT_LOCK := $(FRONTEND_DIR)/package-lock.json
 BACK_LOCK  := $(BACKEND_DIR)/package-lock.json
+
+#  builds + runs in detached mode
+all: up 
 
 # Install deps and initialize local SQLite DB (non-Docker flow)
 setup: check-tools
@@ -37,6 +40,7 @@ frontend:
 	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
 
 db: check-tools
+	@rm $(DB_DIR)/pong.db*
 	@chmod +x "$(DB_DIR)/setup_db.sh"
 	cd "$(DB_DIR)" && ./setup_db.sh
 
@@ -101,7 +105,7 @@ db-wipe-users:
 	@sqlite3 "$(DB)" "DELETE FROM users;" && echo "✔ Wiped users table"
 
 db-show-users:
-	@sqlite3 -header -csv "$(DB)" "SELECT id,username,userStatus,isDeleted FROM users LIMIT 10;"
+	@sqlite3 -header -csv "$(DB)" "SELECT id,username FROM users LIMIT 10;"
 
 db-count:
 	@sqlite3 "$(DB)" "SELECT COUNT(*) AS users FROM users;"

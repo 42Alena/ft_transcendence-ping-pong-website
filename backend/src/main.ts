@@ -1,10 +1,10 @@
 import Fastify from 'fastify';
 import { registerHealthzRoutes } from './routes/healthz';
 import { registerRoutes as registerMainRoutes } from './routes/routes';
-import {registerChatRoutes } from './routes/chat';
-import {registerUserRoutes } from './routes/user';
-import { User } from './lib/Class/User';
-import { UserManager } from './lib/Class/UserManager';
+import { registerChatRoutes } from './routes/chat';
+import { registerUserRoutes } from './routes/user';
+import { User } from './lib/services/User';
+import { UserManager } from './lib/services/UserManager';
 
 const fastify = Fastify();
 
