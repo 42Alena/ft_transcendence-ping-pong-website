@@ -69,6 +69,7 @@
 			justify-content: center;
 			align-content: center;
 		}
+
 		#submitRegButton {
 			margin: 0 6px;
 			background-color: black;
@@ -89,9 +90,6 @@
 			align-items: center;
 		}
 
-		img {
-			background-image: "images/logo.png";
-		}
 	</style>
 	<body>
 		<header class="main-header max-width-container border">
@@ -173,12 +171,16 @@
 									Login</a></button>
 							</div>
 							<div class="account-register" id="registerPage">
-								<form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data">
+								<form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="signup">
 									<p class="profile-picture">
 										<label for="avatar">
 											<img src="images/profile.png" id="pic" style="cursor: pointer;">
 										</label>
 										<input type="file" id="avatar" name="user_avatar" style="display: none;">
+									</p>
+									<p>
+										<label for="nickname">Nickname:</label>
+										<input type="text" id="nickname" name="user_nickname" required/>
 									</p>
 									<p>
 										<label for="name">Name:</label>
@@ -188,8 +190,12 @@
 										<label for="password">Password:</label>
 										<input type="password" id="password" name="user_password" required/>
 									</p>
+									<p>
+										<label for="gdpr">GDPR</label>
+										<input type="checkbox" id="gdpr" name="user_accept_terms" required>
+									</p>
 									<p class="submitButton">
-										<button type="submit" id="submitRegButton">Register</button>
+										<button type="button" id="submitRegButton" style="cursor: pointer;">Register</button>
 									</p>
 								</form>
 							</div>
