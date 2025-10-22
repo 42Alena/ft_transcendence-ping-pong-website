@@ -1,6 +1,6 @@
 const chatP : any = document.getElementById('chatPage');
 const welcP : any = document.getElementById('welcomePage');
-const profP : any = document.getElementById('profilePage');
+const profP : any = document.getElementById('account');
 
 function displayPage(text: string) : void
 {
