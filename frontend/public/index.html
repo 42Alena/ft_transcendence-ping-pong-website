@@ -1,241 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Pong</title>
-		<link rel="stylesheet" href="styles/reset.css">
-		<link rel="stylesheet" href="styles/style.css">
-	</head>
-	<style>
-		.account {
-				position: relative;
-				width: 100%;
-				height: 100%;
-				align-items: center;
-				justify-content: center;
-				display: flex;
-				background: paleturquoise;
-				display: none;
-			}
-
-		 #registerButton, #loginButton {
-			margin: 0 6px;
-			background-color: black;
-			border: 3px lightgray solid;
-			border-radius: 10px;
-			color: lightgrey;
-			font-size: 28px;
-			font-weight: 700;
-			text-transform: uppercase;
-			padding: 4px 10px;
-			width: 250px;
-			outline: 0;
-		}
-
-		#registerButton a, #loginButton a {
-			color: lightgrey;
-			text-decoration: none;
-		}
-
-		.account-register, .account-login, .account-profile {
-			display: none;
-			background-color: paleturquoise;
-			justify-content: center;
-		}
-
-		form {
-			display: inline-block;
-			padding: 1em;
-			border: 1px solid #cccccc;
-			border-radius: 1em;
-		}
-
-		label {
-			display: inline-block;
-			min-width: 90px;
-			text-align: right;
-			font-size: 20px;
-		}
-
-		input {
-			font-size: 20px;
-		}
-		p + p {
-			margin-top: 1em;
-		}
-
-		.submitButton {
-			display: flex;
-			justify-content: center;
-			align-content: center;
-		}
-
-		#submitRegButton #submitLogingButton{
-			margin: 0 6px;
-			background-color: black;
-			border: 3px lightgray solid;
-			border-radius: 10px;
-			color: lightgrey;
-			font-size: 14px;
-			font-weight: 700;
-			text-transform: uppercase;
-			padding: 4px 10px;
-			width: 100px;
-			outline: 0;
-		}
-
-		.profile-picture {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-	</style>
-	<body>
-		<header class="main-header max-width-container border">
-			<div class="main-header__grid max-width border">
-				<div class="main-header__logo border">
-					<a href="#" onclick="displayPage('welcome')">
-						<img src="images/logo.png" alt="logo of the page">
-					</a>
-				</div>
-				<div class="main-header__profile_name border">
-					<h1>Hello, you!</h1>
-				</div>
-				<div class="main-header__profile border">
-					<a href="#" onclick="displayPage('account')">
-					<img src="images/profile.png" alt="avatar profile"></a>
-				</div>
-        	</div>
-		</header>
-		<main class="main max-width-container border">
-			<section class="main-section max-width border">
-					<nav class="nav border">
-							<ul>
-								<li><a href="#" onclick="displayPage('chat')">
-									 <img src="images/chat.png" alt="chat page"></a></li>
-								<!-- <li><a href="#" onclick="display('game')">
+  <head>
+    <link rel="icon" href="images/favicon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pong</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <style></style>
+  <body>
+    <header class="main-header max-width-container border">
+      <div class="main-header__grid max-width border">
+        <div class="main-header__logo border">
+          <a href="#" onclick="displayPage('welcome')">
+            <img src="images/logo.png" alt="logo of the page" />
+          </a>
+        </div>
+        <div class="main-header__profile_name border">
+          <h1>Hello, you!</h1>
+        </div>
+        <div class="main-header__profile border">
+          <a href="#" onclick="displayPage('account')">
+            <img src="images/profile.png" alt="avatar profile"
+          /></a>
+        </div>
+      </div>
+    </header>
+    <main class="main max-width-container border">
+      <section class="main-section max-width border">
+        <nav class="nav border">
+          <ul>
+            <li>
+              <a href="#" onclick="displayPage('chat')">
+                <img src="images/chat.png" alt="chat page"
+              /></a>
+            </li>
+            <!-- <li><a href="#" onclick="display('game')">
 									<img src="images/play.png" alt="game page"></a></li></a></li>
 								<li><a href="#" onclick="display('leaderboard')">
 									<img src="images/leaderboard.png" alt="chat page"></a></li></a></li> -->
-							</ul>
-					</nav>
-					<div class="board-container border" id="board">
-						<div class="welcome welcome-container" id="welcomePage">Welcome page</div>
-						<div class="chat chat-container" id="chatPage">
-							<div class="chat-left border">
-								<div class="chat-left__header border">
-									<div class="border">Messages</div>
-								</div>
-								<div class="chat-left__list border">
-									<div class="chat-left__list-search-bar border">search bar</div>
-									<div class="chat-left__list-dms border" id="list-dms">
-								</div>
-								</div>
-							</div>
-							<div class="chat-right border">
-								<div class="chat-right__header border">header
-									<div class="chat-right__header-contact border" id="contact">Contact</div>
-									<div class="chat-right__header-avatar border">
-										<img src="images/profile.png" alt="avatar profile">
-									</div>
-								</div>
-								<div class="chat-right__list border">
-									<div class="chat-right__box border">
-										<!-- <div class="chat-right__stamp border">stamp</div> -->
-										<div class="chat-right__bubble border" id="bubble">Click on one of the chats to see the conversation
-										</div>
-									</div>
-									<div class="chat-right__textArea border">
-										<div class="chat-right__textArea-input border">
-											<div class="chat-right__textAreas-input-text border" id="input">
-												<input
-												id="text-box"
-												type="text" class="chat-right__textAreas-input-text border"
-												placeholder="Send message">
-											</div>
-										</div>
-										<div class="chat-right__textArea-submitIcon border" onclick="captureInput()">Send</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="account account-container" id="accountPage">
-							<div class="account-login-reg-choice" id="pageChoice">
-								<button type="button" id="registerButton">
-									<a href="#" onclick="setProfilePage('register')">
-									Register
-								</a></button>
-								<button type="button" id="loginButton">
-									<a href="#" onclick="setProfilePage('login')">
-									Login</a></button>
-							</div>
-							<div class="account-register" id="registerPage">
-								<form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
-									<p class="profile-picture">
-										<label for="reg-avatar">
-											<img src="images/profile.png" id="pic" style="cursor: pointer;">
-										</label>
-										<input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none;">
-									</p>
-									<p>
-										<label for="reg-nickname">Nickname:</label>
-										<input type="text" id="reg-nickname" name="reg-user_nickname" required/>
-									</p>
-									<p>
-										<label for="reg-name">Name:</label>
-										<input type="text" id="reg-name" name="reg-user_name" required/>
-									</p>
-									<p>
-										<label for="reg-password">Password:</label>
-										<input type="password" id="reg-password" name="reg-user_password" required/>
-									</p>
-									<p>
-										<label for="gdpr">GDPR</label>
-										<input type="checkbox" id="gdpr" name="reg-user_accept_terms" required>
-									</p>
-									<p class="submitButton">
-										<!-- <button type="button" id="submitRegButton" style="cursor: pointer;">Register</button> -->
-										<button type="submit" id="submitRegButton" style="cursor: pointer;">Register</button>
-									</p>
-								</form>
-							</div>
-							<div class="account-login" id="loginPage">
-								<form action="http://127.0.0.1:8080" method="post" id="login">
-									<p>
-										<label for="login-nickname">Name:</label>
-										<input type="text" id="login-name" name="login-user_name" required/>
-									</p>
-									<p>
-										<label for="login-password">Password:</label>
-										<input type="password" id="login-password" name="login-user_password" required/>
-									</p>
-									<p class="submitButton">
-										<!-- <button type="button" id="submitLogingButton" style="cursor: pointer;">Login</button> -->
-										<button type="submit" id="submitRegButton" style="cursor: pointer;">Login</button>
-									</p>
-								</form>
-							</div>
-							<div class="account-profile" id="profilePage">
-								Profile Page
-							</div>
-						</div>
-					</div>
-			</section>
-		</main>
-		<footer class="main-footer max-width-container border">
-			<div class="main-footer__grid max-width border">
-				<p class="main-footer__copyright border">TRANSCENDENCE</p>
-				<ul class="main-footer__links border">Made by Alena, Luis, Sveva 2025</ul>
-			</div>
-		</footer>
-		<!-- insert scripts  here like this -->
-		<script src="dist/contentManager.js"></script>
-		<script src="dist/chatDisplay.js"></script>
-		<script src="dist/accountDisplay.js"></script>
-		<!-- <script src="dist/user.js"></script>
+          </ul>
+        </nav>
+        <div class="board-container border" id="board">
+          <div class="welcome welcome-container" id="welcomePage">
+            Welcome page
+          </div>
+          <div class="chat chat-container" id="chatPage">
+            <div class="chat-left border">
+              <div class="chat-left__header border">
+                <div class="border">Messages</div>
+              </div>
+              <div class="chat-left__list border">
+                <div class="chat-left__list-search-bar border">search bar</div>
+                <div class="chat-left__list-dms border" id="list-dms"></div>
+              </div>
+            </div>
+            <div class="chat-right border">
+              <div class="chat-right__header border">
+                header
+                <div class="chat-right__header-contact border" id="contact">
+                  Contact
+                </div>
+                <div class="chat-right__header-avatar border">
+                  <img src="images/profile.png" alt="avatar profile" />
+                </div>
+              </div>
+              <div class="chat-right__list border">
+                <div class="chat-right__box border">
+                  <!-- <div class="chat-right__stamp border">stamp</div> -->
+                  <div class="chat-right__bubble border" id="bubble">
+                    Click on one of the chats to see the conversation
+                  </div>
+                </div>
+                <div class="chat-right__textArea border">
+                  <div class="chat-right__textArea-input border">
+                    <div
+                      class="chat-right__textAreas-input-text border"
+                      id="input"
+                    >
+                      <input
+                        id="text-box"
+                        type="text"
+                        class="chat-right__textAreas-input-text border"
+                        placeholder="Send message"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="chat-right__textArea-submitIcon border"
+                    onclick="captureInput()"
+                  >
+                    Send
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="account account-container" id="accountPage">
+            <div class="account-login-reg-choice" id="pageChoice">
+              <button type="button" id="registerButton">
+                <a href="#" onclick="setProfilePage('register')"> Register </a>
+              </button>
+              <button type="button" id="loginButton">
+                <a href="#" onclick="setProfilePage('login')"> Login</a>
+              </button>
+            </div>
+            <div class="account-register" id="registerPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                enctype="multipart/form-data"
+                id="register"
+              >
+                <p class="profile-picture">
+                  <label for="reg-avatar">
+                    <img
+                      src="images/profile.png"
+                      id="pic"
+                      style="cursor: pointer"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="reg-avatar"
+                    name="reg-user_avatar"
+                    style="display: none"
+                  />
+                </p>
+                <p>
+                  <label for="reg-nickname">Nickname:</label>
+                  <input
+                    type="text"
+                    id="reg-nickname"
+                    name="reg-user_nickname"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="reg-name">Name:</label>
+                  <input
+                    type="text"
+                    id="reg-name"
+                    name="reg-user_name"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="reg-password">Password:</label>
+                  <input
+                    type="password"
+                    id="reg-password"
+                    name="reg-user_password"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="gdpr">GDPR</label>
+                  <input
+                    type="checkbox"
+                    id="gdpr"
+                    name="reg-user_accept_terms"
+                    required
+                  />
+                </p>
+                <p class="submitButton">
+                  <!-- <button type="button" id="submitRegButton" style="cursor: pointer;">Register</button> -->
+                  <button
+                    type="submit"
+                    id="submitRegButton"
+                    style="cursor: pointer"
+                  >
+                    Register
+                  </button>
+                </p>
+              </form>
+            </div>
+            <div class="account-login" id="loginPage">
+              <form action="http://127.0.0.1:8080" method="post" id="login">
+                <p>
+                  <label for="login-nickname">Name:</label>
+                  <input
+                    type="text"
+                    id="login-name"
+                    name="login-user_name"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="login-password">Password:</label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="login-user_password"
+                    required
+                  />
+                </p>
+                <p class="submitButton">
+                  <!-- <button type="button" id="submitLogingButton" style="cursor: pointer;">Login</button> -->
+                  <button
+                    type="submit"
+                    id="submitRegButton"
+                    style="cursor: pointer"
+                  >
+                    Login
+                  </button>
+                </p>
+              </form>
+            </div>
+            <div class="account-profile" id="profilePage">Profile Page</div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="main-footer max-width-container border">
+      <div class="main-footer__grid max-width border">
+        <p class="main-footer__copyright border">TRANSCENDENCE</p>
+        <ul class="main-footer__links border">
+          Made by Alena, Luis, Sveva 2025
+        </ul>
+      </div>
+    </footer>
+    <!-- insert scripts  here like this -->
+    <script src="dist/contentManager.js"></script>
+    <script src="dist/chatDisplay.js"></script>
+    <script src="dist/accountDisplay.js"></script>
+    <!-- <script src="dist/user.js"></script>
 		<script src="dist/chat.js"></script> -->
-		<!-- <script src=""></script> -->
-	</body>
+    <!-- <script src=""></script> -->
+  </body>
 </html>
