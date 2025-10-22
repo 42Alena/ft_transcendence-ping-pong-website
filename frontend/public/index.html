@@ -171,36 +171,53 @@
 									Login</a></button>
 							</div>
 							<div class="account-register" id="registerPage">
-								<form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="signup">
+								<form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
 									<p class="profile-picture">
-										<label for="avatar">
+										<label for="reg-avatar">
 											<img src="images/profile.png" id="pic" style="cursor: pointer;">
 										</label>
-										<input type="file" id="avatar" name="user_avatar" style="display: none;">
+										<input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none;">
 									</p>
 									<p>
-										<label for="nickname">Nickname:</label>
-										<input type="text" id="nickname" name="user_nickname" required/>
+										<label for="reg-nickname">Nickname:</label>
+										<input type="text" id="reg-nickname" name="reg-user_nickname" required/>
 									</p>
 									<p>
-										<label for="name">Name:</label>
-										<input type="text" id="name" name="user_name" required/>
+										<label for="reg-name">Name:</label>
+										<input type="text" id="reg-name" name="reg-user_name" required/>
 									</p>
 									<p>
-										<label for="password">Password:</label>
-										<input type="password" id="password" name="user_password" required/>
+										<label for="reg-password">Password:</label>
+										<input type="password" id="reg-password" name="reg-user_password" required/>
 									</p>
 									<p>
 										<label for="gdpr">GDPR</label>
-										<input type="checkbox" id="gdpr" name="user_accept_terms" required>
+										<input type="checkbox" id="gdpr" name="reg-user_accept_terms" required>
 									</p>
 									<p class="submitButton">
 										<button type="button" id="submitRegButton" style="cursor: pointer;">Register</button>
+										<!-- <button type="submit" id="submitRegButton" style="cursor: pointer;">Register</button> -->
 									</p>
 								</form>
 							</div>
-							<div class="account-login" id="loginPage">Login</div>
-							<div class="account-profile" id="profilePage">Profile</div>
+							<div class="account-login" id="loginPage">
+								<form action="http://127.0.0.1:8080" method="post" id="login">
+									<p>
+										<label for="login-nickname">Nickname:</label>
+										<input type="text" id="login-nickname" name="login-user_nickname" required/>
+									</p>
+									<p>
+										<label for="login-password">Password:</label>
+										<input type="password" id="login-password" name="login-user_password" required/>
+									</p>
+									<p class="submitButton">
+										<button type="button" id="submitRegButton" style="cursor: pointer;">Login</button>
+										<!-- <button type="submit" id="submitRegButton" style="cursor: pointer;">Login</button> -->
+									</p>
+								</form>
+							</div>
+							<div class="account-profile" id="profilePage">
+							</div>
 						</div>
 					</div>
 			</section>
