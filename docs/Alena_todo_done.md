@@ -1,37 +1,143 @@
-
 # TEMPLATE FOR PULLREQUESTS
 
-# IDEAS:TODO:
+________NEW_________________________________
 
-## ALL:
+# IDEAS:
+
+# TODO:
+
+# ____ DONE:
+
 ## DB
-## README
-## Backend
-## Frontend  make frontend
-### dockercompose
+## BACKEND
+## FRONTEND
 ### Makefile 
-### .gitignore
-DONE:
+## LINKS/HELP: 
+
+### ======    OLD PULLREQUESTS   ================================================================
+
+
 _________________________________________
-for pullrequests:
-TODO:
-make rebuild db after db change
-make db save in separate file, then easier rebuild after change
-add to .sh remove and adddb(recreate)
-make autofill db from .csv to db for tests
+# IDEAS:
+	make rebuild db after db change
+	make db save in separate file, then easier rebuild after change
+	add to .sh remove and adddb(recreate)
+	9done, need to change?)make autofill db from .csv to db for tests
+# TODO:
+- USER: 
+	-lastSeenAt(change logic for  for online/ offline)
+- ROUTES/USer
+	- add data validation (deleted from User constructor)
 
-In progress:
+- Tournament:
+	- unique alias(insttead displayname) for tournament only, not globally
+- use in routes with shemas
+
+- user, gdpr
+
+  -- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+  -- userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
+  --   CHECK (userStatus IN ('online', 'offline')),
+  -- add last activity date/time
+  -- add user created timestamp
+
+
+	`DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
+
+	POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
+
+	registration
+	login. After will return generated secret session acces token/string
+	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
+	update profile/ change pass(check subject)  put method
+	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
+	
+	Registration
+
+	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+# ____ DONE:
+
+## DB
+	- updated table user for curent User class
+	- added tables for  friends, blocked
+
+## NPM
+	- added bcrypt for hash passwords: npm install --save bcryptjs
+## README
+		made changes in structure and corrected current status
+## BACKEND
+	- added bcrypt to crypto hash ID: https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
+	- added functions for create and check hash password  with bcrypt
+	-  ft session key encrypt
+
+## PASSWORD
+	- add crypto hash password https://nodejs.org/api/crypto.
+
+### class User: 
+		- declined DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
+		- added displayName, according UserMng module
+		- moved  from classe User  friends/blocks/match history in separate tables/services.
+		- userStatus changed to lastSeenAt( will do later for online/ offline)
+		- fix(user): align User fields with spec (displayName, wins/losses, lastSeenAt)
+		-	updated costructor with current user fields
+		-added userprofilePublic userProfileBasic 
+		- class User is now working with Db (rewrote all functions)
+
+### class UserManager: 
+	- moved  from classe User  friends/blocks/match history in separate tables/services.
+	- class UserManager is now working with Db (rewrote all functions)
+
+### /DTO
+	- declined /dto DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
+	- /dto can be removed 
 
 
 
+## FRONTEND 
+
+### Makefile 
+	Command `make` to start whole project 
+
+## LINKS/HELP: 
+https://fastify.dev/docs/latest/Reference/Routes/
+https://json-schema.org/overview/what-is-jsonschema
+https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/
+https://en.wikipedia.org/wiki/Query_string
+https://json-schema.org/understanding-json-schema/about
+
+## Tests:
+https://nodejs.org/api/crypto.html#cryptocreatehashalgorithm-options
+TRANSCENDENCE_public🕒12:16😸 node                                             
+Welcome to Node.js v24.4.1.
+Type ".help" for more information.
+> const crypto = require('crypto')
+undefined
+> const pass = '123&%&%&asdasdf'
+undefined
+> const hasher = crypto.createHash('sha512')
+undefined
+> hasher.update(pass)
+Hash {
+  _options: undefined,
+  Symbol(kHandle): Hash {},
+  Symbol(kState): { Symbol(kFinalized): false }
+}
+> hasher.digest('hex')
+> crypto.createHash('sha256').update("yarikk").digest('hex')
+'b6dc72e1e2414ffc9c188c4876763aaa37a6a4351d00d3be2b2aff3915dc1268'
+> 
+
+
+### In progress:
+
+
+### ======    OLD PULLREQUESTS   ================================================================
 
 DONE:
 ## Links helpfull:
 	https://knexjs.org/guide/query-builder.html#knex
 ## DB
 		- add autofill db for test test_fill_users_dev.sql (tmp, fill users, need for dev)
-
-## README
 ## Backend
 	added CORS to fastify :
 			 npm i @fastify/cors --save
