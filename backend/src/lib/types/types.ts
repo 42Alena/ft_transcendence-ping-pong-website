@@ -10,7 +10,6 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
-//___________USER
 export type UserStatus = 'online' | 'offline';
 export type GameResult = 'won' | 'lost';
 
@@ -19,6 +18,12 @@ export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
 
+
+export type PasswordPlain = string;    //user input, not stored/sended
+export type PasswordHash = string;
+
+
+//___________USER
 // Domain (internal)
 export type User = {
 	readonly id: UserId;
@@ -39,10 +44,30 @@ export type UserPublic = {
 	avatarUrl: AvatarUrl | null;
 };
 
-export type PasswordPlain = string;    //user input, not stored/sended
-export type PasswordHash = string;
 
+export type UserRegister = {
+	username: Username;
+	displayName: DisplayName;
+	avatarUrl?: AvatarUrl | null;
+	passwordPlain: PasswordPlain;
+};
 
+export type UserLogin = {
+	username: Username;
+	passwordPlain: PasswordPlain;
+};
+
+export type UserUpdateProfile = {
+	displayName?: DisplayName;
+	avatarUrl?: AvatarUrl | null;
+};
+
+export type UserLogin = {
+	curPassPlain: PasswordPlain;
+	newPassPlain: PasswordPlain;
+};
+
+//_____________MATCH
 export type MatchResult = {
 	opponentId: UserId;
 	date: Date;

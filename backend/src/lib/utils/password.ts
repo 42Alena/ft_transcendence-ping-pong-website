@@ -1,5 +1,5 @@
 import * as bcrypt from "bcryptjs";
-import type *  as Types from '../lib/types/types';
+import type *  as Types from '../types/types';
 
 
 // https://www.bcrypt.io/languages/typescript
@@ -11,7 +11,7 @@ export async function hashPassword(
 }
 
 export function verifyPassword(
-	passwordPlain: Types.PasswordPlain
+	passwordPlain: Types.PasswordPlain,
 	passwordHash: Types.PasswordHash,
 	 
 	): Promise<boolean> {

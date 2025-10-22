@@ -28,11 +28,20 @@ export class UserManager {
 	}
 
 
-
 	//____________SAVE
+	//now for tet only. TODO: delete later
 	async saveUser(newUser: User) {
 		await this.dbTableUser.insert(newUser.toDB());
 	}
+
+	// async registerUserWithPassword(input: Types.UserRegister): Promise<User> {
+
+	// 	await this.dbTableUser.insert(newUser.toDB());
+
+
+	// }
+
+	// ../frontend/public/images/profile.png
 
 	//___________________GET
 	async getAllUsers(): Promise<User[]> {

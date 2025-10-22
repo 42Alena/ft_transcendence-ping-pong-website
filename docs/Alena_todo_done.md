@@ -53,7 +53,6 @@ _________________________________________
 	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 	
 	Registration
-	- add crypto hash password https://nodejs.org/api/crypto.
 
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 # ____ DONE:
@@ -71,6 +70,8 @@ _________________________________________
 	- added functions for create and check hash password  with bcrypt
 	-  ft session key encrypt
 
+## PASSWORD
+	- add crypto hash password https://nodejs.org/api/crypto.
 
 ### class User: 
 		- declined DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces
@@ -80,16 +81,11 @@ _________________________________________
 		- fix(user): align User fields with spec (displayName, wins/losses, lastSeenAt)
 		-	updated costructor with current user fields
 		-added userprofilePublic userProfileBasic 
+		- class User is now working with Db (rewrote all functions)
 
 ### class UserManager: 
 	- moved  from classe User  friends/blocks/match history in separate tables/services.
-
-<!-- ### /services (new)
-	/Classes/User → lean entity + tiny helpers (no persistence, no cross-user logic).
-
-	/services/* → business rules per feature (friends, blocks, matches, presence).
-
-	/repositories/* → data access boundary (you can start in-memory and switch to DB/SQLite -->
+	- class UserManager is now working with Db (rewrote all functions)
 
 ### /DTO
 	- declined /dto DTO suggestion: using existing types/types.ts since the start of the project — in TypeScript you don’t need both types and interfaces

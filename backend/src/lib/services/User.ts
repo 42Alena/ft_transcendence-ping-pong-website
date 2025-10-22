@@ -50,7 +50,7 @@ export class User implements Types.User {
 			username: row.username as Types.Username,
 			displayName: row.displayName as Types.DisplayName,
 			avatarUrl: (row.avatarUrl ?? null) as Types.AvatarUrl | null,
-			lastSeenAt: row.lastSeenAt,  //TODO conversion
+			lastSeenAt: row.lastSeenAt ? new Date(row.lastSeenAt) : null,
 		})
 	}
 
@@ -62,7 +62,7 @@ export class User implements Types.User {
 			username: this.username,
 			displayName: this.displayName,
 			avatarUrl: this.avatarUrl,
-			lastSeenAt: this.lastSeenAt, //TODO conversion
+			lastSeenAt: this.lastSeenAt ? this.lastSeenAt.toISOString() : null,
 		}
 	}
 
