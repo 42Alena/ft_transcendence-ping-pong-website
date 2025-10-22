@@ -16,6 +16,7 @@
 				justify-content: center;
 				display: flex;
 				background: paleturquoise;
+				display: none;
 			}
 
 		 #registerButton, #loginButton {
@@ -70,7 +71,7 @@
 			align-content: center;
 		}
 
-		#submitRegButton {
+		#submitRegButton #submitLogingButton{
 			margin: 0 6px;
 			background-color: black;
 			border: 3px lightgray solid;
@@ -103,7 +104,7 @@
 					<h1>Hello, you!</h1>
 				</div>
 				<div class="main-header__profile border">
-					<a href="#" onclick="displayPage('profile')">
+					<a href="#" onclick="displayPage('account')">
 					<img src="images/profile.png" alt="avatar profile"></a>
 				</div>
         	</div>
@@ -112,8 +113,8 @@
 			<section class="main-section max-width border">
 					<nav class="nav border">
 							<ul>
-								<!-- <li><a href="#" onclick="displayPage('chat')">
-									 <img src="images/chat.png" alt="chat page"></a></li> -->
+								<li><a href="#" onclick="displayPage('chat')">
+									 <img src="images/chat.png" alt="chat page"></a></li>
 								<!-- <li><a href="#" onclick="display('game')">
 									<img src="images/play.png" alt="game page"></a></li></a></li>
 								<li><a href="#" onclick="display('leaderboard')">
@@ -121,7 +122,7 @@
 							</ul>
 					</nav>
 					<div class="board-container border" id="board">
-						<!-- <div class="welcome welcome-container" id="welcomePage">Welcome page</div> -->
+						<div class="welcome welcome-container" id="welcomePage">Welcome page</div>
 						<div class="chat chat-container" id="chatPage">
 							<div class="chat-left border">
 								<div class="chat-left__header border">
@@ -211,12 +212,13 @@
 										<input type="password" id="login-password" name="login-user_password" required/>
 									</p>
 									<p class="submitButton">
-										<button type="button" id="submitRegButton" style="cursor: pointer;">Login</button>
+										<button type="button" id="submitLogingButton" style="cursor: pointer;">Login</button>
 										<!-- <button type="submit" id="submitRegButton" style="cursor: pointer;">Login</button> -->
 									</p>
 								</form>
 							</div>
 							<div class="account-profile" id="profilePage">
+								Profile Page
 							</div>
 						</div>
 					</div>

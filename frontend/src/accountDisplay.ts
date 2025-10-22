@@ -3,7 +3,9 @@ const loginPage : any = document.getElementById("loginPage");
 const profilePage : any = document.getElementById("profilePage");
 const choicePage : any = document.getElementById("pageChoice");
 const submitButton : any = document.getElementById("submitRegButton");
-const signupForm : any = document.getElementById("signup");
+const loginButton : any = document.getElementById("submitLogingButton");
+const registerForm : any = document.getElementById("register");
+const loginForm : any = document.getElementById("login");
 
 function setProfilePage(text : string)
 {
@@ -31,16 +33,44 @@ function setProfilePage(text : string)
 	}
 }
 
+function displayProfile(user : FormData)
+{
+	profilePage.style.display = "flex";
+	choicePage.style.display = "none";
+	loginPage.style.display = "none";
+	registerPage.style.display = "none";
+}
+//Just to understand how it works
+let usersList : FormData[] = [];
+
 submitButton.addEventListener("click", (event : any) => {
 
-	console.log("clicked");
-	console.log("create form data");
-	let formData = new FormData(signupForm);
+	event.preventDefault()
+	if (registerForm == null)
+			console.log("no form");
+	else
+	{
+	let newUser : FormData = new FormData(registerForm);
 
-	for(let [name, value] of formData) {
-  console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-}
- alert('Registration complete');
+	usersList.push(newUser);
+ 	displayProfile(newUser);
+	registerForm.reset();
+	}
+});
+
+loginButton.addEventListener("click", (event : any) => {
+
+	event.preventDefault()
+	let incomingUser : FormData = new FormData(loginForm);
+	for(const users of usersList) {
+		if (users.get('name') === incomingUser.get('name'))
+		{
+			alert(`${users.get('name')}`);
+			displayProfile(users);
+			break;
+		}
+	}
+	loginForm.reset();
 });
 
 
