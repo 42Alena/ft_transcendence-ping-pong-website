@@ -2,10 +2,15 @@ const registerPage : any = document.getElementById("registerPage");
 const loginPage : any = document.getElementById("loginPage");
 const profilePage : any = document.getElementById("profilePage");
 const choicePage : any = document.getElementById("pageChoice");
+
 const submitButton : any = document.getElementById("submitRegButton");
 const loginButton : any = document.getElementById("submitLogingButton");
+
 const registerForm : any = document.getElementById("register");
 const loginForm : any = document.getElementById("login");
+
+const regAvatar : any = document.getElementById("reg-avatar");
+
 const profName : any = document.getElementById("acc-name");
 const profNickname : any = document.getElementById("acc-nickname");
 const profAvatar : any = document.getElementById("acc-avatar");
@@ -30,6 +35,12 @@ function setAccountPage(text : string)
 		profilePage.style.display = "none";
 	}
 }
+
+regAvatar.addEventListener("change", (event : any) => {
+	console.log('change event caught');
+	const img : any = document.getElementById("avatar");
+	img.src = URL.createObjectURL(regAvatar.files[0]);
+});
 
 // /*Just to understand how it works and future implementation - disabled submission forms*/
 // function setProfilePage(name : string, nickname : string, avatar : string)

@@ -15,7 +15,7 @@
       <div class="main-header__grid max-width border">
         <div class="main-header__logo border">
           <a href="#" onclick="displayPage('welcome')">
-            <img src="images/logo.png" alt="logo of the page" />
+            <img src="images/logo.png" alt="logo of the page"/>
           </a>
         </div>
         <div class="main-header__profile_name border">
@@ -118,8 +118,10 @@
                   <label for="reg-avatar">
                     <img
                       src="images/profile.png"
-                      id="pic"
+                      id="avatar"
                       style="cursor: pointer"
+                      width="50px"
+                      height="50px"
                     />
                   </label>
                   <input
@@ -130,20 +132,20 @@
                   />
                 </p>
                 <p class="reg-form-field">
-                  <label for="reg-nickname">Username (login)</label>
+                  <label for="reg-username">Username (login)</label>
                   <input
                     type="text"
-                    id="reg-nickname"
-                    name="reg-user_nickname"
+                    id="reg-username"
+                    name="reg-user_username"
                     required
                   />
                 </p>
                 <p class="reg-form-field">
-                  <label for="reg-name">Display Name (public)</label>
+                  <label for="reg-dispalyName">Display Name (public)</label>
                   <input
                     type="text"
-                    id="reg-name"
-                    name="reg-user_name"
+                    id="reg-dispalyName"
+                    name="reg-user_dispalyName"
                     required
                   />
                 </p>
@@ -171,11 +173,11 @@
             <div class="account-login" id="loginPage">
               <form action="http://127.0.0.1:8080" method="post" id="login">
                 <p>
-                  <label for="login-nickname">Name:</label>
+                  <label for="login-username">Username:</label>
                   <input
                     type="text"
-                    id="login-name"
-                    name="login-user_name"
+                    id="login-username"
+                    name="login-user_username"
                     required
                   />
                 </p>
@@ -191,7 +193,7 @@
                 <p class="submitButton">
                   <button
                     type="submit"
-                    id="submitRegButton"
+                    id="submitLogButton"
                     style="cursor: pointer"
                   >
                     Login
