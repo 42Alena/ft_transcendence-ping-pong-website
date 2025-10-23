@@ -6,8 +6,13 @@ const submitButton : any = document.getElementById("submitRegButton");
 const loginButton : any = document.getElementById("submitLogingButton");
 const registerForm : any = document.getElementById("register");
 const loginForm : any = document.getElementById("login");
+const profName : any = document.getElementById("acc-name");
+const profNickname : any = document.getElementById("acc-nickname");
+const profAvatar : any = document.getElementById("acc-avatar");
 
-function setProfilePage(text : string)
+let userIsLoggedIn : boolean = false;
+
+function setAccountPage(text : string)
 {
 	if (text == "login")
 	{
@@ -17,65 +22,72 @@ function setProfilePage(text : string)
 		profilePage.style.display = "none";
 
 	}
-	else if (text = "register")
+	else if (text == "register")
 	{
 		registerPage.style.display = "flex";
 		choicePage.style.display = "none";
 		loginPage.style.display = "none";
 		profilePage.style.display = "none";
 	}
-	else
-	{
-		profilePage.style.display = "flex";
-		choicePage.style.display = "none";
-		loginPage.style.display = "none";
-		registerPage.style.display = "none";
-	}
 }
 
-function displayProfile(user : FormData)
-{
-	profilePage.style.display = "flex";
-	choicePage.style.display = "none";
-	loginPage.style.display = "none";
-	registerPage.style.display = "none";
-}
-
-/*Just to understand how it works - not working to go back to the "choice page"
-flow: choice Page: if register, after submitting should take you to profile page?
-if login it takes you to profile page
-implement logic of logged user*/
+// /*Just to understand how it works and future implementation - disabled submission forms*/
+// function setProfilePage(name : string, nickname : string, avatar : string)
+// {
+// 	profName.textContent = "Name: " + name;
+// 	profNickname.textContent = "NickName: " + nickname;
+// 	const imgElement = document.createElement("img");
+//     imgElement.src = avatar;
+//     profAvatar.appendChild(imgElement);
+// }
 
 // let usersList : FormData[] = [];
+// let newUser : FormData = new FormData();
+// newUser.append('name', 'sveva');
+// newUser.append('nickname', 'sve');
+// newUser.append('avatar', './images/blue.png');
 
-// submitButton.addEventListener("click", (event : any) => {
+// let newUser1 : FormData = new FormData();
+// newUser.append('name', 'alena');
+// newUser.append('nickname', 'ale');
+// newUser.append('avatar', './images/green.png');
+
+// let newUser2 : FormData = new FormData();
+// newUser.append('name', 'luis');
+// newUser.append('nickname', 'lui');
+// newUser.append('avatar', './images/purple.png');
+
+
+// registerForm.addEventListener("submit", (event : any) => {
 
 // 	event.preventDefault()
-// 	if (registerForm == null)
-// 			console.log("no form");
-// 	else
-// 	{
-// 	let newUser : FormData = new FormData(registerForm);
-
-// 	usersList.push(newUser);
-//  	displayProfile(newUser);
-// 	registerForm.reset();
-// 	}
+	
+// 	console.log('disable reg form submission');
+// 	alert('registration was a success');
+// 	setAccountPage('login');
 // });
 
-// loginButton.addEventListener("click", (event : any) => {
+// loginForm.addEventListener("submit", (event : any) => {
+// 	event.preventDefault();
 
-// 	event.preventDefault()
-// 	let incomingUser : FormData = new FormData(loginForm);
-// 	for(const users of usersList) {
-// 		if (users.get('name') === incomingUser.get('name'))
-// 		{
-// 			alert(`${users.get('name')}`);
-// 			displayProfile(users);
-// 			break;
-// 		}
-// 	}
-// 	loginForm.reset();
+// 	let loggedUser : FormData = new FormData();
+// 	loggedUser.append('name', 'sveva');
+// 	loggedUser.append('nickname', 'sve');
+// 	loggedUser.append('avatar', './images/blue.png');
+// 	console.log('disable log form submission');
+// 	userIsLoggedIn = true;
+// 	const nameEntry = loggedUser.get('name');
+// 	const nicknameEntry = loggedUser.get('nickname');
+// 	const avatarEntry = loggedUser.get('avatar');
+
+// 	const name = nameEntry !== null ? nameEntry.toString() : '';
+// 	const nickname = nicknameEntry !== null ? nicknameEntry.toString() : '';
+// 	const avatar = avatarEntry !== null ? avatarEntry.toString() : '';
+
+// 	setProfilePage(name, nickname, avatar);
+// 	console.log('page is visible?');
+// 	displayPage('account');
 // });
+
 
 

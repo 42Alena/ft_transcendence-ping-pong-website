@@ -7,6 +7,17 @@
     <title>Pong</title>
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/style.css" />
+    <style>
+      .account-profile {
+        display: none;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        padding: 10em;
+      }
+
+
+    </style>
   </head>
   <body>
     <header class="main-header max-width-container border">
@@ -99,10 +110,10 @@
           <div class="account account-container" id="accountPage">
             <div class="account-login-reg-choice" id="pageChoice">
               <button type="button" id="registerButton">
-                <a href="#" onclick="setProfilePage('register')"> Register </a>
+                <a href="#" onclick="setAccountPage('register')"> Register </a>
               </button>
               <button type="button" id="loginButton">
-                <a href="#" onclick="setProfilePage('login')"> Login</a>
+                <a href="#" onclick="setAccountPage('login')"> Login</a>
               </button>
             </div>
             <div class="account-register" id="registerPage">
@@ -164,7 +175,6 @@
                   />
                 </p>
                 <p class="submitButton">
-                  <!-- <button type="button" id="submitRegButton" style="cursor: pointer;">Register</button> -->
                   <button
                     type="submit"
                     id="submitRegButton"
@@ -196,7 +206,6 @@
                   />
                 </p>
                 <p class="submitButton">
-                  <!-- <button type="button" id="submitLogingButton" style="cursor: pointer;">Login</button> -->
                   <button
                     type="submit"
                     id="submitRegButton"
@@ -207,7 +216,14 @@
                 </p>
               </form>
             </div>
-            <div class="account-profile" id="profilePage">Profile Page</div>
+            <div class="account-profile" id="profilePage">
+                <div class="account-profile__avatar border" id="acc-avatar"></div>
+                </div>
+              <div class="account-profile__name border" id="acc-name"></div>
+              <div
+                class="account-profile__nickname border"
+                id="acc-nickname"
+              ></div>
           </div>
         </div>
       </section>

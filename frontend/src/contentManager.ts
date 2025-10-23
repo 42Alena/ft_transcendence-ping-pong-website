@@ -3,6 +3,7 @@ const welcP : any = document.getElementById('welcomePage');
 const accP : any = document.getElementById('accountPage');
 const regP : any = document.getElementById('registerPage');
 const logP: any = document.getElementById('loginPage');
+const profP : any = document.getElementById('profilePage');
 
 function displayPage(text: string) : void
 {
@@ -24,8 +25,10 @@ function displayPage(text: string) : void
 	}
 	else if (text == 'account')
 	{
-		console.log("account page to show now");
-		accP.style.display = "flex";
+		if (userIsLoggedIn == false)
+			accP.style.display = "flex";
+		else
+			profP.style.display = "flex";
 		chatP.style.display = "none";
 		welcP.style.display = "none";
 		regP.style.display = "none";
