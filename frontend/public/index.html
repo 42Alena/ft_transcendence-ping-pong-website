@@ -8,15 +8,6 @@
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/style.css" />
     <style>
-      .account-profile {
-        display: none;
-        flex-direction: row;
-        align-content: center;
-        justify-content: center;
-        padding: 10em;
-      }
-
-
     </style>
   </head>
   <body>
@@ -110,7 +101,7 @@
           <div class="account account-container" id="accountPage">
             <div class="account-login-reg-choice" id="pageChoice">
               <button type="button" id="registerButton">
-                <a href="#" onclick="setAccountPage('register')"> Register </a>
+                <a href="#" onclick="setAccountPage('register')"> Register</a>
               </button>
               <button type="button" id="loginButton">
                 <a href="#" onclick="setAccountPage('login')"> Login</a>
@@ -138,8 +129,8 @@
                     style="display: none"
                   />
                 </p>
-                <p>
-                  <label for="reg-nickname">Nickname:</label>
+                <p class="reg-form-field">
+                  <label for="reg-nickname">Username (login)</label>
                   <input
                     type="text"
                     id="reg-nickname"
@@ -147,8 +138,8 @@
                     required
                   />
                 </p>
-                <p>
-                  <label for="reg-name">Name:</label>
+                <p class="reg-form-field">
+                  <label for="reg-name">Display Name (public)</label>
                   <input
                     type="text"
                     id="reg-name"
@@ -156,8 +147,8 @@
                     required
                   />
                 </p>
-                <p>
-                  <label for="reg-password">Password:</label>
+                <p class="reg-form-field">
+                  <label for="reg-password">Password</label>
                   <input
                     type="password"
                     id="reg-password"
@@ -165,16 +156,8 @@
                     required
                   />
                 </p>
-                <p>
-                  <label for="gdpr">GDPR</label>
-                  <input
-                    type="checkbox"
-                    id="gdpr"
-                    name="reg-user_accept_terms"
-                    required
-                  />
-                </p>
                 <p class="submitButton">
+                   <span style="display: block; height: 1em;"></span>
                   <button
                     type="submit"
                     id="submitRegButton"
@@ -216,15 +199,14 @@
                 </p>
               </form>
             </div>
-            <div class="account-profile" id="profilePage">
+            <div class="account-profile" id="profilePage" style="display: none;">
                 <div class="account-profile__avatar border" id="acc-avatar"></div>
-                </div>
-              <div class="account-profile__name border" id="acc-name"></div>
-              <div
-                class="account-profile__nickname border"
-                id="acc-nickname"
-              ></div>
-          </div>
+                <div class="account-profile__name border" id="acc-name"></div>
+                <div
+                  class="account-profile__nickname border"
+                  id="acc-nickname"
+                ></div>
+            </div>
         </div>
       </section>
     </main>
