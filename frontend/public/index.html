@@ -7,20 +7,24 @@
     <title>Pong</title>
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/style.css" />
+    <style>
+    </style>
   </head>
   <body>
     <header class="main-header max-width-container border">
       <div class="main-header__grid max-width border">
         <div class="main-header__logo border">
           <a href="#" onclick="displayPage('welcome')">
-            <img src="images/logo.png" alt="logo of the page" />
+            <img src="images/logo.png" alt="logo of the page"/>
           </a>
         </div>
         <div class="main-header__profile_name border">
           <h1>Hello, you!</h1>
         </div>
         <div class="main-header__profile border">
-          <img src="images/profile.png" alt="avatar profile" />
+          <a href="#" onclick="displayPage('account')">
+            <img src="images/profile.png" alt="avatar profile"
+          /></a>
         </div>
       </div>
     </header>
@@ -94,6 +98,117 @@
               </div>
             </div>
           </div>
+          <div class="account account-container" id="accountPage">
+            <div class="account-login-reg-choice" id="pageChoice">
+              <button type="button" id="registerButton">
+                <a href="#" onclick="setAccountPage('register')"> Register</a>
+              </button>
+              <button type="button" id="loginButton">
+                <a href="#" onclick="setAccountPage('login')"> Login</a>
+              </button>
+            </div>
+            <div class="account-register" id="registerPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                enctype="multipart/form-data"
+                id="register"
+              >
+                <p class="profile-picture">
+                  <label for="reg-avatar">
+                    <img
+                      src="images/profile.png"
+                      id="avatar"
+                      style="cursor: pointer"
+                      width="50px"
+                      height="50px"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="reg-avatar"
+                    name="reg-user_avatar"
+                    style="display: none"
+                  />
+                </p>
+                <p class="reg-form-field">
+                  <label for="reg-username">Username (login)</label>
+                  <input
+                    type="text"
+                    id="reg-username"
+                    name="reg-user_username"
+                    required
+                  />
+                </p>
+                <p class="reg-form-field">
+                  <label for="reg-dispalyName">Display Name (public)</label>
+                  <input
+                    type="text"
+                    id="reg-dispalyName"
+                    name="reg-user_dispalyName"
+                    required
+                  />
+                </p>
+                <p class="reg-form-field">
+                  <label for="reg-password">Password</label>
+                  <input
+                    type="password"
+                    id="reg-password"
+                    name="reg-user_password"
+                    required
+                  />
+                </p>
+                <p class="submitButton">
+                   <span style="display: block; height: 1em;"></span>
+                  <button
+                    type="submit"
+                    id="submitRegButton"
+                    style="cursor: pointer"
+                  >
+                    Register
+                  </button>
+                </p>
+              </form>
+            </div>
+            <div class="account-login" id="loginPage">
+              <form action="http://127.0.0.1:8080" method="post" id="login">
+                <p>
+                  <label for="login-username">Username:</label>
+                  <input
+                    type="text"
+                    id="login-username"
+                    name="login-user_username"
+                    required
+                  />
+                </p>
+                <p>
+                  <label for="login-password">Password:</label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    name="login-user_password"
+                    required
+                  />
+                </p>
+                <p class="submitButton">
+                  <button
+                    type="submit"
+                    id="submitLogButton"
+                    style="cursor: pointer"
+                  >
+                    Login
+                  </button>
+                </p>
+              </form>
+            </div>
+            <div class="account-profile" id="profilePage" style="display: none;">
+                <div class="account-profile__avatar border" id="acc-avatar"></div>
+                <div class="account-profile__name border" id="acc-name"></div>
+                <div
+                  class="account-profile__nickname border"
+                  id="acc-nickname"
+                ></div>
+            </div>
         </div>
       </section>
     </main>
@@ -106,7 +221,7 @@
       </div>
     </footer>
     <!-- insert scripts  here like this -->
-    <!-- (Sveva): added these two scripts  -->
+    <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>
     <script src="dist/user.js" type="module"></script>
