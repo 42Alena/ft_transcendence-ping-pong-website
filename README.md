@@ -17,6 +17,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 - [Team & Responsibilities](#-team--responsibilities)
 - [Tech & Languages](#-tech--languages)
 - [Project Overview](#-project-overview)
+- [Documentation](#-documentation)
 - [Folder Structure](#-folder-structure-important-parts-only)
 - [How to Run](#-how-to-run)
 - [License](#-license)
@@ -24,6 +25,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 ---
 ## 🌍 About 42 Berlin
+
 
 [42 Berlin](https://42berlin.de/)  **Software Engineering** School is part of the international 42 network:  
 
@@ -54,7 +56,6 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Fastify](https://img.shields.io/badge/Fastify-Backend-000000?logo=fastify&logoColor=white)](https://fastify.dev/)
-[![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socketdotio&logoColor=white)](https://socket.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-DB-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
@@ -63,7 +64,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 
 - **Languages:** TypeScript, HTML, CSS  
 - **Runtime:** Node.js  
-- **Backend:** Fastify, Socket.IO (WSS), SQLite  
+- **Backend:** Fastify, SQLite  
 - **Frontend:** TypeScript + Tailwind (no framework; History API)  
 - **Security & Ops:** HTTPS/WSS; hashed passwords; GDPR (export/anonymize/delete) endpoints; SQLite in **WAL** mode with **foreign_keys=ON**; **Knex** idempotent migrations; `/db/healthz` (PRAGMAs + size); `.env` config (e.g., `SQLITE_PATH`, secrets)
 
@@ -95,8 +96,6 @@ Key features include:
 
 ---
 
-
-
 ## 📌 CURRENT Modules (Main + 7 majors)
 
 > **Current plan (subject-compliant) — may change as the project evolves.**  
@@ -117,19 +116,25 @@ Done! I removed the **Status** column and marked undecided items with **?** in t
 | **Accessibility — Minor: Support on all devices** **                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
 | **Accessibility — Minor: Multiple language support** **                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
 
-### Totals (Counted ✓ only)
 
 * Majors: **4.0** (Backend, User Mgmt, Live Chat, AI)
 * Minors: **2.0** (Tailwind, SQLite, GDPR, Browser Compatibility)
 * **Total = 7.0 majors**
-
- * need  **7.0**  
-
+* need  **7.0**  
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
+---
 
+### 📘 Documentation
 
+* [Resources Used](./docs/resources_used.md) — official docs, APIs, and guides referenced during development
+* [Input & Validation Policies](./docs/policies/policies_whole_project.md) — backend validation rules (username, password, avatar, etc.)
+* [HTTP response codes](./docs/policies/HTTP_response_codes.md) — backend validation rules (username, password, avatar, etc.)
+* [Learn Guides](./docs/learn/) — short explanations of technologies used (Fastify, SQLite, Tailwind, etc.)
+* [Devlogs](./docs/devlog/) — individual team worklogs and pull request notes
+
+[↑ back to top](#-ft_transcendence-ping-pong-website)
 ---
 
 ## 🗂️ Folder Structure (important parts only)
