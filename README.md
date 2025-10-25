@@ -44,7 +44,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 |-|---------|------|--------|
 |🧩|**Alena**| Backend & Real-Time Lead (Backend, Fastify, User Management, Sockets, Chat, DB) | [@42Alena](https://github.com/42Alena) |
 |🎨| **Sveva**| Game & Frontend Lead (Canvas, AI, Tailwind, Customization) | [@svevotti](https://github.com/svevotti) |
-|🔐|  **Luis**| **Database & Data Protection Lead** (SQLite schema & migrations,   data lifecycle, GDPR deletion/anonymization, observability & DB health) | [@Numbersdontlie](https://github.com/Numbersdontlie) |
+|🔐|  **Luis**| **Database & Data Protection Lead** (SQLite schema & migrations,   GDPR ) | [@Numbersdontlie](https://github.com/Numbersdontlie) |
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
@@ -111,18 +111,17 @@ Done! I removed the **Status** column and marked undecided items with **?** in t
 | **AI-Algo — Major: Introduce an AI opponent**                                                                           | Sveva                | `frontend/src/game/**`                                 | Canvas + TS      | AI wins a round               |   **1** |    ✓    |
 | **Web — Minor: Use a framework or a toolkit to build the frontend (Tailwind CSS)**                                      | Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | responsive screenshots        | **0.5** |    ✓    |
 | **Web — Minor: Use a database for the backend (SQLite)**                                                                | Alena Luis                 | `backend/src/db/**`                                    | SQLite + TS      | PRAGMAs / health route        | **0.5** |    ✓    |
-| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
+| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Alena Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
 | **Accessibility — Minor: Expanding browser compatibility**                                                              | Sveva                | `docs/compat.md`, e2e                                  | TS + Tailwind    | Chrome+Firefox matrix         | **0.5** |    ✓    |
-| **Gameplay and user experience — Minor: Game customization options**                                                    | ?                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
-| **Accessibility — Minor: Support on all devices** *(easy add)*                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
-| **AI-Algo — Minor: User and game stats dashboards** *(easy add)*                                                        | ? Luis                 | `backend/src/routes/stats.ts`, `frontend/src/stats/**` | SQLite + TS      | `/me/stats`, `/matches/stats` | **0.5** |  **?**  |
-| **Accessibility — Minor: Multiple language support** *(easy add)*                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
+| **Gameplay and user experience — Minor: Game customization options**                                                    | ? Sveva                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
+| **Accessibility — Minor: Support on all devices** **                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
+| **Accessibility — Minor: Multiple language support** **                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
 
 ### Totals (Counted ✓ only)
 
 * Majors: **4.0** (Backend, User Mgmt, Live Chat, AI)
 * Minors: **2.0** (Tailwind, SQLite, GDPR, Browser Compatibility)
-* **Total = 6.0 majors**
+* **Total = 7.0 majors**
 
  * need  **7.0**  
 

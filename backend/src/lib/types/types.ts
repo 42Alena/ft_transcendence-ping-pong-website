@@ -23,7 +23,7 @@ export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash = string;
 
 
-//___________USER
+//___________USER_______________________________
 // Domain (internal)
 export type User = {
 	readonly id: UserId;
@@ -45,27 +45,18 @@ export type UserPublic = {
 };
 
 
-export type UserRegister = {
-	username: Username;
-	displayName: DisplayName;
-	avatarUrl?: AvatarUrl | null;
-	passwordPlain: PasswordPlain;
-};
-
-export type UserLogin = {
-	username: Username;
-	passwordPlain: PasswordPlain;
-};
-
+//_________PROFILE_____________________
 export type UserUpdateProfile = {
 	displayName?: DisplayName;
 	avatarUrl?: AvatarUrl | null;
 };
 
-export type UserLogin = {
+export type UserChangePAssword = {
 	curPassPlain: PasswordPlain;
 	newPassPlain: PasswordPlain;
 };
+
+
 
 //_____________MATCH
 export type MatchResult = {

@@ -1,44 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/types';
-import type { UserId } from '../lib/types/types';
 
-// import { User } from '../lib/Class/User';
-// import { generateId } from '../lib/utils/generateId';
 
-type GetUserParams = { userId: Types.UserId };
-/* 
-/users (collection, public, read-only for now)
-
-GET /users // list public profiles
-
-GET /users/:id // one public profile by id
-*/
 export function registerUserRoutes(fastify: FastifyInstance, userManager: UserManager) {
-
-	fastify.get("/users", async () => {
-		//for test created user
-		// const usr1 = new User('usr' + Math.random(), generateId())
-		// await userManager.saveUser(usr1)
-		//end test created user
-
-		const users = await userManager.getAllUsers();
-		// return users.map((user) => user.profile());
-	})
-
-	fastify.get<{ Params: GetUserParams }>(
-		"/users/:userId",
-		async (request, reply) => {
-			const { userId } = request.params;   //params: validates the params(https://fastify.dev/docs/latest/Reference/Routes/)
-			// const id = (request.params as any).userId;
-			const user = await userManager.getUserById(userId);
-			if (!user) {
-				return reply.code(404).send({ error: "User not found" });
-			}
-			// return user.profile();
-		})
-
-	// fastify.get
 
 	/* 
 	TODO:
@@ -56,7 +21,6 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	fastify.post("/login", async (req) => {
 	   // check usernmae and rawPassword
 			  // check if user with (username, encryptPssword(rawPassword))
-	   // generate acces token
 	   // save acccess token  : set expiry = add Date.now() + 7d
 	   // return access token
 	   // res.header('set-cookie', 'auth=accessToken')

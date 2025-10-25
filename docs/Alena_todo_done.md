@@ -1,7 +1,8 @@
 # TEMPLATE FOR PULLREQUESTS
 
-________NEW_________________________________
-
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
+-----------------------
 # IDEAS:
 
 # TODO:
@@ -10,12 +11,23 @@ ________NEW_________________________________
 
 ## DB
 ## BACKEND
+	- added types/api
+
 ## FRONTEND
+		- added types/api
 ### Makefile 
-## LINKS/HELP: 
+## LINKS/HELP:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages
+get vs post
+	https://www.w3schools.com/tags/ref_httpmethods.asp 
+	https://www.ionos.de/digitalguide/websites/web-entwicklung/get-vs-post/
+error msg
+	https://www.w3schools.com/tags/ref_httpmessages.asp
 
+--------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
-
+---------------------------------
 
 _________________________________________
 # IDEAS:
@@ -55,6 +67,34 @@ _________________________________________
 	Registration
 
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
+-----------------------
+# IDEAS:
+
+# TODO:
+
+# ____ DONE:
+
+## DB
+## BACKEND
+### routes: Registration: 
+	registration
+	login. After will return generated secret session acces token/string
+	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
+	update profile/ change pass(check subject)  put method
+	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
+## FRONTEND
+### Makefile 
+## LINKS/HELP: 
+# README 
+	deleted module Stats(after todays team meeting)
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
 # ____ DONE:
 
 ## DB
