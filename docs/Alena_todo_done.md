@@ -89,7 +89,8 @@ _________________________________________
 ### DOCUMENTATION
 	HTTP_response_codes.md
 ### TESTS
-	# history | grep curl | uniq
+	 - added backend/tests/users.sh ( history | grep curl | uniq)
+	- added /backend/tests/README.md
 # run in terminal: ./backend/tests/users.sh
 
 ## LINKS/HELP: 
