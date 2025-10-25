@@ -373,3 +373,9 @@
 			display: table-row;
 			text-align: center;
 		}
+
+		/* REGISTER FORM LAYOUT */
+		#registerPage {
+			display: flex;
+			flex-direction: column;
+		}

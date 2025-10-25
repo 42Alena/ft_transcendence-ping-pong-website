@@ -10,6 +10,7 @@ const registerForm : any = document.getElementById("register");
 const loginForm : any = document.getElementById("login");
 
 const regAvatar : any = document.getElementById("reg-avatar");
+const regUsername : any = document.getElementById("reg-username");
 
 const profName : any = document.getElementById("acc-name");
 const profNickname : any = document.getElementById("acc-nickname");
@@ -42,6 +43,30 @@ regAvatar.addEventListener("change", (event : any) => {
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
 
+
+/*validate input real time*/
+regUsername.addEventListener('input', validateName);
+let err : boolean = false;
+
+function validateName() {
+	const nameInput = document.getElementById('reg-username');
+	if (regUsername.checkValidity()) {
+		regUsername.setCustomValidity('');
+	} else {
+		if (err == false)
+		{
+			regUsername.setCustomValidity('Name must be at least 3 characters long.');
+			const errMess : any = document.createElement('p');
+			errMess.textContent = 'Name must be at least 3 characters long.';
+			document.getElementById('box-error')?.append(errMess);
+			setTimeout(() => {
+				errMess.remove();
+			}, 3000);
+		}
+		err = true;
+	}
+	regUsername.reportValidity(); // Show validation message if invalid
+}
 // /*Just to understand how it works and future implementation - disabled submission forms*/
 // function setProfilePage(name : string, nickname : string, avatar : string)
 // {

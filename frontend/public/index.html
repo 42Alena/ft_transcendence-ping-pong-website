@@ -137,6 +137,7 @@
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
+                    minlength="3"
                     required
                   />
                 </p>
@@ -159,7 +160,7 @@
                   />
                 </p>
                 <p class="submitButton">
-                   <span style="display: block; height: 1em;"></span>
+                  <span style="display: block; height: 1em;"></span>
                   <button
                     type="submit"
                     id="submitRegButton"
@@ -169,6 +170,8 @@
                   </button>
                 </p>
               </form>
+              <span style="display: block; height: 1em;"></span>
+              <div class="reg-box-error reg-box-error-container border" id="box-error">Error box</div>
             </div>
             <div class="account-login" id="loginPage">
               <form action="http://127.0.0.1:8080" method="post" id="login">
