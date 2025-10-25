@@ -23,7 +23,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		//end test created user
 
 		const users = await userManager.getAllUsers();
-		// return users.map((user) => user.profile());
+		return users.map((user) => user.toBasicProfile());
 	})
 
 	fastify.get<{ Params: GetUserParams }>(
@@ -35,7 +35,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			if (!user) {
 				return reply.code(404).send({ error: "User not found" });
 			}
-			// return user.profile();
+			return user.toPublicProfile();
 		})
 
 	// fastify.get
@@ -62,7 +62,13 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	   // res.header('set-cookie', 'auth=accessToken')
 	})
 
-	fastify.post("/users/register", async (req) => {
+	fastify.post("/users/register", async (req, reply) => {
+	//take parameter from body to variables
+		const { username, displayName, password, avatarUrl }  = req.body (as Types.RegisterBody)
+
+		if (!username ) return reply.status(400).text("blalbakjalkbjalkjb")
+		if (!password ) return reply.status(400).text("blalbakjalkbjalkjb")
+		
 	   // GOAL: create user record in users db table
 
 	   // validate username/passow/avatar

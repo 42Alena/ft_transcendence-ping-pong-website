@@ -7,23 +7,18 @@
 
 # TODO:
 
-# ____ DONE:
+# ____ DONE:____________________________________
 
-## DB
-## BACKEND
-	- added types/api
+# DB
+# BACKEND
 
-## FRONTEND
-		- added types/api
+# FRONTEND
+
+### DOCUMENTATION
+### TESTS
 ### Makefile 
 ## LINKS/HELP:
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages
-get vs post
-	https://www.w3schools.com/tags/ref_httpmethods.asp 
-	https://www.ionos.de/digitalguide/websites/web-entwicklung/get-vs-post/
-error msg
-	https://www.w3schools.com/tags/ref_httpmessages.asp
+
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
@@ -75,10 +70,12 @@ _________________________________________
 
 # TODO:
 
-# ____ DONE:
+# ____ DONE:________________________
 
 ## DB
 ## BACKEND
+	- added types/api
+	-register user
 ### routes: Registration: 
 	registration
 	login. After will return generated secret session acces token/string
@@ -86,9 +83,35 @@ _________________________________________
 	update profile/ change pass(check subject)  put method
 	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 ## FRONTEND
+		- added types/api
+		-index.html added "errror messagebox"
 ### Makefile 
+### DOCUMENTATION
+	HTTP_response_codes.md
+### TESTS
+	# history | grep curl | uniq
+# run in terminal: ./backend/tests/users.sh
+
 ## LINKS/HELP: 
-# README 
+	https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages
+
+get vs post
+	
+	- https://www.w3schools.com/tags/ref_httpmethods.asp 
+
+	
+	- https://www.ionos.de/digitalguide/websites/web-entwicklung/get-vs-post/
+
+error msg
+	
+ https://www.w3schools.com/tags/ref_httpmessages.asp
+
+eeror codes
+
+	https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
+### README 
 	deleted module Stats(after todays team meeting)
 
 --------------------------

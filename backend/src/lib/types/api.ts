@@ -5,7 +5,7 @@ import *  from '../types/UserTypes';
 or 
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
-
+// backend/public/avatars/default.png
 export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
@@ -26,7 +26,7 @@ export type ApiError = { error: string; code?: string; details?: unknown };
 export type RegisterBody = {
 	username: Username;
 	displayName: DisplayName;
-	avatarUrl?: AvatarUrl | null;
+	avatarUrl: AvatarUrl | null;
 	passwordPlain: PasswordPlain;
 };
 

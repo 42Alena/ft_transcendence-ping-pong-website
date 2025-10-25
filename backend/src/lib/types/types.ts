@@ -24,6 +24,7 @@ export type PasswordHash = string;
 
 
 //___________USER_______________________________
+
 // Domain (internal)
 export type User = {
 	readonly id: UserId;
@@ -55,7 +56,6 @@ export type UserChangePAssword = {
 	curPassPlain: PasswordPlain;
 	newPassPlain: PasswordPlain;
 };
-
 
 
 //_____________MATCH

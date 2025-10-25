@@ -19,26 +19,24 @@ import type *  as Types from '../types/types';
 // (Luis importing the DTOs to ensure consistency between class and DTOs)
 // import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
 
+// If only this file needs it, keep it local:
+type UserInit = Types.User & { passwordHash: Types.PasswordHash };
+
 export class User implements Types.User {
 
 	readonly id: Types.UserId; 				// set in constructor, read anywhere in programm, not changeable
 	username: Types.Username;
 	displayName: Types.DisplayName;
+	passwordHash: Types.PasswordHash;
 	avatarUrl: Types.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
 	lastSeenAt: Date | null;                    //changed from userStatus
 
 
-	constructor(init: {
-		id: Types.UserId;
-		username: Types.Username;
-		displayName: Types.DisplayName;
-		avatarUrl?: Types.AvatarUrl | null;
-		lastSeenAt?: Date | null;
-	}) {
-
+	constructor(init:  UserInit) {
 		this.id = init.id;
 		this.username = init.username;
 		this.displayName = init.displayName;
+		this.passwordHash = init.passwordHash;
 		this.avatarUrl = init.avatarUrl ?? null;
 		this.lastSeenAt = init.lastSeenAt ?? null;
 	}
@@ -49,6 +47,7 @@ export class User implements Types.User {
 			id: row.id as Types.UserId,
 			username: row.username as Types.Username,
 			displayName: row.displayName as Types.DisplayName,
+			passwordHash: row.passwordHash as Types.PasswordHash,
 			avatarUrl: (row.avatarUrl ?? null) as Types.AvatarUrl | null,
 			lastSeenAt: row.lastSeenAt ? new Date(row.lastSeenAt) : null,
 		})
@@ -61,6 +60,7 @@ export class User implements Types.User {
 			id: this.id,
 			username: this.username,
 			displayName: this.displayName,
+			passwordHash: this.passwordHash,
 			avatarUrl: this.avatarUrl,
 			lastSeenAt: this.lastSeenAt ? this.lastSeenAt.toISOString() : null,
 		}
@@ -68,25 +68,25 @@ export class User implements Types.User {
 
 
 
-/* return a clean object for frontend (id, name, wins, losses,  online)
-This is needed for /user/register and /user/profile
-@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-*/
-toPublic(): Types.UserPublic {
-	return {
-		id: this.id,
-		displayName: this.displayName,
-		avatarUrl: this.avatarUrl,
-	};
-}
+	/* return a clean object for frontend (id, name, wins, losses,  online)
+	This is needed for /user/register and /user/profile
+	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
+	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+	*/
+	toPublicProfile(): Types.UserPublic {
+		return {
+			id: this.id,
+			displayName: this.displayName,
+			avatarUrl: this.avatarUrl,
+		};
+	}
 
-toBasic(): Types.UserBasic {
-	return {
-		id: this.id,
-		displayName: this.displayName,
-	};
-}
+	toBasicProfile(): Types.UserBasic {
+		return {
+			id: this.id,
+			displayName: this.displayName,
+		};
+	}
 
 
 }

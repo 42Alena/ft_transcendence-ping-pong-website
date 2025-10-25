@@ -112,5 +112,5 @@
   },
   "include": [
     "./src/*.ts"
-  ],
+, "src/types"  ],
 }

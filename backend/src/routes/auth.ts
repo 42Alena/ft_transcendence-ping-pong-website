@@ -1,9 +1,12 @@
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
-import type *  as Types from '../lib/types/types';
+import type *  as Types from '../lib/types/api';
+import { User } from '../lib/services/User';
+import { generateId } from '../lib/utils/randomId';
+import { hashPassword } from '../lib/utils/password';
 
 
-export function registerUserRoutes(fastify: FastifyInstance, userManager: UserManager) {
+export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
 	/* 
 	TODO:
@@ -100,22 +103,52 @@ fetch('/users/me'); // browser will attach cookie automatically
 
 	//TODO: create user id
 
+	function normalizeAvatar(v: unknown): Types.AvatarUrl | null {
+		if (typeof v === "string") {
+			const s = v.trim();
+			return s !== "" ? (s as Types.AvatarUrl) : null;
+		}
+		return null;
+	}
+
+	const sendError = (res: FastifyReply, error: string, field: string) => {
+		// { [field]: error }
+		return res.status(400).send({ error, field })
+	}
 
 	/*   FOR LATER
-	fastify.post("/user/register", async (req, res) => {
+	fastify.get('/res', handler)
+	*/
+	fastify.post("/user/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
+		const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
 
-		const { name, avatarUrl } = req.body as any;
+		if (!displayName) {
+			return sendError(res, "No display name", "displayName")
+		}
 
+		if (!passwordPlain) {
+			return sendError(res, "No password", "passwordPlain")
+		}
+
+		// if (!avatarUrl) {
+		// 	return sendError(res, "No password", "passwordPlain")
+		// }
 
 		try {
-			const newUser = new User(name, generateId())
-
+			const newUser = new User({
+				id: generateId(),
+				username,
+				displayName,
+				passwordHash: await hashPassword(passwordPlain),
+				avatarUrl: normalizeAvatar(avatarUrl),
+				lastSeenAt: null,
+			})
+			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)
-			return newUser.profile();
+			return newUser.toPublicProfile();
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
-	}
-	*/
+	});
 }
