@@ -1,5 +1,9 @@
 # Profile Page requirements
 
+### profiles must be visible only to authenticated users
+	Public (no login): main page /, login /login, register /register.
+
+	Private (login required): /profile/:id (any profile), chat, friends, matches.
 
 # 🧍‍♀️ MY PROFILE (own profile view)
 
@@ -114,3 +118,42 @@ Those belong to the **tabs** below.
 * “Invite to Play” button = only on **other user’s profile**.
 * Friendship = **mutual** (backend inserts both directions).
 * Username = only in **Account/Settings** (read-only, private).
+
+---
+# profiles must be visible only to authenticated users
+
+
+
+# Access rules
+
+* **Public (no login):** main page **/**, login **/login**, register **/register**.
+* **Private (login required):** **/profile/:id** (any profile), chat, friends, matches.
+
+# Redirects (SPA)
+
+
+
+* **After successful registration →** `/profile/{me}?tab=settings`
+* **After login →** `/`
+* **Click “My Profile” (menu) →** `/profile/{me}`
+* **Click a username (chat/friends/matches) →** `/profile/{id}`
+* **Open any `/profile/:id` while unauthenticated →** `/login`
+* **After account deletion →** `/` *(or `/login` if you also clear auth there)*
+* **Profile not found →** `/not-found` *(or show a 404 view)*
+
+(No redirect after saving settings; stay on the same tab.)
+
+
+# Backend enforcement (must)
+
+* Protect API routes:
+
+  * `GET /users/:id/profile` → **401** if no/invalid auth.
+  * `GET /me/settings` → **401** if no auth.
+* Never return `username` in public profile payloads.
+* Compute flags server-side: `isSelf`, `friendshipStatus`, `canInvite`, `isBlockedByMe`, `hasBlockedMe`.
+
+# Frontend conditionals (display only after auth)
+
+* Render profile page **only after** successful fetch of `/users/:id/profile`.
+* If fetch returns **401**, route to **/login**.

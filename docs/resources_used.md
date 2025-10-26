@@ -11,3 +11,8 @@
 ### ⚠️ Error Messages & Status Codes
 - [W3Schools – HTTP Messages](https://www.w3schools.com/tags/ref_httpmessages.asp)
 - [MDN – HTTP Status Codes Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+
+
+## Typescript
+	https://developer.mozilla.org/en-US/docs/Glossary/TypeScript
+

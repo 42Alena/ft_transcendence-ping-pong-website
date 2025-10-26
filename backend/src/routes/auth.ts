@@ -4,9 +4,8 @@ import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
 import { generateId } from '../lib/utils/randomId';
 import { hashPassword } from '../lib/utils/password';
+import * as Validate from '../lib/utils/validators';
 
-
-export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
 	/* 
 	TODO:
@@ -20,7 +19,6 @@ export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserMa
 	// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
 
 
-
 	fastify.post("/login", async (req) => {
 	   // check usernmae and rawPassword
 			  // check if user with (username, encryptPssword(rawPassword))
@@ -28,120 +26,64 @@ export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserMa
 	   // return access token
 	   // res.header('set-cookie', 'auth=accessToken')
 	})
+*/
+export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
-	fastify.post("/users/register", async (req) => {
-	   // GOAL: create user record in users db table
-
-	   // validate username/passow/avatar
-	   // pass -> encryptPassword (bcrypt / sha512) -> passwordHash
-	   // save in db
-
-	   // OPTIONAL goal: create access token right away and return it
-	   // return access token optional
-	   // 
-	})
-
-how frontend will work with access tokens:
-//1 header
-/// frontend will have to store access token somehwere.. sessionStorage/localStorage/indexedDb
-fetch('/users/me', {
-  headers: {
-	Authorization: `Bearer: ${accessToken}`
-  }
-})
-//2 cookies
-fetch('/users/me'); // browser will attach cookie automatically
-
-
-	// auth flow for user-only resource
-	fastify.post("/only/secure/123", async (req, res) => {
-	  // 1. get access token from req
-	  //   req.headers('Authorization')  https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Authorization
-	  //   req.cookies() ///  same header  https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies 
-	  // 2 if no token - 401 (auth required)
-	  // 3 if token -> validate token
-	  // 3.1 - check access token db if this token is present
-	  // 3.2 -> no token -> 401 (auth required)
-	  // 3.3 -> token exists and not expired -> return user_id
-	  // (optional) 4. if token.user_id !== 123 -> 403 access denied
-
-	  // business as usual: token.user_id -> authenticated user
-	});
-
-	async function getUserFromRequest(req): Promise<User> {
-	 // 1. get authentication header
-	 // 2. get cookie ("auth")
-	 // check db if token is present
-	 // userManager.getById(token.user_id)
-	 // return User()
-	 // if no user -> throw Error()
-	}
-	
-	*/
-
-	// fastify.post("/user", async (req, res) => {
-	// 	console.log('Register user', req.body)
-
-	// 	const { name, avatarUrl } = req.body as any;
-
-
-	// 	try {
-	// 		const newUser = new User(name, generateId())
-
-	// 		await userManager.saveUser(newUser)
-	// 		return newUser.profile();
-	// 	} catch (e: any) {
-	// 		return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
-	// 	}
-	// });
-
-	// const handler = async () => {};
-	// fastify.get('/path', handler)
-
-	//register handler
-
-
-	//TODO: create user id
-
-	function normalizeAvatar(v: unknown): Types.AvatarUrl | null {
-		if (typeof v === "string") {
-			const s = v.trim();
-			return s !== "" ? (s as Types.AvatarUrl) : null;
-		}
-		return null;
-	}
 
 	const sendError = (res: FastifyReply, error: string, field: string) => {
 		// { [field]: error }
 		return res.status(400).send({ error, field })
 	}
 
-	/*   FOR LATER
+
+	/*  "/user/register" 
+	GOAL: create user record in users db table
+
+	   validate username/passow/avatar
+	   pass -> encryptPassword (bcrypt / sha512) -> passwordHash
+	   save in db
+
+	   OPTIONAL goal: create access token right away and return it
+	   return access token optional
 	fastify.get('/res', handler)
+	dont trimm passwordPlain(can have empty chars)
+
 	*/
 	fastify.post("/user/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
-		const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
+		const body = req.body as Types.RgisterBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
 
-		if (!displayName) {
-			return sendError(res, "No display name", "displayName")
-		}
+		const username = Validate.normalizeString(body.username)
+		const displayName = Validate.normalizeString(body.displayName)
+		const passwordPlain = body.paswordPlain;
+		const avatarUrl = Validate.normalizeString(body.avatarUrl)
 
-		if (!passwordPlain) {
-			return sendError(res, "No password", "passwordPlain")
-		}
+		//username
+		if (!username) { return sendError(res, "No user name", "userName") }
+		if (Validate.validateName(username)) { return sendError(res, "Display name is taken", "userame") }
 
-		// if (!avatarUrl) {
-		// 	return sendError(res, "No password", "passwordPlain")
-		// }
+		//display name
+		if (!displayName) { return sendError(res, "No display name", "displayName") }
+		const validateDisplayNameError = Validate.validateName(displayName);
+		if (validateDisplayNameError) { return sendError(res, validateDisplayNameError, "displayName") }
+		if (await userManager.isDisplayNameTaken(displayName)) { return sendError(res, "Display name is taken", "displayName") }
 
+		//passwordPlain
+		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
+		const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
+		if (validatePassError) { return sendError(res, validatePassError, "passwordPlain") }
+
+
+		// check uniq displayname
 		try {
+
 			const newUser = new User({
 				id: generateId(),
 				username,
 				displayName,
 				passwordHash: await hashPassword(passwordPlain),
-				avatarUrl: normalizeAvatar(avatarUrl),
+				avatarUrl: avatarUrl ? avatarUrl : null,
 				lastSeenAt: null,
 			})
 			console.debug("Saving new user", newUser)

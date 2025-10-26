@@ -47,6 +47,7 @@ Not required for evaluation — used for organization and pull request preparati
 	- added types/api
 	- register user
 	- added backend/tests/users.sh ( history | grep curl | uniq)
+	- validateName() validatePassword()
 	-  POST /register
 	
 ## FRONTEND
@@ -61,7 +62,7 @@ Not required for evaluation — used for organization and pull request preparati
 	- deleted module Stats(after todays team meeting)
 	- HTTP_response_codes.md
 	- docs/policies/policies_whole_project.md 
-	
+	- Profile Page requirements: docs/policies/profile.md 
 ## 🔗 LINKS / HELP
 
 ### 🌐 HTTP Basics
