@@ -11,8 +11,8 @@ const loginForm : any = document.getElementById("login");
 
 const regAvatar : any = document.getElementById("reg-avatar");
 
-const profName : any = document.getElementById("acc-name");
-const profNickname : any = document.getElementById("acc-nickname");
+const profName : any = document.getElementById("acc-username");
+const profNickname : any = document.getElementById("acc-displayName");
 const profAvatar : any = document.getElementById("acc-avatar");
 
 let userIsLoggedIn : boolean = false;
@@ -41,6 +41,44 @@ regAvatar.addEventListener("change", (event : any) => {
 	const img : any = document.getElementById("avatar");
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
+
+/* Releated to profile page */
+
+/*Implementation to display page triggered by menu */
+//divs in menu
+const settingsDiv : any = document.getElementById("acc-settings");
+const friendsDiv : any = document.getElementById("acc-friends");
+const matchesDiv : any = document.getElementById("acc-matches");
+
+//page
+const settingsPage : any = document.getElementById("update-settings");
+const friendsPage : any = document.getElementById("friends");
+const matchesPage : any = document.getElementById("matches");
+
+//event on each div
+settingsDiv.addEventListener("click", (event : any) => {
+	console.log("settings page");
+	settingsPage.style.display = "flex";
+	friendsPage.style.display = "none";
+	matchesPage.style.display = "none";
+});
+
+friendsDiv.addEventListener("click", (event : any) => {
+	console.log("friends page");
+	friendsPage.style.display = "grid";
+	settingsPage.style.display = "none";
+	matchesPage.style.display = "none";
+});
+
+matchesDiv.addEventListener("click", (event : any) => {
+	console.log("matches page");
+	matchesPage.style.display = "flex";
+	settingsPage.style.display = "none";
+	friendsPage.style.display = "none";
+});
+
+/*Implementation to display "personal" profile page
+You can see settings in menu and being able to edit
 
 // /*Just to understand how it works and future implementation - disabled submission forms*/
 // function setProfilePage(name : string, nickname : string, avatar : string)
