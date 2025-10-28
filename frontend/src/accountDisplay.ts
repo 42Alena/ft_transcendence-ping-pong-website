@@ -22,7 +22,9 @@ const profileSettingsPage : any = document.getElementById("update-settings");
 
 const profileFriendsPageButtons : any = document.getElementById("friend-buttons");
 
-let userIsLoggedIn : boolean = false;
+// (Alena) begin temporary for error
+const errorsElm = document.getElementById('reg-errors');
+// (Alena) begin temporary for error
 
 /*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
