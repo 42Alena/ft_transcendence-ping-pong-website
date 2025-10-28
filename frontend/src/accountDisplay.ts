@@ -1,30 +1,60 @@
+//pages
 const registerPage : any = document.getElementById("registerPage");
 const loginPage : any = document.getElementById("loginPage");
 const profilePage : any = document.getElementById("profilePage");
 const choicePage : any = document.getElementById("pageChoice");
-
-const submitButton : any = document.getElementById("submitRegButton");
-const loginButton : any = document.getElementById("submitLogingButton");
-
+//register form
 const registerForm : any = document.getElementById("register");
-const loginForm : any = document.getElementById("login");
-
 const regAvatar : any = document.getElementById("reg-avatar");
-
+const submitButton : any = document.getElementById("submitRegButton"); //button
+//login form
+const loginForm : any = document.getElementById("login");
+const loginButton : any = document.getElementById("submitLogingButton"); //button
+//profile page
 const profileUsername : any = document.getElementById("acc-username");
 const profileDisplayName : any = document.getElementById("acc-displayName");
 const profileAvatar : any = document.getElementById("acc-avatar");
 const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
-const profileActions : any = document.getElementById("acc-actions");
-
+const profileActions : any = document.getElementById("acc-actions"); //buttons
+//buttons
+const profileAddFriend : any = document.getElementById("add-friend__header");
+const profileRemoveFriend : any = document.getElementById("remove-friend__header");
+const profileBlockFriend : any = document.getElementById("block-friend__header");
+const profileInviteFriend : any = document.getElementById("invite-friend__header");
+//settings page
 const profileMenuSettings : any = document.getElementById("acc-settings");
 const profileSettingsPage : any = document.getElementById("update-settings");
+const profileSettingsForm : any = document.getElementById("settings");
+//friend page
+const profileFriendsPageButtons : any = document.getElementById("friend-buttons"); //buttons
+//buttons
+const addFriend : any = document.getElementById("add-friend__page");
+const removeFriend : any = document.getElementById("remove-friend__page");
+const blockFriend : any = document.getElementById("block-friend__page");
 
-const profileFriendsPageButtons : any = document.getElementById("friend-buttons");
+//events on registration
+registerForm.addEventListener("submit", (event : any) => {
+	// (Alena) begin temporary for error
+	const errorsElm = document.getElementById('reg-errors');
+	// (Alena) begin temporary for error
+});
 
-// (Alena) begin temporary for error
-const errorsElm = document.getElementById('reg-errors');
-// (Alena) begin temporary for error
+//event on login
+loginForm.addEventListener("submit", (event));
+
+//event on setting page
+profileSettingsForm.addEventListener("submit", (event));
+
+//events on profile button
+profileAddFriend.addEventListener("click", (event));
+profileRemoveFriend.addEventListener("click", (event));
+profileBlockFriend.addEventListener("click", (event));
+profileInviteFriend.addEventListener("click", (event));
+addFriend.addEventListener("click", (event));
+removeFriend.addEventListener("click", (event));
+blockFriend.addEventListener("click", (event));
+
+
 
 /*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
@@ -70,7 +100,7 @@ profileActions.style.display = "none"; //flex for others' view
 //header username
 profileUsername.style.display = "flex"; //none for others' view
 //settings menu + settings page
-profileMenuSettings.style.display = "flex"; //none for others' view
+profileMenuSettings.style.display = "block"; //none for others' view
 profileSettingsPage.style.display = "flex"; //none for others' view
 //friends button requests in friend page
 profileFriendsPageButtons.style.display = "flex"; //none for others' view

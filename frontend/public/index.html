@@ -171,10 +171,10 @@
                 </div>
                 <div class="actions" id="acc-actions"
                   style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" style="display: flex; justify-content: center;">add friend</button>
-                  <button class="remove-friend" style="display: flex; justify-content: center;">remove friend</button>
-                  <button class="block-friend" style="display: flex; justify-content: center;">block friend</button>
-                  <button class="invite-friend" style="display: flex; justify-content: center;">invite friend</button>
+                  <button class="add-friend" type="button" id="add-friend__header" style="display: flex; justify-content: center;">add friend</button>
+                  <button class="remove-friend" type="button" id="remove-friend__header" style="display: flex; justify-content: center;">remove friend</button>
+                  <button class="block-friend" type="button" id="block-friend__header" style="display: flex; justify-content: center;">block friend</button>
+                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">invite friend</button>
                 </div>
               </div>
             </div>
@@ -188,7 +188,7 @@
               <div class="account-profile__page-settings border" id="update-settings">
                 <div class="account-profile__page-settings-pi border">
                   <h3>Edit information</h3>
-                  <form class="update-settings-form" role="updateSettings">
+                  <form class="update-settings-form" role="updateSettings" id="settings">
                     <p class="profile-picture">
                       <label for="reg-avatar">
                         <img src="images/profile/orange.png" id="avatar" style="cursor: pointer" width="50px"
@@ -223,11 +223,11 @@
                     <p class="form-group">
                       <label class="col-md-3 control-label"></label>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="submit" class="btn btn-primary" value="Save Changes">
-                      <input type="submit" class="btn btn-default" value="Cancel">
+                      <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes">
+                      <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
                     </p>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="button" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
+                      <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
                     </p>
                 </div>
                 </form>
@@ -241,9 +241,9 @@
                     </div>
                     <div class="friend-action" id="friend-buttons"
                       style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                      <button class="add-friend">add friend</button>
-                      <button class="remove-friend">remove friend</button>
-                      <button class="block-friend">block friend</button>
+                      <button class="add-friend" type="button" id="add-friend__page">add friend</button>
+                      <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
+                      <button class="block-friend" type="button" id="block-friend__page">block friend</button>
                     </div>
                   </div>
                 </div>
