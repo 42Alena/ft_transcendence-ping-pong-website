@@ -11,12 +11,20 @@ const loginForm : any = document.getElementById("login");
 
 const regAvatar : any = document.getElementById("reg-avatar");
 
-const profName : any = document.getElementById("acc-username");
-const profNickname : any = document.getElementById("acc-displayName");
-const profAvatar : any = document.getElementById("acc-avatar");
+const profileUsername : any = document.getElementById("acc-username");
+const profileDisplayName : any = document.getElementById("acc-displayName");
+const profileAvatar : any = document.getElementById("acc-avatar");
+const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
+const profileActions : any = document.getElementById("acc-actions");
+
+const profileMenuSettings : any = document.getElementById("acc-settings");
+const profileSettingsPage : any = document.getElementById("update-settings");
+
+const profileFriendsPageButtons : any = document.getElementById("friend-buttons");
 
 let userIsLoggedIn : boolean = false;
 
+/*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
 {
 	if (text == "login")
@@ -34,8 +42,16 @@ function setAccountPage(text : string)
 		loginPage.style.display = "none";
 		profilePage.style.display = "none";
 	}
+	else if (text == "profile")
+	{
+		profilePage.style.display = "grid";
+		choicePage.style.display = "none";
+		loginPage.style.display = "none";
+		registerPage.style.display = "none";
+	}
 }
 
+// It makes the preview of the avatar the user wants to upload
 regAvatar.addEventListener("change", (event : any) => {
 	console.log('change event caught');
 	const img : any = document.getElementById("avatar");
@@ -44,7 +60,22 @@ regAvatar.addEventListener("change", (event : any) => {
 
 /* Releated to profile page */
 
-/*Implementation to display page triggered by menu */
+/* Implementation to choose which profile page to display: personal or other's users*/
+/* Now just change the value of each element to display different profile pages
+ I will implement logic after getting visibility flag for server*/
+//header friend actions
+profileActions.style.display = "none"; //flex for others' view
+//header username
+profileUsername.style.display = "flex"; //none for others' view
+//settings menu + settings page
+profileMenuSettings.style.display = "flex"; //none for others' view
+profileSettingsPage.style.display = "flex"; //none for others' view
+//friends button requests in friend page
+profileFriendsPageButtons.style.display = "flex"; //none for others' view
+//change avatar in header
+profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
+
+/*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv : any = document.getElementById("acc-settings");
 const friendsDiv : any = document.getElementById("acc-friends");
@@ -55,88 +86,21 @@ const settingsPage : any = document.getElementById("update-settings");
 const friendsPage : any = document.getElementById("friends");
 const matchesPage : any = document.getElementById("matches");
 
-//event on each div
+//event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
-	console.log("settings page");
 	settingsPage.style.display = "flex";
 	friendsPage.style.display = "none";
 	matchesPage.style.display = "none";
 });
 
 friendsDiv.addEventListener("click", (event : any) => {
-	console.log("friends page");
 	friendsPage.style.display = "grid";
 	settingsPage.style.display = "none";
 	matchesPage.style.display = "none";
 });
 
 matchesDiv.addEventListener("click", (event : any) => {
-	console.log("matches page");
 	matchesPage.style.display = "flex";
 	settingsPage.style.display = "none";
 	friendsPage.style.display = "none";
 });
-
-/*Implementation to display "personal" profile page
-You can see settings in menu and being able to edit
-
-// /*Just to understand how it works and future implementation - disabled submission forms*/
-// function setProfilePage(name : string, nickname : string, avatar : string)
-// {
-// 	profName.textContent = "Name: " + name;
-// 	profNickname.textContent = "NickName: " + nickname;
-// 	const imgElement = document.createElement("img");
-//     imgElement.src = avatar;
-//     profAvatar.appendChild(imgElement);
-// }
-
-// let usersList : FormData[] = [];
-// let newUser : FormData = new FormData();
-// newUser.append('name', 'sveva');
-// newUser.append('nickname', 'sve');
-// newUser.append('avatar', './images/blue.png');
-
-// let newUser1 : FormData = new FormData();
-// newUser.append('name', 'alena');
-// newUser.append('nickname', 'ale');
-// newUser.append('avatar', './images/green.png');
-
-// let newUser2 : FormData = new FormData();
-// newUser.append('name', 'luis');
-// newUser.append('nickname', 'lui');
-// newUser.append('avatar', './images/purple.png');
-
-
-// registerForm.addEventListener("submit", (event : any) => {
-
-// 	event.preventDefault()
-	
-// 	console.log('disable reg form submission');
-// 	alert('registration was a success');
-// 	setAccountPage('login');
-// });
-
-// loginForm.addEventListener("submit", (event : any) => {
-// 	event.preventDefault();
-
-// 	let loggedUser : FormData = new FormData();
-// 	loggedUser.append('name', 'sveva');
-// 	loggedUser.append('nickname', 'sve');
-// 	loggedUser.append('avatar', './images/blue.png');
-// 	console.log('disable log form submission');
-// 	userIsLoggedIn = true;
-// 	const nameEntry = loggedUser.get('name');
-// 	const nicknameEntry = loggedUser.get('nickname');
-// 	const avatarEntry = loggedUser.get('avatar');
-
-// 	const name = nameEntry !== null ? nameEntry.toString() : '';
-// 	const nickname = nicknameEntry !== null ? nicknameEntry.toString() : '';
-// 	const avatar = avatarEntry !== null ? avatarEntry.toString() : '';
-
-// 	setProfilePage(name, nickname, avatar);
-// 	console.log('page is visible?');
-// 	displayPage('account');
-// });
-
-
-
