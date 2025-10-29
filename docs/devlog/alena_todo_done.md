@@ -43,12 +43,14 @@ Not required for evaluation — used for organization and pull request preparati
 -----------------------
 
 ## DB
-## BACKEND
-	- added types/api
+	-  added  username     case insencitive (COLLATE NOCASE)
+## BACKEND added:
+	- types/api
 	- register user
 	- added backend/tests/users.sh ( history | grep curl | uniq)
 	- validateName() validatePassword()
 	-  POST /register
+	- normalize name9 case insensitive, .normalize("NFKC")  // unify Unicode  chars
 	
 ## FRONTEND
 		- added types/api
@@ -56,6 +58,11 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### TESTS
 	-  run in terminal: ./backend/tests/users.sh
+
+	- in terminal: curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admn" }' -v 
+
+	- in console browser. copy ft register without types  and run: apiAuthRegister({
+"username": "dcba", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "ardmn" }) 
 
 ## 📘 DOCUMENTATION
 	- added /backend/tests/README.md

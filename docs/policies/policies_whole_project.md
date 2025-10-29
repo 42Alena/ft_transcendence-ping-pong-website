@@ -19,13 +19,13 @@ All checks are enforced **server-side**, as required by the subject.
 - **Regex:** `^[A-Za-z][A-Za-z0-9_]{2,9}$`  → total length **3–10**
 
 ### Username
-- **Uniqueness:** not required  
+- **Uniqueness:** required   (case-insensitive) example: Alena= alena
 - Store both:
   - **Original** (as entered)
   - **Canonical** (lowercased) for comparison
 
 ### Display Name
-- **Uniqueness:** required (case-insensitive)  
+- **Uniqueness:** required (case-insensitive)  example: Alena= alena
 - Same format rules as username
 
 ---

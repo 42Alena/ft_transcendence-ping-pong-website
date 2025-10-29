@@ -17,8 +17,16 @@ export class UserManager {
 		this.dbTableBlocks = db('blocks');
 	}
 
+	async getUserByUsername(username: Types.Username): Promise<User | null> {
+		const row = await this.dbTableUser().where({ username : username }).first()
+		if (!row) {
+			return null;
+		}
+		return User.fromDB(row)
+	}
 
-	//___________ID__________
+
+
 	async getUserById(userId: Types.UserId): Promise<User | null> {
 		const row = await this.dbTableUser().where({ id: userId }).first()
 		if (!row) {
@@ -53,12 +61,16 @@ export class UserManager {
 
 	//__________is NAME...
 	async isUsernameTaken(username: string): Promise<boolean> {
-		const row = await this.dbTableUser().where({ username }).first();
+		const row = await this.dbTableUser()
+			.whereRaw('LOWER(displayName) = LOWER(?)', [username])
+			.first();
 		return !!row;
 	}
 
 	async isDisplayNameTaken(displayName: string): Promise<boolean> {
-		const row = await this.dbTableUser().where({ displayName }).first();
+		const row = await this.dbTableUser()
+			.whereRaw('LOWER(displayName) = LOWER(?)', [displayName])
+			.first();
 		return !!row;
 	}
 

@@ -3,39 +3,15 @@ import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
 import { generateId } from '../lib/utils/randomId';
-import { hashPassword } from '../lib/utils/password';
+import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
 
 
-	/* 
-	TODO:
-	registration
-	login. After will return generated secret session acces token/string
-	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
-	update profile/ change pass(check subject)  put method
-	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
-
-	// can use cookies to store access tokens:
-	// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
 
 
-	fastify.post("/login", async (req) => {
-	   // check usernmae and rawPassword
-			  // check if user with (username, encryptPssword(rawPassword))
-	   // save acccess token  : set expiry = add Date.now() + 7d
-	   // return access token
-	   // res.header('set-cookie', 'auth=accessToken')
-	})
-*/
-export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
 
-	const sendError = (res: FastifyReply, error: string, field: string) => {
-		// { [field]: error }
-		return res.status(400).send({ error, field })
-	}
-
-
+/* 
 	/*  "/user/register" 
 	GOAL: create user record in users db table
 
@@ -49,19 +25,54 @@ export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserMa
 	dont trimm passwordPlain(can have empty chars)
 
 	*/
+export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
+
+
+	const sendError = (res: FastifyReply, error: string, field: string, statusCode = 400) => {
+		// { [field]: error }
+		return res.status(statusCode).send({ error, field })
+	}
+
+
+
+
+
+	/* 
+TODO:
+registration
+login. After will return generated secret session acces token/string
+online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
+update profile/ change pass(check subject)  put method
+add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
+
+// can use cookies to store access tokens:
+// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
+
+
+fastify.post("/login", async (req) => {
+   // check usernmae and rawPassword
+		  // check if user with (username, encryptPssword(rawPassword))
+   // save acccess token  : set expiry = add Date.now() + 7d
+   // return access token
+   // res.header('set-cookie', 'auth=accessToken')
+})
+
+
+*/
 	fastify.post("/user/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
-		const body = req.body as Types.RgisterBody;
+		const body = req.body as Types.RegisterBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
 
-		const username = Validate.normalizeString(body.username)
-		const displayName = Validate.normalizeString(body.displayName)
-		const passwordPlain = body.paswordPlain;
+		const username = Validate.normalizeName(body.username)
+		const displayName = Validate.normalizeName(body.displayName)
+		const passwordPlain = body.passwordPlain;
 		const avatarUrl = Validate.normalizeString(body.avatarUrl)
 
 		//username
 		if (!username) { return sendError(res, "No user name", "userName") }
-		if (Validate.validateName(username)) { return sendError(res, "Display name is taken", "userame") }
+		const validateUsernameError = Validate.validateName(username);
+		if (validateUsernameError) { return sendError(res, validateUsernameError, "userame") }
 
 		//display name
 		if (!displayName) { return sendError(res, "No display name", "displayName") }
@@ -92,5 +103,37 @@ export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserMa
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
+
 	});
+
+
+
+
+	fastify.post("/user/login", async (req, res: FastifyReply) => {
+		console.log('Register user', req.body)
+		const body = req.body as Types.LoginBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
+
+		const username = Validate.normalizeName(body.username)
+		const passwordPlain = body.passwordPlain;
+
+
+		if (!username) { return sendError(res, "No user name", "userName") }
+		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
+
+
+
+		const user = await userManager.getUserByUsername(username);
+
+		if (!user) { return sendError(res, "No user", "username", 401) }
+
+		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect pacssword", "passwordPlain", 401) }
+
+		
+
+	});
+
+
+
+
 }

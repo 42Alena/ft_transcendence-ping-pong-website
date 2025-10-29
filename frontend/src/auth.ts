@@ -7,11 +7,12 @@ import type *  as Types from './types/api.ts';
 
 
 const SERVER = 'http://localhost:3000'
-// [{username: 'Alena',displayName: "akurmyza", , pasword: "fksadjfkl", avatar: "default.png"}]
+
+/* // [{username: 'Alena',displayName: "akurmyza", , pasword: "fksadjfkl", avatar: "default.png"}] */
 export async function apiAuthRegister(data: Types.RegisterBody) {
 	const payload = JSON.stringify(data) // string  JSON
 
-	const req = await fetch(`${SERVER}/auth/register`, {
+	const response = await fetch(`${SERVER}/user/register`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -20,15 +21,29 @@ export async function apiAuthRegister(data: Types.RegisterBody) {
 	})
 
 	// check response status code
+	console.log(response.status, response.statusText, response.ok)
 
-	console.log(req)
-	const res = await req.json();
+	// console.log(response)
+
+	//only 1 time can be read from stream
+	const responseBody = await response.json() as Types.UserPublic; // parsed payload;
+
 	// if res.error ... res.field
 	// if 400 -> throw error
 //parse json??
 	// either show errorrs, or succes
 
-	return req
+
+	if (response.status !== 200) {
+		return {
+			succes: false,
+			errors: responseBody
+		}
+		// throw new ApiError(responseRegister)
+	}
+
+	
+	return { success: true, data: responseBody }
 }
 
 // [{username: 'Alena', pasword: "fksadjfkl"}]
@@ -48,7 +63,7 @@ in index.html
 /* 
 later
 in accountDisplay.ts
-registerForm.addEventListener("submit", (event: any) => {
+registerForm.addEventListener("submit", async (event: any) => {
 	const errorsElm = document.getElementById('reg-errors')
 
 	// reset errors before submit
@@ -56,13 +71,15 @@ registerForm.addEventListener("submit", (event: any) => {
 
 	event.preventDefault()
 	console.log('disable reg form submission');
-	try {
-		call apiAuthRegister(with form data)
+
+	const r = await apiAuthRegister(with form data)
+
+	if (r.success) {
 		alert('registration was a success');
 		setAccountPage('login');
-	} catch (err) {
-		errorsElm.innerHTML = err.message
-	}
+	 else
+		errorsElm.innerHTML = r.errors
+
 
 });
 

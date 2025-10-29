@@ -8,11 +8,20 @@ export function isEmptyString(value: string): boolean {
 	return !value || value.trim() === "";
 }
 
-export function normalizeString(input: string): string | null {
+export function normalizeString(input?: string | null): string | null {
 	return input ? String(input).trim() : null;
 }
 
-//_________________
+//_________________NAME_____________________
+
+export function normalizeName(name: string): string {
+	// Defensive: handle unexpected values gracefully
+	if (typeof name !== "string") return "";
+  
+	return name
+	  .normalize("NFKC")  // unify Unicode forms and compatibility chars
+	  .trim()             
+  }
 
 
 export function validateName(name: string): string | null {
@@ -37,7 +46,7 @@ export function validateName(name: string): string | null {
   - Recommended: add **one uppercase** or **special** character  
   - Must **not contain** username or display name (case-insensitive)  
    */
-export export function validatePassword(pw: string, username: string, displayName: string): string | null {
+export function validatePassword(pw: string, username: string, displayName: string): string | null {
 
 	if (pw.length < 8) return 'Password must be at least 8 characters';
 
@@ -91,4 +100,3 @@ export function ensureReceiverIsAll(receiverId: string): void {
 		throw new Error("receiverId must be 'all'");
 	}
 }
- */
