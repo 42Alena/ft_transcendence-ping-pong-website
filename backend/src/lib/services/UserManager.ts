@@ -10,11 +10,13 @@ export class UserManager {
 	dbTableUser: any
 	dbTableFriends: any
 	dbTableBlocks: any
+	dbTableLoginSessions: any
 
 	constructor() {
 		this.dbTableUser = () => db<User>('users');
 		this.dbTableFriends = db('friends');
 		this.dbTableBlocks = db('blocks');
+		this.dbTableLoginSessions = db('login_sessions');
 	}
 
 	async getUserByUsername(username: Types.Username): Promise<User | null> {
@@ -44,14 +46,7 @@ export class UserManager {
 		await this.dbTableUser().insert(data);
 	}
 
-	// async registerUserWithPassword(input: Types.UserRegister): Promise<User> {
 
-	// 	await this.dbTableUser().insert(newUser.toDB());
-
-
-	// }
-
-	// ../frontend/public/images/profile.png
 
 	//___________________GET
 	async getAllUsers(): Promise<User[]> {
