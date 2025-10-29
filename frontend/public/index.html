@@ -1,231 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" href="images/favicon.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pong</title>
-    <link rel="stylesheet" href="styles/reset.css" />
-    <link rel="stylesheet" href="styles/style.css" />
-    <style>
-    </style>
-  </head>
-  <body>
-    <header class="main-header max-width-container border">
-      <div class="main-header__grid max-width border">
-        <div class="main-header__logo border">
-          <a href="#" onclick="displayPage('welcome')">
-            <img src="images/logo.png" alt="logo of the page"/>
-          </a>
-        </div>
-        <div class="main-header__profile_name border">
-          <h1>Hello, you!</h1>
-        </div>
-        <div class="main-header__profile border">
-          <a href="#" onclick="displayPage('account')">
-            <img src="images/profile.png" alt="avatar profile"
-          /></a>
-        </div>
+
+<head>
+  <link rel="icon" href="images/favicon.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pong</title>
+  <link rel="stylesheet" href="styles/reset.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+  <header class="main-header max-width-container border">
+    <div class="main-header__grid max-width border">
+      <div class="main-header__logo border">
+        <a href="#" onclick="displayPage('welcome')">
+          <img src="images/logo.png" alt="logo of the page" />
+        </a>
       </div>
-    </header>
-    <main class="main max-width-container border">
-      <section class="main-section max-width border">
-        <nav class="nav border">
-          <ul>
-            <li>
-              <a href="#" onclick="displayPage('chat')">
-                <img src="images/chat.png" alt="chat page"
-              /></a>
-            </li>
-            <!-- <li><a href="#" onclick="display('game')">
-									<img src="images/play.png" alt="game page"></a></li></a></li>
-								<li><a href="#" onclick="display('leaderboard')">
-									<img src="images/leaderboard.png" alt="chat page"></a></li></a></li> -->
-          </ul>
-        </nav>
-        <div class="board-container border" id="board">
-          <div class="welcome welcome-container" id="welcomePage">
-            Welcome page
+      <div class="main-header__profile_name border">
+        <h1>Hello, you!</h1>
+      </div>
+      <div class="main-header__profile">
+        <a href="#" onclick="displayPage('account')">
+          <img src="images/profile/orange.png" alt="avatar profile" width="50px" height="50px" /></a>
+      </div>
+    </div>
+  </header>
+  <main class="main max-width-container border">
+    <section class="main-section max-width border">
+      <nav class="nav border">
+        <ul>
+          <li>
+            <a href="#" onclick="displayPage('chat')">
+              <img src="images/chat.png" alt="chat page" /></a>
+          </li>
+          <!-- <li><a href="#" onclick="display('game')">
+                    <img src="images/play.png" alt="game page"></a></li></a></li>
+                  <li><a href="#" onclick="display('leaderboard')">
+                    <img src="images/leaderboard.png" alt="chat page"></a></li></a></li> -->
+        </ul>
+      </nav>
+      <div class="board-container border" id="board">
+        <div class="welcome" id="welcomePage">
+          Welcome page
+        </div>
+        <div class="chat" id="chatPage">
+          <div class="chat-left border">
+            <div class="chat-left__header border">
+              <div class="border">Messages</div>
+            </div>
+            <div class="chat-left__list border">
+              <div class="chat-left__list-search-bar border">search bar</div>
+              <div class="chat-left__list-dms border" id="list-dms"></div>
+            </div>
           </div>
-          <div class="chat chat-container" id="chatPage">
-            <div class="chat-left border">
-              <div class="chat-left__header border">
-                <div class="border">Messages</div>
+          <div class="chat-right border">
+            <div class="chat-right__header border">
+              header
+              <div class="chat-right__header-contact border" id="contact">
+                Contact
               </div>
-              <div class="chat-left__list border">
-                <div class="chat-left__list-search-bar border">search bar</div>
-                <div class="chat-left__list-dms border" id="list-dms"></div>
+              <div class="chat-right__header-avatar">
+                <img src="images/profile/purple.png" alt="avatar profile" width="50px" height="50px" />
               </div>
             </div>
-            <div class="chat-right border">
-              <div class="chat-right__header border">
-                header
-                <div class="chat-right__header-contact border" id="contact">
-                  Contact
-                </div>
-                <div class="chat-right__header-avatar border">
-                  <img src="images/profile.png" alt="avatar profile" />
+            <div class="chat-right__list border">
+              <div class="chat-right__box border">
+                <!-- <div class="chat-right__stamp border">stamp</div> -->
+                <div class="chat-right__bubble border" id="bubble">
+                  Click on one of the chats to see the conversation
                 </div>
               </div>
-              <div class="chat-right__list border">
-                <div class="chat-right__box border">
-                  <!-- <div class="chat-right__stamp border">stamp</div> -->
-                  <div class="chat-right__bubble border" id="bubble">
-                    Click on one of the chats to see the conversation
+              <div class="chat-right__textArea border">
+                <div class="chat-right__textArea-input border">
+                  <div class="chat-right__textAreas-input-text border" id="input">
+                    <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
+                      placeholder="Send message" />
                   </div>
                 </div>
-                <div class="chat-right__textArea border">
-                  <div class="chat-right__textArea-input border">
-                    <div
-                      class="chat-right__textAreas-input-text border"
-                      id="input"
-                    >
-                      <input
-                        id="text-box"
-                        type="text"
-                        class="chat-right__textAreas-input-text border"
-                        placeholder="Send message"
-                      />
+                <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
+                  Send
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="account" id="accountPage" style="display: none;">
+          <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
+            <button type="button" id="registerButton">
+              <a href="#" onclick="setAccountPage('register')"> Register</a>
+            </button>
+            <button type="button" id="loginButton">
+              <a href="#" onclick="setAccountPage('login')"> Login</a>
+            </button>
+            <button type="button" id="profile">
+              <a href="#" onclick="setAccountPage('profile')"> Profile</a>
+            </button>
+          </div>
+          <div class="account-register" id="registerPage">
+            <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
+              <p class="profile-picture">
+                <label for="reg-avatar">
+                  <img src="images/profile/grey.png" id="avatar" style="cursor: pointer" width="50px" height="50px" />
+                </label>
+                <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
+              </p>
+              <p class="reg-form-field">
+                <label for="reg-username">Username (login)</label>
+                <input type="text" id="reg-username" name="reg-user_username" required />
+              </p>
+              <p class="reg-form-field">
+                <label for="reg-displayName">Display Name (public)</label>
+                <input type="text" id="reg-displayName" name="reg-user_displayName" required />
+              </p>
+              <p class="reg-form-field">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" name="reg-user_password" required />
+              </p>
+              <p class="submitButton">
+                <span style="display: block; height: 1em;"></span>
+                <button type="submit" id="submitRegButton" style="cursor: pointer">
+                  Register
+                </button>
+              </p>
+            </form>
+          </div>
+          <div class="account-login" id="loginPage" style="background-color: white; display: none;">
+            <form action="http://127.0.0.1:8080" method="post" id="login">
+              <p>
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="login-user_username" required />
+              </p>
+              <p>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-user_password" required />
+              </p>
+              <p class="submitButton">
+                <button type="submit" id="submitLogButton" style="cursor: pointer">
+                  Login
+                </button>
+              </p>
+            </form>
+            <!-- (Alena) begin temporary for error -->
+            <div class="errors" id="reg-errors"></div>
+            <!-- (Alena) end temporary  for error -->
+          </div>
+          <div class="account-profile border" id="profilePage" style="background-color: beige; display: none;">
+            <div class="account-profile__header border" id="acc-profile-header" style="background-color: aliceblue;">
+              <div class="account-profile_header-avatar border" id="acc-avatar">
+                <img src="images/profile/orange.png" alt="" id="acc-profile-avatar" width="100px" height="100px">
+              </div>
+              <div class="account-profile_header-info border" id="acc-info">
+                <div class="account-profile_header-info-username border" id="acc-username">
+                  <p>
+                    Username: Pinco
+                  </p>
+                </div>
+                <div class="account-profile_header-info-displayName border" id="acc-displayName">
+                  <p>
+                    Display Name: Pallo
+                  </p>
+                </div>
+              </div>
+              <div class="account-profile_header-options border" id="acc-options;"
+                style="display: flex; flex-direction: column;">
+                <div class="status" style="display: flex; height: 50px; gap: 10px; margin-top: 10px;">
+                  <div class="status-circle"></div>
+                  <div class="status-word">OFFLINE</div>
+                </div>
+                <div class="actions" id="acc-actions"
+                  style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
+                  <button class="add-friend" type="button" id="add-friend__header" style="display: flex; justify-content: center;">add friend</button>
+                  <button class="remove-friend" type="button" id="remove-friend__header" style="display: flex; justify-content: center;">remove friend</button>
+                  <button class="block-friend" type="button" id="block-friend__header" style="display: flex; justify-content: center;">block friend</button>
+                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">invite friend</button>
+                </div>
+              </div>
+            </div>
+            <div class="account-profile__menu border" id="acc-profile-menu"
+              style="background-color: burlywood; cursor: pointer;">
+              <div class="account-profile__menu-settings border" id="acc-settings">SETTINGS</div>
+              <div class="account-profile__menu-friends border" id="acc-friends">FRIENDS</div>
+              <div class="account-profile__menu-matches border" id="acc-matches">MATCHES</div>
+            </div>
+            <div class="account-profile__page border" id="acc-profile-page" style="background-color: antiquewhite;">
+              <div class="account-profile__page-settings border" id="update-settings">
+                <div class="account-profile__page-settings-pi border">
+                  <h3>Edit information</h3>
+                  <form class="update-settings-form" role="updateSettings" id="settings">
+                    <p class="profile-picture">
+                      <label for="reg-avatar">
+                        <img src="images/profile/orange.png" id="avatar" style="cursor: pointer" width="50px"
+                          height="50px" />
+                      </label>
+                      <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
+                    </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                      <input class="form-control" type="text" value="Pinco" readonly>
+                    </div>
+                    </p>
+                    <p class="form-group">
+                      <label class="col-lg-3 control-label">Display Name:</label>
+                    <div class="col-lg-8">
+                      <input class="form-control" type="text" value="Pallo">
+                    </div>
+                    </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label">Password:</label>
+                    <div class="col-md-8">
+                      <input class="form-control" type="password" value="aaaaaaaaa">
+                    </div>
+                    </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label">Confirm password:</label>
+                    <div class="col-md-8">
+                      <input class="form-control" type="password" value="aaaaaaaaa">
+                    </div>
+                    </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label"></label>
+                    <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
+                      <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes">
+                      <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
+                    </p>
+                    <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
+                      <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
+                    </p>
+                </div>
+                </form>
+              </div>
+              <div class="account-profile__page-friends border" id="friends" style="display: none;">
+                <div class="friend" style="display: flex; align-items: center;">
+                  <img src="images/profile/purple.png" alt="" id="friendAvatar" width="100px" height="100px">
+                  <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
+                    <div class="friend-name" style="display: flex; align-items: center;">Mafalda
+                      <div class="status-circle"></div>
+                    </div>
+                    <div class="friend-action" id="friend-buttons"
+                      style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                      <button class="add-friend" type="button" id="add-friend__page">add friend</button>
+                      <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
+                      <button class="block-friend" type="button" id="block-friend__page">block friend</button>
                     </div>
                   </div>
-                  <div
-                    class="chat-right__textArea-submitIcon border"
-                    onclick="captureInput()"
-                  >
-                    Send
+                </div>
+              </div>
+              <div class="account-profile__page-matches border" id="matches" style="display: none;">
+                <div class="account-profile__page-matches-stats">
+                  <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
+                    style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
+                  <div class="statsList border" style="display: grid; grid-template-columns: repeat(4, 1fr);">
+                    <div class="stat border">
+                      3
+                      <span class="stat_name">Current Ranking</span>
+                    </div>
+                    <div class="stat border">
+                      12-10
+                      <span class="stat_name">W-L</span>
+                    </div>
+                    <div class="stat border">
+                      22
+                      <span class="stat_name">Tot games</span>
+                    </div>
+                    <div class="stat border">
+                      54%
+                      <span class="stat_name">Average wins</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc-matches border" id="acc-stats" style="display: grid; grid-template-rows: 50px 1fr;">
+                  <div class="acc-matches__header border"
+                    style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
+                    <div class="opponent border" style="display: flex; justify-content: center; align-items: center;">
+                      opponent</div>
+                    <div class="date border" style="display: flex; justify-content: center; align-items: center;">date
+                    </div>
+                    <div class="score border" style="display: flex; justify-content: center; align-items: center;">score
+                    </div>
+                  </div>
+                  <div class="acc-matches__content border"
+                    style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
+                    <div class="border" style="display: flex; align-items: center; padding: 10px">opponent 1</div>
+                    <div class="border" style="display: flex; justify-content: center; align-items: center;">5/10/25
+                    </div>
+                    <div class="border" style="display: flex; justify-content: center; align-items: center;">3-2</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="account account-container" id="accountPage">
-            <div class="account-login-reg-choice" id="pageChoice">
-              <button type="button" id="registerButton">
-                <a href="#" onclick="setAccountPage('register')"> Register</a>
-              </button>
-              <button type="button" id="loginButton">
-                <a href="#" onclick="setAccountPage('login')"> Login</a>
-              </button>
-            </div>
-            <div class="account-register" id="registerPage">
-              <form
-                action="http://127.0.0.1:8080"
-                method="post"
-                enctype="multipart/form-data"
-                id="register"
-              >
-                <p class="profile-picture">
-                  <label for="reg-avatar">
-                    <img
-                      src="images/profile.png"
-                      id="avatar"
-                      style="cursor: pointer"
-                      width="50px"
-                      height="50px"
-                    />
-                  </label>
-                  <input
-                    type="file"
-                    id="reg-avatar"
-                    name="reg-user_avatar"
-                    style="display: none"
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-username">Username (login)</label>
-                  <input
-                    type="text"
-                    id="reg-username"
-                    name="reg-user_username"
-                    required
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-dispalyName">Display Name (public)</label>
-                  <input
-                    type="text"
-                    id="reg-dispalyName"
-                    name="reg-user_dispalyName"
-                    required
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-password">Password</label>
-                  <input
-                    type="password"
-                    id="reg-password"
-                    name="reg-user_password"
-                    required
-                  />
-                </p>
-                <p class="submitButton">
-                   <span style="display: block; height: 1em;"></span>
-                  <button
-                    type="submit"
-                    id="submitRegButton"
-                    style="cursor: pointer"
-                  >
-                    Register
-                  </button>
-                </p>
-              </form>
-            </div>
-            <div class="account-login" id="loginPage">
-              <form action="http://127.0.0.1:8080" method="post" id="login">
-                <p>
-                  <label for="login-username">Username:</label>
-                  <input
-                    type="text"
-                    id="login-username"
-                    name="login-user_username"
-                    required
-                  />
-                </p>
-                <p>
-                  <label for="login-password">Password:</label>
-                  <input
-                    type="password"
-                    id="login-password"
-                    name="login-user_password"
-                    required
-                  />
-                </p>
-                <p class="submitButton">
-                  <button
-                    type="submit"
-                    id="submitLogButton"
-                    style="cursor: pointer"
-                  >
-                    Login
-                  </button>
-                </p>
-              </form>
-            </div>
-            <div class="account-profile" id="profilePage" style="display: none;">
-                <div class="account-profile__avatar border" id="acc-avatar"></div>
-                <div class="account-profile__name border" id="acc-name"></div>
-                <div
-                  class="account-profile__nickname border"
-                  id="acc-nickname"
-                ></div>
-            </div>
         </div>
-      </section>
-    </main>
-    <footer class="main-footer max-width-container border">
-      <div class="main-footer__grid max-width border">
-        <p class="main-footer__copyright border">TRANSCENDENCE</p>
-        <ul class="main-footer__links border">
-          Made by Alena, Luis, Sveva 2025
-        </ul>
       </div>
-    </footer>
-    <!-- insert scripts  here like this -->
-    <script src="dist/accountDisplay.js"></script>
-    <script src="dist/contentManager.js"></script>
-    <script src="dist/chatDisplay.js"></script>
-    <script src="dist/user.js" type="module"></script>
-    <script src="dist/chat.js" type="module"></script>
-    <!-- <script src=""></script> -->
-  </body>
+    </section>
+  </main>
+  <footer class="main-footer max-width-container border">
+    <div class="main-footer__grid max-width border">
+      <p class="main-footer__copyright border">TRANSCENDENCE</p>
+      <ul class="main-footer__links border">
+        Made by Alena, Luis, Sveva 2025
+      </ul>
+    </div>
+  </footer>
+  <!-- insert scripts  here like this -->
+  <script src="dist/accountDisplay.js"></script>
+  <script src="dist/contentManager.js"></script>
+  <script src="dist/chatDisplay.js"></script>
+  <script src="dist/user.js" type="module"></script>
+  <script src="dist/chat.js" type="module"></script>
+  <!-- <script src=""></script> -->
+</body>
+
 </html>

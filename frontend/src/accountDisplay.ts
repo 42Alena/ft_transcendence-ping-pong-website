@@ -1,22 +1,62 @@
+//pages
 const registerPage : any = document.getElementById("registerPage");
 const loginPage : any = document.getElementById("loginPage");
 const profilePage : any = document.getElementById("profilePage");
 const choicePage : any = document.getElementById("pageChoice");
-
-const submitButton : any = document.getElementById("submitRegButton");
-const loginButton : any = document.getElementById("submitLogingButton");
-
+//register form
 const registerForm : any = document.getElementById("register");
-const loginForm : any = document.getElementById("login");
-
 const regAvatar : any = document.getElementById("reg-avatar");
+const submitButton : any = document.getElementById("submitRegButton"); //button
+//login form
+const loginForm : any = document.getElementById("login");
+const loginButton : any = document.getElementById("submitLogingButton"); //button
+//profile page
+const profileUsername : any = document.getElementById("acc-username");
+const profileDisplayName : any = document.getElementById("acc-displayName");
+const profileAvatar : any = document.getElementById("acc-avatar");
+const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
+const profileActions : any = document.getElementById("acc-actions"); //buttons
+//buttons
+const profileAddFriend : any = document.getElementById("add-friend__header");
+const profileRemoveFriend : any = document.getElementById("remove-friend__header");
+const profileBlockFriend : any = document.getElementById("block-friend__header");
+const profileInviteFriend : any = document.getElementById("invite-friend__header");
+//settings page
+const profileMenuSettings : any = document.getElementById("acc-settings");
+const profileSettingsPage : any = document.getElementById("update-settings");
+const profileSettingsForm : any = document.getElementById("settings");
+//friend page
+const profileFriendsPageButtons : any = document.getElementById("friend-buttons"); //buttons
+//buttons
+const addFriend : any = document.getElementById("add-friend__page");
+const removeFriend : any = document.getElementById("remove-friend__page");
+const blockFriend : any = document.getElementById("block-friend__page");
 
-const profName : any = document.getElementById("acc-name");
-const profNickname : any = document.getElementById("acc-nickname");
-const profAvatar : any = document.getElementById("acc-avatar");
+//events on registration
+registerForm.addEventListener("submit", (event : any) => {
+	// (Alena) begin temporary for error
+	const errorsElm = document.getElementById('reg-errors');
+	// (Alena) begin temporary for error
+});
 
-let userIsLoggedIn : boolean = false;
+//event on login
+loginForm.addEventListener("submit", (event));
 
+//event on setting page
+profileSettingsForm.addEventListener("submit", (event));
+
+//events on profile button
+profileAddFriend.addEventListener("click", (event));
+profileRemoveFriend.addEventListener("click", (event));
+profileBlockFriend.addEventListener("click", (event));
+profileInviteFriend.addEventListener("click", (event));
+addFriend.addEventListener("click", (event));
+removeFriend.addEventListener("click", (event));
+blockFriend.addEventListener("click", (event));
+
+
+
+/*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
 {
 	if (text == "login")
@@ -34,71 +74,65 @@ function setAccountPage(text : string)
 		loginPage.style.display = "none";
 		profilePage.style.display = "none";
 	}
+	else if (text == "profile")
+	{
+		profilePage.style.display = "grid";
+		choicePage.style.display = "none";
+		loginPage.style.display = "none";
+		registerPage.style.display = "none";
+	}
 }
 
+// It makes the preview of the avatar the user wants to upload
 regAvatar.addEventListener("change", (event : any) => {
 	console.log('change event caught');
 	const img : any = document.getElementById("avatar");
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
 
-// /*Just to understand how it works and future implementation - disabled submission forms*/
-// function setProfilePage(name : string, nickname : string, avatar : string)
-// {
-// 	profName.textContent = "Name: " + name;
-// 	profNickname.textContent = "NickName: " + nickname;
-// 	const imgElement = document.createElement("img");
-//     imgElement.src = avatar;
-//     profAvatar.appendChild(imgElement);
-// }
+/* Releated to profile page */
 
-// let usersList : FormData[] = [];
-// let newUser : FormData = new FormData();
-// newUser.append('name', 'sveva');
-// newUser.append('nickname', 'sve');
-// newUser.append('avatar', './images/blue.png');
+/* Implementation to choose which profile page to display: personal or other's users*/
+/* Now just change the value of each element to display different profile pages
+ I will implement logic after getting visibility flag for server*/
+//header friend actions
+profileActions.style.display = "none"; //flex for others' view
+//header username
+profileUsername.style.display = "flex"; //none for others' view
+//settings menu + settings page
+profileMenuSettings.style.display = "block"; //none for others' view
+profileSettingsPage.style.display = "flex"; //none for others' view
+//friends button requests in friend page
+profileFriendsPageButtons.style.display = "flex"; //none for others' view
+//change avatar in header
+profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
 
-// let newUser1 : FormData = new FormData();
-// newUser.append('name', 'alena');
-// newUser.append('nickname', 'ale');
-// newUser.append('avatar', './images/green.png');
+/*Implementation to display pages triggered by menu selection */
+//divs in menu
+const settingsDiv : any = document.getElementById("acc-settings");
+const friendsDiv : any = document.getElementById("acc-friends");
+const matchesDiv : any = document.getElementById("acc-matches");
 
-// let newUser2 : FormData = new FormData();
-// newUser.append('name', 'luis');
-// newUser.append('nickname', 'lui');
-// newUser.append('avatar', './images/purple.png');
+//page
+const settingsPage : any = document.getElementById("update-settings");
+const friendsPage : any = document.getElementById("friends");
+const matchesPage : any = document.getElementById("matches");
 
+//event on each menu div
+settingsDiv.addEventListener("click", (event : any) => {
+	settingsPage.style.display = "flex";
+	friendsPage.style.display = "none";
+	matchesPage.style.display = "none";
+});
 
-// registerForm.addEventListener("submit", (event : any) => {
+friendsDiv.addEventListener("click", (event : any) => {
+	friendsPage.style.display = "grid";
+	settingsPage.style.display = "none";
+	matchesPage.style.display = "none";
+});
 
-// 	event.preventDefault()
-	
-// 	console.log('disable reg form submission');
-// 	alert('registration was a success');
-// 	setAccountPage('login');
-// });
-
-// loginForm.addEventListener("submit", (event : any) => {
-// 	event.preventDefault();
-
-// 	let loggedUser : FormData = new FormData();
-// 	loggedUser.append('name', 'sveva');
-// 	loggedUser.append('nickname', 'sve');
-// 	loggedUser.append('avatar', './images/blue.png');
-// 	console.log('disable log form submission');
-// 	userIsLoggedIn = true;
-// 	const nameEntry = loggedUser.get('name');
-// 	const nicknameEntry = loggedUser.get('nickname');
-// 	const avatarEntry = loggedUser.get('avatar');
-
-// 	const name = nameEntry !== null ? nameEntry.toString() : '';
-// 	const nickname = nicknameEntry !== null ? nicknameEntry.toString() : '';
-// 	const avatar = avatarEntry !== null ? avatarEntry.toString() : '';
-
-// 	setProfilePage(name, nickname, avatar);
-// 	console.log('page is visible?');
-// 	displayPage('account');
-// });
-
-
-
+matchesDiv.addEventListener("click", (event : any) => {
+	matchesPage.style.display = "flex";
+	settingsPage.style.display = "none";
+	friendsPage.style.display = "none";
+});
