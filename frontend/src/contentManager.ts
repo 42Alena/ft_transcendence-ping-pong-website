@@ -4,6 +4,7 @@ const accP : any = document.getElementById('accountPage');
 const regP : any = document.getElementById('registerPage');
 const logP: any = document.getElementById('loginPage');
 const profP : any = document.getElementById('profilePage');
+const gameP : any = document.getElementById('gamePage')
 
 
 
@@ -12,6 +13,7 @@ function displayPage(text: string) : void
 	if (text == 'chat')
 	{
 		chatP.style.display = "grid";
+		gameP.style.display = "none";
 		welcP.style.display = "none";
 		accP.style.display = "none";
 		regP.style.display = "none";
@@ -21,6 +23,7 @@ function displayPage(text: string) : void
 	{
 		welcP.style.display = "flex";
 		chatP.style.display = "none";
+		gameP.style.display = "none";
 		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
@@ -32,8 +35,18 @@ function displayPage(text: string) : void
 		 so each time you click on the profile avatar you check to choose page*/
 		choicePage.style.display = "flex";
 		profP.style.display = "none"
+		gameP.style.display = "none";
 		chatP.style.display = "none";
 		welcP.style.display = "none";
+		regP.style.display = "none";
+		logP.style.display = "none";
+	}
+	else if (text == 'game')
+	{
+		gameP.style.display = "flex";
+		welcP.style.display = "none";
+		chatP.style.display = "none";
+		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
 	}
