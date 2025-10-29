@@ -1,29 +1,12 @@
-# TEMPLATE FOR PULLREQUESTS
+# Alena — Personal Work Log
 
-________NEW_________________________________
-
-# IDEAS:
-
-# TODO:
-
-# ____ DONE:
-
-## DB
-## BACKEND
-## FRONTEND
-### Makefile 
-## LINKS/HELP: 
-
-### ======    OLD PULLREQUESTS   ================================================================
+Internal file for tracking what I’ve done in the project, with notes and links.  
+Not required for evaluation — used for organization and pull request preparation.
 
 
-_________________________________________
-# IDEAS:
-	make rebuild db after db change
-	make db save in separate file, then easier rebuild after change
-	add to .sh remove and adddb(recreate)
-	9done, need to change?)make autofill db from .csv to db for tests
-# TODO:
+---------------------
+
+##_____________  TODO FOR FUTURE:
 - USER: 
 	-lastSeenAt(change logic for  for online/ offline)
 - ROUTES/USer
@@ -35,19 +18,18 @@ _________________________________________
 
 - user, gdpr
 
-  -- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-  -- userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
-  --   CHECK (userStatus IN ('online', 'offline')),
-  -- add last activity date/time
-  -- add user created timestamp
+  - Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+  - userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
+  -   CHECK (userStatus IN ('online', 'offline')),
+  - add last activity date/time
+  - add user created timestamp
 
+- `DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
 
-	`DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
+	- POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
 
-	POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
-
-	registration
-	login. After will return generated secret session acces token/string
+	- registration
+	- login. After will return generated secret session acces token/string
 	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
 	update profile/ change pass(check subject)  put method
 	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
@@ -55,11 +37,65 @@ _________________________________________
 	Registration
 
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
+-----------------------
+
+## DB
+	-  added  username     case insencitive (COLLATE NOCASE)
+	- added table for LOGIN session key
+## BACKEND added:
+	- types/api
+	- register user
+	- added backend/tests/users.sh ( history | grep curl | uniq)
+	- validateName() validatePassword()
+	-  POST /register
+	- normalize name9 case insensitive, .normalize("NFKC")  // unify Unicode  chars
+	
+## FRONTEND
+		- added types/api
+		-index.html added "errror messagebox"
+
+### TESTS
+	-  run in terminal: ./backend/tests/users.sh
+
+	- in terminal: curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admn" }' -v 
+
+	- in console browser. copy ft register without types  and run: apiAuthRegister({
+"username": "dcba", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "ardmn" }) 
+
+## 📘 DOCUMENTATION
+	- added /backend/tests/README.md
+	- deleted module Stats(after todays team meeting)
+	- HTTP_response_codes.md
+	- docs/policies/policies_whole_project.md 
+	- Profile Page requirements: docs/policies/profile.md 
+## 🔗 LINKS / HELP
+
+### 🌐 HTTP Basics
+- [MDN – HTTP Overview](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview)
+- [MDN – HTTP Messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages)
+
+### 📤 Request Methods
+- [W3Schools – HTTP Methods](https://www.w3schools.com/tags/ref_httpmethods.asp)
+- [IONOS – GET vs POST](https://www.ionos.de/digitalguide/websites/web-entwicklung/get-vs-post/)
+
+### ⚠️ Error Messages & Status Codes
+- [W3Schools – HTTP Messages](https://www.w3schools.com/tags/ref_httpmessages.asp)
+- [MDN – HTTP Status Codes Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
 # ____ DONE:
 
 ## DB
 	- updated table user for curent User class
 	- added tables for  friends, blocked
+	- make autofill db from .csv to db for tests
 
 ## NPM
 	- added bcrypt for hash passwords: npm install --save bcryptjs
@@ -96,6 +132,7 @@ _________________________________________
 ## FRONTEND 
 
 ### Makefile 
+	make rebuild db after db change
 	Command `make` to start whole project 
 
 ## LINKS/HELP: 
@@ -127,10 +164,6 @@ Hash {
 'b6dc72e1e2414ffc9c188c4876763aaa37a6a4351d00d3be2b2aff3915dc1268'
 > 
 
-
-### In progress:
-
-
 ### ======    OLD PULLREQUESTS   ================================================================
 
 DONE:
@@ -160,8 +193,6 @@ DONE:
 ### user.ts
 	- GET /users // list public profiles
 	- GET /users/:id // one public profile by id
-	
-## Frontend
 
 ### Makefile 
 		- TO work with DB:
@@ -213,9 +244,6 @@ ________________end test
 }
 
 	- review webpage for chat (schould be profil or all user as table?)
-
-
-
 
 ___________________
 	- found current db fields that now needed and used by Classes

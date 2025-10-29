@@ -17,6 +17,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 - [Team & Responsibilities](#-team--responsibilities)
 - [Tech & Languages](#-tech--languages)
 - [Project Overview](#-project-overview)
+- [Documentation](#-documentation)
 - [Folder Structure](#-folder-structure-important-parts-only)
 - [How to Run](#-how-to-run)
 - [License](#-license)
@@ -24,6 +25,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 ---
 ## 🌍 About 42 Berlin
+
 
 [42 Berlin](https://42berlin.de/)  **Software Engineering** School is part of the international 42 network:  
 
@@ -44,7 +46,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 |-|---------|------|--------|
 |🧩|**Alena**| Backend & Real-Time Lead (Backend, Fastify, User Management, Sockets, Chat, DB) | [@42Alena](https://github.com/42Alena) |
 |🎨| **Sveva**| Game & Frontend Lead (Canvas, AI, Tailwind, Customization) | [@svevotti](https://github.com/svevotti) |
-|🔐|  **Luis**| **Database & Data Protection Lead** (SQLite schema & migrations,   data lifecycle, GDPR deletion/anonymization, observability & DB health) | [@Numbersdontlie](https://github.com/Numbersdontlie) |
+|🔐|  **Luis**| **Database & Data Protection Lead** (SQLite schema & migrations,   GDPR ) | [@Numbersdontlie](https://github.com/Numbersdontlie) |
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
@@ -54,7 +56,6 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Fastify](https://img.shields.io/badge/Fastify-Backend-000000?logo=fastify&logoColor=white)](https://fastify.dev/)
-[![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socketdotio&logoColor=white)](https://socket.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-DB-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
@@ -63,7 +64,7 @@ After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScr
 
 - **Languages:** TypeScript, HTML, CSS  
 - **Runtime:** Node.js  
-- **Backend:** Fastify, Socket.IO (WSS), SQLite  
+- **Backend:** Fastify, SQLite  
 - **Frontend:** TypeScript + Tailwind (no framework; History API)  
 - **Security & Ops:** HTTPS/WSS; hashed passwords; GDPR (export/anonymize/delete) endpoints; SQLite in **WAL** mode with **foreign_keys=ON**; **Knex** idempotent migrations; `/db/healthz` (PRAGMAs + size); `.env` config (e.g., `SQLITE_PATH`, secrets)
 
@@ -95,8 +96,6 @@ Key features include:
 
 ---
 
-
-
 ## 📌 CURRENT Modules (Main + 7 majors)
 
 > **Current plan (subject-compliant) — may change as the project evolves.**  
@@ -111,26 +110,31 @@ Done! I removed the **Status** column and marked undecided items with **?** in t
 | **AI-Algo — Major: Introduce an AI opponent**                                                                           | Sveva                | `frontend/src/game/**`                                 | Canvas + TS      | AI wins a round               |   **1** |    ✓    |
 | **Web — Minor: Use a framework or a toolkit to build the frontend (Tailwind CSS)**                                      | Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | responsive screenshots        | **0.5** |    ✓    |
 | **Web — Minor: Use a database for the backend (SQLite)**                                                                | Alena Luis                 | `backend/src/db/**`                                    | SQLite + TS      | PRAGMAs / health route        | **0.5** |    ✓    |
-| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
+| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Alena Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
 | **Accessibility — Minor: Expanding browser compatibility**                                                              | Sveva                | `docs/compat.md`, e2e                                  | TS + Tailwind    | Chrome+Firefox matrix         | **0.5** |    ✓    |
-| **Gameplay and user experience — Minor: Game customization options**                                                    | ?                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
-| **Accessibility — Minor: Support on all devices** *(easy add)*                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
-| **AI-Algo — Minor: User and game stats dashboards** *(easy add)*                                                        | ? Luis                 | `backend/src/routes/stats.ts`, `frontend/src/stats/**` | SQLite + TS      | `/me/stats`, `/matches/stats` | **0.5** |  **?**  |
-| **Accessibility — Minor: Multiple language support** *(easy add)*                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
+| **Gameplay and user experience — Minor: Game customization options**                                                    | ? Sveva                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
+| **Accessibility — Minor: Support on all devices** **                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
+| **Accessibility — Minor: Multiple language support** **                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
 
-### Totals (Counted ✓ only)
 
 * Majors: **4.0** (Backend, User Mgmt, Live Chat, AI)
 * Minors: **2.0** (Tailwind, SQLite, GDPR, Browser Compatibility)
-* **Total = 6.0 majors**
-
- * need  **7.0**  
-
+* **Total = 7.0 majors**
+* need  **7.0**  
 
 [↑ back to top](#-ft_transcendence-ping-pong-website)
 
+---
 
+### 📘 Documentation
 
+* [Resources Used](./docs/resources_used.md) — official docs, APIs, and guides referenced during development
+* [Input & Validation Policies](./docs/policies/policies_whole_project.md) — backend validation rules (username, password, avatar, etc.)
+* [HTTP response codes](./docs/policies/HTTP_response_codes.md) — backend validation rules (username, password, avatar, etc.)
+* [Learn Guides](./docs/learn/) — short explanations of technologies used (Fastify, SQLite, Tailwind, etc.)
+* [Devlogs](./docs/devlog/) — individual team worklogs and pull request notes
+
+[↑ back to top](#-ft_transcendence-ping-pong-website)
 ---
 
 ## 🗂️ Folder Structure (important parts only)

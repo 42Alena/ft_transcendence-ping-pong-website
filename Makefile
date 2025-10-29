@@ -43,7 +43,8 @@ db: check-tools
 	@rm $(DB_DIR)/pong.db*
 	@chmod +x "$(DB_DIR)/setup_db.sh"
 	cd "$(DB_DIR)" && ./setup_db.sh
-
+	
+# runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
 backend-tests:
 	cd "$(BACKEND_DIR)" && npm run backend-tests
 

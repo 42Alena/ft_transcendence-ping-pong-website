@@ -10,17 +10,27 @@ export class UserManager {
 	dbTableUser: any
 	dbTableFriends: any
 	dbTableBlocks: any
+	dbTableLoginSessions: any
 
 	constructor() {
-		this.dbTableUser = db<User>('users');
+		this.dbTableUser = () => db<User>('users');
 		this.dbTableFriends = db('friends');
 		this.dbTableBlocks = db('blocks');
+		this.dbTableLoginSessions = db('login_sessions');
+	}
+
+	async getUserByUsername(username: Types.Username): Promise<User | null> {
+		const row = await this.dbTableUser().where({ username : username }).first()
+		if (!row) {
+			return null;
+		}
+		return User.fromDB(row)
 	}
 
 
-	//___________ID__________
+
 	async getUserById(userId: Types.UserId): Promise<User | null> {
-		const row = await this.dbTableUser.where({ id: userId }).first()
+		const row = await this.dbTableUser().where({ id: userId }).first()
 		if (!row) {
 			return null;
 		}
@@ -31,32 +41,31 @@ export class UserManager {
 	//____________SAVE
 	//now for tet only. TODO: delete later
 	async saveUser(newUser: User) {
-		await this.dbTableUser.insert(newUser.toDB());
+		const data = newUser.toDB()
+		console.debug("Saving user", data)
+		await this.dbTableUser().insert(data);
 	}
 
-	// async registerUserWithPassword(input: Types.UserRegister): Promise<User> {
 
-	// 	await this.dbTableUser.insert(newUser.toDB());
-
-
-	// }
-
-	// ../frontend/public/images/profile.png
 
 	//___________________GET
 	async getAllUsers(): Promise<User[]> {
-		const dbUsers = await this.dbTableUser.select()
-		return dbUsers.map(User.fromDB);
+		const dbUsers = await this.dbTableUser().select('*')
+		return (dbUsers || []).map(User.fromDB);
 	}
 
 	//__________is NAME...
 	async isUsernameTaken(username: string): Promise<boolean> {
-		const row = await this.dbTableUser.where({ username }).first();
+		const row = await this.dbTableUser()
+			.whereRaw('LOWER(displayName) = LOWER(?)', [username])
+			.first();
 		return !!row;
 	}
 
 	async isDisplayNameTaken(displayName: string): Promise<boolean> {
-		const row = await this.dbTableUser.where({ displayName }).first();
+		const row = await this.dbTableUser()
+			.whereRaw('LOWER(displayName) = LOWER(?)', [displayName])
+			.first();
 		return !!row;
 	}
 
@@ -89,7 +98,7 @@ export class UserManager {
 		return !!row;
 	}
 
-		//_________________BLOCKED______________________
+	//_________________BLOCKED______________________
 
 	//blocked only on 1 site
 	async blockUser(userId: Types.UserId, blockedId: Types.UserId) {
@@ -117,14 +126,14 @@ export class UserManager {
 		return !!row;
 	}
 
-	
-	
 
-// //____Status: online | ofline
 
-// setStatus(status: Types.UserStatus) {
-// 	this.userStatus = status;
-// }
+
+	// //____Status: online | ofline
+
+	// setStatus(status: Types.UserStatus) {
+	// 	this.userStatus = status;
+	// }
 
 
 
