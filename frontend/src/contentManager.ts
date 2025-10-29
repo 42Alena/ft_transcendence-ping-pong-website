@@ -5,6 +5,8 @@ const regP : any = document.getElementById('registerPage');
 const logP: any = document.getElementById('loginPage');
 const profP : any = document.getElementById('profilePage');
 
+
+
 function displayPage(text: string) : void
 {
 	if (text == 'chat')
@@ -25,14 +27,14 @@ function displayPage(text: string) : void
 	}
 	else if (text == 'account')
 	{
-		if (userIsLoggedIn == false)
-			accP.style.display = "flex";
-		else
-			profP.style.display = "flex";
+		accP.style.display = "flex";
+		/*choice page and profile page momenterely are set here
+		 so each time you click on the profile avatar you check to choose page*/
+		choicePage.style.display = "flex";
+		profP.style.display = "none"
 		chatP.style.display = "none";
 		welcP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
 	}
-
 }
