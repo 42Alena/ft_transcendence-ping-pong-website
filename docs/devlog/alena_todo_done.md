@@ -44,6 +44,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## DB
 	-  added  username     case insencitive (COLLATE NOCASE)
+	- added table for LOGIN session key
 ## BACKEND added:
 	- types/api
 	- register user
