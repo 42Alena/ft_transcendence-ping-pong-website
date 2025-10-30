@@ -1,34 +1,37 @@
 const canvas : any = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+let interval = 0;
 
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
 function keyDownHandler(e : any) {
+  e.preventDefault()
   if (e.key === "Up" || e.key === "ArrowUp") {
-    paddleLeft.up = true;
+    paddleRight.up = true;
   } else if (e.key === "Down" || e.key === "ArrowDown") {
-    paddleLeft.down = true;
+    paddleRight.down = true;
   }
 
-   if (e.key === "w") {
-    paddleRight.up = true;
+  if (e.key === "w") {
+    paddleLeft.up = true;
   } else if (e.key === "s") {
-    paddleRight.down = true;
+    paddleLeft.down = true;
   }
 }
 
 function keyUpHandler(e : any) {
+  e.preventDefault()
   if (e.key === "Up" || e.key === "ArrowUp") {
-    paddleLeft.up = false;
+    paddleRight.up = false;
   } else if (e.key === "Down" || e.key === "ArrowDown") {
-    paddleLeft.down = false;
+    paddleRight.down = false;
   }
 
    if (e.key === "w") {
-    paddleRight.up = false;
+    paddleLeft.up = false;
   } else if (e.key === "s") {
-    paddleRight.down = false;
+    paddleLeft.down = false;
   }
 }
 
@@ -43,7 +46,7 @@ class Paddle {
   down : boolean;
 
 	constructor() {
-	this.lenght = 35;
+	this.lenght = 70;
 	this.width = 10;
 	this.color = "white";
 	this.v = 7;
@@ -76,10 +79,10 @@ class Ball {
 	y : number;
 
 	constructor () {
-		this.lenght = 8;
+		this.lenght = 12;
 		this.dx = 2;
 		this.dy = -2;
-		this.color = "white";
+		this.color = "red";
 		this.x = canvas.width / 2 - this.lenght / 2;
 		this.y = canvas.height / 2 - this.lenght / 2;
 	}
@@ -87,7 +90,7 @@ class Ball {
 	drawBall() {
 		ctx.beginPath();
 		ctx.rect(this.x, this.y, this.lenght, this.lenght);
-		ctx.fillStyle = "white";
+		ctx.fillStyle = this.color;
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -102,8 +105,8 @@ let paddleRight = new Paddle();
 let paddleLeft = new Paddle();
 let ball = new Ball();
 
-paddleRight.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
-paddleLeft.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
+paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
+paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -134,11 +137,11 @@ function draw() {
       paddleLeft.y = 0;
     }
   }
-
-  if (ball.x + ball.dx > canvas.width - 3 || ball.x + ball.dx < 3) {
+  
+  if (ball.x + ball.dx < -(ball.lenght / 2) || ball.x + ball.dx > canvas.width - (ball.lenght / 2)) {
     ball.dx = -ball.dx;
   }
-  if (ball.y + ball.dy > canvas.height - 3 || ball.y + ball.dy < 3) {
+  if (ball.y + ball.dy < -(ball.lenght / 2) || ball.y + ball.dy > canvas.height - (ball.lenght / 2) ) {
     ball.dy = -ball.dy;
   }
 
@@ -147,7 +150,7 @@ function draw() {
 }
 
 function startGame() {
-  setInterval(draw, 10);
+  interval = setInterval(draw, 20);
 }
 
 const runButton : any = document.getElementById("runButton");
