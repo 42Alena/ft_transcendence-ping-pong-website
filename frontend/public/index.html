@@ -165,15 +165,15 @@
               <div class="account-profile_header-options border" id="acc-options;"
                 style="display: flex; flex-direction: column;">
                 <div class="status" style="display: flex; height: 50px; gap: 10px; margin-top: 10px;">
-                  <div class="status-circle"></div>
-                  <div class="status-word">OFFLINE</div>
+                  <div class="status-circle-on"></div>
+                  <div class="status-word">ONLINE</div>
                 </div>
                 <div class="actions" id="acc-actions"
                   style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" type="button" id="add-friend__header" style="display: flex; justify-content: center;">add friend</button>
-                  <button class="remove-friend" type="button" id="remove-friend__header" style="display: flex; justify-content: center;">remove friend</button>
-                  <button class="block-friend" type="button" id="block-friend__header" style="display: flex; justify-content: center;">block friend</button>
-                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">invite friend</button>
+                  <button class="add-friend" type="button" id="add-remove-friend__header" style="display: flex; justify-content: center;">Add friend</button>
+                  <button class="block-friend" type="button" id="block-unblock-friend__header" style="display: flex; justify-content: center;">Block friend</button>
+                  <button class="invite-friend" type="button" id="send-message__header" style="display: flex; justify-content: center;">Send message</button>
+                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">Invite friend</button>
                 </div>
               </div>
             </div>
@@ -232,23 +232,55 @@
                 </div>
                 </form>
               </div>
-              <div class="account-profile__page-friends border" id="friends" style="display: none;">
-                <div class="friend" style="display: flex; align-items: center;">
-                  <img src="images/profile/purple.png" alt="" id="friendAvatar" width="100px" height="100px">
-                  <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
-                    <div class="friend-name" style="display: flex; align-items: center;">Mafalda
-                      <div class="status-circle"></div>
+              <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
+                <div>
+                  <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked friends</button>
+                </div>
+                <div id="friendsList" style="display: flex; padding: 5px;">
+                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
+                    <img src="images/profile/purple.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
+                      <div class="friend-name" style="display: flex; align-items: center;">Mafalda
+                        <div class="status-circle-off"></div>
+                        Offline
+                      </div>
+                      <div class="friend-action" id="friend-buttons"
+                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                        <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
+                        <button class="block-friend" type="button" id="block-friend__page">block friend</button>
+                      </div>
                     </div>
-                    <div class="friend-action" id="friend-buttons"
-                      style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                      <button class="add-friend" type="button" id="add-friend__page">add friend</button>
-                      <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                      <button class="block-friend" type="button" id="block-friend__page">block friend</button>
+                  </div>
+                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
+                    <img src="images/profile/green.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
+                      <div class="friend-name" style="display: flex; align-items: center;">Kevin
+                        <div class="status-circle-on"></div>
+                        Online
+                      </div>
+                      <div class="friend-action" id="friend-buttons"
+                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                        <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
+                        <button class="block-friend" type="button" id="block-friend__page">block friend</button>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                <div id="blockedList" style="display: none; padding: 5px;">
+                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
+                    <img src="images/profile/blue.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
+                      <div class="friend-name" style="display: flex; align-items: center;">Zorro
+                      </div>
+                      <div class="friend-action" id="friend-buttons"
+                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                        <button class="block-friend" type="button" id="block-friend__page">unblock friend</button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="account-profile__page-matches border" id="matches" style="display: none;">
+            </div>
+             <div class="account-profile__page-matches border" id="matches" style="display: none;">
                 <div class="account-profile__page-matches-stats">
                   <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
                     style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
@@ -290,7 +322,6 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
       </div>
     </section>
