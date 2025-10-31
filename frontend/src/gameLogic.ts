@@ -138,10 +138,11 @@ function draw() {
     }
   }
   
-  if (ball.x + ball.dx < -(ball.lenght / 2) || ball.x + ball.dx > canvas.width - (ball.lenght / 2)) {
+  if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width) || ball.x + ball.dx > canvas.width - ball.lenght - paddleRight.width) {
     ball.dx = -ball.dx;
   }
-  if (ball.y + ball.dy < -(ball.lenght / 2) || ball.y + ball.dy > canvas.height - (ball.lenght / 2) ) {
+
+  if (ball.y + ball.dy < 0 || ball.y + ball.dy > canvas.height - (ball.lenght) ) {
     ball.dy = -ball.dy;
   }
 
