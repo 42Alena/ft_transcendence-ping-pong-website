@@ -126,7 +126,6 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	/*  can use cookies to store access tokens:
 	 https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
 	
-	fastify.post("/login", async (req) => {
 	   check usernmae and rawPassword
 			  check if user with (username, encryptPssword(rawPassword))
 	   save acccess token  : set expiry = add Date.now() + 7d
@@ -163,9 +162,12 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		return sendOK(res, user.toPublicProfile(), 201)
 	});
 
-	fastify.post("/user/login", async (req, res: FastifyReply) => {
-		console.log('Logout user', req.body)
 
+
+	fastify.post("/user/logout", async (req, res: FastifyReply) => {
+		console.log('Logout user', req.body)
+		const body = req.body as Types.LoginBody;
+		await userManager.deleteLoginSession(body)
 	});
 }
 
@@ -191,9 +193,5 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 </body>
 </html>`)
 	})
-
-
-
-
 
 */
