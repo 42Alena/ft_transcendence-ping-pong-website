@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyReply } from 'fastify';
+import type { FastifyInstance, FastifyReply,FastifyRequest } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
@@ -7,9 +7,41 @@ import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
 
 
+//sendOK(res, user.toPublicProfile(), 201); for non 200
+export function sendOK<T>(res: FastifyReply, payload: T, statusCode = 200) {
+	return res.status(statusCode).send(payload);
+}
 
+export function sendError(
+	res: FastifyReply,
+	error: string,
+	field: string,
+	statusCode = 400): FastifyReply {
+	// { [field]: error }
+	return res.status(statusCode).send({ error, field })
+}
 
+export async function authCheck(
+	req: FastifyRequest,
+	res: FastifyReply,
+	userManager: UserManager
+): Promise<FastifyReply> {
 
+	const allCookies: string = req.headers['cookie'] ?? ''
+
+	const pairs: string[] = allCookies
+		.split(';')
+		.map((a: string) => a.trim())
+		.filter((a: string) => a.startsWith("auth="))
+
+	if (pairs?.length !== 1) { return sendError(res, "not valid session", "auth", 401) }
+
+	const [cookieName, loginSessionId] = pairs[0].split('=')
+	if (! await userManager.isLoginSessionExist(loginSessionId)) { return sendError(res, "session not exist", "auth", 401) }
+
+	return res.send("authCheck: OK")
+
+}
 
 /* 
 	/*  "/user/register" 
@@ -28,10 +60,7 @@ import * as Validate from '../lib/utils/validators';
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
 
-	const sendError = (res: FastifyReply, error: string, field: string, statusCode = 400) => {
-		// { [field]: error }
-		return res.status(statusCode).send({ error, field })
-	}
+
 
 
 	/* 
@@ -84,7 +113,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)
 			res.header('set-cookie', `usr=${newUser.id}`);
-			return res.send(newUser.toPublicProfile());
+
+			return sendOK(res, newUser.toPublicProfile(), 201); // 201 Created
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -129,22 +159,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
 
-		return res.send(user.toPublicProfile()); //default 200
+		// sends user.toPublicProfile() JSON with HTTP 201(user created)
+		return sendOK(res, user.toPublicProfile(), 201)
 	});
-
-
-	fastify.get('/auth/check', async (req, res) => {
-		const allCookies = req.headers['cookie']
-		const pairs = allCookies?.split(';').filter(a => a.startsWith("auth="))
-		if (pairs?.length !== 1)  { return sendError(res, "not valid session", "auth", 401) }
-		
-		const [cookieName, loginSessionId] = pairs[0].split('=')
-		if (! await userManager.isLoginSessionExist(loginSessionId))
-			 { return sendError(res, "session not exist", "auth", 401) }
-
-
-		return   res.send("OKKK")
-	})
 
 
 }

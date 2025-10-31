@@ -72,6 +72,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### auth.ts
 	- "/user/login"
 	- '/auth/check'
+	- authCheck()
 
 ## FRONTEND
 
@@ -82,6 +83,9 @@ Not required for evaluation — used for organization and pull request preparati
  curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
 #  2. check login
  curl localhost:3000/user/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
+
+ #3. check cookie auth
+ curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=1bf8f9442440ba5257c878ddaaf0bad5aab2393d01c3299aeb346c7e450b6227" -v 
 
 ```
 ## 📘 DOCUMENTATION
