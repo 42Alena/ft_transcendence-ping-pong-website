@@ -115,22 +115,60 @@ class Score {
   ctx.fillStyle = "#0095DD";
   ctx.fillText(`Score: ${this.playerLeft} - ${this.playerRight}`, 8, 20);
 }
+}
+
+class Board {
+
+  constructor(){}
+   drawBoardElements() {
+    this.drawMiddleLine();
+    this.drawTopLine();
+    this.drawBottomLine();
+   }
+
+   drawMiddleLine() {
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, 0);
+    ctx.lineTo(canvas.width / 2, canvas.height);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+  }
+
+  drawTopLine() {
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvas.width, 0);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "blue";
+    ctx.stroke();
+   }
+  drawBottomLine() {
+    ctx.beginPath();
+    ctx.moveTo(0, canvas.height);
+    ctx.lineTo(canvas.width, canvas.height);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+   }
 
 }
 let paddleRight = new Paddle();
 let paddleLeft = new Paddle();
 let ball = new Ball();
 let score = new Score();
+let board = new Board();
 
 paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
 paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  score.drawScore();
+  board.drawBoardElements();
   ball.drawBall();
   paddleRight.drawPaddle();
   paddleLeft.drawPaddle();
-  score.drawScore();
 
   if (paddleRight.down) {
     paddleRight.y += 7;
@@ -166,7 +204,8 @@ function draw() {
         score.playerRight++;
       else
         score.playerLeft++;
-      ball.dx = -ball.dx;
+      ball.x = canvas.width / 2 - ball.lenght / 2;
+      ball.y = canvas.height / 2 - ball.lenght / 2;
     }
   }
 
