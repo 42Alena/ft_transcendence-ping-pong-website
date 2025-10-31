@@ -101,9 +101,26 @@ class Ball {
 	}
 }
 
+class Score {
+  playerLeft : number;
+  playerRight : number;
+
+  constructor() {
+    this.playerLeft = 0;
+    this.playerRight = 0;
+  }
+
+  drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText(`Score: ${this.playerLeft} - ${this.playerRight}`, 8, 20);
+}
+
+}
 let paddleRight = new Paddle();
 let paddleLeft = new Paddle();
 let ball = new Ball();
+let score = new Score();
 
 paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
 paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
@@ -113,6 +130,7 @@ function draw() {
   ball.drawBall();
   paddleRight.drawPaddle();
   paddleLeft.drawPaddle();
+  score.drawScore();
 
   if (paddleRight.down) {
     paddleRight.y += 7;
@@ -139,7 +157,17 @@ function draw() {
   }
   
   if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width) || ball.x + ball.dx > canvas.width - ball.lenght - paddleRight.width) {
-    ball.dx = -ball.dx;
+    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght || ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght) {
+      ball.dx = -ball.dx;
+    }
+    else
+    {
+      if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width))
+        score.playerRight++;
+      else
+        score.playerLeft++;
+      ball.dx = -ball.dx;
+    }
   }
 
   if (ball.y + ball.dy < 0 || ball.y + ball.dy > canvas.height - (ball.lenght) ) {
