@@ -32,11 +32,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_users_display_nocase ON users (displayName C
 CREATE TABLE IF NOT EXISTS login_sessions (
   id        TEXT PRIMARY KEY,                              -- random string (cookie value)
   userId    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  expiresAt INTEGER NOT NULL,
-  createdAt INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
-CREATE INDEX IF NOT EXISTS i_login_sessions_expires ON login_sessions(expiresAt);
 CREATE INDEX IF NOT EXISTS i_login_sessions_user    ON login_sessions(userId);
 
 

@@ -10,6 +10,7 @@ export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
+export type LoginSessionId = string;
 
 //_________ Auth secrets (backend-only)_____________
 

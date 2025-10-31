@@ -59,6 +59,43 @@ fastify.post("/login", async (req) => {
 
 
 */
+	fastify.get('/auth/playground', async (req, res) => {
+		res.header('content-type', 'text/html')
+			.send(`
+<html>
+<body>
+<h1>User register test</h1>
+<form action="/user/register" method="POST">
+<input type="text" name="username" placeholder="username" />
+<input type="text" name="displayName" placeholder="displayName" />
+<input type="text" name="avatarUrl" placeholder="avatarUrl" />
+<input type="password" name="passwordPlain" placeholder="password" />
+<button>Save</button>
+</form>
+<script>
+// document.getElementById('...')
+</script>
+</body>
+</html>`)
+	})
+
+
+	fastify.get('/auth/set', async (req, res) => {
+		res.header('set-cookie', `secret=${new Date()}`)
+		res.header('set-cookie', `name=${Math.random()}`)
+		return res.send('magic done')
+	})
+	fastify.get('/auth/get', async (req, res) => {
+		const allCookies = req.headers['cookie']
+		const pairs = allCookies?.split(';')
+
+		return pairs?.map(val => {
+			const [cookieName, cookieValue] = val.split('=')
+			return `Got cookie: ${cookieName} with value [${cookieValue}]`
+		}).join('\n')
+	})
+
+
 	fastify.post("/user/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
 		const body = req.body as Types.RegisterBody;
@@ -99,7 +136,8 @@ fastify.post("/login", async (req) => {
 			})
 			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)
-			return newUser.toPublicProfile();
+			res.header('set-cookie', `usr=${newUser.id}`);
+			return res.send(newUser.toPublicProfile());
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -127,9 +165,10 @@ fastify.post("/login", async (req) => {
 
 		if (!user) { return sendError(res, "No user", "username", 401) }
 
-		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect pacssword", "passwordPlain", 401) }
+		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect password", "passwordPlain", 401) }
 
-		
+		res.header('set-cookie', 'auth=accessToken')
+
 
 	});
 

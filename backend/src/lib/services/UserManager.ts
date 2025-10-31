@@ -2,6 +2,7 @@
 //  https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 import { Knex, QueryBuilder } from 'knex';
 import *  as Types from '../types/types';
+
 import { db } from './DB';
 import { User } from './User';
 
@@ -20,7 +21,7 @@ export class UserManager {
 	}
 
 	async getUserByUsername(username: Types.Username): Promise<User | null> {
-		const row = await this.dbTableUser().where({ username : username }).first()
+		const row = await this.dbTableUser().where({ username: username }).first()
 		if (!row) {
 			return null;
 		}
@@ -38,7 +39,7 @@ export class UserManager {
 	}
 
 
-	//____________SAVE
+	//____________SAVE_____________________________
 	//now for tet only. TODO: delete later
 	async saveUser(newUser: User) {
 		const data = newUser.toDB()
@@ -68,6 +69,18 @@ export class UserManager {
 			.first();
 		return !!row;
 	}
+
+	//____________________LOGIN SESSION KEY________________
+
+	async isLoginSessionExist(loginSessionId: Types.LoginSessionId): Promise<boolean> {
+		if (!loginSessionId) return false;
+		const row = await this.dbTableLoginSessions()
+			.where({ id: loginSessionId })
+			.first();
+		return !!row;
+	}
+
+
 
 
 	//_________________FRIENDS______________________

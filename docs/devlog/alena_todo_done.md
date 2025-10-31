@@ -5,6 +5,24 @@ Not required for evaluation — used for organization and pull request preparati
 
 
 ---------------------
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+-----------------------
 
 ##_____________  TODO FOR FUTURE:
 - USER: 
@@ -40,7 +58,23 @@ Not required for evaluation — used for organization and pull request preparati
 
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
------------------------
+## DB
+ - deleted roows with login expire. Not requiered
+
+## BACKEND
+
+### LOGIN:
+
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 
 ## DB
 	-  added  username     case insencitive (COLLATE NOCASE)
