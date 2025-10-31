@@ -17,9 +17,9 @@ const profileAvatar : any = document.getElementById("acc-avatar");
 const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
 const profileActions : any = document.getElementById("acc-actions"); //buttons
 //buttons
-const profileAddFriend : any = document.getElementById("add-friend__header");
-const profileRemoveFriend : any = document.getElementById("remove-friend__header");
-const profileBlockFriend : any = document.getElementById("block-friend__header");
+const profileAddRemFriend : any = document.getElementById("add-remove-friend__header");
+const profileBlockUnbFriend : any = document.getElementById("block-unblock-friend__header");
+const profileSendMess : any = document.getElementById("send-message__header");
 const profileInviteFriend : any = document.getElementById("invite-friend__header");
 //settings page
 const profileMenuSettings : any = document.getElementById("acc-settings");
@@ -45,10 +45,35 @@ loginForm.addEventListener("submit", (event));
 profileSettingsForm.addEventListener("submit", (event));
 
 //events on profile button
-profileAddFriend.addEventListener("click", (event));
-profileRemoveFriend.addEventListener("click", (event));
-profileBlockFriend.addEventListener("click", (event));
+let isFriend = true;
+let isBlocked = true;
+
+profileAddRemFriend.addEventListener("click", (event : any) => {
+	if (isFriend == false)
+	{
+		profileAddRemFriend.textContent = "Add friend";
+		isFriend = true;
+	}
+	else
+	{
+		profileAddRemFriend.textContent = "Remove friend";
+		isFriend = false;
+	}
+});
+profileBlockUnbFriend.addEventListener("click", (event : any) => {
+	if (isBlocked == false)
+	{
+		profileBlockUnbFriend.textContent = "Block friend";
+		isBlocked = true;
+	}
+	else
+	{
+		profileBlockUnbFriend.textContent = "Unblock friend";
+		isBlocked = false;
+	}
+});
 profileInviteFriend.addEventListener("click", (event));
+profileSendMess.addEventListener("click", (event));
 removeFriend.addEventListener("click", (event));
 blockFriend.addEventListener("click", (event));
 
@@ -95,7 +120,7 @@ regAvatar.addEventListener("change", (event : any) => {
 /* Now just change the value of each element to display different profile pages
  I will implement logic after getting visibility flag for server*/
 //header friend actions
-profileActions.style.display = "none"; //flex for others' view
+profileActions.style.display = "flex"; //flex for others' view
 //header username
 profileUsername.style.display = "flex"; //none for others' view
 //settings menu + settings page
