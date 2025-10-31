@@ -66,6 +66,7 @@ Not required for evaluation — used for organization and pull request preparati
  -isLoginSessionExist()
  -saveLoginSession()
  -deleteLoginSession()
+ -getUserIdByLoginSession()
 
 ### LOGIN:
 

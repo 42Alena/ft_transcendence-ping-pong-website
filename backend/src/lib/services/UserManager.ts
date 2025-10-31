@@ -72,6 +72,21 @@ export class UserManager {
 
 	//____________________LOGIN SESSION KEY________________
 
+	async getUserIdByLoginSession(
+		loginSessionId: Types.LoginSessionId
+	): Promise<UserId | null> {
+
+		if (!loginSessionId) return null;
+
+		const row = await this.dbTableLoginSessions()
+			.where({ id: loginSessionId })
+			.first() as { userId: Types.UserId } | undefined;;
+
+		if (!row) 	return null;	
+
+		return row.userId;
+	}
+
 	async isLoginSessionExist(loginSessionId: Types.LoginSessionId): Promise<boolean> {
 		if (!loginSessionId) return false;
 		const row = await this.dbTableLoginSessions()
@@ -135,7 +150,7 @@ export class UserManager {
 	}
 
 	async isFriend(
-		viewerId: Types.UserId, 
+		viewerId: Types.UserId,
 		targetId: Types.UserId
 	): Promise<boolean> {
 		const row = await this.dbTableFriends()
