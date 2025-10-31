@@ -8,6 +8,6 @@ export function generateId(){
 
 
 export function generateSessionToken(){
-	return randomBytes(64).toString('hex') 
+	return randomBytes(32).toString('hex') 
 }
 

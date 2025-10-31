@@ -15,9 +15,9 @@ export class UserManager {
 
 	constructor() {
 		this.dbTableUser = () => db<User>('users');
-		this.dbTableFriends = db('friends');
-		this.dbTableBlocks = db('blocks');
-		this.dbTableLoginSessions = db('login_sessions');
+		this.dbTableFriends = () =>db('friends');
+		this.dbTableBlocks = () =>db('blocks');
+		this.dbTableLoginSessions = () => db('login_sessions'); //= () => anonym fkt =factory fkt
 	}
 
 	async getUserByUsername(username: Types.Username): Promise<User | null> {
@@ -74,7 +74,7 @@ export class UserManager {
 
 	async getUserIdByLoginSession(
 		loginSessionId: Types.LoginSessionId
-	): Promise<UserId | null> {
+	): Promise<Types.UserId | null> {
 
 		if (!loginSessionId) return null;
 
@@ -82,7 +82,7 @@ export class UserManager {
 			.where({ id: loginSessionId })
 			.first() as { userId: Types.UserId } | undefined;;
 
-		if (!row) 	return null;	
+		if (!row) return null;
 
 		return row.userId;
 	}
@@ -95,16 +95,19 @@ export class UserManager {
 		return !!row;
 	}
 
-	/* “single-session-per-user” policy (new login replaces old) */
-	async saveLoginSession(loginSessionId: Types.LoginSessionId, userId: Types.UserId) {
+
+	async saveLoginSession(
+		loginSessionId: Types.LoginSessionId,
+		userId: Types.UserId
+	) {
 
 		await this.dbTableLoginSessions()
 			.insert({ id: loginSessionId, userId })
-			.onConflict('userId')
-			.merge(['id']); 			// update id(on conflict), if exist
 	}
 
 
+
+	//___________________LOGOUT______________
 	async deleteLoginSession(
 		loginSessionId: Types.LoginSessionId,
 		userId: Types.UserId

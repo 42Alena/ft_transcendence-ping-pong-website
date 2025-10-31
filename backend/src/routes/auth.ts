@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyReply } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
-import { generateId } from '../lib/utils/randomId';
+import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
 
@@ -34,68 +34,15 @@ export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserMa
 	}
 
 
-
-
-
 	/* 
-TODO:
+
 registration
 login. After will return generated secret session acces token/string
 online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
 update profile/ change pass(check subject)  put method
 add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 
-// can use cookies to store access tokens:
-// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
-
-
-fastify.post("/login", async (req) => {
-   // check usernmae and rawPassword
-		  // check if user with (username, encryptPssword(rawPassword))
-   // save acccess token  : set expiry = add Date.now() + 7d
-   // return access token
-   // res.header('set-cookie', 'auth=accessToken')
-})
-
-
 */
-	fastify.get('/auth/playground', async (req, res) => {
-		res.header('content-type', 'text/html')
-			.send(`
-<html>
-<body>
-<h1>User register test</h1>
-<form action="/user/register" method="POST">
-<input type="text" name="username" placeholder="username" />
-<input type="text" name="displayName" placeholder="displayName" />
-<input type="text" name="avatarUrl" placeholder="avatarUrl" />
-<input type="password" name="passwordPlain" placeholder="password" />
-<button>Save</button>
-</form>
-<script>
-// document.getElementById('...')
-</script>
-</body>
-</html>`)
-	})
-
-
-	fastify.get('/auth/set', async (req, res) => {
-		res.header('set-cookie', `secret=${new Date()}`)
-		res.header('set-cookie', `name=${Math.random()}`)
-		return res.send('magic done')
-	})
-	fastify.get('/auth/get', async (req, res) => {
-		const allCookies = req.headers['cookie']
-		const pairs = allCookies?.split(';')
-
-		return pairs?.map(val => {
-			const [cookieName, cookieValue] = val.split('=')
-			return `Got cookie: ${cookieName} with value [${cookieValue}]`
-		}).join('\n')
-	})
-
-
 	fastify.post("/user/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
 		const body = req.body as Types.RegisterBody;
@@ -146,7 +93,15 @@ fastify.post("/login", async (req) => {
 
 
 
-
+	/*  can use cookies to store access tokens:
+	 https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
+	
+	fastify.post("/login", async (req) => {
+	   check usernmae and rawPassword
+			  check if user with (username, encryptPssword(rawPassword))
+	   save acccess token  : set expiry = add Date.now() + 7d
+	   return access token
+	   res.header('set-cookie', 'auth=accessToken') */
 	fastify.post("/user/login", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
 		const body = req.body as Types.LoginBody;
@@ -167,12 +122,58 @@ fastify.post("/login", async (req) => {
 
 		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect password", "passwordPlain", 401) }
 
-		res.header('set-cookie', 'auth=accessToken')
+		const loginSessionId = generateSessionToken();
+
+		await userManager.saveLoginSession(loginSessionId, user.id);
 
 
+		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+
+		return res.send(user.toPublicProfile()); //default 200
 	});
 
 
+	fastify.get('/auth/check', async (req, res) => {
+		const allCookies = req.headers['cookie']
+		const pairs = allCookies?.split(';').filter(a => a.startsWith("auth="))
+		if (pairs?.length !== 1)  { return sendError(res, "not valid session", "auth", 401) }
+		
+		const [cookieName, loginSessionId] = pairs[0].split('=')
+		if (! await userManager.isLoginSessionExist(loginSessionId))
+			 { return sendError(res, "session not exist", "auth", 401) }
+
+
+		return   res.send("OKKK")
+	})
 
 
 }
+
+
+/* 
+
+	fastify.get('/auth/playground', async (req, res) => {
+		res.header('content-type', 'text/html')
+			.send(`
+<html>
+<body>
+<h1>User register test</h1>
+<form action="/user/register" method="POST">
+<input type="text" name="username" placeholder="username" />
+<input type="text" name="displayName" placeholder="displayName" />
+<input type="text" name="avatarUrl" placeholder="avatarUrl" />
+<input type="password" name="passwordPlain" placeholder="password" />
+<button>Save</button>
+</form>
+<script>
+// document.getElementById('...')
+</script>
+</body>
+</html>`)
+	})
+
+
+
+
+
+*/

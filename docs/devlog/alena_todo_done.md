@@ -60,6 +60,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### ======    NEW PULLREQUESTS   ================================================================
 ## DB
  - deleted roows with login expire. Not requiered
+ - add timecreation stamp for login
 
 ## BACKEND
 ### USermanager:
@@ -68,12 +69,21 @@ Not required for evaluation — used for organization and pull request preparati
  -deleteLoginSession()
  -getUserIdByLoginSession()
 
-### LOGIN:
+### auth.ts
+	- "/user/login"
+	- '/auth/check'
 
 ## FRONTEND
 
 ### TESTS
+1.LOGIN TEST:
+```bash
+#  0. register:
+ curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+#  2. check login
+ curl localhost:3000/user/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
+```
 ## 📘 DOCUMENTATION
 
 ## 🔗 LINKS / HELP
