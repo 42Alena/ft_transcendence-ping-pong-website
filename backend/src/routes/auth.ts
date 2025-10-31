@@ -133,7 +133,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	   return access token
 	   res.header('set-cookie', 'auth=accessToken') */
 	fastify.post("/user/login", async (req, res: FastifyReply) => {
-		console.log('Register user', req.body)
+		console.log('Login user', req.body)
 		const body = req.body as Types.LoginBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
 
@@ -163,7 +163,10 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		return sendOK(res, user.toPublicProfile(), 201)
 	});
 
+	fastify.post("/user/login", async (req, res: FastifyReply) => {
+		console.log('Logout user', req.body)
 
+	});
 }
 
 
