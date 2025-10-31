@@ -62,6 +62,10 @@ Not required for evaluation — used for organization and pull request preparati
  - deleted roows with login expire. Not requiered
 
 ## BACKEND
+### USermanager:
+ -isLoginSessionExist()
+ -saveLoginSession()
+ -deleteLoginSession()
 
 ### LOGIN:
 

@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS login_sessions (
   userId    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 );
 
-CREATE INDEX IF NOT EXISTS i_login_sessions_user    ON login_sessions(userId);
+CREATE UNIQUE INDEX IF NOT EXISTS i_login_sessions_user    ON login_sessions(userId);
 
 
 -- =========================
