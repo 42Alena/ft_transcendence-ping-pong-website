@@ -32,7 +32,7 @@
       <nav class="nav border">
         <ul>
           <li>
-            <a href="#" onclick="displayPage('chat')">
+            <a href="#chat" onclick="displayPage('chat')">
               <img src="images/chat.png" alt="chat page" /></a>
           </li>
           <!-- <li><a href="#" onclick="display('game')">
@@ -98,7 +98,7 @@
               <a href="#" onclick="setAccountPage('profile')"> Profile</a>
             </button>
           </div>
-          <div class="account-register" id="registerPage">
+          <div class="account-register" id="registerPage" style="flex-direction: column;">
             <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
               <p class="profile-picture">
                 <label for="reg-avatar">
@@ -125,8 +125,9 @@
                 </button>
               </p>
             </form>
+             <div class="errors border" id="reg-errors">Error box</div>
           </div>
-          <div class="account-login" id="loginPage" style="background-color: white; display: none;">
+          <div class="account-login" id="loginPage" style="background-color: white; display: none; flex-direction: column;">
             <form action="http://127.0.0.1:8080" method="post" id="login">
               <p>
                 <label for="login-username">Username:</label>
@@ -142,9 +143,7 @@
                 </button>
               </p>
             </form>
-            <!-- (Alena) begin temporary for error -->
-            <div class="errors" id="reg-errors"></div>
-            <!-- (Alena) end temporary  for error -->
+            <div class="errors border" id="reg-errors">Error box</div>
           </div>
           <div class="account-profile border" id="profilePage" style="background-color: beige; display: none;">
             <div class="account-profile__header border" id="acc-profile-header" style="background-color: aliceblue;">
@@ -209,25 +208,26 @@
                     </div>
                     </p>
                     <p class="form-group">
-                      <label class="col-md-3 control-label">Password:</label>
+                      <label class="col-md-3 control-label">Old Password:</label>
                     <div class="col-md-8">
                       <input class="form-control" type="password" value="aaaaaaaaa">
                     </div>
                     </p>
                     <p class="form-group">
-                      <label class="col-md-3 control-label">Confirm password:</label>
+                      <label class="col-md-3 control-label">New password:</label>
                     <div class="col-md-8">
                       <input class="form-control" type="password" value="aaaaaaaaa">
                     </div>
                     </p>
                     <p class="form-group">
-                      <label class="col-md-3 control-label"></label>
+                      <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes">
+                      <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes" style="margin-right: 10px;">
                       <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
                     </p>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
                       <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
+                    </p>
                     </p>
                 </div>
                 </form>
@@ -292,123 +292,6 @@
               </div>
             </div>
           </div>
-          <div class="account account-container" id="accountPage">
-            <div class="account-login-reg-choice" id="pageChoice">
-              <button type="button" id="registerButton">
-                <a href="#" onclick="setAccountPage('register')"> Register</a>
-              </button>
-              <button type="button" id="loginButton">
-                <a href="#" onclick="setAccountPage('login')"> Login</a>
-              </button>
-            </div>
-            <div class="account-register" id="registerPage">
-              <form
-                action="http://127.0.0.1:8080"
-                method="post"
-                enctype="multipart/form-data"
-                id="register"
-              >
-                <p class="profile-picture">
-                  <label for="reg-avatar">
-                    <img
-                      src="images/profile.png"
-                      id="avatar"
-                      style="cursor: pointer"
-                      width="50px"
-                      height="50px"
-                    />
-                  </label>
-                  <input
-                    type="file"
-                    id="reg-avatar"
-                    name="reg-user_avatar"
-                    style="display: none"
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-username">Username (login)</label>
-                  <input
-                    type="text"
-                    id="reg-username"
-                    name="reg-user_username"
-                    required
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-dispalyName">Display Name (public)</label>
-                  <input
-                    type="text"
-                    id="reg-dispalyName"
-                    name="reg-user_dispalyName"
-                    required
-                  />
-                </p>
-                <p class="reg-form-field">
-                  <label for="reg-password">Password</label>
-                  <input
-                    type="password"
-                    id="reg-password"
-                    name="reg-user_password"
-                    required
-                  />
-                </p>
-
-                <!-- (Alena) begin temporary for error -->
-                <div class="errors" id="reg-errors"></div>
-                <!-- (Alena) end temporary  for error -->
-
-                <p class="submitButton">
-                   <span style="display: block; height: 1em;"></span>
-                  <button
-                    type="submit"
-                    id="submitRegButton"
-                    style="cursor: pointer"
-                  >
-                    Register
-                  </button>
-                </p>
-              </form>
-            </div>
-            <div class="account-login" id="loginPage">
-              <form action="http://127.0.0.1:8080" method="post" id="login">
-                <p>
-                  <label for="login-username">Username:</label>
-                  <input
-                    type="text"
-                    id="login-username"
-                    name="login-user_username"
-                    required
-                  />
-                </p>
-                <p>
-                  <label for="login-password">Password:</label>
-                  <input
-                    type="password"
-                    id="login-password"
-                    name="login-user_password"
-                    required
-                  />
-                </p>
-                <p class="submitButton">
-                  <button
-                    type="submit"
-                    id="submitLogButton"
-                    style="cursor: pointer"
-                  >
-                    Login
-                  </button>
-                </p>
-              </form>
-            </div>
-            <div class="account-profile" id="profilePage" style="display: none;">
-                <div class="account-profile__avatar border" id="acc-avatar"></div>
-                <div class="account-profile__name border" id="acc-name"></div>
-                <div
-                  class="account-profile__nickname border"
-                  id="acc-nickname"
-                ></div>
-            </div>
-        </div>
       </div>
     </section>
   </main>
