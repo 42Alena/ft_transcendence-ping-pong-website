@@ -6,6 +6,12 @@ const SendEl : any = document.getElementById("send-button");
 const contactChatEl: any = document.getElementById("contact");
 let currChatId : string;
 
+//tabs chat/user chat left
+let tablinks : any = document.getElementsByClassName("tablinks");
+for (let i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+}
+
 //display
 function addBubble(role : string, content : string)
 {
