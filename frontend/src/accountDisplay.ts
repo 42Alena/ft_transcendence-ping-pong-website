@@ -161,7 +161,7 @@ function displayBlockedFriends() {
 	}
 	else
 	{
-		blockButton.textContent = "See blocked friends";
+		blockButton.textContent = "See blocked users";
 		friendList.style.display = "flex";
 		blockedList.style.display = "none";
 		toggle = false;

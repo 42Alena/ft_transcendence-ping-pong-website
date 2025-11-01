@@ -233,8 +233,8 @@
                 </form>
               </div>
               <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
-                <div id="button-friends-blockedUsers">
-                  <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked friends</button>
+                <div>
+                  <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked users</button>
                 </div>
                 <div id="friendsList" style="display: flex; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
@@ -247,7 +247,7 @@
                       <div class="friend-action" id="friend-buttons"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                        <button class="block-friend" type="button" id="block-friend__page">block friend</button>
+                        <button class="block-friend" type="button" id="block-friend__page">block</button>
                       </div>
                     </div>
                   </div>
@@ -261,7 +261,7 @@
                       <div class="friend-action" id="friend-buttons"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                        <button class="block-friend" type="button" id="block-friend__page">block friend</button>
+                        <button class="block-friend" type="button" id="block-friend__page">block</button>
                       </div>
                     </div>
                 </div>
@@ -274,13 +274,12 @@
                       </div>
                       <div class="friend-action" id="friend-buttons"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="block-friend" type="button" id="block-friend__page">unblock friend</button>
+                        <button class="block-friend" type="button" id="block-friend__page">unblock</button>
                       </div>
                     </div>
                   </div>
                 </div>
-            </div>
-             <div class="account-profile__page-matches border" id="matches" style="display: none;">
+              <div class="account-profile__page-matches border" id="matches" style="display: none;">
                 <div class="account-profile__page-matches-stats">
                   <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
                     style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
