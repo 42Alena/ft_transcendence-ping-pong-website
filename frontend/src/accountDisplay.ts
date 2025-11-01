@@ -17,9 +17,9 @@ const profileAvatar : any = document.getElementById("acc-avatar");
 const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
 const profileActions : any = document.getElementById("acc-actions"); //buttons
 //buttons
-const profileAddFriend : any = document.getElementById("add-friend__header");
-const profileRemoveFriend : any = document.getElementById("remove-friend__header");
-const profileBlockFriend : any = document.getElementById("block-friend__header");
+const profileAddRemFriend : any = document.getElementById("add-remove-friend__header");
+const profileBlockUnbFriend : any = document.getElementById("block-unblock-friend__header");
+const profileSendMess : any = document.getElementById("send-message__header");
 const profileInviteFriend : any = document.getElementById("invite-friend__header");
 //settings page
 const profileMenuSettings : any = document.getElementById("acc-settings");
@@ -45,14 +45,37 @@ loginForm.addEventListener("submit", (event));
 profileSettingsForm.addEventListener("submit", (event));
 
 //events on profile button
-profileAddFriend.addEventListener("click", (event));
-profileRemoveFriend.addEventListener("click", (event));
-profileBlockFriend.addEventListener("click", (event));
+let isFriend = false;
+let isBlocked = true;
+
+profileAddRemFriend.addEventListener("click", (event : any) => {
+	if (isFriend == false)
+	{
+		profileAddRemFriend.textContent = "Add friend";
+		isFriend = true;
+	}
+	else
+	{
+		profileAddRemFriend.textContent = "Remove friend";
+		isFriend = false;
+	}
+});
+profileBlockUnbFriend.addEventListener("click", (event : any) => {
+	if (isBlocked == false)
+	{
+		profileBlockUnbFriend.textContent = "Block";
+		isBlocked = true;
+	}
+	else
+	{
+		profileBlockUnbFriend.textContent = "Unblock";
+		isBlocked = false;
+	}
+});
 profileInviteFriend.addEventListener("click", (event));
+profileSendMess.addEventListener("click", (event));
 removeFriend.addEventListener("click", (event));
 blockFriend.addEventListener("click", (event));
-
-
 
 /*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
@@ -95,17 +118,21 @@ regAvatar.addEventListener("change", (event : any) => {
 /* Now just change the value of each element to display different profile pages
  I will implement logic after getting visibility flag for server*/
 //header friend actions
-profileActions.style.display = "none"; //flex for others' view
+profileActions.style.display = "flex"; //flex for others' view
 //header username
-profileUsername.style.display = "flex"; //none for others' view
+profileUsername.style.display = "none"; //none for others' view
 //settings menu + settings page
-profileMenuSettings.style.display = "block"; //none for others' view
-profileSettingsPage.style.display = "flex"; //none for others' view
+profileMenuSettings.style.display = "none"; //none for others' view
+profileSettingsPage.style.display = "none"; //none for others' view
 //friends button requests in friend page
-profileFriendsPageButtons.style.display = "flex"; //none for others' view
+const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
+friendsButtons.forEach((button) => {
+  const element = button as HTMLElement;
+  element.style.display = 'none';
+});
+// profileFriendsPageButtons.style.display = "none"; //none for others' view
 //change avatar in header
-profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
-
+profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv : any = document.getElementById("acc-settings");
@@ -141,6 +168,7 @@ function displayBlockedFriends() {
 	}
 }
 
+blockButton.style.display = "none";
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
 	settingsPage.style.display = "flex";
