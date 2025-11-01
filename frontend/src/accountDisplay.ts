@@ -45,7 +45,7 @@ loginForm.addEventListener("submit", (event));
 profileSettingsForm.addEventListener("submit", (event));
 
 //events on profile button
-let isFriend = true;
+let isFriend = false;
 let isBlocked = true;
 
 profileAddRemFriend.addEventListener("click", (event : any) => {
@@ -63,12 +63,12 @@ profileAddRemFriend.addEventListener("click", (event : any) => {
 profileBlockUnbFriend.addEventListener("click", (event : any) => {
 	if (isBlocked == false)
 	{
-		profileBlockUnbFriend.textContent = "Block friend";
+		profileBlockUnbFriend.textContent = "Block";
 		isBlocked = true;
 	}
 	else
 	{
-		profileBlockUnbFriend.textContent = "Unblock friend";
+		profileBlockUnbFriend.textContent = "Unblock";
 		isBlocked = false;
 	}
 });
@@ -120,15 +120,19 @@ regAvatar.addEventListener("change", (event : any) => {
 //header friend actions
 profileActions.style.display = "flex"; //flex for others' view
 //header username
-profileUsername.style.display = "flex"; //none for others' view
+profileUsername.style.display = "none"; //none for others' view
 //settings menu + settings page
-profileMenuSettings.style.display = "block"; //none for others' view
-profileSettingsPage.style.display = "flex"; //none for others' view
+profileMenuSettings.style.display = "none"; //none for others' view
+profileSettingsPage.style.display = "none"; //none for others' view
 //friends button requests in friend page
-profileFriendsPageButtons.style.display = "flex"; //none for others' view
+const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
+friendsButtons.forEach((button) => {
+  const element = button as HTMLElement;
+  element.style.display = 'none';
+});
+// profileFriendsPageButtons.style.display = "none"; //none for others' view
 //change avatar in header
-profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
-
+profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv : any = document.getElementById("acc-settings");
@@ -164,6 +168,7 @@ function displayBlockedFriends() {
 	}
 }
 
+blockButton.style.display = "none";
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
 	settingsPage.style.display = "flex";

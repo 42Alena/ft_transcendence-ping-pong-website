@@ -170,10 +170,10 @@
                 </div>
                 <div class="actions" id="acc-actions"
                   style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" type="button" id="add-remove-friend__header" style="display: flex; justify-content: center;">Add friend</button>
-                  <button class="block-friend" type="button" id="block-unblock-friend__header" style="display: flex; justify-content: center;">Block friend</button>
+                  <button class="add-friend" type="button" id="add-remove-friend__header" style="display: flex; justify-content: center;">Remove friend</button>
+                  <button class="block-friend" type="button" id="block-unblock-friend__header" style="display: flex; justify-content: center;">Block</button>
                   <button class="invite-friend" type="button" id="send-message__header" style="display: flex; justify-content: center;">Send message</button>
-                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">Invite friend</button>
+                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">Invite to game</button>
                 </div>
               </div>
             </div>
@@ -233,7 +233,7 @@
                 </form>
               </div>
               <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
-                <div>
+                <div id="button-friends-blockedUsers">
                   <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked friends</button>
                 </div>
                 <div id="friendsList" style="display: flex; padding: 5px;">
