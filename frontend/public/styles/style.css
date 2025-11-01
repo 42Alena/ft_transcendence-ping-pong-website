@@ -497,11 +497,20 @@ input {
 }
 
 /* friends page */
-.status-circle {
+.status-circle-off {
   width: 15px;
   height: 15px;
   border-radius: 50%;
   background-color: grey;
+  border: 2px solid white;
+  margin-left: 5px;
+}
+
+.status-circle-on {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: green;
   border: 2px solid white;
   margin-left: 5px;
 }
