@@ -93,6 +93,10 @@ Not required for evaluation — used for organization and pull request preparati
 
  #3. check cookie auth
  curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=1bf8f9442440ba5257c878ddaaf0bad5aab2393d01c3299aeb346c7e450b6227" -v 
+ 
+ #4. add ddecorators to extract auth cookie:
+  curl localhost:3000/user/logout -X POST -v -H 'Cookie: auth=abc'
+ 
 
 ```
 ## 📘 DOCUMENTATION

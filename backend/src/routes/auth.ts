@@ -23,22 +23,38 @@ export function sendError(
 
 export async function authCheck(
 	req: FastifyRequest,
-	res: FastifyReply,
 	userManager: UserManager
-): Promise<FastifyReply> {
+): Promise<Boolean> {
 	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
 
 	if (!loginSessionId) {
-		return sendError(res, "not valid session", "auth", 401);
+		return false
 	}
 
 	if (! await userManager.isLoginSessionExist(loginSessionId)) {
-		return sendError(res, "session not exist", "auth", 401)
+		return false
 	}
-
-	return res.send("authCheck: OK")
+	return true;
 
 }
+// export async function authCheck(
+// 	req: FastifyRequest,
+// 	res: FastifyReply,
+// 	userManager: UserManager
+// ): Promise<FastifyReply> {
+// 	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
+
+// 	if (!loginSessionId) {
+// 		return sendError(res, "not valid session", "auth", 401);
+// 	}
+
+// 	if (! await userManager.isLoginSessionExist(loginSessionId)) {
+// 		return sendError(res, "session not exist", "auth", 401)
+// 	}
+
+// 	return res.send("authCheck: OK")
+
+// }
 
 /* 
 	/*  "/user/register" 
@@ -164,23 +180,21 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	fastify.post("/user/logout", async (req, res: FastifyReply) => {
 
 		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-		// if (!req.userId) {
-		// 	return res.send(401)
-		// }
+		if (!loginSessionId) {
+			return sendError(res, "no loginSessionId for logout", "auth", 204);
+		}
 
 		console.log(loginSessionId);
-		return res.send(200);
+		// return res.send(200);
 
-		// console.log('Logout user', req.body)
-		// const body = req.body as Types.LoginBody;
-		// try {
-		// 	authCheck(req, res, userManager)
+		try {
+			authCheck(req, res, userManager)
 
-		// 	return sendOK(res, "user logout");
-		// } catch (e: any) {
+			return sendOK(res, "ok: user  logout");
+		} catch (e: any) {
 
-		// 	return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
-		// }
+			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
+		}
 
 		// await userManager.deleteLoginSession(loginSessionId, userId)
 	});
