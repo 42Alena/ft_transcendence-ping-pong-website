@@ -19,9 +19,11 @@ export type UserId = string;
 export type AvatarUrl = string;
 
 
+
 export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash = string;
 
+export type LoginSessionId = string;
 
 //___________USER_______________________________
 
