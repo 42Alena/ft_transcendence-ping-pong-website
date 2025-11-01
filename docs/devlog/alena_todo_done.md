@@ -73,6 +73,13 @@ Not required for evaluation — used for organization and pull request preparati
 	- "/user/login"
 	- '/auth/check'
 	- authCheck()
+	- user/logout
+
+### types/api.ts
+	+  type UserAwareRequest 
+
+### decorators.ts
+	- adds custom fields to every request (userId, loginSessionId) via decorators
 
 ## FRONTEND
 

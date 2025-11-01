@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyReply,FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
@@ -26,18 +26,15 @@ export async function authCheck(
 	res: FastifyReply,
 	userManager: UserManager
 ): Promise<FastifyReply> {
+	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
 
-	const allCookies: string = req.headers['cookie'] ?? ''
+	if (!loginSessionId) {
+		return sendError(res, "not valid session", "auth", 401);
+	}
 
-	const pairs: string[] = allCookies
-		.split(';')
-		.map((a: string) => a.trim())
-		.filter((a: string) => a.startsWith("auth="))
-
-	if (pairs?.length !== 1) { return sendError(res, "not valid session", "auth", 401) }
-
-	const [cookieName, loginSessionId] = pairs[0].split('=')
-	if (! await userManager.isLoginSessionExist(loginSessionId)) { return sendError(res, "session not exist", "auth", 401) }
+	if (! await userManager.isLoginSessionExist(loginSessionId)) {
+		return sendError(res, "session not exist", "auth", 401)
+	}
 
 	return res.send("authCheck: OK")
 
@@ -163,11 +160,29 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	});
 
 
-
+	//204 No Content
 	fastify.post("/user/logout", async (req, res: FastifyReply) => {
-		console.log('Logout user', req.body)
-		const body = req.body as Types.LoginBody;
-		await userManager.deleteLoginSession(body)
+
+		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
+		// if (!req.userId) {
+		// 	return res.send(401)
+		// }
+
+		console.log(loginSessionId);
+		return res.send(200);
+
+		// console.log('Logout user', req.body)
+		// const body = req.body as Types.LoginBody;
+		// try {
+		// 	authCheck(req, res, userManager)
+
+		// 	return sendOK(res, "user logout");
+		// } catch (e: any) {
+
+		// 	return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
+		// }
+
+		// await userManager.deleteLoginSession(loginSessionId, userId)
 	});
 }
 
