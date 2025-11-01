@@ -28,7 +28,6 @@ const profileSettingsForm : any = document.getElementById("settings");
 //friend page
 const profileFriendsPageButtons : any = document.getElementById("friend-buttons"); //buttons
 //buttons
-const addFriend : any = document.getElementById("add-friend__page");
 const removeFriend : any = document.getElementById("remove-friend__page");
 const blockFriend : any = document.getElementById("block-friend__page");
 
@@ -50,7 +49,6 @@ profileAddFriend.addEventListener("click", (event));
 profileRemoveFriend.addEventListener("click", (event));
 profileBlockFriend.addEventListener("click", (event));
 profileInviteFriend.addEventListener("click", (event));
-addFriend.addEventListener("click", (event));
 removeFriend.addEventListener("click", (event));
 blockFriend.addEventListener("click", (event));
 
@@ -90,6 +88,7 @@ regAvatar.addEventListener("change", (event : any) => {
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
 
+
 /* Releated to profile page */
 
 /* Implementation to choose which profile page to display: personal or other's users*/
@@ -118,6 +117,30 @@ const settingsPage : any = document.getElementById("update-settings");
 const friendsPage : any = document.getElementById("friends");
 const matchesPage : any = document.getElementById("matches");
 
+/* Releated to friend page*/
+
+let toggle = false;
+const blockButton : any = document.getElementById("blockButton");
+const blockedList : any = document.getElementById("blockedList");
+const friendList : any = document.getElementById("friendsList");
+
+function displayBlockedFriends() {
+	if (toggle == false)
+	{
+		blockButton.textContent = "See friends";
+		blockedList.style.display = "flex";
+		friendList.style.display = "none";
+		toggle = true;
+	}
+	else
+	{
+		blockButton.textContent = "See blocked users";
+		friendList.style.display = "flex";
+		blockedList.style.display = "none";
+		toggle = false;
+	}
+}
+
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
 	settingsPage.style.display = "flex";
@@ -126,7 +149,7 @@ settingsDiv.addEventListener("click", (event : any) => {
 });
 
 friendsDiv.addEventListener("click", (event : any) => {
-	friendsPage.style.display = "grid";
+	friendsPage.style.display = "flex";
 	settingsPage.style.display = "none";
 	matchesPage.style.display = "none";
 });
