@@ -1,10 +1,11 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import type { DoneFuncWithErrOrRes, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
 import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
+import { authRequiredOptions } from './utils';
 
 
 //sendOK(res, user.toPublicProfile(), 201); for non 200
@@ -20,41 +21,6 @@ export function sendError(
 	// { [field]: error }
 	return res.status(statusCode).send({ error, field })
 }
-
-export async function authCheck(
-	req: FastifyRequest,
-	userManager: UserManager
-): Promise<Boolean> {
-	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-
-	if (!loginSessionId) {
-		return false
-	}
-
-	if (! await userManager.isLoginSessionExist(loginSessionId)) {
-		return false
-	}
-	return true;
-
-}
-// export async function authCheck(
-// 	req: FastifyRequest,
-// 	res: FastifyReply,
-// 	userManager: UserManager
-// ): Promise<FastifyReply> {
-// 	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-
-// 	if (!loginSessionId) {
-// 		return sendError(res, "not valid session", "auth", 401);
-// 	}
-
-// 	if (! await userManager.isLoginSessionExist(loginSessionId)) {
-// 		return sendError(res, "session not exist", "auth", 401)
-// 	}
-
-// 	return res.send("authCheck: OK")
-
-// }
 
 /* 
 	/*  "/user/register" 
@@ -176,27 +142,26 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	});
 
 
-	//204 No Content
-	fastify.post("/user/logout", async (req, res: FastifyReply) => {
+
+
+	fastify.post("/user/logout", authRequiredOptions, async (req, res: FastifyReply) => {
 
 		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-		if (!loginSessionId) {
-			return sendError(res, "no loginSessionId for logout", "auth", 204);
-		}
+		const userId = (req as Types.UserAwareRequest).userId;
 
-		console.log(loginSessionId);
-		// return res.send(200);
+		console.log(loginSessionId, userId);
+
 
 		try {
-			authCheck(req, res, userManager)
 
-			return sendOK(res, "ok: user  logout");
+			await userManager.deleteLoginSession(loginSessionId, userId)
+			res.header('set-cookie', "auth="); //`backtig is a literal string to put value
+			return sendOK(res, null, 204); //204 No Content
 		} catch (e: any) {
 
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
 		}
 
-		// await userManager.deleteLoginSession(loginSessionId, userId)
 	});
 }
 

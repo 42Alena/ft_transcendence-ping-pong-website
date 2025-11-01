@@ -56,6 +56,6 @@ export type RegisterResponse = UserPublic;
 export type LoginResponse = UserPublic;
 
 export type UserAwareRequest = FastifyRequest & {
-	userId?: string;
-	loginSessionId?: string;
+	userId: string;
+	loginSessionId: string;
 }

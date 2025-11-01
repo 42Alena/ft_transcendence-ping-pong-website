@@ -13,6 +13,9 @@ const fastify = Fastify();
 const userManager = new UserManager()
 fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
 
+// The decorated Fastify server is bound to this in route handlers:
+// https://fastify.dev/docs/latest/Reference/Decorators/
+fastify.decorate('userManager', userManager);
 initDecorators(fastify);
 
 //fastify register routes

@@ -92,11 +92,11 @@ Not required for evaluation — used for organization and pull request preparati
  curl localhost:3000/user/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
  #3. check cookie auth
- curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=1bf8f9442440ba5257c878ddaaf0bad5aab2393d01c3299aeb346c7e450b6227" -v 
+#  curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 
  
- #4. add ddecorators to extract auth cookie:
-  curl localhost:3000/user/logout -X POST -v -H 'Cookie: auth=abc'
- 
+ #4. logout. add decorators to extract auth cookie 9change cookie from terminal auth:
+  curl localhost:3000/user/logout -X POST -v -H 'Cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d'
+
 
 ```
 ## 📘 DOCUMENTATION
