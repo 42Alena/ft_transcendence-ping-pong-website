@@ -47,14 +47,29 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 	}
 }
 
-function addElement(name : string, id : string) {
+function addElement(name : string, id : string, avatar : string) {
   
 	const newDiv = document.createElement("div");
+
+	const avatDiv = document.createElement("div");
+	const avatImg = document.createElement("img");
+	avatImg.src = avatar;
+	avatImg.width = 30;
+	avatImg.height = 30;
+	avatDiv.appendChild(avatImg);
+	avatDiv.className = "border";
+	newDiv.appendChild(avatDiv);
+
+	const userDiv = document.createElement("div");
+	userDiv.setAttribute('id', id);
     const newContent = document.createTextNode(name);
-	newDiv.setAttribute('id', id);
+	userDiv.appendChild(newContent);
+	newDiv.appendChild(userDiv);
 	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
-	newDiv.appendChild(newContent);
     newDiv.className = "chat-left__list-dms-item border";
+	newDiv.style.display = "flex";
+	newDiv.style.alignItems = "center";
+	newDiv.style.gap = "10px";
     listDmsDiv.append(newDiv);
 }
 
@@ -109,12 +124,12 @@ let message6 : { sender: boolean; receiver: boolean; content: string } = {sender
 messages2.push(message4);
 messages2.push(message5);
 messages2.push(message6);
-chatList.push(new Chat('1', "chat " + 1, "url", messages1));
-chatList.push(new Chat('2', "chat " + 2, "url", messages2));
+chatList.push(new Chat('1', "Mafalda ", "images/profile/purple.png", messages1));
+chatList.push(new Chat('2', "Kevin", "images/profile/green.png", messages2));
 
 //create chat box in left sidebar
 for (let step = 0; step < chatList.length; step++) {
-	addElement(chatList[step].recipientName, chatList[step].id);
+	addElement(chatList[step].recipientName, chatList[step].id, chatList[step].avatar);
 }
 //events
 inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
