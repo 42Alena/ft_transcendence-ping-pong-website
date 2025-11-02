@@ -3,7 +3,7 @@
 // <script src="dist/chat.js" type="module"></script>
 
 
-import type *  as Types from './types/api.ts';
+import type *  as Types from './types/api.js';
 
 
 const SERVER = 'http://localhost:3000'
@@ -30,7 +30,7 @@ export async function apiAuthRegister(data: Types.RegisterBody) {
 
 	// if res.error ... res.field
 	// if 400 -> throw error
-//parse json??
+	//parse json??
 	// either show errorrs, or succes
 
 
@@ -42,7 +42,7 @@ export async function apiAuthRegister(data: Types.RegisterBody) {
 		// throw new ApiError(responseRegister)
 	}
 
-	
+
 	return { success: true, data: responseBody }
 }
 

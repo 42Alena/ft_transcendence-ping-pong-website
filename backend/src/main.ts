@@ -6,11 +6,17 @@ import { registerUserRoutes } from './routes/user';
 import { registerAuthRoutes } from './routes/auth';
 import { User } from './lib/services/User';
 import { UserManager } from './lib/services/UserManager';
+import { initDecorators } from './decorators';
 
 const fastify = Fastify();
 
 const userManager = new UserManager()
 fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
+
+// The decorated Fastify server is bound to this in route handlers:
+// https://fastify.dev/docs/latest/Reference/Decorators/
+fastify.decorate('userManager', userManager);
+initDecorators(fastify);
 
 //fastify register routes
 registerMainRoutes(fastify)
@@ -18,7 +24,6 @@ registerChatRoutes(fastify)
 registerUserRoutes(fastify, userManager)
 registerHealthzRoutes(fastify);
 registerAuthRoutes(fastify, userManager);
-
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, (err: Error | null, address: string) => {
   if (err) throw err;

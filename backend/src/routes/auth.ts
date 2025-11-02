@@ -1,15 +1,26 @@
-import type { FastifyInstance, FastifyReply } from 'fastify';
+import type { DoneFuncWithErrOrRes, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as Types from '../lib/types/api';
 import { User } from '../lib/services/User';
-import { generateId } from '../lib/utils/randomId';
+import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
+import { authRequiredOptions } from './utils';
 
 
+//sendOK(res, user.toPublicProfile(), 201); for non 200
+export function sendOK<T>(res: FastifyReply, payload: T, statusCode = 200) {
+	return res.status(statusCode).send(payload);
+}
 
-
-
+export function sendError(
+	res: FastifyReply,
+	error: string,
+	field: string,
+	statusCode = 400): FastifyReply {
+	// { [field]: error }
+	return res.status(statusCode).send({ error, field })
+}
 
 /* 
 	/*  "/user/register" 
@@ -28,35 +39,16 @@ import * as Validate from '../lib/utils/validators';
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
 
-	const sendError = (res: FastifyReply, error: string, field: string, statusCode = 400) => {
-		// { [field]: error }
-		return res.status(statusCode).send({ error, field })
-	}
-
-
 
 
 
 	/* 
-TODO:
+
 registration
 login. After will return generated secret session acces token/string
 online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
 update profile/ change pass(check subject)  put method
 add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
-
-// can use cookies to store access tokens:
-// https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
-
-
-fastify.post("/login", async (req) => {
-   // check usernmae and rawPassword
-		  // check if user with (username, encryptPssword(rawPassword))
-   // save acccess token  : set expiry = add Date.now() + 7d
-   // return access token
-   // res.header('set-cookie', 'auth=accessToken')
-})
-
 
 */
 	fastify.post("/user/register", async (req, res: FastifyReply) => {
@@ -99,7 +91,9 @@ fastify.post("/login", async (req) => {
 			})
 			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)
-			return newUser.toPublicProfile();
+			res.header('set-cookie', `usr=${newUser.id}`);
+
+			return sendOK(res, newUser.toPublicProfile(), 201); // 201 Created
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -108,9 +102,16 @@ fastify.post("/login", async (req) => {
 
 
 
-
+	/*  can use cookies to store access tokens:
+	 https://fastify.dev/docs/latest/Reference/Reply/#getheaderkey 
+	
+	   check usernmae and rawPassword
+			  check if user with (username, encryptPssword(rawPassword))
+	   save acccess token  : set expiry = add Date.now() + 7d
+	   return access token
+	   res.header('set-cookie', 'auth=accessToken') */
 	fastify.post("/user/login", async (req, res: FastifyReply) => {
-		console.log('Register user', req.body)
+		console.log('Login user', req.body)
 		const body = req.body as Types.LoginBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
 
@@ -127,13 +128,64 @@ fastify.post("/login", async (req) => {
 
 		if (!user) { return sendError(res, "No user", "username", 401) }
 
-		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect pacssword", "passwordPlain", 401) }
+		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect password", "passwordPlain", 401) }
 
-		
+		const loginSessionId = generateSessionToken();
 
+		await userManager.saveLoginSession(loginSessionId, user.id);
+
+
+		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+
+		// sends user.toPublicProfile() JSON with HTTP 201(user created)
+		return sendOK(res, user.toPublicProfile(), 201)
 	});
 
 
 
 
+	fastify.post("/user/logout", authRequiredOptions, async (req, res: FastifyReply) => {
+
+		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
+		const userId = (req as Types.UserAwareRequest).userId;
+
+		console.log(loginSessionId, userId);
+
+
+		try {
+
+			await userManager.deleteLoginSession(loginSessionId, userId)
+			res.header('set-cookie', "auth="); //`backtig is a literal string to put value
+			return sendOK(res, null, 204); //204 No Content
+		} catch (e: any) {
+
+			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
+		}
+
+	});
 }
+
+
+/* 
+
+	fastify.get('/auth/playground', async (req, res) => {
+		res.header('content-type', 'text/html')
+			.send(`
+<html>
+<body>
+<h1>User register test</h1>
+<form action="/user/register" method="POST">
+<input type="text" name="username" placeholder="username" />
+<input type="text" name="displayName" placeholder="displayName" />
+<input type="text" name="avatarUrl" placeholder="avatarUrl" />
+<input type="password" name="passwordPlain" placeholder="password" />
+<button>Save</button>
+</form>
+<script>
+// document.getElementById('...')
+</script>
+</body>
+</html>`)
+	})
+
+*/
