@@ -265,7 +265,7 @@ body {
   text-align: center;
 }
 
-.chat-right__list {
+.chat-right__body {
   display: flex;
   flex-grow: 1;
   flex-direction: column;

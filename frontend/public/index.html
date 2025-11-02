@@ -55,27 +55,22 @@
             <div class="chat-left__list">
               <div class="chat-left__list-dms" id="list-dms"></div>
               <div class="chat-left__list-dms" id="list-users" style="display: none;">
-               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
+               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;" onclick="displayProf()">
                 <div class="border">
                   <img src="images/profile/blue.png" width="30" height="30">
                 </div>
                 <div>Eos</div>
-              </div>
-              <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
-                <div class="border">
-                  <img src="images/profile/green.png" width="30" height="30">
-                </div>
-                <div>Felix</div>
               </div>
             </div>
             </div>
           </div>
           <div class="chat-right">
             <div id="start-chat" style="display: flex; justify-content: center; align-items: center;  height: 100vh; background-color: white;">Start a converstion</div>
+            <div id="userProfile" style="display: none;"></div>
             <div id="conversation" style="display: none; flex-direction: column; height: 100vh;" class="border">
               <div class="chat-right__header" id="chat-info" style="gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
               </div>
-              <div class="chat-right__list border" style="flex: 1">
+              <div class="chat-right__body border" style="flex: 1">
                 <div class="chat-right__box border">
                   <!-- <div class="chat-right__stamp border">stamp</div> -->
                   <div class="chat-right__bubble border" id="bubble">
@@ -167,7 +162,7 @@
                   </p>
                 </div>
                 <div class="account-profile_header-info-displayName border" id="acc-displayName">
-                  <p>
+                  <p id="temp-displayname">
                     Display Name: Pallo
                   </p>
                 </div>

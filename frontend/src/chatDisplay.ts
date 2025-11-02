@@ -7,6 +7,7 @@ const listUsersDiv : any = document.getElementById("list-users");
 const conversationDiv : any = document.getElementById("conversation");
 const chatInfoDiv : any = document.getElementById("chat-info");
 const startConvDiv : any = document.getElementById("start-chat");
+const userProfileDiv : any = document.getElementById("userProfile");
 let historyConversation : any;
 let currChatId : string;
 
@@ -62,6 +63,7 @@ function addBubble(role : string, content : string)
 
 function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
 
+	userProfileDiv.style.display = "none";
 	fillConversationInfo(name, avatar);
 	currChatId = id;
 	const existingBubble = document.getElementById('history-conv');
@@ -218,3 +220,16 @@ inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 		captureInput();
 	}
 });
+
+function displayProf() {
+	startConvDiv.style.display = "none";
+	conversationDiv.style.display = "none";
+	blockedList.style.display = "none";
+	friendList.style.display = "flex";
+	displayUserProfile();
+	userProfileDiv.appendChild(profilePage);
+	userProfileDiv.style.display = "block";
+	profilePage.style.display = "grid";
+	profileFriendPage.style.display = "flex";
+	toggle = true;
+}

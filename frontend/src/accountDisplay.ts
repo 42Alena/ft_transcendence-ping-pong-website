@@ -25,9 +25,13 @@ const profileInviteFriend : any = document.getElementById("invite-friend__header
 const profileMenuSettings : any = document.getElementById("acc-settings");
 const profileSettingsPage : any = document.getElementById("update-settings");
 const profileSettingsForm : any = document.getElementById("settings");
+//friend page
+const profileFriendPage : any = document.getElementById("friends");
 //buttons
 const removeFriend : any = document.getElementById("remove-friend__page");
 const blockFriend : any = document.getElementById("block-friend__page");
+
+const tempdisplayN : any = document.getElementById("temp-displayname");
 
 //events on registration
 registerForm.addEventListener("submit", (event : any) => {
@@ -96,6 +100,9 @@ function setAccountPage(text : string)
 	else if (text == "profile")
 	{
 		profilePage.style.display = "grid";
+		accP.appendChild(profilePage);
+		displayPersonalProfile();
+		profileFriendPage.style.display = "none";
 		choicePage.style.display = "none";
 		loginPage.style.display = "none";
 		registerPage.style.display = "none";
@@ -116,21 +123,21 @@ regAvatar.addEventListener("change", (event : any) => {
 /* Now just change the value of each element to display different profile pages
  I will implement logic after getting visibility flag for server*/
 //header friend actions
-profileActions.style.display = "none"; //flex for others' view
-//header username
-profileUsername.style.display = "flex"; //none for others' view
-//settings menu + settings page
-profileMenuSettings.style.display = "flex"; //none for others' view
-profileSettingsPage.style.display = "flex"; //none for others' view
-//friends button requests in friend page
-const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
-friendsButtons.forEach((button) => {
-  const element = button as HTMLElement;
-  element.style.display = 'flex';
-});
-// profileFriendsPageButtons.style.display = "none"; //none for others' view
-//change avatar in header
-profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
+// profileActions.style.display = "none"; //flex for others' view
+// //header username
+// profileUsername.style.display = "flex"; //none for others' view
+// //settings menu + settings page
+// profileMenuSettings.style.display = "flex"; //none for others' view
+// profileSettingsPage.style.display = "flex"; //none for others' view
+// //friends button requests in friend page
+// const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
+// friendsButtons.forEach((button) => {
+//   const element = button as HTMLElement;
+//   element.style.display = 'flex';
+// });
+// // profileFriendsPageButtons.style.display = "none"; //none for others' view
+// //change avatar in header
+// profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv : any = document.getElementById("acc-settings");
@@ -185,3 +192,48 @@ matchesDiv.addEventListener("click", (event : any) => {
 	settingsPage.style.display = "none";
 	friendsPage.style.display = "none";
 });
+
+function displayPersonalProfile () {
+
+	tempdisplayN.innerHTML = "Display name: Pallo";
+	profileActions.style.display = "none"; //flex for others' view
+//header username
+profileUsername.style.display = "flex"; //none for others' view
+//settings menu + settings page
+profileMenuSettings.style.display = "flex"; //none for others' view
+profileSettingsPage.style.display = "flex"; //none for others' view
+//friends button requests in friend page
+const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
+friendsButtons.forEach((button) => {
+  const element = button as HTMLElement;
+  element.style.display = 'flex';
+});
+// profileFriendsPageButtons.style.display = "none"; //none for others' view
+//change avatar in header
+profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
+toggle = true;
+displayBlockedFriends();
+blockButton.style.display = "block";
+}
+
+function displayUserProfile () {
+
+	tempdisplayN.innerHTML = "Display name: Eos";
+	profileActions.style.display = "flex"; //flex for others' view
+//header username
+profileUsername.style.display = "none"; //none for others' view
+//settings menu + settings page
+profileMenuSettings.style.display = "none"; //none for others' view
+profileSettingsPage.style.display = "none"; //none for others' view
+//friends button requests in friend page
+const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
+friendsButtons.forEach((button) => {
+  const element = button as HTMLElement;
+  element.style.display = 'none';
+});
+// profileFriendsPageButtons.style.display = "none"; //none for others' view
+//change avatar in header
+profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
+blockButton.style.display = "none";
+
+}
