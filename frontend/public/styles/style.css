@@ -248,7 +248,6 @@ body {
 
 .chat-right__header {
   display: flex;
-  flex: auto auto; /*it could be resized*/
   /* padding: 1em;
   gap: 10px; */
   align-items: center;
@@ -278,7 +277,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 60px;
-  overflow: auto;
+  /* overflow: auto; */
   flex-grow: 1;
   gap: 10px;
   padding: 1em;
@@ -289,6 +288,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: auto;
   padding: 1em;
   gap: 10px;
   background-color: white;

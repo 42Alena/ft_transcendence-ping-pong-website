@@ -3,11 +3,11 @@ const listDmsDiv : any = document.getElementById("list-dms");
 const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
-const contactChatEl: any = document.getElementById("contact");
 const listUsersDiv : any = document.getElementById("list-users");
 const conversationDiv : any = document.getElementById("conversation");
 const chatInfoDiv : any = document.getElementById("chat-info");
 const startConvDiv : any = document.getElementById("start-chat");
+let historyConversation : any;
 let currChatId : string;
 
 //tabs chat/user chat left
@@ -56,22 +56,25 @@ function addBubble(role : string, content : string)
 	{
 		newBubble.className = "chat-right__bubble-received border";
 	}
-	bubbleDiv.append(newBubble);
+	historyConversation.append(newBubble);
+	bubbleDiv.appendChild(historyConversation);
 }
 
-function dispalyConversationHistory(id : string, list : Chat[]) {
+function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
+
+	fillConversationInfo(name, avatar);
 	currChatId = id;
-	bubbleDiv.innerHTML = "";
-	contactChatEl.innerHTML = "";
+	const existingBubble = document.getElementById('history-conv');
+	if (existingBubble)
+		existingBubble.remove();
+	historyConversation = document.createElement('div');
+	historyConversation.className = "chat-right__bubble border";
+	historyConversation.setAttribute('id', 'history-conv');
 	for (let step = 0; step < list.length; step++)
 	{
 		if (list[step].id == id)
 		{
 			let historyMex : { sender: boolean; receiver: boolean; content: string }[] = list[step].messages;
-			const newHeaderContact = document.createElement("h2");
-			const newContent = document.createTextNode(list[step].recipientName);
-			newHeaderContact.append(newContent);
-			contactChatEl.appendChild(newHeaderContact);
 			for (let step = 0; step < historyMex.length; step++)
 			{
 				if (historyMex[step].receiver == true)
@@ -137,12 +140,12 @@ function addElement(name : string, id : string, avatar : string) {
 	newDiv.appendChild(avatDiv);
 
 	const userDiv = document.createElement("div");
-	userDiv.setAttribute('id', id);
+	userDiv.setAttribute('id', name);
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	newDiv.onclick = function () { fillConversationInfo(name, avatar)};
-	// newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
+	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
+	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
     newDiv.className = "chat-left__list-dms-item border";
 	newDiv.style.display = "flex";
 	newDiv.style.alignItems = "center";
@@ -209,9 +212,9 @@ for (let step = 0; step < chatList.length; step++) {
 	addElement(chatList[step].recipientName, chatList[step].id, chatList[step].avatar);
 }
 //events
-// inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
-// 	if (event.key == "Enter")
-// 	{
-// 		captureInput();
-// 	}
-// });
+inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
+	if (event.key == "Enter")
+	{
+		captureInput();
+	}
+});

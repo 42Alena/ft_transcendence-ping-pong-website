@@ -71,32 +71,30 @@
             </div>
           </div>
           <div class="chat-right">
-            <div id="start-chat" style="display: none; justify-content: center; align-items: center;  height: 100vh; background-color: white;">Start a converstion</div>
-            <div id="conversation" style="display: flex; align-items: center; justify-content: center;" class="border">
-              <div class="chat-right__header" id="chat-info" style="gap: 10px; padding: 14px 16px; height: 45px"></div>
-            </div>
-              <!-- <div class="chat-right__list border"> -->
-                <!-- <div class="chat-right__box border"> -->
+            <div id="start-chat" style="display: flex; justify-content: center; align-items: center;  height: 100vh; background-color: white;">Start a converstion</div>
+            <div id="conversation" style="display: none; flex-direction: column; height: 100vh;" class="border">
+              <div class="chat-right__header" id="chat-info" style="gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
+              </div>
+              <div class="chat-right__list border" style="flex: 1">
+                <div class="chat-right__box border">
                   <!-- <div class="chat-right__stamp border">stamp</div> -->
-                  <!-- <div class="chat-right__bubble border" id="bubble"> -->
-                    <!-- Click on one of the chats to see the conversation -->
-                  <!-- </div> -->
-                <!-- </div> -->
-                <!-- <div class="chat-right__textArea border"> -->
-                  <!-- <div class="chat-right__textArea-input border"> -->
-                    <!-- <div class="chat-right__textAreas-input-text border" id="input"> -->
-                      <!-- <input id="text-box" type="text" class="chat-right__textAreas-input-text border" -->
-                        <!-- placeholder="Send message" /> -->
-                    <!-- </div> -->
-                  <!-- </div> -->
-                  <!-- <div class="chat-right__textArea-submitIcon border" onclick="captureInput()"> -->
-                    <!-- Send -->
-                      <!-- </div> -->
-                <!-- </div> -->
-              <!-- </div> -->
+                  <div class="chat-right__bubble border" id="bubble">
+                  </div>
+                  <div class="chat-right__textArea border">
+                  <div class="chat-right__textArea-input border">
+                    <div class="chat-right__textAreas-input-text border" id="input">
+                      <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
+                        placeholder="Send message" />
+                    </div>
+                  </div>
+                  <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
+                    Send
+                  </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         <div class="account" id="accountPage" style="display: none;">
           <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
             <button type="button" id="registerButton">
