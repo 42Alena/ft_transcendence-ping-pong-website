@@ -4,12 +4,36 @@ const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
 const contactChatEl: any = document.getElementById("contact");
+const listUsersDiv : any = document.getElementById("list-users");
 let currChatId : string;
 
 //tabs chat/user chat left
-let tablinks : any = document.getElementsByClassName("tablinks");
-for (let i = 0; i < tablinks.length; i++) {
+const chatTab : any = document.getElementById("defaultOpen");
+chatTab.click();
+
+function displayList(event : any, text : string) {
+  var i, tablinks;
+
+  let tabcontent : any = document.getElementsByClassName("chat-left__list-dms");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  if (text == 'chat')
+  {
+	listDmsDiv.style.display = "block";
+	listUsersDiv.style.display = "none";
+
+  }
+  else
+  {
+	listUsersDiv.style.display = "block";
+	listDmsDiv.style.display = "none";
+  }
+  event.currentTarget.className += " active";
 }
 
 //display

@@ -49,11 +49,12 @@
         <div class="chat" id="chatPage">
           <div class="chat-left border">
             <div class="chat-tab">
-              <button>Chats</button>
-              <button>Users</button>
+              <button class="tablinks" id="defaultOpen" onclick="displayList(event, 'chat')">Chats</button>
+              <button class="tablinks" onclick="displayList(event, 'users')">Users</button>
             </div>
             <div class="chat-left__list border">
               <div class="chat-left__list-dms border" id="list-dms"></div>
+              <div class="chat-left__list-dms border" id="list-users" style="display: none;">Users</div>
             </div>
           </div>
           <div class="chat-right border">
