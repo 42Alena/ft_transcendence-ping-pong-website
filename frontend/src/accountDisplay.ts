@@ -25,8 +25,6 @@ const profileInviteFriend : any = document.getElementById("invite-friend__header
 const profileMenuSettings : any = document.getElementById("acc-settings");
 const profileSettingsPage : any = document.getElementById("update-settings");
 const profileSettingsForm : any = document.getElementById("settings");
-//friend page
-const profileFriendsPageButtons : any = document.getElementById("friend-buttons"); //buttons
 //buttons
 const removeFriend : any = document.getElementById("remove-friend__page");
 const blockFriend : any = document.getElementById("block-friend__page");
@@ -74,8 +72,8 @@ profileBlockUnbFriend.addEventListener("click", (event : any) => {
 });
 profileInviteFriend.addEventListener("click", (event));
 profileSendMess.addEventListener("click", (event));
-removeFriend.addEventListener("click", (event));
-blockFriend.addEventListener("click", (event));
+// removeFriend.addEventListener("click", (event));
+// blockFriend.addEventListener("click", (event));
 
 /*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
@@ -118,17 +116,17 @@ regAvatar.addEventListener("change", (event : any) => {
 /* Now just change the value of each element to display different profile pages
  I will implement logic after getting visibility flag for server*/
 //header friend actions
-profileActions.style.display = "flex"; //flex for others' view
+profileActions.style.display = "none"; //flex for others' view
 //header username
-profileUsername.style.display = "none"; //none for others' view
+profileUsername.style.display = "flex"; //none for others' view
 //settings menu + settings page
-profileMenuSettings.style.display = "none"; //none for others' view
-profileSettingsPage.style.display = "none"; //none for others' view
+profileMenuSettings.style.display = "flex"; //none for others' view
+profileSettingsPage.style.display = "flex"; //none for others' view
 //friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
-  element.style.display = 'none';
+  element.style.display = 'flex';
 });
 // profileFriendsPageButtons.style.display = "none"; //none for others' view
 //change avatar in header
@@ -168,7 +166,7 @@ function displayBlockedFriends() {
 	}
 }
 
-blockButton.style.display = "none";
+blockButton.style.display = "block";
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
 	settingsPage.style.display = "flex";

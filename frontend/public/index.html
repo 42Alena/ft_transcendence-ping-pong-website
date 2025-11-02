@@ -59,13 +59,13 @@
                 <div class="border">
                   <img src="images/profile/blue.png" width="30" height="30">
                 </div>
-                <div id="1">Eos</div>
+                <div>Eos</div>
               </div>
               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
                 <div class="border">
                   <img src="images/profile/green.png" width="30" height="30">
                 </div>
-                <div id="1">Felix</div>
+                <div>Felix</div>
               </div>
             </div>
             </div>
@@ -95,6 +95,7 @@
               </div>
             </div>
           </div>
+          </div>
         <div class="account" id="accountPage" style="display: none;">
           <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
             <button type="button" id="registerButton">
@@ -111,7 +112,7 @@
             <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
               <p class="profile-picture">
                 <label for="reg-avatar">
-                  <img src="images/profile/grey.png" id="avatar" style="cursor: pointer" width="50px" height="50px" />
+                  <img src="images/profile/grey.png" style="cursor: pointer" width="50px" height="50px" />
                 </label>
                 <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
               </p>
@@ -152,7 +153,7 @@
                 </button>
               </p>
             </form>
-            <div class="errors border" id="reg-errors">Error box</div>
+            <div class="errors border" id="log-errors">Error box</div>
           </div>
           <div class="account-profile border" id="profilePage" style="background-color: beige; display: none;">
             <div class="account-profile__header border" id="acc-profile-header" style="background-color: aliceblue;">
@@ -198,11 +199,11 @@
                   <h3>Edit information</h3>
                   <form class="update-settings-form" role="updateSettings" id="settings">
                     <p class="profile-picture">
-                      <label for="reg-avatar">
-                        <img src="images/profile/orange.png" id="avatar" style="cursor: pointer" width="50px"
+                      <label for="edit-avatar">
+                        <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
                           height="50px" />
                       </label>
-                      <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
+                      <input type="file" id="edit-avatar" name="reg-user_avatar" style="display: none" />
                     </p>
                     <p class="form-group">
                       <label class="col-md-3 control-label">Username:</label>
@@ -238,8 +239,8 @@
                       <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
                     </p>
                     </p>
-                </div>
                 </form>
+                </div>
               </div>
               <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
                 <div>
@@ -247,13 +248,13 @@
                 </div>
                 <div id="friendsList" style="display: flex; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/purple.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/purple.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Mafalda
                         <div class="status-circle-off"></div>
                         Offline
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
                         <button class="block-friend" type="button" id="block-friend__page">block</button>
@@ -261,29 +262,29 @@
                     </div>
                   </div>
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/green.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/green.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Kevin
                         <div class="status-circle-on"></div>
                         Online
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                        <button class="block-friend" type="button" id="block-friend__page">block</button>
+                        <button class="remove-friend" type="button">remove friend</button>
+                        <button class="block-friend" type="button">block</button>
                       </div>
                     </div>
                 </div>
                 </div>
                 <div id="blockedList" style="display: none; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/blue.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/blue.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Zorro
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="block-friend" type="button" id="block-friend__page">unblock</button>
+                        <button class="block-friend" type="button">unblock</button>
                       </div>
                     </div>
                   </div>
@@ -312,7 +313,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="acc-matches border" id="acc-stats" style="display: grid; grid-template-rows: 50px 1fr;">
+                <div class="acc-matches border" id="acc-stats-details" style="display: grid; grid-template-rows: 50px 1fr;">
                   <div class="acc-matches__header border"
                     style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
                     <div class="opponent border" style="display: flex; justify-content: center; align-items: center;">
@@ -334,6 +335,7 @@
             </div>
           </div>
         </div>
+      </div>
     </section>
   </main>
   <footer class="main-footer max-width-container border">
