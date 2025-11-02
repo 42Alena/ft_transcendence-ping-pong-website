@@ -5,6 +5,9 @@ const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
 const contactChatEl: any = document.getElementById("contact");
 const listUsersDiv : any = document.getElementById("list-users");
+const conversationDiv : any = document.getElementById("conversation");
+const chatInfoDiv : any = document.getElementById("chat-info");
+const startConvDiv : any = document.getElementById("start-chat");
 let currChatId : string;
 
 //tabs chat/user chat left
@@ -35,6 +38,9 @@ function displayList(event : any, text : string) {
   }
   event.currentTarget.className += " active";
 }
+
+//display content
+//conversation
 
 //display
 function addBubble(role : string, content : string)
@@ -77,6 +83,46 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 	}
 }
 
+function fillConversationInfo(name : string, avatar : string) {
+
+	const existingContactDiv = document.getElementById('contact-name');
+	const existingAvatarDiv = document.getElementById('contact-avatar');
+
+	if (existingContactDiv)
+	{
+		existingContactDiv.remove();
+	}
+	if (existingAvatarDiv)
+	{
+		existingAvatarDiv.remove();
+	}
+
+	const contactDiv = document.createElement("div");
+	const avatarDiv = document.createElement("div");
+	const avatarImg = document.createElement("img");
+
+	contactDiv.className = "chat-right__header-contact";
+	contactDiv.textContent = name;
+	contactDiv.setAttribute('id', 'contact-name');
+	chatInfoDiv.appendChild(contactDiv);
+
+	avatarDiv.className = "chat-right__header-avatar";
+	avatarDiv.setAttribute('id', 'contact-avatar');
+	avatarDiv.style.width = '45px';
+	avatarDiv.style.height = '45px';
+	avatarDiv.style.overflow = 'hidden';
+	avatarDiv.style.padding = '5px';
+	avatarImg.src = avatar;
+	avatarImg.style.width = '100%';
+	avatarImg.style.height = '100%';
+	avatarImg.style.objectFit = 'cover';
+	avatarDiv.appendChild(avatarImg);
+	chatInfoDiv.appendChild(avatarDiv);
+
+	conversationDiv.style.display = "flex";
+	startConvDiv.style.display = "none";
+}
+
 function addElement(name : string, id : string, avatar : string) {
   
 	const newDiv = document.createElement("div");
@@ -95,7 +141,8 @@ function addElement(name : string, id : string, avatar : string) {
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
+	newDiv.onclick = function () { fillConversationInfo(name, avatar)};
+	// newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
     newDiv.className = "chat-left__list-dms-item border";
 	newDiv.style.display = "flex";
 	newDiv.style.alignItems = "center";
@@ -162,9 +209,9 @@ for (let step = 0; step < chatList.length; step++) {
 	addElement(chatList[step].recipientName, chatList[step].id, chatList[step].avatar);
 }
 //events
-inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
-	if (event.key == "Enter")
-	{
-		captureInput();
-	}
-});
+// inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
+// 	if (event.key == "Enter")
+// 	{
+// 		captureInput();
+// 	}
+// });
