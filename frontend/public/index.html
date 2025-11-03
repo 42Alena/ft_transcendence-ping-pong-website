@@ -52,55 +52,45 @@
               <button class="tablinks" id="defaultOpen" onclick="displayList(event, 'chat')">Chats</button>
               <button class="tablinks" onclick="displayList(event, 'users')">Users</button>
             </div>
-            <div class="chat-left__list border">
-              <div class="chat-left__list-dms border" id="list-dms"></div>
-              <div class="chat-left__list-dms border" id="list-users" style="display: none;">
-               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
+            <div class="chat-left__list">
+              <div class="chat-left__list-dms" id="list-dms"></div>
+              <div class="chat-left__list-dms" id="list-users" style="display: none;">
+               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;" onclick="displayProf()">
                 <div class="border">
                   <img src="images/profile/blue.png" width="30" height="30">
                 </div>
-                <div id="1">Eos</div>
-              </div>
-              <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
-                <div class="border">
-                  <img src="images/profile/green.png" width="30" height="30">
-                </div>
-                <div id="1">Felix</div>
+                <div>Eos</div>
               </div>
             </div>
             </div>
           </div>
-          <div class="chat-right border">
-            <div class="chat-right__header border">
-              header
-              <div class="chat-right__header-contact border" id="contact">
-                Contact
+          <div class="chat-right">
+            <div id="start-chat" style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: white;">Start a converstion</div>
+            <div id="userProfile" style="display: none; height: 100%;"></div>
+            <div id="conversation" style="display: none; flex-direction: column; height: 100%;" class="border">
+              <div class="chat-right__header" id="chat-info" style="display: flex;  align-items: center; justify-content: center; gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
               </div>
-              <div class="chat-right__header-avatar">
-                <img src="images/profile/purple.png" alt="avatar profile" width="50px" height="50px" />
-              </div>
-            </div>
-            <div class="chat-right__list border">
-              <div class="chat-right__box border">
-                <!-- <div class="chat-right__stamp border">stamp</div> -->
-                <div class="chat-right__bubble border" id="bubble">
-                  Click on one of the chats to see the conversation
-                </div>
-              </div>
-              <div class="chat-right__textArea border">
-                <div class="chat-right__textArea-input border">
-                  <div class="chat-right__textAreas-input-text border" id="input">
-                    <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
-                      placeholder="Send message" />
+              <div class="chat-right__body border" style="flex: 1">
+                <div class="chat-right__box border">
+                  <!-- <div class="chat-right__stamp border">stamp</div> -->
+                  <div class="chat-right__bubble border" id="bubble">
+                  </div>
+                  <div class="chat-right__textArea border">
+                  <div class="chat-right__textArea-input border">
+                    <div class="chat-right__textAreas-input-text border" id="input">
+                      <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
+                        placeholder="Send message" />
+                    </div>
+                  </div>
+                  <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
+                    Send
+                  </div>
                   </div>
                 </div>
-                <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
-                  Send
-                </div>
               </div>
             </div>
           </div>
-        </div>
+          </div>
         <div class="account" id="accountPage" style="display: none;">
           <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
             <button type="button" id="registerButton">
@@ -117,7 +107,7 @@
             <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
               <p class="profile-picture">
                 <label for="reg-avatar">
-                  <img src="images/profile/grey.png" id="avatar" style="cursor: pointer" width="50px" height="50px" />
+                  <img src="images/profile/grey.png" style="cursor: pointer" width="50px" height="50px" />
                 </label>
                 <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
               </p>
@@ -158,7 +148,7 @@
                 </button>
               </p>
             </form>
-            <div class="errors border" id="reg-errors">Error box</div>
+            <div class="errors border" id="log-errors">Error box</div>
           </div>
           <div class="account-profile border" id="profilePage" style="background-color: beige; display: none;">
             <div class="account-profile__header border" id="acc-profile-header" style="background-color: aliceblue;">
@@ -172,7 +162,7 @@
                   </p>
                 </div>
                 <div class="account-profile_header-info-displayName border" id="acc-displayName">
-                  <p>
+                  <p id="temp-displayname">
                     Display Name: Pallo
                   </p>
                 </div>
@@ -204,11 +194,11 @@
                   <h3>Edit information</h3>
                   <form class="update-settings-form" role="updateSettings" id="settings">
                     <p class="profile-picture">
-                      <label for="reg-avatar">
-                        <img src="images/profile/orange.png" id="avatar" style="cursor: pointer" width="50px"
+                      <label for="edit-avatar">
+                        <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
                           height="50px" />
                       </label>
-                      <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
+                      <input type="file" id="edit-avatar" name="reg-user_avatar" style="display: none" />
                     </p>
                     <p class="form-group">
                       <label class="col-md-3 control-label">Username:</label>
@@ -244,8 +234,8 @@
                       <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
                     </p>
                     </p>
-                </div>
                 </form>
+                </div>
               </div>
               <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
                 <div>
@@ -253,13 +243,13 @@
                 </div>
                 <div id="friendsList" style="display: flex; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/purple.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/purple.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Mafalda
                         <div class="status-circle-off"></div>
                         Offline
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
                         <button class="block-friend" type="button" id="block-friend__page">block</button>
@@ -267,29 +257,29 @@
                     </div>
                   </div>
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/green.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/green.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Kevin
                         <div class="status-circle-on"></div>
                         Online
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                        <button class="block-friend" type="button" id="block-friend__page">block</button>
+                        <button class="remove-friend" type="button">remove friend</button>
+                        <button class="block-friend" type="button">block</button>
                       </div>
                     </div>
                 </div>
                 </div>
                 <div id="blockedList" style="display: none; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/blue.png" alt="" id="friendAvatar" width="100px" height="100px">
+                    <img src="images/profile/blue.png" alt="" width="100px" height="100px">
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Zorro
                       </div>
-                      <div class="friend-action" id="friend-buttons"
+                      <div class="friend-action"
                         style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="block-friend" type="button" id="block-friend__page">unblock</button>
+                        <button class="block-friend" type="button">unblock</button>
                       </div>
                     </div>
                   </div>
@@ -318,7 +308,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="acc-matches border" id="acc-stats" style="display: grid; grid-template-rows: 50px 1fr;">
+                <div class="acc-matches border" id="acc-stats-details" style="display: grid; grid-template-rows: 50px 1fr;">
                   <div class="acc-matches__header border"
                     style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
                     <div class="opponent border" style="display: flex; justify-content: center; align-items: center;">
@@ -340,6 +330,7 @@
             </div>
           </div>
         </div>
+      </div>
     </section>
   </main>
   <footer class="main-footer max-width-container border">

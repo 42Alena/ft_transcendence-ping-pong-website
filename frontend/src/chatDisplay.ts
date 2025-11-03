@@ -3,8 +3,12 @@ const listDmsDiv : any = document.getElementById("list-dms");
 const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
-const contactChatEl: any = document.getElementById("contact");
 const listUsersDiv : any = document.getElementById("list-users");
+const conversationDiv : any = document.getElementById("conversation");
+const chatInfoDiv : any = document.getElementById("chat-info");
+const startConvDiv : any = document.getElementById("start-chat");
+const userProfileDiv : any = document.getElementById("userProfile");
+let historyConversation : any;
 let currChatId : string;
 
 //tabs chat/user chat left
@@ -50,22 +54,26 @@ function addBubble(role : string, content : string)
 	{
 		newBubble.className = "chat-right__bubble-received border";
 	}
-	bubbleDiv.append(newBubble);
+	historyConversation.append(newBubble);
+	bubbleDiv.appendChild(historyConversation);
 }
 
-function dispalyConversationHistory(id : string, list : Chat[]) {
+function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
+
+	userProfileDiv.style.display = "none";
+	fillConversationInfo(name, avatar);
 	currChatId = id;
-	bubbleDiv.innerHTML = "";
-	contactChatEl.innerHTML = "";
+	const existingBubble = document.getElementById('history-conv');
+	if (existingBubble)
+		existingBubble.remove();
+	historyConversation = document.createElement('div');
+	historyConversation.className = "chat-right__bubble border";
+	historyConversation.setAttribute('id', 'history-conv');
 	for (let step = 0; step < list.length; step++)
 	{
 		if (list[step].id == id)
 		{
 			let historyMex : { sender: boolean; receiver: boolean; content: string }[] = list[step].messages;
-			const newHeaderContact = document.createElement("h2");
-			const newContent = document.createTextNode(list[step].recipientName);
-			newHeaderContact.append(newContent);
-			contactChatEl.appendChild(newHeaderContact);
 			for (let step = 0; step < historyMex.length; step++)
 			{
 				if (historyMex[step].receiver == true)
@@ -75,6 +83,46 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 			}
 		}
 	}
+}
+
+function fillConversationInfo(name : string, avatar : string) {
+
+	const existingContactDiv = document.getElementById('contact-name');
+	const existingAvatarDiv = document.getElementById('contact-avatar');
+
+	if (existingContactDiv)
+	{
+		existingContactDiv.remove();
+	}
+	if (existingAvatarDiv)
+	{
+		existingAvatarDiv.remove();
+	}
+
+	const contactDiv = document.createElement("div");
+	const avatarDiv = document.createElement("div");
+	const avatarImg = document.createElement("img");
+
+	contactDiv.className = "chat-right__header-contact";
+	contactDiv.textContent = name;
+	contactDiv.setAttribute('id', 'contact-name');
+	chatInfoDiv.appendChild(contactDiv);
+
+	avatarDiv.className = "chat-right__header-avatar";
+	avatarDiv.setAttribute('id', 'contact-avatar');
+	avatarDiv.style.width = '45px';
+	avatarDiv.style.height = '45px';
+	avatarDiv.style.overflow = 'hidden';
+	avatarDiv.style.padding = '5px';
+	avatarImg.src = avatar;
+	avatarImg.style.width = '100%';
+	avatarImg.style.height = '100%';
+	avatarImg.style.objectFit = 'cover';
+	avatarDiv.appendChild(avatarImg);
+	chatInfoDiv.appendChild(avatarDiv);
+
+	conversationDiv.style.display = "flex";
+	startConvDiv.style.display = "none";
 }
 
 function addElement(name : string, id : string, avatar : string) {
@@ -91,11 +139,12 @@ function addElement(name : string, id : string, avatar : string) {
 	newDiv.appendChild(avatDiv);
 
 	const userDiv = document.createElement("div");
-	userDiv.setAttribute('id', id);
+	userDiv.setAttribute('id', name);
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
+	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
+	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
     newDiv.className = "chat-left__list-dms-item border";
 	newDiv.style.display = "flex";
 	newDiv.style.alignItems = "center";
@@ -168,3 +217,16 @@ inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 		captureInput();
 	}
 });
+
+function displayProf() {
+	startConvDiv.style.display = "none";
+	conversationDiv.style.display = "none";
+	blockedList.style.display = "none";
+	friendList.style.display = "flex";
+	displayUserProfile();
+	userProfileDiv.appendChild(profilePage);
+	userProfileDiv.style.display = "block";
+	profilePage.style.display = "grid";
+	profileFriendPage.style.display = "flex";
+	toggle = true;
+}
