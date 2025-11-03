@@ -8,7 +8,7 @@
   <title>Pong</title>
   <link rel="stylesheet" href="styles/reset.css" />
   <link rel="stylesheet" href="styles/style.css" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
    <style>
     .dropdown {
     position: relative;
@@ -42,6 +42,13 @@
 .dropdown-menu li a:hover {
     background-color: #f0f0f0;
 }
+
+.container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
    </style>
 </head>
 
@@ -96,8 +103,12 @@
         </ul>
       </nav>
       <div class="board-container border" id="board">
-        <div class="welcome" id="welcomePage">
+        <div class="welcome" id="welcomePage" style="display: none;">
           Welcome page
+        </div>
+        <div id="gamePage" style="display: block;" class="container">
+          <canvas id="myCanvas" style="background-color: black;" width="500" height="420"></canvas>
+		      <button id="runButton">Start game</button>
         </div>
         <div class="chat" id="chatPage">
           <div class="chat-left border">
@@ -390,10 +401,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="hidden" id="gamePage">
-          <canvas id="myCanvas" class="bg-black" width="500" height="420"></canvas>
-		      <button id="runButton">Start game</button>
         </div>
       </div>
     </section>

@@ -17,6 +17,8 @@ function displayPage(text: string) : void
 		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
+		gameP.style.display = "none";
+		profP.style.display = "none";
 	}
 	else if(text == 'welcome')
 	{
@@ -25,15 +27,18 @@ function displayPage(text: string) : void
 		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
+		gameP.style.display = "none";
+		profP.style.display = "none";
 	}
 	else if (text == 'account')
 	{
 		accP.style.display = "flex";
-		profP.style.display = "none"
+		profP.style.display = "none";
 		chatP.style.display = "none";
 		welcP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
+		gameP.style.display = "none";
 	}
 	else if (text == 'game')
 	{
@@ -43,5 +48,6 @@ function displayPage(text: string) : void
 		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
+		profP.style.display = "none";
 	}
 }
