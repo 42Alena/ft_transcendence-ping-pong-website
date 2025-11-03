@@ -246,21 +246,21 @@ body {
   flex-direction: column;
 }
 
-.chat-right__header {
+/* .chat-right__header {
   display: flex;
-  /* padding: 1em;
-  gap: 10px; */
+  padding: 1em;
+  gap: 10px;
   align-items: center;
   justify-content: center;
-}
+} */
 
-.chat-right__header-avatar {
+/* .chat-right__header-avatar {
   margin-left: auto;
-}
+} */
 
 .chat-right__header-contact {
   display: block;
-  flex-grow: 1;
+  /* flex-grow: 1; */
   /* align-items: center; */
   text-align: center;
 }
