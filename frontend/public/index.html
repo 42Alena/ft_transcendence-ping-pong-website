@@ -8,7 +8,7 @@
   <title>Pong</title>
   <link rel="stylesheet" href="styles/reset.css" />
   <link rel="stylesheet" href="styles/style.css" />
-  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
    <style>
     .dropdown {
     position: relative;
@@ -89,8 +89,10 @@
             <a href="#chat" onclick="displayPage('chat')">
               <img src="images/chat.png" alt="chat page" /></a>
           </li>
-          <!-- <li><a href="#" onclick="display('game')">
-                    <img src="images/play.png" alt="game page"></a></li></a></li> -->
+          <li>
+            <a href="#" onclick="displayPage('game')">
+              <img src="images/play.png" alt="game page"></a>
+          </li>
         </ul>
       </nav>
       <div class="board-container border" id="board">
@@ -388,6 +390,10 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="hidden" id="gamePage">
+          <canvas id="myCanvas" class="bg-black" width="500" height="420"></canvas>
+		      <button id="runButton">Start game</button>
         </div>
       </div>
     </section>
