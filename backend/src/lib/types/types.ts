@@ -25,39 +25,38 @@ export type PasswordHash = string;
 
 export type LoginSessionId = string;
 
-//___________USER_______________________________
+//___________USER_____FOR BACKEND__________________________
 
-// Domain (internal)
+// Domain (backend, internal)
 export type User = {
 	readonly id: UserId;
 	username: Username;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl | null;
-	lastSeenAt: Date | null;
+
+	// later/optionally :
+	// passwordHash?: string;
+	// createdAt?: Date;
+	// updatedAt?: Date;
+	// deletedAt?: Date | null;
 };
 
 
-// User { id: UserId; displayName: DisplayName }
-export type UserBasic = Pick<User, 'id' | 'displayName'>;
+//_________PROFILE__send_ to_FRONTEND___________________
 
-//    User without the private login field
+//   all  others public users. Without username(all other users)
 export type UserPublic = {
 	id: UserId;
-	displayName: DisplayName;
+	displayName: DisplayName;    //public
 	avatarUrl: AvatarUrl | null;
 };
 
-
-//_________PROFILE_____________________
-export type UserUpdateProfile = {
-	displayName?: DisplayName;
-	avatarUrl?: AvatarUrl | null;
+//    User's own profile with username
+// User { id: UserId; displayName: DisplayName, ... }
+export type UserSelf = UserPublic & {
+	readonly username: Username;       //only for own profile
 };
 
-export type UserChangePAssword = {
-	curPassPlain: PasswordPlain;
-	newPassPlain: PasswordPlain;
-};
 
 
 //_____________MATCH

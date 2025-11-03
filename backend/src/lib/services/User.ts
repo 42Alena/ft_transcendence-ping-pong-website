@@ -32,7 +32,7 @@ export class User implements Types.User {
 	lastSeenAt: Date | null;                    //changed from userStatus
 
 
-	constructor(init:  UserInit) {
+	constructor(init: UserInit) {
 		this.id = init.id;
 		this.username = init.username;
 		this.displayName = init.displayName;
@@ -73,21 +73,23 @@ export class User implements Types.User {
 	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 	*/
-	toPublicProfile(): Types.UserPublic {
+	toSelfProfile(): Types.UserSelf{
+		return {
+			id: this.id,
+			userName: this.userName,
+			displayName: this.displayName,
+			avatarUrl: this.avatarUrl,
+		};
+	}
+
+	//can see online/offline status
+	toOtherProfile(): Types.UserPublic {
 		return {
 			id: this.id,
 			displayName: this.displayName,
 			avatarUrl: this.avatarUrl,
 		};
 	}
-
-	toBasicProfile(): Types.UserBasic {
-		return {
-			id: this.id,
-			displayName: this.displayName,
-		};
-	}
-
 
 }
 

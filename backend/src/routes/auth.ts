@@ -8,7 +8,7 @@ import * as Validate from '../lib/utils/validators';
 import { authRequiredOptions } from './utils';
 
 
-//sendOK(res, user.toPublicProfile(), 201); for non 200
+//sendOK(res, user.toSelfProfile(), 201); for non 200
 export function sendOK<T>(res: FastifyReply, payload: T, statusCode = 200) {
 	return res.status(statusCode).send(payload);
 }
@@ -93,7 +93,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 			await userManager.saveUser(newUser)
 			res.header('set-cookie', `usr=${newUser.id}`);
 
-			return sendOK(res, newUser.toPublicProfile(), 201); // 201 Created
+			return sendOK(res, newUser.toSelfProfile(), 201); // 201 Created
 		} catch (e: any) {
 			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -137,8 +137,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
 
-		// sends user.toPublicProfile() JSON with HTTP 201(user created)
-		return sendOK(res, user.toPublicProfile(), 201)
+		// sends user.toSelfProfile() JSON with HTTP 201(user created)
+		return sendOK(res, user.toSelfProfile(), 201)
 	});
 
 

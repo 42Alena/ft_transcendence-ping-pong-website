@@ -56,8 +56,26 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 
-------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+	-user table; deleted 'last seen'
+	-sessions: added created at + ping update
+
+## BACKEND
+	- added 2 types for own and other profile
+	-deleted profile basic
+	-changed types to send from backend to frontend: userPublic + userSelf
+
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================================================================================
 ## DB
  - deleted roows with login expire. Not requiered
  - add timecreation stamp for login
