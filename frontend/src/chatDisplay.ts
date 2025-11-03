@@ -4,7 +4,37 @@ const bubbleDiv : any = document.getElementById("bubble");
 const inputEl : any = document.getElementById("text-box");
 const SendEl : any = document.getElementById("send-button");
 const contactChatEl: any = document.getElementById("contact");
+const listUsersDiv : any = document.getElementById("list-users");
 let currChatId : string;
+
+//tabs chat/user chat left
+const chatTab : any = document.getElementById("defaultOpen");
+chatTab.click();
+
+function displayList(event : any, text : string) {
+  var i, tablinks;
+
+  let tabcontent : any = document.getElementsByClassName("chat-left__list-dms");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  if (text == 'chat')
+  {
+	listDmsDiv.style.display = "block";
+	listUsersDiv.style.display = "none";
+
+  }
+  else
+  {
+	listUsersDiv.style.display = "block";
+	listDmsDiv.style.display = "none";
+  }
+  event.currentTarget.className += " active";
+}
 
 //display
 function addBubble(role : string, content : string)
@@ -47,14 +77,29 @@ function dispalyConversationHistory(id : string, list : Chat[]) {
 	}
 }
 
-function addElement(name : string, id : string) {
+function addElement(name : string, id : string, avatar : string) {
   
 	const newDiv = document.createElement("div");
+
+	const avatDiv = document.createElement("div");
+	const avatImg = document.createElement("img");
+	avatImg.src = avatar;
+	avatImg.width = 30;
+	avatImg.height = 30;
+	avatDiv.appendChild(avatImg);
+	avatDiv.className = "border";
+	newDiv.appendChild(avatDiv);
+
+	const userDiv = document.createElement("div");
+	userDiv.setAttribute('id', id);
     const newContent = document.createTextNode(name);
-	newDiv.setAttribute('id', id);
+	userDiv.appendChild(newContent);
+	newDiv.appendChild(userDiv);
 	newDiv.onclick = function() { dispalyConversationHistory(newDiv.id, chatList)};
-	newDiv.appendChild(newContent);
     newDiv.className = "chat-left__list-dms-item border";
+	newDiv.style.display = "flex";
+	newDiv.style.alignItems = "center";
+	newDiv.style.gap = "10px";
     listDmsDiv.append(newDiv);
 }
 
@@ -109,12 +154,12 @@ let message6 : { sender: boolean; receiver: boolean; content: string } = {sender
 messages2.push(message4);
 messages2.push(message5);
 messages2.push(message6);
-chatList.push(new Chat('1', "chat " + 1, "url", messages1));
-chatList.push(new Chat('2', "chat " + 2, "url", messages2));
+chatList.push(new Chat('1', "Mafalda ", "images/profile/purple.png", messages1));
+chatList.push(new Chat('2', "Kevin", "images/profile/green.png", messages2));
 
 //create chat box in left sidebar
 for (let step = 0; step < chatList.length; step++) {
-	addElement(chatList[step].recipientName, chatList[step].id);
+	addElement(chatList[step].recipientName, chatList[step].id, chatList[step].avatar);
 }
 //events
 inputEl.addEventListener("keydown", (event : KeyboardEvent) => {

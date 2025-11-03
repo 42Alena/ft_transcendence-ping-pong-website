@@ -8,6 +8,7 @@
   <title>Pong</title>
   <link rel="stylesheet" href="styles/reset.css" />
   <link rel="stylesheet" href="styles/style.css" />
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -47,12 +48,26 @@
         </div>
         <div class="chat" id="chatPage">
           <div class="chat-left border">
-            <div class="chat-left__header border">
-              <div class="border">Messages</div>
+            <div class="chat-tab">
+              <button class="tablinks" id="defaultOpen" onclick="displayList(event, 'chat')">Chats</button>
+              <button class="tablinks" onclick="displayList(event, 'users')">Users</button>
             </div>
             <div class="chat-left__list border">
-              <div class="chat-left__list-search-bar border">search bar</div>
               <div class="chat-left__list-dms border" id="list-dms"></div>
+              <div class="chat-left__list-dms border" id="list-users" style="display: none;">
+               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
+                <div class="border">
+                  <img src="images/profile/blue.png" width="30" height="30">
+                </div>
+                <div id="1">Eos</div>
+              </div>
+              <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;">
+                <div class="border">
+                  <img src="images/profile/green.png" width="30" height="30">
+                </div>
+                <div id="1">Felix</div>
+              </div>
+            </div>
             </div>
           </div>
           <div class="chat-right border">
@@ -279,7 +294,8 @@
                     </div>
                   </div>
                 </div>
-              <div class="account-profile__page-matches border" id="matches" style="display: none;">
+              </div>
+             <div class="account-profile__page-matches border" id="matches" style="display: none;">
                 <div class="account-profile__page-matches-stats">
                   <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
                     style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
@@ -321,8 +337,9 @@
                   </div>
                 </div>
               </div>
+            </div>
           </div>
-      </div>
+        </div>
     </section>
   </main>
   <footer class="main-footer max-width-container border">
