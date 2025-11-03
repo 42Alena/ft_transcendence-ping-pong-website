@@ -198,7 +198,7 @@
                         <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
                           height="50px" />
                       </label>
-                      <input type="file" id="edit-avatar" name="reg-user_avatar" style="display: none" />
+                      <input type="file" id="edit-avatar" name="edit-user_avatar" style="display: none"/>
                     </p>
                     <p class="form-group">
                       <label class="col-md-3 control-label">Username:</label>
@@ -207,29 +207,37 @@
                     </div>
                     </p>
                     <p class="form-group">
-                      <label class="col-lg-3 control-label">Display Name:</label>
+                      <p class="form-group">
+                      <label class="col-lg-3 control-label" for="edit-displayName">Display Name:</label>
+                      </p>
                     <div class="col-lg-8">
-                      <input class="form-control" type="text" value="Pallo">
+                      <input class="form-control" id="edit-displayName" name="edit-user_displayName" type="text" value="Pallo">
                     </div>
                     </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label">Old Password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" type="password" value="aaaaaaaaa">
-                    </div>
+                    <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                    <button type="submit" id="editDisplayNameButton" style="cursor: pointer">Change display name</button>
                     </p>
+                      <p class="form-group">
+                        <label class="col-md-3 control-label" for="edit-oldPass">Old Password:</label>
+                      <div class="col-md-8">
+                        <input class="form-control" id="edit-oldPass" name="edit-user_oldPass" type="password" value="aaaaaaaaa">
+                      </div>
+                      </p>
+                      <p class="form-group">
+                        <label class="col-md-3 control-label" for="edit-newPass">New Password:</label>
+                      <div class="col-md-8">
+                        <input class="form-control" id="edit-newPass" name="edit-user_newPass" type="password" value="aaaaaaaaa">
+                      </div>
+                      </p>
+                       <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                       <button type="submit" id="editPasswordButton" style="cursor: pointer">Change password</button>
+                       </p>
                     <p class="form-group">
-                      <label class="col-md-3 control-label">New password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" type="password" value="aaaaaaaaa">
-                    </div>
-                    </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
+                      <!-- <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
                       <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes" style="margin-right: 10px;">
                       <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
-                    </p>
+                    </p> -->
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
                       <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
                     </p>
