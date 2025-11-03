@@ -40,9 +40,6 @@ function displayList(event : any, text : string) {
   event.currentTarget.className += " active";
 }
 
-//display content
-//conversation
-
 //display
 function addBubble(role : string, content : string)
 {
