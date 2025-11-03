@@ -441,8 +441,9 @@ input {
 
 .account-profile__menu {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
   text-align: center;
 }
 
@@ -477,7 +478,7 @@ input {
   align-items: center;
   height: 100%;
   width: 100%;
-  font-size: 30px;
+  font-size: 15px;
   text-align: left;
 }
 
