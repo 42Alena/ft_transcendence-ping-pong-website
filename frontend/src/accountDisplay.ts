@@ -82,6 +82,12 @@ profileSendMess.addEventListener("click", (event));
 /*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
 {
+	accP.style.display = "flex";
+	profP.style.display = "none"
+	chatP.style.display = "none";
+	welcP.style.display = "none";
+	regP.style.display = "none";
+	logP.style.display = "none";
 	if (text == "login")
 	{
 		loginPage.style.display = "flex";
