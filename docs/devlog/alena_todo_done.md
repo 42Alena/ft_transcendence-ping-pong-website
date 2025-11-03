@@ -65,6 +65,11 @@ Not required for evaluation — used for organization and pull request preparati
 	- added 2 types for own and other profile
 	-deleted profile basic
 	-changed types to send from backend to frontend: userPublic + userSelf
+	-changed for login, logout, registration route from /user to /auth to avoid confusion with /user/..profiles
+
+	- added GET /users/:id (public profile)
+
+    -added GET /me   (own profile/settings)
 
 ## FRONTEND
 

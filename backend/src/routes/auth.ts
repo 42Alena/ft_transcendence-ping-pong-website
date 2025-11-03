@@ -51,7 +51,7 @@ update profile/ change pass(check subject)  put method
 add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 
 */
-	fastify.post("/user/register", async (req, res: FastifyReply) => {
+	fastify.post("/auth/register", async (req, res: FastifyReply) => {
 		console.log('Register user', req.body)
 		const body = req.body as Types.RegisterBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
@@ -110,7 +110,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	   save acccess token  : set expiry = add Date.now() + 7d
 	   return access token
 	   res.header('set-cookie', 'auth=accessToken') */
-	fastify.post("/user/login", async (req, res: FastifyReply) => {
+	fastify.post("/auth/login", async (req, res: FastifyReply) => {
 		console.log('Login user', req.body)
 		const body = req.body as Types.LoginBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
@@ -144,7 +144,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 
 
-	fastify.post("/user/logout", authRequiredOptions, async (req, res: FastifyReply) => {
+	fastify.post("/auth/logout", authRequiredOptions, async (req, res: FastifyReply) => {
 
 		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
 		const userId = (req as Types.UserAwareRequest).userId;
