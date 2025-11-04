@@ -22,22 +22,8 @@ export function sendError(
 	return res.status(statusCode).send({ error, field })
 }
 
-/* 
-	/*  "/user/register" 
-	GOAL: create user record in users db table
 
-	   validate username/passow/avatar
-	   pass -> encryptPassword (bcrypt / sha512) -> passwordHash
-	   save in db
-
-	   OPTIONAL goal: create access token right away and return it
-	   return access token optional
-	fastify.get('/res', handler)
-	dont trimm passwordPlain(can have empty chars)
-
-	*/
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
-
 
 
 
@@ -87,7 +73,6 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 				displayName,
 				passwordHash: await hashPassword(passwordPlain),
 				avatarUrl: avatarUrl ? avatarUrl : null,
-				lastSeenAt: null,
 			})
 			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)

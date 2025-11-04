@@ -73,17 +73,17 @@ export class User implements Types.User {
 	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 	*/
-	toSelfProfile(): Types.UserSelf{
+	toSelfProfile(): Types.SelfProfile {
 		return {
 			id: this.id,
-			userName: this.userName,
+			username: this.username,
 			displayName: this.displayName,
 			avatarUrl: this.avatarUrl,
 		};
 	}
 
 	//can see online/offline status
-	toOtherProfile(): Types.UserPublic {
+	toPublicProfile(): Types.PublicProfile {
 		return {
 			id: this.id,
 			displayName: this.displayName,

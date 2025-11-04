@@ -33,19 +33,19 @@ export type User = {
 	username: Username;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl | null;
-
+	lastSeenAt: Date  | null;   //removed when created  new user. Will updated on login
+	
 	// later/optionally :
 	// passwordHash?: string;
-	// createdAt?: Date;
-	// updatedAt?: Date;
 	// deletedAt?: Date | null;
 };
 
 
 //_________PROFILE__send_ to_FRONTEND___________________
 
+
 //   all  others public users. Without username(all other users)
-export type UserPublic = {
+export type PublicProfile = {
 	id: UserId;
 	displayName: DisplayName;    //public
 	avatarUrl: AvatarUrl | null;
@@ -53,13 +53,13 @@ export type UserPublic = {
 
 //    User's own profile with username
 // User { id: UserId; displayName: DisplayName, ... }
-export type UserSelf = UserPublic & {
+export type SelfProfile = PublicProfile & {
 	readonly username: Username;       //only for own profile
 };
 
 
 
-//_____________MATCH
+//_____________MATCH______________________
 export type MatchResult = {
 	opponentId: UserId;
 	date: Date;

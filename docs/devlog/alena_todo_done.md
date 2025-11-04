@@ -25,38 +25,20 @@ Not required for evaluation — used for organization and pull request preparati
 -----------------------
 
 ##_____________  TODO FOR FUTURE:
-- USER: 
-	-lastSeenAt(change logic for  for online/ offline)
+
 - ROUTES/USer
 	- add data validation (deleted from User constructor)
 
 - Tournament:
 	- unique alias(insttead displayname) for tournament only, not globally
-- use in routes with shemas
 
-- user, gdpr
-
-  - Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-  - userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
-  -   CHECK (userStatus IN ('online', 'offline')),
-  - add last activity date/time
-  - add user created timestamp
-
-- `DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
-
-	- POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
-
-	- registration
-	- login. After will return generated secret session acces token/string
-	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
-	update profile/ change pass(check subject)  put method
-	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
-	
-	Registration
-
+- USER: 
+	-lastSeenAt(change logic for  for online/ offline)
+   [] make in authRequiredOptions and Usermanager(fkt) updating online in lastSeenAt
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 
 ### ======    NEW PULLREQUESTS   ================================================================
+
 ## DB
 	-user table; deleted 'last seen'
 	-sessions: added created at + ping update
