@@ -60,6 +60,7 @@ Not required for evaluation — used for organization and pull request preparati
 	- created utils and moved there  moved sendOk(),sendErr() for all routes
 	-created lib/mappers/user.ts and moved mappers to API from class
 	-changed time from Date to number, because DB saved as number(no need conversion for now, will add conversion if needed) 
+	-added types.db and moved there UserDbRow 
 ## FRONTEND
 
 ### TESTS
