@@ -60,33 +60,29 @@ export class UserManager {
 			lastSeenAt: null, // set on login/ping later
 		})
 
-		await this.saveUser(user);   // reuse the single insert path
+		await this.saveUserInDb(user);   // reuse the single insert path
 		return user;
 	};
 
 
 	//____________SAVE_____________________________
-	//now for tet only. TODO: delete later
-	async saveUser(newUser: User) {
-		const data = userToDbRow()
-		console.debug("Saving user", data)
-		await this.dbTableUser().insert(data);
+	
+	async saveUserInDb(user: Domain.User): Promise<void>  {
+		const dbRow = userToDbRow(user);
+		console.debug("Saving user", dbRow)   //TODO: comment out, for tests now
+		await this.dbTableUser().insert(dbRow);
 	}
 
 
-
-	//___________________GET
-
-
-	//__________is NAME...
-	async isUsernameTaken(username: string): Promise<boolean> {
+	//__________is UNIQUE____________________ 
+	async isUsernameTaken(username: Domain.Username): Promise<boolean> {
 		const row = await this.dbTableUser()
 			.whereRaw('LOWER(displayName) = LOWER(?)', [username])
 			.first();
 		return !!row;
 	}
 
-	async isDisplayNameTaken(displayName: string): Promise<boolean> {
+	async isDisplayNameTaken(displayName: Domain.DisplayName): Promise<boolean> {
 		const row = await this.dbTableUser()
 			.whereRaw('LOWER(displayName) = LOWER(?)', [displayName])
 			.first();
@@ -103,12 +99,16 @@ export class UserManager {
 
 		const row = await this.dbTableLoginSessions()
 			.where({ id: loginSessionId })
-			.first() as { userId: Domain.UserId } | undefined;;
+			.first() as 
+			|{ userId: Domain.UserId } 
+			| undefined;;
 
 		if (!row) return null;
 
 		return row.userId;
 	}
+
+
 
 	async isLoginSessionExist(loginSessionId: Domain.LoginSessionId): Promise<boolean> {
 		if (!loginSessionId) return false;

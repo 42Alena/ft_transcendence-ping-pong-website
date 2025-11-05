@@ -64,6 +64,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### Usermanager
 	+ createUser()
+	+ saveUserInDb() changed
 ## FRONTEND
 
 ### TESTS
