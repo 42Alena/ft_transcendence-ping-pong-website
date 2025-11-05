@@ -8,21 +8,21 @@
 
 
 
-import type *  as Types from '../types/domain';
+import type *  as Domain from '../types/domain';
 // import * as Validate from '../utils/validators';
 
 
 // If only this file needs it, keep it local:
-type UserInit = Types.User & { passwordHash: Types.PasswordHash };
+type UserInit = Domain.User & { passwordHash: Domain.PasswordHash };
 
-export class User implements Types.User {
+export class User implements Domain.User {
 
-	readonly id: Types.UserId; 				// set in constructor, read anywhere in programm, not changeable
-	username: Types.Username;
-	displayName: Types.DisplayName;
-	passwordHash: Types.PasswordHash;
-	avatarUrl: Types.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
-	lastSeenAt: Date | null;                    //changed from userStatus
+	readonly id: Domain.UserId; 				// set in constructor, read anywhere in programm, not changeable
+	username: Domain.Username;
+	displayName: Domain.DisplayName;
+	passwordHash: Domain.PasswordHash;
+	avatarUrl: Domain.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
+	lastSeenAt: Domain.TimeSec;                    //changed from userStatus
 
 
 	constructor(init: UserInit) {
@@ -33,29 +33,4 @@ export class User implements Types.User {
 		this.avatarUrl = init.avatarUrl ?? null;
 		this.lastSeenAt = init.lastSeenAt ?? null;
 	}
-
-	// Conversion: DB row =>  User  
-	static fromDB(row: Record<string, any>): User {
-		return new User({
-			id: row.id as Types.UserId,
-			username: row.username as Types.Username,
-			displayName: row.displayName as Types.DisplayName,
-			passwordHash: row.passwordHash as Types.PasswordHash,
-			avatarUrl: (row.avatarUrl ?? null) as Types.AvatarUrl | null,
-			lastSeenAt: row.lastSeenAt ? new Date(row.lastSeenAt) : null,
-		})
-	}
-
-
-	// Conversion:    User =>  DB row
-	toDB() {
-		return {
-			id: this.id,
-			username: this.username,
-			displayName: this.displayName,
-			passwordHash: this.passwordHash,
-			avatarUrl: this.avatarUrl,
-			lastSeenAt: this.lastSeenAt ? this.lastSeenAt.toISOString() : null,
-		}
-	}
-
+}

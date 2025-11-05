@@ -1,13 +1,13 @@
-import type { DoneFuncWithErrOrRes, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+
+import type {  FastifyInstance, FastifyReply} from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
-import type *  as Types from '../lib/types/api';
-import { User } from '../lib/services/User';
+import type *  as API from '../lib/types/api';
+import * as Validate from '../lib/utils/validators';
 import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
-import * as Validate from '../lib/utils/validators';
 import { authRequiredOptions } from './utils';
 import { sendError, sendOK } from '../lib/utils/http';
-
+import { toUserSelf } from '../lib/mappers/user';
 
 
 
@@ -28,8 +28,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 */
 	fastify.post("/auth/register", async (req, reply: FastifyReply) => {
 		console.log('Register user', req.body)
-		const body = req.body as Types.RegisterBody;
-		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
+		const body = req.body as API.RegisterBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as API.RegisterBody;
 
 		const username = Validate.normalizeName(body.username)
 		const displayName = Validate.normalizeName(body.displayName)
@@ -56,7 +56,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		// check uniq displayname
 		try {
 
-			const newUser = new User({
+			// const newUser = new User({  old
+			 const user = await userManager.createUser({
+			// const newUser = new User({
 				id: generateId(),
 				username,
 				displayName,
@@ -82,13 +84,13 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	
 	   check usernmae and rawPassword
 			  check if user with (username, encryptPssword(rawPassword))
-	   save acccess token  : set expiry = add Date.now() + 7d
+	   save acccess token  : set expiry = add Date.now() + 7d //TODO: change from DAte to number as in DB
 	   return access token
 	   reply.header('set-cookie', 'auth=accessToken') */
 	fastify.post("/auth/login", async (req, reply: FastifyReply) => {
 		console.log('Login user', req.body)
-		const body = req.body as Types.LoginBody;
-		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
+		const body = req.body as API.LoginBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as API.LoginBody;
 
 		const username = Validate.normalizeName(body.username)
 		const passwordPlain = body.passwordPlain;
@@ -121,8 +123,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 	fastify.post("/auth/logout", authRequiredOptions, async (req, res: FastifyReply) => {
 
-		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-		const userId = (req as Types.UserAwareRequest).userId;
+		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
+		const userId = (req as API.UserAwareRequest).userId;
 
 		console.log(loginSessionId, userId);
 

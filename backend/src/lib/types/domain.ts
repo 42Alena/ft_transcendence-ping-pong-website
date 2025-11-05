@@ -17,7 +17,7 @@ export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
 export type AvatarUrl = string;
-
+export type TimeSec = number | null; // unix epoch seconds or null
 
 
 export type PasswordPlain = string;    //user input, not stored/sended
@@ -38,14 +38,14 @@ export type User = {
 	avatarUrl: AvatarUrl | null;
 
 	// Store timestamps as epoch seconds (number) or null if never seen.
-	lastSeenAt: Date  | null;   //TODO: schould be removed when created  new user?. Will updated on login
+	lastSeenAt: TimeSec;   //TODO: schould be removed when created  new user?. Will updated on login
 	
 	// Backend-only field; never expose to clients.
 	passwordHash: string;
 
 
 	// later/optionally :
-	// deletedAt?: Date | null;
+	// deletedAt?: TimeSec;
 };
 
 
@@ -54,7 +54,7 @@ export type User = {
 //_____________MATCH______________________
 export type MatchResult = {
 	opponentId: UserId;
-	date: Date;
+	date: Date;                //TODO: change from DAte to number as in DB
 	result: GameResult;
 };
 

@@ -36,6 +36,9 @@ Not required for evaluation — used for organization and pull request preparati
 	-lastSeenAt(change logic for  for online/ offline)
    [] make in authRequiredOptions and Usermanager(fkt) updating online in lastSeenAt
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
+	- add conversion for Time from number to Date, if needed
+
+
 ##FRONTEND:
  	- add tailwind to frontend
 
@@ -56,6 +59,7 @@ Not required for evaluation — used for organization and pull request preparati
     -added GET /me   (own profile/settings)
 	- created utils and moved there  moved sendOk(),sendErr() for all routes
 	-created lib/mappers/user.ts and moved mappers to API from class
+	-changed time from Date to number, because DB saved as number(no need conversion for now, will add conversion if needed) 
 ## FRONTEND
 
 ### TESTS
