@@ -6,21 +6,10 @@ import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
 import * as Validate from '../lib/utils/validators';
 import { authRequiredOptions } from './utils';
+import { sendError, sendOK } from '../lib/utils/http';
 
 
-//sendOK(res, user.toSelfProfile(), 201); for non 200
-export function sendOK<T>(res: FastifyReply, payload: T, statusCode = 200) {
-	return res.status(statusCode).send(payload);
-}
 
-export function sendError(
-	res: FastifyReply,
-	error: string,
-	field: string,
-	statusCode = 400): FastifyReply {
-	// { [field]: error }
-	return res.status(statusCode).send({ error, field })
-}
 
 
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
@@ -37,7 +26,7 @@ update profile/ change pass(check subject)  put method
 add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 
 */
-	fastify.post("/auth/register", async (req, res: FastifyReply) => {
+	fastify.post("/auth/register", async (req, reply: FastifyReply) => {
 		console.log('Register user', req.body)
 		const body = req.body as Types.RegisterBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
@@ -48,20 +37,20 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const avatarUrl = Validate.normalizeString(body.avatarUrl)
 
 		//username
-		if (!username) { return sendError(res, "No user name", "userName") }
+		if (!username) { return sendError(reply, "No user name", "userName") }
 		const validateUsernameError = Validate.validateName(username);
-		if (validateUsernameError) { return sendError(res, validateUsernameError, "userame") }
+		if (validateUsernameError) { return sendError(reply, validateUsernameError, "userame") }
 
 		//display name
-		if (!displayName) { return sendError(res, "No display name", "displayName") }
+		if (!displayName) { return sendError(reply, "No display name", "displayName") }
 		const validateDisplayNameError = Validate.validateName(displayName);
-		if (validateDisplayNameError) { return sendError(res, validateDisplayNameError, "displayName") }
-		if (await userManager.isDisplayNameTaken(displayName)) { return sendError(res, "Display name is taken", "displayName") }
+		if (validateDisplayNameError) { return sendError(reply, validateDisplayNameError, "displayName") }
+		if (await userManager.isDisplayNameTaken(displayName)) { return sendError(reply, "Display name is taken", "displayName") }
 
 		//passwordPlain
-		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
+		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
 		const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
-		if (validatePassError) { return sendError(res, validatePassError, "passwordPlain") }
+		if (validatePassError) { return sendError(reply, validatePassError, "passwordPlain") }
 
 
 		// check uniq displayname
@@ -73,14 +62,15 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 				displayName,
 				passwordHash: await hashPassword(passwordPlain),
 				avatarUrl: avatarUrl ? avatarUrl : null,
+				lastSeenAt: null,
 			})
 			console.debug("Saving new user", newUser)
 			await userManager.saveUser(newUser)
-			res.header('set-cookie', `usr=${newUser.id}`);
+			reply.header('set-cookie', `usr=${newUser.id}`);
 
-			return sendOK(res, newUser.toSelfProfile(), 201); // 201 Created
+			return sendOK(reply, newUser.toSelfProfile(), 201); // 201 Created
 		} catch (e: any) {
-			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
+			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
 
 	});
@@ -94,8 +84,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 			  check if user with (username, encryptPssword(rawPassword))
 	   save acccess token  : set expiry = add Date.now() + 7d
 	   return access token
-	   res.header('set-cookie', 'auth=accessToken') */
-	fastify.post("/auth/login", async (req, res: FastifyReply) => {
+	   reply.header('set-cookie', 'auth=accessToken') */
+	fastify.post("/auth/login", async (req, reply: FastifyReply) => {
 		console.log('Login user', req.body)
 		const body = req.body as Types.LoginBody;
 		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
@@ -104,26 +94,26 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const passwordPlain = body.passwordPlain;
 
 
-		if (!username) { return sendError(res, "No user name", "userName") }
-		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
+		if (!username) { return sendError(reply, "No user name", "userName") }
+		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
 
 
 
 		const user = await userManager.getUserByUsername(username);
 
-		if (!user) { return sendError(res, "No user", "username", 401) }
+		if (!user) { return sendError(reply, "No user", "username", 401) }
 
-		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect password", "passwordPlain", 401) }
+		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
 
 		const loginSessionId = generateSessionToken();
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
 
-		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+		reply.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
 
 		// sends user.toSelfProfile() JSON with HTTP 201(user created)
-		return sendOK(res, user.toSelfProfile(), 201)
+		return sendOK(reply, user.toSelfProfile(), 201)
 	});
 
 

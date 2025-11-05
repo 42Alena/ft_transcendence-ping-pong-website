@@ -1,7 +1,7 @@
 
 import assert from "assert";
 import { User } from "../src/lib/services/User";
-import * as Types from "../src/lib/types/types";
+import * as Types from "../src/lib/types/domain";
 
 
 

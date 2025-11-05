@@ -8,16 +8,9 @@
 
 
 
-import type *  as Types from '../types/types';
+import type *  as Types from '../types/domain';
 // import * as Validate from '../utils/validators';
 
-/* 
-(Alena) Declined DTO suggestion — explanation in UserDto.ts
-(Luis) Suggestion to improve the profile method with DTOs
-...
-*/
-// (Luis importing the DTOs to ensure consistency between class and DTOs)
-// import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
 
 // If only this file needs it, keep it local:
 type UserInit = Types.User & { passwordHash: Types.PasswordHash };
@@ -65,31 +58,4 @@ export class User implements Types.User {
 			lastSeenAt: this.lastSeenAt ? this.lastSeenAt.toISOString() : null,
 		}
 	}
-
-
-
-	/* return a clean object for frontend (id, name, wins, losses,  online)
-	This is needed for /user/register and /user/profile
-	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
-	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-	*/
-	toSelfProfile(): Types.SelfProfile {
-		return {
-			id: this.id,
-			username: this.username,
-			displayName: this.displayName,
-			avatarUrl: this.avatarUrl,
-		};
-	}
-
-	//can see online/offline status
-	toPublicProfile(): Types.PublicProfile {
-		return {
-			id: this.id,
-			displayName: this.displayName,
-			avatarUrl: this.avatarUrl,
-		};
-	}
-
-}
 

@@ -1,12 +1,13 @@
 import type { FastifyInstance } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
-import type *  as Types from '../lib/types/types';
-import type { UserId } from '../lib/types/types';
+import type *  as Types from '../lib/types/domain';
+import type { UserId } from '../lib/types/domain';
 import { authRequiredOptions } from './utils';
+import { sendOK } from '../lib/utils/http';
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
 
-type GetUserParams = { userId: Types.UserId };
+// type GetUserParams = { userId: Types.UserId };
 /* 
 /users (collection, public, read-only for now)
 
@@ -26,7 +27,6 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	// /users/123
 	// /users/124
-	// /users/register
 	fastify.get<{ Params: GetUserParams }>(
 		"/users/:userId",
 		authRequiredOptions,
@@ -37,7 +37,8 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			if (!user) {
 				return reply.code(404).send({ error: "User not found" });
 			}
-			return user.toSelfProfile();
+
+			return sendOK(reply, user.toPublicProfile(), 201)
 		})
 
 

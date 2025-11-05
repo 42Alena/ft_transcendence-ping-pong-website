@@ -1,11 +1,11 @@
 import * as bcrypt from "bcryptjs";
-import type *  as Types from '../types/types';
+import type *  as Types from '../types/domain';
 
 
 // https://www.bcrypt.io/languages/typescript
 export async function hashPassword(
 	passwordPlain: Types.PasswordPlain
-): Promise < Types.PasswordHash > {
+): Promise<Types.PasswordHash> {
 	const saltRounds = 12;
 	return bcrypt.hash(passwordPlain, saltRounds);
 }
@@ -13,8 +13,8 @@ export async function hashPassword(
 export function verifyPassword(
 	passwordPlain: Types.PasswordPlain,
 	passwordHash: Types.PasswordHash,
-	 
-	): Promise<boolean> {
+
+): Promise<boolean> {
 
 	return bcrypt.compare(passwordPlain, passwordHash);
 }

@@ -1,7 +1,7 @@
 // Used information from links
 //  https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 import { Knex, QueryBuilder } from 'knex';
-import *  as Types from '../types/types';
+import *  as Types from '../types/domain';
 
 import { db } from './DB';
 import { User } from './User';
@@ -15,8 +15,8 @@ export class UserManager {
 
 	constructor() {
 		this.dbTableUser = () => db<User>('users');
-		this.dbTableFriends = () =>db('friends');
-		this.dbTableBlocks = () =>db('blocks');
+		this.dbTableFriends = () => db('friends');
+		this.dbTableBlocks = () => db('blocks');
 		this.dbTableLoginSessions = () => db('login_sessions'); //= () => anonym fkt =factory fkt
 	}
 

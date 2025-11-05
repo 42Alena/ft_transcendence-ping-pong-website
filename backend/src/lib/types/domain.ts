@@ -1,3 +1,4 @@
+// DOMAIN = use FOR BACKEND ONLY
 /* 
 https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html
 INFO: this types can be used for all project
@@ -10,9 +11,8 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
-export type UserStatus = 'online' | 'offline';
-export type GameResult = 'won' | 'lost';
 
+//_______________Primitives, single source of truth_____________
 export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
@@ -22,40 +22,32 @@ export type AvatarUrl = string;
 
 export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash = string;
-
 export type LoginSessionId = string;
 
-//___________USER_____FOR BACKEND__________________________
+export type UserStatus = 'online' | 'offline';
+export type GameResult = 'won' | 'lost';
 
-// Domain (backend, internal)
+
+//___________USER_____FOR DOMAIN(BACKEND) only__________________________
+
+
 export type User = {
 	readonly id: UserId;
 	username: Username;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl | null;
-	lastSeenAt: Date  | null;   //removed when created  new user. Will updated on login
+
+	// Store timestamps as epoch seconds (number) or null if never seen.
+	lastSeenAt: Date  | null;   //TODO: schould be removed when created  new user?. Will updated on login
 	
+	// Backend-only field; never expose to clients.
+	passwordHash: string;
+
+
 	// later/optionally :
-	// passwordHash?: string;
 	// deletedAt?: Date | null;
 };
 
-
-//_________PROFILE__send_ to_FRONTEND___________________
-
-
-//   all  others public users. Without username(all other users)
-export type PublicProfile = {
-	id: UserId;
-	displayName: DisplayName;    //public
-	avatarUrl: AvatarUrl | null;
-};
-
-//    User's own profile with username
-// User { id: UserId; displayName: DisplayName, ... }
-export type SelfProfile = PublicProfile & {
-	readonly username: Username;       //only for own profile
-};
 
 
 
