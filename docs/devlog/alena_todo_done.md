@@ -55,9 +55,46 @@ Not required for evaluation — used for organization and pull request preparati
 	Registration
 
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+
+## FRONTEND
+
+### connected tailwind to frontend. The easiest way that possible:
+
+  <!-- start: (ALena): reset.css is conflicting with tailwind. Some styles will not be applied. This reset is from 2011 year -->
+  <!-- Delete all file reset.css or disable smth what you dont need in reset.css  Start with commenting out line below: <link rel="stylesheet" href="styles/reset.css" />-->
+  <link rel="stylesheet" href="styles/reset.css" />
+<!-- end: (ALena):  -->
+
+  <link rel="stylesheet" href="styles/style.css" />
+
+  <!-- start: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+   <!--  end: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
+
+   <!-- start: (Alena): your versin is 2.2 and newer one is 4, that I added above.  Line with 2.2 candbe deleted-->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <!-- end (Alena): -->
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+Tailwind:
+	https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+
+
+------------------------
+
 ## DB
  - deleted roows with login expire. Not requiered
  - add timecreation stamp for login
