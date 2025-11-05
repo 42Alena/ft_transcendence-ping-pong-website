@@ -9,11 +9,7 @@
 
 
 import type *  as Domain from '../types/domain';
-// import * as Validate from '../utils/validators';
 
-
-// If only this file needs it, keep it local:
-type UserInit = Domain.User & { passwordHash: Domain.PasswordHash };
 
 export class User implements Domain.User {
 
@@ -21,16 +17,16 @@ export class User implements Domain.User {
 	username: Domain.Username;
 	displayName: Domain.DisplayName;
 	passwordHash: Domain.PasswordHash;
-	avatarUrl: Domain.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
+	avatarUrl: Domain.AvatarUrl;     //allowed "no avatar" yet; //for .jpg/.png (later)
 	lastSeenAt: Domain.TimeSec;                    //changed from userStatus
 
 
-	constructor(init: UserInit) {
+	constructor(init: Domain.User ) {
 		this.id = init.id;
 		this.username = init.username;
 		this.displayName = init.displayName;
 		this.passwordHash = init.passwordHash;
-		this.avatarUrl = init.avatarUrl ?? null;
-		this.lastSeenAt = init.lastSeenAt ?? null;
+		this.avatarUrl = init.avatarUrl;
+		this.lastSeenAt = init.lastSeenAt;
 	}
 }

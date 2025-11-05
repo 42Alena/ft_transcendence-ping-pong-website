@@ -1,11 +1,14 @@
 // Used information from links
 //  https://www.Domaincriptlang.org/docs/handbook/2/mapped-types.html
 import { Knex, QueryBuilder } from 'knex';
+
 import *  as Domain from '../types/domain';
 
 import { db } from './DB';
-import { User } from './User';
-import { userFromDbRow } from '../mappers/user_db';
+import { User } from './User';           // class used only here
+import { userFromDbRow, userToDbRow } from '../mappers/user_db';
+import { generateId } from '../utils/randomId';
+import { hashPassword } from '../utils/password';
 
 export class UserManager {
 
@@ -15,13 +18,16 @@ export class UserManager {
 	dbTableLoginSessions: any
 
 	constructor() {
+		// Typed table factories (//= () => anonym fkt =factory fkt)
 		this.dbTableUser = () => db<User>('users');
 		this.dbTableFriends = () => db('friends');
 		this.dbTableBlocks = () => db('blocks');
-		this.dbTableLoginSessions = () => db('login_sessions'); //= () => anonym fkt =factory fkt
+		this.dbTableLoginSessions = () => db('login_sessions');
 	}
 
-	async getUserByUsername(username: Domain.Username): Promise<User | null> {
+	//_______________READ__________________
+
+	async getUserByUsername(username: Domain.Username): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ username: username }).first()
 		if (!row) {
 			return null;
@@ -30,8 +36,7 @@ export class UserManager {
 	}
 
 
-
-	async getUserById(userId: Domain.UserId): Promise<User | null> {
+	async getUserById(userId: Domain.UserId): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ id: userId }).first()
 		if (!row) {
 			return null;
@@ -39,11 +44,31 @@ export class UserManager {
 		return userFromDbRow(row)
 	}
 
+	async getAllUsers(): Promise<Domain.User[]> {
+		const dbUsers = await this.dbTableUser().select('*')
+		return (dbUsers || []).map(userFromDbRow);
+	}
+
+	//__________CREATE
+	async createUser(params: Domain.CreateUserParams): Promise<Domain.User> {
+		const user = new User({
+			id: generateId(),
+			username: params.username,
+			displayName: params.displayName,
+			passwordHash: await hashPassword(params.passwordPlain),
+			avatarUrl: params.avatarUrl,
+			lastSeenAt: null, // set on login/ping later
+		})
+
+		await this.saveUser(user);   // reuse the single insert path
+		return user;
+	};
+
 
 	//____________SAVE_____________________________
 	//now for tet only. TODO: delete later
 	async saveUser(newUser: User) {
-		const data = newUser.userToDbRow()
+		const data = userToDbRow()
 		console.debug("Saving user", data)
 		await this.dbTableUser().insert(data);
 	}
@@ -51,10 +76,7 @@ export class UserManager {
 
 
 	//___________________GET
-	async getAllUsers(): Promise<User[]> {
-		const dbUsers = await this.dbTableUser().select('*')
-		return (dbUsers || []).map(userFromDbRow);
-	}
+
 
 	//__________is NAME...
 	async isUsernameTaken(username: string): Promise<boolean> {

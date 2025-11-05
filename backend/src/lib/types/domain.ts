@@ -48,7 +48,12 @@ export type User = {
 	// deletedAt?: TimeSec;
 };
 
-
+type CreateUserParams = {
+  username: Username;
+  displayName: DisplayName;
+  passwordPlain: PasswordPlain;
+  avatarUrl: AvatarUrl;
+};
 
 
 //_____________MATCH______________________
