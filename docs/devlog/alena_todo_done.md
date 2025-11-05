@@ -57,14 +57,32 @@ Not required for evaluation — used for organization and pull request preparati
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
-## DB
-
-## BACKEND
 
 ## FRONTEND
 
-### connected tailwind to frontend. The easiest way that possible:
+### API 
+Summary
+- Created `src/api/` and moved my existing frontend API helpers there.
+- This is a mechanical separation (file moves + import path updates only.  No features added, no logic changed, no UI changes.).
+- Sets up a small Fastify client layer for the frontend.
 
+Why
+- Central place for fetch/cookies/CORS, JSON parsing, and typed responses.
+- Prepares the frontend for upcoming endpoints while I finish key backend routes.
+
+
+Notes for frontend
+- Components can import from `src/api/` (e.g., `api.auth.register(...)`) instead of using `fetch` directly.
+- If you push HTML/Tailwind with element IDs, I will wire up the calls from this client layer—no need to worry about headers or cookies in the UI.
+
+Next steps
+- After (or in parallel with) finishing backend routes,  I will implement the Fastify client functions and DTO types here.
+- Planned endpoints include: `/user/register`, `/auth/login`, `/users/:id`, etc.
+
+
+## Tailwind
+### connected tailwind to frontend. The easiest way that possible:
+```bash
   <!-- start: (ALena): reset.css is conflicting with tailwind. Some styles will not be applied. This reset is from 2011 year -->
   <!-- Delete all file reset.css or disable smth what you dont need in reset.css  Start with commenting out line below: <link rel="stylesheet" href="styles/reset.css" />-->
   <link rel="stylesheet" href="styles/reset.css" />
@@ -79,7 +97,7 @@ Not required for evaluation — used for organization and pull request preparati
    <!-- start: (Alena): your versin is 2.2 and newer one is 4, that I added above.  Line with 2.2 candbe deleted-->
   <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
   <!-- end (Alena): -->
-
+```
 ### TESTS
 
 ## 📘 DOCUMENTATION

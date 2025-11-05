@@ -112,5 +112,5 @@
   },
   "include": [
     "./src/*.ts"
-, "src/types", "src/types/api.ts", "src/auth.ts", "src/chat.ts"  ],
+, "src/types", "src/api/types.d.ts", "src/api/auth.ts", "src/api/chat.ts", "src/api/user.ts"  ],
 }
