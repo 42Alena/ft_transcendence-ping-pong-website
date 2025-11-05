@@ -121,8 +121,10 @@ body {
 
 .nav ul {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: space-between; */
   align-items: center;
+  /* justify-content: center; */
 }
 
 .nav li {
@@ -137,7 +139,7 @@ body {
     /* gap: 5px; */
   }
 
-  .nav ul {
+  /* .nav ul {
     flex-direction: column;
     justify-content: flex-start;
     padding: 10px;
@@ -146,7 +148,7 @@ body {
   .nav li {
     padding: 4px;
     line-height: 1;
-  }
+  } */
 }
 
 /* WELCOME PAGE LAYOUT */
