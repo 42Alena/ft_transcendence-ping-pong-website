@@ -25,8 +25,21 @@ export class UserManager {
 		this.dbTableLoginSessions = () => db('login_sessions');
 	}
 
-	//_______________READ__________________
 
+
+	//_______________bool: existence_____________________
+	async existsById(userId: Domain.UserId): Promise<boolean> {
+		const row = await this.dbTableUser().where({ id: userId }).first("id");
+		return !!row;
+	}
+
+	async existsByUsername(username: Domain.Username): Promise<boolean> {
+		const row = await this.dbTableUser().where({ username }).first("id");
+		return !!row;
+	}
+
+
+	//_______________READ__________________
 	async getUserByUsername(username: Domain.Username): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ username: username }).first()
 		if (!row) {
@@ -35,7 +48,6 @@ export class UserManager {
 		return userFromDbRow(row)
 	}
 
-
 	async getUserById(userId: Domain.UserId): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ id: userId }).first()
 		if (!row) {
@@ -43,6 +55,7 @@ export class UserManager {
 		}
 		return userFromDbRow(row)
 	}
+
 
 	async getAllUsers(): Promise<Domain.User[]> {
 		const dbUsers = await this.dbTableUser().select('*')
@@ -66,8 +79,8 @@ export class UserManager {
 
 
 	//____________SAVE_____________________________
-	
-	async saveUserInDb(user: Domain.User): Promise<void>  {
+
+	async saveUserInDb(user: Domain.User): Promise<void> {
 		const dbRow = userToDbRow(user);
 		console.debug("Saving user", dbRow)   //TODO: comment out, for tests now
 		await this.dbTableUser().insert(dbRow);
@@ -99,8 +112,8 @@ export class UserManager {
 
 		const row = await this.dbTableLoginSessions()
 			.where({ id: loginSessionId })
-			.first() as 
-			|{ userId: Domain.UserId } 
+			.first() as
+			| { userId: Domain.UserId }
 			| undefined;;
 
 		if (!row) return null;
@@ -131,6 +144,7 @@ export class UserManager {
 
 
 	//___________________LOGOUT______________
+
 	async deleteLoginSession(
 		loginSessionId: Domain.LoginSessionId,
 		userId: Domain.UserId
