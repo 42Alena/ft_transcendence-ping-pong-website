@@ -38,6 +38,8 @@ Not required for evaluation — used for organization and pull request preparati
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 	- add conversion for Time from number to Date, if needed
 
+	- loginSession id: set expire date?
+
 
 ### ======    NEW PULLREQUESTS   ================================================================
 

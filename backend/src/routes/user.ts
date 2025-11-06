@@ -25,7 +25,10 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		return sendOK(reply, users.map(toUserPublic), 200);
 
 	})
-
+  fastify.get("/users", authRequiredOptions, async (req, reply) => {
+    const users = await userManager.getAllUsers();
+    return sendOK(reply, users.map(toUserPublic), 200);
+  });
 
 	// fastify.get('/users/me', ...)
 

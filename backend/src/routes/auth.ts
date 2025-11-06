@@ -118,7 +118,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
 		const userId = (req as API.UserAwareRequest).userId;
 
-		console.log(loginSessionId, userId);
+		// console.log(loginSessionId, userId);
 
 
 		try {
