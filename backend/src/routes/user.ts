@@ -17,13 +17,18 @@ GET /users/:id // one public profile by id
 */
 export function registerUserRoutes(fastify: FastifyInstance, userManager: UserManager) {
 
-	fastify.get("/users", authRequiredOptions, async () => {
+	// GET /users → public list (displayName + avatarUrl + id)
+	fastify.get("/users", authRequiredOptions, async (req, reply) => {
 
 		const users = await userManager.getAllUsers();
-		return users.map((user) => toUserPublic(user));
+
+		return sendOK(reply, users.map(toUserPublic), 200);
+
 	})
 
+
 	// fastify.get('/users/me', ...)
+
 
 	// /users/123
 	// /users/124
@@ -39,60 +44,11 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 				return reply.code(404).send({ error: "User not found" });
 			}
 
-			return sendOK(reply, toUserPublic(user), 201)
+			return sendOK(reply, toUserPublic(user), 200)
 		})
 
 
 
 
-	// fastify.post("/users/logout", authRequiredOptions, async (req, res: FastifyReply) => {
-
-	// 	const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-	// 	const userId = (req as Types.UserAwareRequest).userId;
-
-	// 	console.log(loginSessionId, userId);
-
-
-	// 	try {
-
-	// 		await userManager.deleteLoginSession(loginSessionId, userId)
-	// 		res.header('set-cookie', "auth="); //`backtig is a literal string to put value
-	// 		return sendOK(res, null, 204); //204 No Content
-	// 	} catch (e: any) {
-
-	// 		return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
-	// 	}
-
-	// });
 
 }
-
-/*
-
-how frontend will work with access tokens:
-//1 header
-/// frontend will have to store access token somehwere.. sessionStorage/localStorage/indexedDb
-fetch('/users/me', {
-headers: {
-Authorization: `Bearer: ${accessToken}`
-}
-})
-//2 cookies
-fetch('/users/me'); // browser will attach cookie automatically
-
-
-// auth flow for user-only resource
-fastify.post("/only/secure/123", async (req, res) => {
-  // 1. get access token from req
-  //   req.headers('Authorization')  https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Authorization
-  //   req.cookies() ///  same header  https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies 
-  // 2 if no token - 401 (auth required)
-  // 3 if token -> validate token
-  // 3.1 - check access token db if this token is present
-  // 3.2 -> no token -> 401 (auth required)
-  // 3.3 -> token exists and not expired -> return user_id
-  // (optional) 4. if token.user_id !== 123 -> 403 access denied
-
-  // business as usual: token.user_id -> authenticated user
-});
-*/

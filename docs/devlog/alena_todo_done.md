@@ -71,14 +71,23 @@ Not required for evaluation — used for organization and pull request preparati
 ## FRONTEND
 
 ### TESTS
-#  0. register:
- curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
-#  2. check login
+1 chack all users:
+	1.1. login #  2. check login
  curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
+ curl -sS http://localhost:3000/users \
+  -H "Cookie: auth=63486830d229a4dbe26dbd470217b7cca56735b33fec461df17920353770aaaf"
+  <!-- -H "Cookie: auth=<YOUR_SESSION_ID>"   copy from login -->
+
 ## 📘 DOCUMENTATION
+| jq  => formats JSON nicely; without it you’ll see one long line.
 
 ## 🔗 LINKS / HELP
+
+
+
+
+
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================================================================================
