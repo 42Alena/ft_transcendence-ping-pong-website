@@ -1,5 +1,5 @@
 
-import type {  FastifyInstance, FastifyReply} from 'fastify';
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import type *  as API from '../lib/types/api';
 import * as Validate from '../lib/utils/validators';
@@ -52,10 +52,10 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
 		if (validatePassError) { return sendError(reply, validatePassError, "passwordPlain") }
 
-		
+
 		try {
 
-			 const newUser = await userManager.registerUser({
+			const newUser = await userManager.registerUser({
 				username,
 				displayName,
 				passwordPlain,
@@ -65,7 +65,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 			reply.header('set-cookie', `usr=${newUser.id}`);
 
-			return sendOK(reply,  toUserSelf(newUser), 201); // 201 Created
+			return sendOK(reply, toUserSelf(newUser), 201); // 201 Created
 		} catch (e: any) {
 			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -90,7 +90,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const username = Validate.normalizeName(body.username)
 		const passwordPlain = body.passwordPlain;
 
-		if (!username) { return sendError(reply, "No user name", "userName") }
+		if (!username) { return sendError(reply, "No user name", "username") }
 		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
 
 		const user = await userManager.getUserByUsername(username);
@@ -103,11 +103,17 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
+		// old:
+		// reply.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
 
-		reply.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+		// new(for all paths, not /auth only:
+	  reply.header(
+      "Set-Cookie",
+      `auth=${loginSessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 60 * 60}`
+      //TODO:  set Secure in production over HTTPS
+    );
 
-		// sends user.toSelfProfile() JSON with HTTP 201(user created)
-		return sendOK(reply, toUserSelf(user), 201)
+		return sendOK(reply, toUserSelf(user))
 	});
 
 

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
 import { authRequiredOptions } from './utils';
-import { sendOK } from '../lib/utils/http';
+import { sendError, sendOK } from '../lib/utils/http';
 import { toUserPublic } from '../lib/mappers/user';
 import { GetUserParams } from '../lib/types/api';
 // import { User } from '../lib/Class/User';
@@ -36,16 +36,17 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		"/users/:userId",
 		authRequiredOptions,
 		async (request, reply) => {
-			const { userId } = request.params;   //params: validates the params
-			// (https://fastify.dev/docs/latest/Reference/Routes/)
-			// const id = (request.params as any).userId;
+			const { userId } = request.params;   
+			
 			const user = await userManager.getUserById(userId);
 			if (!user) {
-				return reply.code(404).send({ error: "User not found" });
+				return sendError(reply, "User not found", "userId", 404);
 			}
 
 			return sendOK(reply, toUserPublic(user), 200)
 		})
+
+
 
 
 
