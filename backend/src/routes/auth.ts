@@ -103,15 +103,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
-		// old:
-		// reply.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+		
+		reply.header('set-cookie', `auth=${loginSessionId}; Path=/;  HttpOnly;`); //`backtig is a literal string to put value
 
-		// new(for all paths, not /auth only:
-	  reply.header(
-      "Set-Cookie",
-      `auth=${loginSessionId}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 60 * 60}`
-      //TODO:  set Secure in production over HTTPS
-    );
 
 		return sendOK(reply, toUserSelf(user))
 	});

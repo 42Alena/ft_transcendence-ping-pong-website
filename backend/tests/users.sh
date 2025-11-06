@@ -13,6 +13,8 @@ ALICE_COOKIE="$TMP_DIR/cookies_alice.txt"
 BOB_COOKIE="$TMP_DIR/cookies_bob.txt"
 CAROL_COOKIE="$TMP_DIR/cookies_carol.txt"
 
+echo "cookies at: $TMP_DIR"
+
 jq_or_cat() { if command -v jq >/dev/null 2>&1; then jq; else cat; fi; }
 
 hr() { echo "------------------------------------------------------------"; }

@@ -39,9 +39,6 @@ Not required for evaluation — used for organization and pull request preparati
 	- add conversion for Time from number to Date, if needed
 
 
-##FRONTEND:
- 	- add tailwind to frontend
-
 ### ======    NEW PULLREQUESTS   ================================================================
 
 ## DB
@@ -61,6 +58,7 @@ Not required for evaluation — used for organization and pull request preparati
 	-created lib/mappers/user.ts and moved mappers to API from class
 	-changed time from Date to number, because DB saved as number(no need conversion for now, will add conversion if needed) 
 	-added types.db and moved there UserDbRow 
+	-corrected auth cookie visability in another routes
 
 ### Usermanager
 	+ createUser()
