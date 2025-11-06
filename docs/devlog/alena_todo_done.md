@@ -100,7 +100,6 @@ Next steps
 ```
 ### TESTS
 
-## 📘 DOCUMENTATION
 
 ## 🔗 LINKS / HELP
 Tailwind:
