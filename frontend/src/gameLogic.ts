@@ -8,8 +8,7 @@ const playersNum : any = document.getElementById("setupNumberPlayers");
 const alias : any = document.getElementById("setupDisplayName");
 const instruction : any = document.getElementById("game-instructions");
 const setGame : any = document.getElementById("setupGame");
-const keysPlayersOne : any = document.getElementById("setOnePlayerButton");
-let enablePlayerTwo : boolean = false;
+let enableAI : boolean = true;
 
 function showNextGamePage() {
   setGame.style.display = "block";
@@ -40,14 +39,19 @@ function showNextGamePage() {
 
 function setOnePlayer(value : boolean)
 {
+  console.log(`value: ${value}`);
   if (value == true)
   {
-    enablePlayerTwo = false;
+    console.log("one player selected");
+    enableAI = true;
   }
   else 
   {
-    enablePlayerTwo = true;
+    enableAI = false;
+    console.log("two players selected");
   }
+  playersNum.style.display = "none";
+  alias.style.display = "flex";
 }
 
 
@@ -58,7 +62,7 @@ document.addEventListener("keyup", keyUpHandler);
 
 function keyDownHandler(e : any) {
   e.preventDefault()
-  if (enablePlayerTwo)
+  if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
       paddleRight.up = true;
@@ -76,7 +80,7 @@ function keyDownHandler(e : any) {
 
 function keyUpHandler(e : any) {
   e.preventDefault()
-  if (enablePlayerTwo)
+  if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
       paddleRight.up = false;
