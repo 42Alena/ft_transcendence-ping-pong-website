@@ -102,13 +102,9 @@
           </li>
         </ul>
       </nav>
-      <div class="board-container border" id="board">
+      <div class="board-container border" id="board" style="background-color: black;">
         <div class="welcome" id="welcomePage" style="display: none;">
           Welcome page
-        </div>
-        <div id="gamePage" style="display: block;" class="container">
-          <canvas id="myCanvas" style="background-color: black;" width="500" height="420"></canvas>
-		      <button id="runButton">Start game</button>
         </div>
         <div class="chat" id="chatPage">
           <div class="chat-left border">
@@ -402,7 +398,53 @@
             </div>
           </div>
         </div>
-      </div>
+        <div id="gamePage" class="container" style="display: flex; justify-content: center; align-items: center;">
+          <div id="setupGame" style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
+            <!-- <button style="position: absolute; top: 10px; right: 10px;" onclick="showNextGamePage()">NEXT</button> -->
+            <div id="setupNumberPlayers" style="display: flex; flex-direction: row; width: 100%; height: 100%; gap: 10px; justify-content: center; align-items: center;">
+              <button type="button" name="setOnePlayerButton" onclick="setOnePlayer('true')">
+                  One Player
+              </button>
+              <button type="button" onclick="setOnePlayer('false')">
+                  Two Players
+              </button>
+            </div>
+            <div id="setupDisplayName" style="display: none; flex-direction: row; width: 100%; height: 100%; align-items: center; justify-content: center; gap: 10px">
+                <p>
+                  <label for="aliasPlayerOne" style="color: white; display: block;">Player one</label>
+                  <input id="aliasPlayerOne" type="text" name="game-alias-1" placeholder="Enter your display name" />
+                </p>
+                <p>
+                  <label for="aliasPlayerTwo" style="color: white; display: block;">Player two</label>
+                  <input id="aliasPlayerTwo" type="text" name="game-alias-2" placeholder="Enter your display name" />
+                </p>
+            </div>
+            <div id="game-instructions" style="display: none; flex-direction: column; height: 100%; width: 100%; gap: 10px; align-items: center; justify-content: center;">
+              <div id="game-instructions-keys" style="color: white;">
+                P : pause the game
+              </div>
+              <div id="game-instructions-single" style="color: white;">
+                Player one: Use "w" and "s" to move the LEFT PADDLE up and down
+              </div>
+              <div id="game-instructions-multi" style="color: white;">
+                <div>
+                    Player One: use "w" and "s" to move the LEFT PADDLE up and down
+                </div>
+                <div>
+                    Player Two: use "arrow up" and "arrow down" to move the RIGHT PADDLE up and down
+                </div>
+              </div>
+              <div>
+                <button>Start game</button>
+              </div>
+            </div>
+          </div>
+          <div id="gameScreen" style="display: flex; justify-content: center; align-items: center;">
+            <canvas id="myCanvas" style="display: none; background-color: black;border: 1px solid blue" width="640" height="480"></canvas>
+            <button id="runButton">Start game</button>
+          </div>
+        </div>
+        </div>
     </section>
   </main>
   <footer class="main-footer max-width-container border">

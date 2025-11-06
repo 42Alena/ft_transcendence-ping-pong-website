@@ -1,16 +1,70 @@
 const canvas : any = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let interval = 0;
+let pageIndex = 1;
 
+//setup game
+const playersNum : any = document.getElementById("setupNumberPlayers");
+const alias : any = document.getElementById("setupDisplayName");
+const instruction : any = document.getElementById("game-instructions");
+const setGame : any = document.getElementById("setupGame");
+const keysPlayersOne : any = document.getElementById("setOnePlayerButton");
+let enablePlayerTwo : boolean = false;
+
+function showNextGamePage() {
+  setGame.style.display = "block";
+  console.log(`Current pageIndex: ${pageIndex}`);
+  
+  if (pageIndex == 0) {
+    console.log("Displaying playersNum");
+    playersNum.style.display = "flex";
+    alias.style.display = "none";
+    instruction.style.display = "none";
+    pageIndex++;
+  }
+  else if (pageIndex == 1) {
+    console.log("Displaying alias");
+    alias.style.display = "flex";
+    playersNum.style.display = "none";
+    instruction.style.display = "none";
+    pageIndex++;
+  }
+  else if (pageIndex == 2) {
+    console.log("Displaying instruction");
+    instruction.style.display = "flex";
+    alias.style.display = "none";
+    playersNum.style.display = "none";
+    pageIndex = 0;
+  }
+}
+
+function setOnePlayer(value : boolean)
+{
+  if (value == true)
+  {
+    enablePlayerTwo = false;
+  }
+  else 
+  {
+    enablePlayerTwo = true;
+  }
+}
+
+
+//ask about name to display
+//ask number of players
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
 function keyDownHandler(e : any) {
   e.preventDefault()
-  if (e.key === "Up" || e.key === "ArrowUp") {
-    paddleRight.up = true;
-  } else if (e.key === "Down" || e.key === "ArrowDown") {
-    paddleRight.down = true;
+  if (enablePlayerTwo)
+  {
+    if (e.key === "Up" || e.key === "ArrowUp") {
+      paddleRight.up = true;
+    } else if (e.key === "Down" || e.key === "ArrowDown") {
+      paddleRight.down = true;
+    }
   }
 
   if (e.key === "w") {
@@ -22,10 +76,13 @@ function keyDownHandler(e : any) {
 
 function keyUpHandler(e : any) {
   e.preventDefault()
-  if (e.key === "Up" || e.key === "ArrowUp") {
-    paddleRight.up = false;
-  } else if (e.key === "Down" || e.key === "ArrowDown") {
-    paddleRight.down = false;
+  if (enablePlayerTwo)
+  {
+    if (e.key === "Up" || e.key === "ArrowUp") {
+      paddleRight.up = false;
+    } else if (e.key === "Down" || e.key === "ArrowDown") {
+      paddleRight.down = false;
+    }
   }
 
    if (e.key === "w") {
@@ -223,6 +280,14 @@ function startGame() {
 
 const runButton : any = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
+
+  alias.style.display = "none;"
+  playersNum.style.display = "none";
+  instruction.style.display = "none";
+  setGame.style.display = "none";
+  gameP.style.disabled = "flex";
+  canvas.style.display = "block";
   startGame();
+  pageIndex = 0;
   runButton.disabled = true;
 });

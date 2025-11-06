@@ -42,7 +42,7 @@ function displayPage(text: string) : void
 	}
 	else if (text == 'game')
 	{
-		gameP.style.display = "block";
+		gameP.style.display = "flex";
 		welcP.style.display = "none";
 		chatP.style.display = "none";
 		accP.style.display = "none";
