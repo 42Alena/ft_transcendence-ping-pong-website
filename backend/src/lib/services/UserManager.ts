@@ -62,8 +62,8 @@ export class UserManager {
 		return (dbUsers || []).map(userFromDbRow);
 	}
 
-	//__________CREATE
-	async createUser(params: Domain.CreateUserParams): Promise<Domain.User> {
+	//__________REGISTER
+	async registerUser(params: Domain.RegisterUserParams): Promise<Domain.User> {
 		const user = new User({
 			id: generateId(),
 			username: params.username,

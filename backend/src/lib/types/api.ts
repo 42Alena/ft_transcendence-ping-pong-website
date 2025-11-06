@@ -25,7 +25,7 @@ export type PasswordHash = string;   //backend only!
 export type ApiError = { error: string; code?: string; details?: unknown };
 
 //________USER
-type GetUserParams = { userId: UserId };
+export type GetUserParams = { userId: UserId };
 
 //_______REQ bodies (waht client POST)___________
 

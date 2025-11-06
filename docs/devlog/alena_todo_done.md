@@ -71,6 +71,10 @@ Not required for evaluation — used for organization and pull request preparati
 ## FRONTEND
 
 ### TESTS
+#  0. register:
+ curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+#  2. check login
+ curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
 ## 📘 DOCUMENTATION
 
@@ -107,15 +111,16 @@ Not required for evaluation — used for organization and pull request preparati
 1.LOGIN TEST:
 ```bash
 #  0. register:
- curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+ curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+
 #  2. check login
- curl localhost:3000/user/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
+ curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
  #3. check cookie auth
-#  curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 
+#   curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 
  
  #4. logout. add decorators to extract auth cookie 9change cookie from terminal auth:
-  curl localhost:3000/user/logout -X POST -v -H 'Cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d'
+  curl localhost:3000/auth/logout -X POST -v -H 'Cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d'
 
 
 ```

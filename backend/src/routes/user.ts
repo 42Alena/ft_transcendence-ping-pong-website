@@ -1,9 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
-import type *  as Types from '../lib/types/domain';
-import type { UserId } from '../lib/types/domain';
 import { authRequiredOptions } from './utils';
 import { sendOK } from '../lib/utils/http';
+import { toUserPublic } from '../lib/mappers/user';
+import { GetUserParams } from '../lib/types/api';
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
 
@@ -20,10 +20,10 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	fastify.get("/users", authRequiredOptions, async () => {
 
 		const users = await userManager.getAllUsers();
-		return users.map((user) => user.toPublicProfile());
+		return users.map((user) => toUserPublic(user));
 	})
 
-	fastify.get('/users/me', ...)
+	// fastify.get('/users/me', ...)
 
 	// /users/123
 	// /users/124
@@ -31,14 +31,15 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		"/users/:userId",
 		authRequiredOptions,
 		async (request, reply) => {
-			const { userId } = request.params;   //params: validates the params(https://fastify.dev/docs/latest/Reference/Routes/)
+			const { userId } = request.params;   //params: validates the params
+			// (https://fastify.dev/docs/latest/Reference/Routes/)
 			// const id = (request.params as any).userId;
 			const user = await userManager.getUserById(userId);
 			if (!user) {
 				return reply.code(404).send({ error: "User not found" });
 			}
 
-			return sendOK(reply, user.toPublicProfile(), 201)
+			return sendOK(reply, toUserPublic(user), 201)
 		})
 
 
@@ -94,4 +95,4 @@ fastify.post("/only/secure/123", async (req, res) => {
 
   // business as usual: token.user_id -> authenticated user
 });
-
+*/

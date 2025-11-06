@@ -37,9 +37,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const avatarUrl = Validate.normalizeString(body.avatarUrl)
 
 		//username
-		if (!username) { return sendError(reply, "No user name", "userName") }
+		if (!username) { return sendError(reply, "No user name", "username") }
 		const validateUsernameError = Validate.validateName(username);
-		if (validateUsernameError) { return sendError(reply, validateUsernameError, "userame") }
+		if (validateUsernameError) { return sendError(reply, validateUsernameError, "username") }
 
 		//display name
 		if (!displayName) { return sendError(reply, "No display name", "displayName") }
@@ -52,25 +52,20 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
 		if (validatePassError) { return sendError(reply, validatePassError, "passwordPlain") }
 
-
-		// check uniq displayname
+		
 		try {
 
-			// const newUser = new User({  old
-			 const user = await userManager.createUser({
-			// const newUser = new User({
-				id: generateId(),
+			 const newUser = await userManager.registerUser({
 				username,
 				displayName,
-				passwordHash: await hashPassword(passwordPlain),
+				passwordPlain,
 				avatarUrl: avatarUrl ? avatarUrl : null,
-				lastSeenAt: null,
 			})
-			console.debug("Saving new user", newUser)
-			await userManager.saveUser(newUser)
+			console.debug("Saving new user", newUser) //TODO: comment out, for tests now
+
 			reply.header('set-cookie', `usr=${newUser.id}`);
 
-			return sendOK(reply, newUser.toSelfProfile(), 201); // 201 Created
+			return sendOK(reply,  toUserSelf(newUser), 201); // 201 Created
 		} catch (e: any) {
 			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
@@ -95,11 +90,8 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const username = Validate.normalizeName(body.username)
 		const passwordPlain = body.passwordPlain;
 
-
 		if (!username) { return sendError(reply, "No user name", "userName") }
 		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
-
-
 
 		const user = await userManager.getUserByUsername(username);
 
@@ -115,7 +107,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		reply.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
 
 		// sends user.toSelfProfile() JSON with HTTP 201(user created)
-		return sendOK(reply, user.toSelfProfile(), 201)
+		return sendOK(reply, toUserSelf(user), 201)
 	});
 
 

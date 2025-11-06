@@ -48,7 +48,7 @@ export type User = {
 	// deletedAt?: TimeSec;
 };
 
-type CreateUserParams = {
+export type RegisterUserParams = {
   username: Username;
   displayName: DisplayName;
   passwordPlain: PasswordPlain;
