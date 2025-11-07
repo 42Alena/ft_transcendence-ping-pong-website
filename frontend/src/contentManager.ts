@@ -18,6 +18,11 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		setGame.style.display = "none";
+		playersNum.style.display = "none";
+		alias.style.display = "none";
+		gameOverDiv.style.display = "none";
+		instruction.style.display = "none";
 		if (gameisOn)
 		{
 			clearInterval(interval)
@@ -34,6 +39,11 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		setGame.style.display = "none";
+		playersNum.style.display = "none";
+		alias.style.display = "none";
+		gameOverDiv.style.display = "none";
+		instruction.style.display = "none";
 		if (gameisOn)
 		{
 			clearInterval(interval);
@@ -51,6 +61,11 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		setGame.style.display = "none";
+		playersNum.style.display = "none";
+		alias.style.display = "none";
+		gameOverDiv.style.display = "none";
+		instruction.style.display = "none";
 		if (gameisOn)
 		{
 			clearInterval(interval);
@@ -66,7 +81,7 @@ function displayPage(text: string) : void
 		alias.style.display = "none";
 		gameOverDiv.style.display = "none";
 		instruction.style.display = "none";
-		
+
 		if (gameisOn)
 		{
 			clearInterval(interval);
