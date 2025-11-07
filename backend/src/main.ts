@@ -14,15 +14,18 @@ const userManager = new UserManager()
 fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
 
 //________________DECORATORS___________________
-
 // The decorated Fastify server is bound to this in route handlers:
 // https://fastify.dev/docs/latest/Reference/Decorators/
-// installs a global preHandler hook that runs on every request and, if present, copies the auth=<sid> cookie into req.loginSessionId.
-initDecorators(fastify); // (A) app-level hook parses "auth" cookie
 
-// sets req.loginSessionId from cookie 
-// attaches your userManager to the Fastify instance so you can access it later as req.server.userManager.
-fastify.decorate('userManager', userManager); // (B) attach userManager to the server
+
+// 1) Parse "auth" cookie on every request and put the value into req.loginSessionId.
+//  Call this BEFORE registering routes that use authRequiredOptions.
+initDecorators(fastify);  
+
+// 2) Attach userManager to the Fastify instance.
+//    In any handler/preHandler you can access it as: req.server.userManager.
+//    Do this BEFORE registering routes.
+fastify.decorate('userManager', userManager);
 
 //_____________________ROUTES REGISTRATION___________________
 //fastify register routes
@@ -36,5 +39,3 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, (err: Error | null, address: str
   if (err) throw err;
   console.log(`🚀 Server ready at ${address}`);
 });
-
-

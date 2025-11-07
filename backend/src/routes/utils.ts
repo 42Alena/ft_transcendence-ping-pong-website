@@ -1,6 +1,6 @@
 // https://fastify.dev/docs/latest/Reference/Routes/#shorthand-declaration
 
-import { DoneFuncWithErrOrRes, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import type *  as API from '../lib/types/api';
 import { sendError } from "../lib/utils/http";
 
@@ -10,29 +10,32 @@ import { sendError } from "../lib/utils/http";
  Runs before protected routes. Requires a valid "auth" cookie,
 resolves the userId from session store, and attaches it to req. */
 export const authRequiredOptions = {
-	 preHandler: async(req: FastifyRequest, reply: FastifyReply) => {
+	preHandler: async (req: FastifyRequest, reply: FastifyReply) => {
 
-		// filled by  global decorator hook (see below).
+		// filled by  global decorator hook  in/decorators.ts( auto fill loginSessionId)
 		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
+
 		// console.log('Hello from prehandler', loginSessionId)  //for debug
 
 		if (!loginSessionId) {
 			return sendError(reply, "need cookies", "auth", 401);
 
 		}
- // access userManager  via decoration
-		// const userId = await (req as any).userManager.getUserIdByLoginSession(loginSessionId);
-		const userId = await (this as any).userManager.getUserIdByLoginSession(loginSessionId);
+
+		// access userManager  via decoration
+		const userId = await (req.server as any).userManager.getUserIdByLoginSession(loginSessionId);
 
 		if (!userId) {
-			return sendError(reply, "prehandler: invalid session", "auth", 401);
-		}
+			return sendError(reply, "prehandler: invalid session", "auth", 401);}
 
 		//  attach to request for downstream handlers  (/users/me, etc.)
-		(req as API.UserAwareRequest).userId = userId;
+		(req as API.UserAwareRequest).userId = userId; //  now handlers can read req.userId
 
 	}
 };
+
+
+
 
 
 /* 

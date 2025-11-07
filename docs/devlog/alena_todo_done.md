@@ -61,6 +61,7 @@ Not required for evaluation — used for organization and pull request preparati
 	-changed time from Date to number, because DB saved as number(no need conversion for now, will add conversion if needed) 
 	-added types.db and moved there UserDbRow 
 	-corrected auth cookie visability in another routes
+	+ corrected logic in hook prehandler
 
 ### Usermanager
 	+ createUser()

@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { UserAwareRequest } from "./lib/types/api";
 
 export function initDecorators(fastify: FastifyInstance) {
+	
 	// apply before fastify.lsten(Must run BEFORE registering routes that use authRequiredOptions)
 	fastify.decorateRequest('userId', null);
 	fastify.decorateRequest('loginSessionId', null);
