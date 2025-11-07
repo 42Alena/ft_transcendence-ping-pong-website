@@ -2,40 +2,18 @@ const canvas : any = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let interval = 0;
 let pageIndex = 1;
+let displayNamePlayerOne : string;
+let displayNamePlayerTwo : string;
 
 //setup game
 const playersNum : any = document.getElementById("setupNumberPlayers");
-const alias : any = document.getElementById("setupDisplayName");
-const instruction : any = document.getElementById("game-instructions");
+const alias : any = document.getElementById("setUpPlayers");
+const instruction : any = document.getElementById("Setinstructions");
 const setGame : any = document.getElementById("setupGame");
+const inputPlayerOne : any = document.getElementById("namePlayerOne");
+const inputNamePlayerTwo : any = document.getElementById("namePlayerTwo");
 let enableAI : boolean = true;
-
-function showNextGamePage() {
-  setGame.style.display = "block";
-  console.log(`Current pageIndex: ${pageIndex}`);
-  
-  if (pageIndex == 0) {
-    console.log("Displaying playersNum");
-    playersNum.style.display = "flex";
-    alias.style.display = "none";
-    instruction.style.display = "none";
-    pageIndex++;
-  }
-  else if (pageIndex == 1) {
-    console.log("Displaying alias");
-    alias.style.display = "flex";
-    playersNum.style.display = "none";
-    instruction.style.display = "none";
-    pageIndex++;
-  }
-  else if (pageIndex == 2) {
-    console.log("Displaying instruction");
-    instruction.style.display = "flex";
-    alias.style.display = "none";
-    playersNum.style.display = "none";
-    pageIndex = 0;
-  }
-}
+let gameisOn : boolean = false;
 
 function setOnePlayer(value : boolean)
 {
@@ -52,8 +30,56 @@ function setOnePlayer(value : boolean)
   }
   playersNum.style.display = "none";
   alias.style.display = "flex";
+  setAlias();
 }
 
+function setAlias() {
+  if (enableAI)
+  {
+    inputNamePlayerTwo.readOnly = true;
+    inputNamePlayerTwo.value = "AI";
+    displayNamePlayerTwo = "AI";
+    inputNamePlayerTwo.disabled = true;
+
+  }
+}
+
+function showStartButton() {
+  runButton.style.display = "block";
+}
+function saveDisplayName(player : number) {
+  if (player == 1)
+  {
+    displayNamePlayerOne = inputPlayerOne.value;
+    inputPlayerOne.disabled = true;
+  }
+  else
+  {
+    displayNamePlayerTwo = inputNamePlayerTwo.value;
+    inputNamePlayerTwo.disabled = true;
+  }
+
+  if (inputPlayerOne.disabled && inputNamePlayerTwo.disabled)
+  {
+    setTimeout(showStartButton, 3000);
+    instruction.style.display = "block";
+    // runButton.style.display = "block";
+  }
+}
+
+inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
+	if (event.key == "Enter")
+	{
+		displayNamePlayerOne = inputPlayerOne.value;
+	}
+});
+
+inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
+	if (event.key == "Enter")
+	{
+		displayNamePlayerTwo = inputNamePlayerTwo.value;
+	}
+});
 
 //ask about name to display
 //ask number of players
@@ -61,7 +87,9 @@ document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 
 function keyDownHandler(e : any) {
-  e.preventDefault()
+
+  if (gameisOn)
+      e.preventDefault();
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -79,7 +107,9 @@ function keyDownHandler(e : any) {
 }
 
 function keyUpHandler(e : any) {
-  e.preventDefault()
+
+  if (gameisOn)
+    e.preventDefault();
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -95,6 +125,9 @@ function keyUpHandler(e : any) {
     paddleLeft.down = false;
   }
 }
+
+
+//game over
 
 class Paddle {
 	width: number;
@@ -256,7 +289,12 @@ function draw() {
   }
   
   if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width) || ball.x + ball.dx > canvas.width - ball.lenght - paddleRight.width) {
-    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght || ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght) {
+    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght)
+    {
+      ball.dx = -ball.dx;
+    }
+    else if (ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght)
+    {
       ball.dx = -ball.dx;
     }
     else
@@ -269,6 +307,15 @@ function draw() {
       ball.y = canvas.height / 2 - ball.lenght / 2;
     }
   }
+  
+  if (score.playerLeft == 3 || score.playerRight == 3)
+  {
+    if (score.playerLeft == 3)
+      score.playerLeft++;
+    else
+      score.playerRight++;
+    clearInterval(interval);
+  }
 
   if (ball.y + ball.dy < 0 || ball.y + ball.dy > canvas.height - (ball.lenght) ) {
     ball.dy = -ball.dy;
@@ -279,6 +326,7 @@ function draw() {
 }
 
 function startGame() {
+  gameisOn = true;
   interval = setInterval(draw, 20);
 }
 
@@ -291,7 +339,7 @@ runButton.addEventListener("click", () => {
   setGame.style.display = "none";
   gameP.style.disabled = "flex";
   canvas.style.display = "block";
+  runButton.style.display = "none";
+  instruction.style.display = "none";
   startGame();
-  pageIndex = 0;
-  runButton.disabled = true;
 });

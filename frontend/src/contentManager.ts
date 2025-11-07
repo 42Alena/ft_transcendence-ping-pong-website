@@ -18,6 +18,12 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.style.display = "none";
+			gameisOn = false;
+		}
 		profP.style.display = "none";
 	}
 	else if(text == 'welcome')
@@ -28,6 +34,12 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		if (gameisOn)
+		{
+			clearInterval(interval);
+			canvas.style.display = "none";
+			gameisOn = false;
+		}
 		profP.style.display = "none";
 	}
 	else if (text == 'account')
@@ -39,10 +51,23 @@ function displayPage(text: string) : void
 		regP.style.display = "none";
 		logP.style.display = "none";
 		gameP.style.display = "none";
+		if (gameisOn)
+		{
+			clearInterval(interval);
+			canvas.style.display = "none";
+			gameisOn = false;
+		}
 	}
 	else if (text == 'game')
 	{
 		gameP.style.display = "flex";
+		setGame.style.display = "block";
+		if (gameisOn)
+		{
+			clearInterval(interval);
+			canvas.style.display = "none";
+			gameisOn = false;
+		}
 		welcP.style.display = "none";
 		chatP.style.display = "none";
 		accP.style.display = "none";
