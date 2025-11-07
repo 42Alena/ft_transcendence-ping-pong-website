@@ -37,7 +37,7 @@ CREATE INDEX IF NOT EXISTS i_login_sessions_user ON login_sessions (userId);
 
 
 -- =========================
--- FRIENDS  (User friend list) 
+-- FRIENDS  (User friend list: directed) 
 -- =========================
 CREATE TABLE IF NOT EXISTS friends (
     userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -46,21 +46,18 @@ CREATE TABLE IF NOT EXISTS friends (
     PRIMARY KEY (userId, friendId)
 );
 
--- Helpful indexes for lookups by either side
-CREATE INDEX IF NOT EXISTS idx_friends_userId   ON friends(userId);
-CREATE INDEX IF NOT EXISTS idx_friends_friendId ON friends(friendId);
 
 -- =========================
--- BLOCKS  (User block list) 
+-- BLOCKS  (User block list directed) 
 -- =========================
 CREATE TABLE IF NOT EXISTS blocks (
     userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     blockedId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     CHECK (userId <> blockedId),
-    PRIMARY KEY (userId, blockedId)
+    PRIMARY KEY (userId, blockedId)  -- WHERE userId = ? => uses the PK index = who I blocked
 );
 
---  "who blocks me?" / "am I blocked by X?"
+--  who blocks me? / am I blocked by X?
 CREATE INDEX IF NOT EXISTS idx_blocks_blockedId ON blocks(blockedId);
 
 

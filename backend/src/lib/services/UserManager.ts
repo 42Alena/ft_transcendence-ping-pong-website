@@ -212,6 +212,18 @@ export class UserManager {
 
 	//_________________BLOCKED______________________
 
+	async getMyBlocks(userId: Domain.UserId): Promise<Domain.User[]> {
+
+		const rows = await this.dbTableUser()
+			.join( 'blocks', 'users.id', 'blocks.blockedId') //join users and blocks tables
+			.where('blocks.userId', userId)                 // who I blocked
+			.select('users.*')                             // only user columns
+			.orderBy('users.displayName');
+
+		return rows.map(userFromDbRow);
+	}
+
+
 	//blocked only on 1 site
 	async blockUser(userId: Domain.UserId, blockedId: Domain.UserId) {
 

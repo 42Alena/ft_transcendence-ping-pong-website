@@ -64,7 +64,7 @@ fastify.get<{ Params: API.GetUserParams }>(
 
 	//____________________/ME: FRIENDS_______________________
 	
-	//my friends
+	//all who are my my friends
 	fastify.get("/users/me/friends", authRequiredOptions, async (req, reply) => {
 		
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
@@ -78,6 +78,17 @@ fastify.get<{ Params: API.GetUserParams }>(
 	
 	//____________________/ME: BLOKS_______________________
 
+	//all who I blocked
+	fastify.get("/users/me/blocks", authRequiredOptions, async (req, reply) => {
+		
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+	
+		
+		const myBlocks = await userManager.getMyBlocks(meId); // returns Domain.User[]
+		
+
+		return sendOK(reply, myBlocks.map(toUserPublic));
+	});
 
 
 }

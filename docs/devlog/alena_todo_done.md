@@ -47,6 +47,8 @@ Not required for evaluation — used for organization and pull request preparati
 	-user table; deleted 'last seen'
 	-sessions: added created at + ping update
  	-deleted for login expired/ping
+	+ added for blcoks "who i blocked index"
+	- deleted index for friends and blocks, that already in primary key
 
 ## BACKEND
 	- added 2 types for own and other profile
@@ -64,6 +66,7 @@ Not required for evaluation — used for organization and pull request preparati
 	-corrected auth cookie visability in another routes
 	+ corrected logic in hook prehandler
 	+ created /users/me/friends
+	+ created /users/me/blocks
 
 ### Usermanager
 	+ createUser()
@@ -76,6 +79,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### TESTS
 	+ created tests in backend/tests/users.sh   (to run in terminal)
+	<!-- + to run tests: make backend-tests -->
 
 
 ## 📘 DOCUMENTATION
