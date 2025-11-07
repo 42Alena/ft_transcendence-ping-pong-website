@@ -64,8 +64,8 @@
           </li>
         </ul>
       </nav>
-      <div class="board-container border" id="board" style="background-color: black;">
-        <div class="welcome" id="welcomePage" style="display: none;">
+      <div class="board-container border" id="board">
+        <div class="welcome" id="welcomePage" style="display: flex;">
           Welcome page
         </div>
         <div class="chat" id="chatPage">
@@ -373,7 +373,7 @@
             </div>
           </div>
         </div>
-        <div id="gamePage" class="container" style="display: flex; justify-content: center; align-items: center;">
+        <div id="gamePage" class="container" style="display: none; width: 100%; justify-content: center; align-items: center; background-color: black;">
           <div id="setupGame"
             style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
             <div id="setupNumberPlayers"
@@ -426,7 +426,9 @@
             style="display: none; flex-direction: column; justify-content: center; align-items: center; width: 640px; height: 480px; background-color: paleturquoise;">
             <div id="result"
               style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-              GAME OVER</div>
+              GAME OVER
+              <div id="winner-text"></div>
+            </div>
             <div id="nextGame">
               <button type="button">Play Again</button>
               <button type="button">New Game</button>

@@ -5,6 +5,7 @@ let pageIndex = 1;
 let displayNamePlayerOne : string;
 let displayNamePlayerTwo : string;
 
+
 //setup game
 const playersNum : any = document.getElementById("setupNumberPlayers");
 const alias : any = document.getElementById("setUpPlayers");
@@ -16,15 +17,19 @@ const gameScreenDiv : any = document.getElementById("gameScreen");
 const resultDiv : any = document.getElementById("result");
 const inputFieldPlayerOne : any = document.getElementById("displayNamePlayerOne")
 const inputPlayerTwo : any = document.getElementById("displayNamePlayerTwo");
+const winnerTextDiv : any = document.getElementById("winner-text");
 let enableAI : boolean = true;
 let gameisOn : boolean = false;
 
 function setOnePlayer(value : boolean)
 {
-  console.log(`value: ${value}`);
+  //reset
+  inputPlayerOne.value = "";
+  inputNamePlayerTwo.value = "";
+  inputPlayerOne.disabled = false;
+  inputNamePlayerTwo.disabled = false;
   if (value == true)
   {
-    console.log("one player selected");
     inputPlayerTwo.style.display = "none";
     enableAI = true;
   }
@@ -32,7 +37,6 @@ function setOnePlayer(value : boolean)
   {
     enableAI = false;
     inputPlayerTwo.style.display = "block";
-    console.log("two players selected");
   }
   playersNum.style.display = "none";
   alias.style.display = "flex";
@@ -49,6 +53,7 @@ function setAlias() {
 function showStartButton() {
   runButton.style.display = "block";
 }
+
 function saveDisplayName(player : number) {
   if (player == 1)
   {
@@ -312,14 +317,18 @@ function draw() {
   if (score.playerLeft == 3 || score.playerRight == 3)
   {
     if (score.playerLeft == 3)
+    {
+      winnerTextDiv.textContent = displayNamePlayerOne;
       score.playerLeft++;
+    }
     else
+    {
+      winnerTextDiv.textContent = displayNamePlayerTwo;
       score.playerRight++;
+    }
     gameOverDiv.style.display = "flex";
     gameScreenDiv.style.display = "none";
-    let winnerDiv : any = document.createElement("div");
-    winnerDiv.textContent = displayNamePlayerOne + " won!!!";
-    resultDiv.appendChild(winnerDiv);
+    
     clearInterval(interval);
   }
 
@@ -337,6 +346,12 @@ function startGame() {
   interval = setInterval(draw, 20);
 }
 
+function resetGame() {
+  score.playerRight = 0;
+  score.playerLeft = 0;
+  paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
+  paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
+}
 const runButton : any = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
 
@@ -344,11 +359,12 @@ runButton.addEventListener("click", () => {
   playersNum.style.display = "none";
   instruction.style.display = "none";
   setGame.style.display = "none";
-  gameP.style.disabled = "flex";
+  gameP.style.display = "flex";
   canvas.style.display = "block";
   runButton.style.display = "none";
   instruction.style.display = "none";
   gameOverDiv.style.display = "none";
   gameScreenDiv.style.display = "flex";
+  resetGame();
   startGame();
 });

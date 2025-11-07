@@ -63,9 +63,10 @@ function displayPage(text: string) : void
 		gameP.style.display = "flex";
 		setGame.style.display = "block";
 		playersNum.style.display = "flex";
-		
 		alias.style.display = "none";
 		gameOverDiv.style.display = "none";
+		instruction.style.display = "none";
+		
 		if (gameisOn)
 		{
 			clearInterval(interval);
