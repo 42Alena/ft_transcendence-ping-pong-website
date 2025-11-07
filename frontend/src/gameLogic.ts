@@ -12,6 +12,10 @@ const instruction : any = document.getElementById("Setinstructions");
 const setGame : any = document.getElementById("setupGame");
 const inputPlayerOne : any = document.getElementById("namePlayerOne");
 const inputNamePlayerTwo : any = document.getElementById("namePlayerTwo");
+const gameScreenDiv : any = document.getElementById("gameScreen");
+const resultDiv : any = document.getElementById("result");
+const inputFieldPlayerOne : any = document.getElementById("displayNamePlayerOne")
+const inputPlayerTwo : any = document.getElementById("displayNamePlayerTwo");
 let enableAI : boolean = true;
 let gameisOn : boolean = false;
 
@@ -21,11 +25,13 @@ function setOnePlayer(value : boolean)
   if (value == true)
   {
     console.log("one player selected");
+    inputPlayerTwo.style.display = "none";
     enableAI = true;
   }
   else 
   {
     enableAI = false;
+    inputPlayerTwo.style.display = "block";
     console.log("two players selected");
   }
   playersNum.style.display = "none";
@@ -36,11 +42,7 @@ function setOnePlayer(value : boolean)
 function setAlias() {
   if (enableAI)
   {
-    inputNamePlayerTwo.readOnly = true;
-    inputNamePlayerTwo.value = "AI";
     displayNamePlayerTwo = "AI";
-    inputNamePlayerTwo.disabled = true;
-
   }
 }
 
@@ -59,11 +61,10 @@ function saveDisplayName(player : number) {
     inputNamePlayerTwo.disabled = true;
   }
 
-  if (inputPlayerOne.disabled && inputNamePlayerTwo.disabled)
+  if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
   {
     setTimeout(showStartButton, 3000);
     instruction.style.display = "block";
-    // runButton.style.display = "block";
   }
 }
 
@@ -314,6 +315,11 @@ function draw() {
       score.playerLeft++;
     else
       score.playerRight++;
+    gameOverDiv.style.display = "flex";
+    gameScreenDiv.style.display = "none";
+    let winnerDiv : any = document.createElement("div");
+    winnerDiv.textContent = displayNamePlayerOne + " won!!!";
+    resultDiv.appendChild(winnerDiv);
     clearInterval(interval);
   }
 
@@ -325,6 +331,7 @@ function draw() {
   ball.y += ball.dy;
 }
 
+const gameOverDiv : any = document.getElementById("gameOverScreen");
 function startGame() {
   gameisOn = true;
   interval = setInterval(draw, 20);
@@ -341,5 +348,7 @@ runButton.addEventListener("click", () => {
   canvas.style.display = "block";
   runButton.style.display = "none";
   instruction.style.display = "none";
+  gameOverDiv.style.display = "none";
+  gameScreenDiv.style.display = "flex";
   startGame();
 });
