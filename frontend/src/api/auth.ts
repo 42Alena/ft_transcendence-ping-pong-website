@@ -3,7 +3,7 @@
 // <script src="dist/chat.js" type="module"></script>
 
 
-import type *  as Types from './types/api.js';
+import type *  as Types from './types.js';
 
 
 const SERVER = 'http://localhost:3000'
