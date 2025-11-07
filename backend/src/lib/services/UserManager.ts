@@ -62,7 +62,7 @@ export class UserManager {
 		return (dbUsers || []).map(userFromDbRow);
 	}
 
-	//__________REGISTER
+	//__________REGISTER + SAVE inDB_____________
 	async registerUser(params: Domain.RegisterUserParams): Promise<Domain.User> {
 		const user = new User({
 			id: generateId(),
@@ -77,8 +77,6 @@ export class UserManager {
 		return user;
 	};
 
-
-	//____________SAVE_____________________________
 
 	async saveUserInDb(user: Domain.User): Promise<void> {
 		const dbRow = userToDbRow(user);
@@ -161,6 +159,23 @@ export class UserManager {
 
 
 	//_________________FRIENDS______________________
+
+	async getMyFriends(userId: Domain.UserId): Promise<Domain.User[]> {
+
+		//collect friends ids
+		const ids = await this.dbTableFriends()
+			.where({ userId })
+			.pluck('friendId') as string[];
+
+		
+		if (ids.length === 0) return [];
+
+		// fetch user rows
+		const dbUsers = await this.dbTableUser().whereIn('id', ids);
+		return dbUsers.map(userFromDbRow);
+	}
+
+
 
 	//friend only on 1 site, without approval
 	async addFriend(

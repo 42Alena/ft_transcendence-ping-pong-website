@@ -57,12 +57,27 @@ fastify.get<{ Params: API.GetUserParams }>(
 			return sendError(reply, "User not found", "userId", 404);
 		}
 
+
 		return sendOK(reply, toUserPublic(user), 200)
 	});
 
 
 
-
+	//____________________/ME: FRIENDS_______________________
+	
+	//personal profile(username, displayName, avatarUrl, id)
+	fastify.get("/users/me/friends", authRequiredOptions, async (req, reply) => {
+		
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+		if (!meId) return sendError(reply, "need cookies", "auth", 401);
+		
+		const me = await userManager.getUserById(meId);
+		if (!me) return sendError(reply, "User not found", "userId", 404);
+		
+		return sendOK(reply, toUserSelf(me), 200);
+	});
+	
+	//____________________/ME: BLCOKS_______________________
 
 
 
