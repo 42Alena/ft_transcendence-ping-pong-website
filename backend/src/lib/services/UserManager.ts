@@ -136,7 +136,7 @@ export class UserManager {
 	) {
 
 		await this.dbTableLoginSessions()
-			.insert({ id: loginSessionId, userId })
+			.insert({ id: loginSessionId, userId })  
 	}
 
 
@@ -162,17 +162,23 @@ export class UserManager {
 
 	async getMyFriends(userId: Domain.UserId): Promise<Domain.User[]> {
 
-		//collect friends ids
-		const ids = await this.dbTableFriends()
-			.where({ userId })
-			.pluck('friendId') as string[];
+		// //collect friends ids
+		// const ids = await this.dbTableFriends()
+		// 	.where({ userId })
+		// 	.pluck('friendId') as string[];
 
-		
-		if (ids.length === 0) return [];
 
-		// fetch user rows
-		const dbUsers = await this.dbTableUser().whereIn('id', ids);
-		return dbUsers.map(userFromDbRow);
+		// if (ids.length === 0) return [];
+
+		// // fetch user rows
+		// const dbUsers = await this.dbTableUser().whereIn('id', ids);
+		// return dbUsers.map(userFromDbRow);
+
+
+		return this.dbTableUser()
+			.join('friends', 'friends.friendId', '=', 'users.id')
+			.where('friends.userId', '=', userId)
+
 	}
 
 

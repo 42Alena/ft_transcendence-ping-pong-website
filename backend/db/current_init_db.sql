@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS users (
     passwordHash TEXT NOT NULL, -- hashed password
     displayName TEXT UNIQUE NOT NULL, -- unique public name
     avatarUrl TEXT, -- optional
-    lastSeenAt INTEGER NOT NULL DEFAULT(unixepoch ()),
-    deletedAt INTEGER NOT NULL DEFAULT 0, -- GDPR soft-delete flag
+    lastSeenAt INTEGER  NULL DEFAULT(unixepoch ()),
+    deletedAt INTEGER NOT NULL DEFAULT 0 -- GDPR soft-delete flag
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_users_username_nocase ON users (username COLLATE NOCASE);
@@ -30,9 +30,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_users_display_nocase ON users (displayName C
 CREATE TABLE IF NOT EXISTS login_sessions (
     id TEXT PRIMARY KEY, -- random string (cookie value)
     userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    createdAt INTEGER NOT NULL DEFAULT(unixepoch ()) expiresAt INTEGER NOT NULL, -- now + TTL seconds
-    expiresAt INTEGER NOT NULL,
-    lastPingAt INTEGER NOT NULL DEFAULT(unixepoch ()) -- updated by /session/ping
+    createdAt INTEGER NOT NULL DEFAULT(unixepoch ())
 );
 
 CREATE INDEX IF NOT EXISTS i_login_sessions_user ON login_sessions (userId);

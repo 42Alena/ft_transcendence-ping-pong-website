@@ -69,7 +69,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ existsById()
 	+ getUserByUsername()
 	+getMyFriends()
-	
+
 ## FRONTEND
 
 ### TESTS
@@ -91,6 +91,7 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
  - deleted roows with login expire. Not requiered
  - add timecreation stamp for login
+ -deleted for login expired/pin
 
 ## BACKEND
 ### USermanager:
@@ -117,10 +118,10 @@ Not required for evaluation — used for organization and pull request preparati
 1.LOGIN TEST:
 ```bash
 #  0. register:
- curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+ curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "hello", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
 
 #  2. check login
- curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
+ curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "hello", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
  #3. check cookie auth
 #   curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 

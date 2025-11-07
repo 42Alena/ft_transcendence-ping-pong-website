@@ -77,7 +77,7 @@ fastify.get<{ Params: API.GetUserParams }>(
 		return sendOK(reply, toUserSelf(me), 200);
 	});
 	
-	//____________________/ME: BLCOKS_______________________
+	//____________________/ME: BLOKS_______________________
 
 
 
