@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS login_sessions (
 );
 
 CREATE INDEX IF NOT EXISTS i_login_sessions_user ON login_sessions (userId);
-CREATE INDEX IF NOT EXISTS i_login_sessions_valid ON login_sessions (expiresAt);
+
 
 -- =========================
 -- FRIENDS  (User friend list) 

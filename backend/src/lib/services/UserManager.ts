@@ -136,7 +136,7 @@ export class UserManager {
 	) {
 
 		await this.dbTableLoginSessions()
-			.insert({ id: loginSessionId, userId })  
+			.insert({ id: loginSessionId, userId })
 	}
 
 
@@ -162,25 +162,14 @@ export class UserManager {
 
 	async getMyFriends(userId: Domain.UserId): Promise<Domain.User[]> {
 
-		// //collect friends ids
-		// const ids = await this.dbTableFriends()
-		// 	.where({ userId })
-		// 	.pluck('friendId') as string[];
+		const rows = await this.dbTableUser()
+			.join( 'friends', 'users.id', 'friends.friendId') //join users and friends tables
+			.where('friends.userId', userId)                 // WHERE f.userId = :userId
+			.select('users.*')                             // only user columns
+			.orderBy('users.displayName');
 
-
-		// if (ids.length === 0) return [];
-
-		// // fetch user rows
-		// const dbUsers = await this.dbTableUser().whereIn('id', ids);
-		// return dbUsers.map(userFromDbRow);
-
-
-		return this.dbTableUser()
-			.join('friends', 'friends.friendId', '=', 'users.id')
-			.where('friends.userId', '=', userId)
-
+		return rows.map(userFromDbRow);
 	}
-
 
 
 	//friend only on 1 site, without approval

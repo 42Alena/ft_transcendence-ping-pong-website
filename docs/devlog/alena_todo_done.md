@@ -46,6 +46,7 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 	-user table; deleted 'last seen'
 	-sessions: added created at + ping update
+ 	-deleted for login expired/ping
 
 ## BACKEND
 	- added 2 types for own and other profile
@@ -62,6 +63,7 @@ Not required for evaluation — used for organization and pull request preparati
 	-added types.db and moved there UserDbRow 
 	-corrected auth cookie visability in another routes
 	+ corrected logic in hook prehandler
+	+ created /users/me/friends
 
 ### Usermanager
 	+ createUser()
@@ -91,7 +93,7 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
  - deleted roows with login expire. Not requiered
  - add timecreation stamp for login
- -deleted for login expired/pin
+
 
 ## BACKEND
 ### USermanager:

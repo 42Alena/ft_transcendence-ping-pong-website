@@ -23,7 +23,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 		const users = await userManager.getAllUsers();
 
-		return sendOK(reply, users.map(toUserPublic), 200);
+		return sendOK(reply, users.map(toUserPublic));
 
 	});
 
@@ -37,7 +37,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		const me = await userManager.getUserById(meId);
 		if (!me) return sendError(reply, "User not found", "userId", 404);
 
-		return sendOK(reply, toUserSelf(me), 200);
+		return sendOK(reply, toUserSelf(me));
 		});
 
 
@@ -57,24 +57,23 @@ fastify.get<{ Params: API.GetUserParams }>(
 			return sendError(reply, "User not found", "userId", 404);
 		}
 
-
-		return sendOK(reply, toUserPublic(user), 200)
+		return sendOK(reply, toUserPublic(user))
 	});
 
 
 
 	//____________________/ME: FRIENDS_______________________
 	
-	//personal profile(username, displayName, avatarUrl, id)
+	//my friends
 	fastify.get("/users/me/friends", authRequiredOptions, async (req, reply) => {
 		
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
-		if (!meId) return sendError(reply, "need cookies", "auth", 401);
+	
 		
-		const me = await userManager.getUserById(meId);
-		if (!me) return sendError(reply, "User not found", "userId", 404);
+		const myFriends = await userManager.getMyFriends(meId); // returns Domain.User[]
 		
-		return sendOK(reply, toUserSelf(me), 200);
+
+		return sendOK(reply, myFriends.map(toUserPublic));
 	});
 	
 	//____________________/ME: BLOKS_______________________
