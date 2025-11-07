@@ -295,11 +295,11 @@ function draw() {
   }
   
   if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width) || ball.x + ball.dx > canvas.width - ball.lenght - paddleRight.width) {
-    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght)
+    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght && ball.x < canvas.width / 2)
     {
       ball.dx = -ball.dx;
     }
-    else if (ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght)
+    else if (ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght && ball.x > canvas.width / 2)
     {
       ball.dx = -ball.dx;
     }
