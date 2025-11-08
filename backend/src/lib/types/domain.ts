@@ -77,7 +77,8 @@ export type BlockUserResult =
   | { ok: false; reason: "self"  };
 
 
-export type UnblockUserResult = { ok: true };
+export type UnblockUserResult = { ok: true }
+ | { ok: false; reason: "self"};
 
 
 

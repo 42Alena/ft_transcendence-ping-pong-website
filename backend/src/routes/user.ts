@@ -165,6 +165,26 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	// ______________BLOCKS:    DELETE /blocks/:id_____________
 
+	//unblock user
+	fastify.delete<{ Params: API.TargetIdParams }>(
+		"/blocks/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.removeFriend(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot remove yourself", "id", 400);
+
+		});
+
 	//_________________SETTINGS: CHANGE AVATAR____________
 	//_________________SETTINGS: CHANGE DISPLAY NAME____________
 	//_________________SETTINGS: CHANGE PASSWORD NAME____________

@@ -256,10 +256,18 @@ export class UserManager {
 		return { ok: true };
 	}
 
-	async unblockUser(userId: Domain.UserId, blockedId: Domain.UserId): Promise<number> {
+	async unblockUser(
+		meId: Domain.UserId,
+		targetId: Domain.UserId
+	): Promise<Domain.UnblockUserResult> {
 
-		return await this.dbTableBlocks().where({ userId, blockedId }).del();
+		if (meId === targetId)
+			return { ok: false, reason: "self" };
 
+
+		await this.dbTableBlocks().where({ userId: meId, blockedId: targetId }).del();
+		
+		return { ok: true };
 	}
 
 	async isBlocked(meId: Domain.UserId, targetId: Domain.UserId): Promise<boolean> {

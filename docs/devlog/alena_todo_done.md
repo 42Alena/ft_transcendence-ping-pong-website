@@ -67,6 +67,8 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### UserManager
 	+ removeFriend()
+	+/- updated blockUser() with type and check
+	+/- updated unblockUser() with type and check
 
 ### /user routes
 	+ delete /friends/:id  => delete friend
