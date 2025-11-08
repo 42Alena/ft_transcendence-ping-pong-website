@@ -73,6 +73,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		return sendOK(reply, myFriends.map(toUserPublic));
 	});
 
+
 	//____________________/ME: BLOKS_______________________
 
 	//all who I blocked
@@ -90,7 +91,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	// ______________FRIENDS: ADD: POST /friends/:id_____________
 
-
+	//add friend
 	fastify.post<{ Params: API.TargetIdParams }>(
 		"/friends/:id",
 		authRequiredOptions,
@@ -118,7 +119,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	// ______________FRIENDS:    DELETE /friends/:id_____________
 
-
+	// delete friend
 	fastify.delete<{ Params: API.TargetIdParams }>(
 		"/friends/:id",
 		authRequiredOptions,
@@ -140,6 +141,28 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 
 	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
+
+	//block user
+	fastify.post<{ Params: API.TargetIdParams }>(
+		"/blocks/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.blockUser(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot block yourself", "id", 400);
+
+		});
+
+
 	// ______________BLOCKS:    DELETE /blocks/:id_____________
 
 	//_________________SETTINGS: CHANGE AVATAR____________

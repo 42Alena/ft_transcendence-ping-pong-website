@@ -70,6 +70,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### /user routes
 	+ delete /friends/:id  => delete friend
+	+ /blocks/:id"   => block user
 
 ### Makefile
 	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats

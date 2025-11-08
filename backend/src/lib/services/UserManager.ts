@@ -172,7 +172,7 @@ export class UserManager {
 	}
 
 
-	//add friend only on 1 site(me) 
+	//add friend only on 1 side(me) 
 	async addFriend(
 		meId: Domain.UserId,
 		targetId: Domain.UserId
@@ -225,7 +225,9 @@ export class UserManager {
 
 	//_________________BLOCKED______________________
 
-	async getMyBlocks(userId: Domain.UserId): Promise<Domain.User[]> {
+	async getMyBlocks(userId: Domain.UserId
+
+	): Promise<Domain.User[]> {
 
 		const rows = await this.dbTableUser()
 			.join('blocks', 'users.id', 'blocks.blockedId') //join users and blocks tables
@@ -237,18 +239,21 @@ export class UserManager {
 	}
 
 
-	//blocked only on 1 site
-	async blockUser(userId: Domain.UserId, blockedId: Domain.UserId) {
+	//blocked only on 1 side, keep also as friend
+	async blockUser(
+		meId: Domain.UserId,
+		targetId: Domain.UserId
+	): Promise<Domain.BlockUserResult> {
 
-		if (userId === blockedId)
-			throw new Error(" userId and blockedId: must be different");
-
+		if (meId === targetId)
+			return { ok: false, reason: "self" };
 
 		await this.dbTableBlocks()
-			.insert({ userId, blockedId })
+			.insert({ userId: meId, blockedId: targetId })
 			.onConflict(['userId', 'blockedId'])
 			.ignore();
 
+		return { ok: true };
 	}
 
 	async unblockUser(userId: Domain.UserId, blockedId: Domain.UserId): Promise<number> {

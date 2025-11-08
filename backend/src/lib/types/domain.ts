@@ -74,7 +74,7 @@ export type RemoveFriendResult =
 
 export type BlockUserResult =
   | { ok: true }
-  | { ok: false; reason: "self" | "not_found" };
+  | { ok: false; reason: "self"  };
 
 
 export type UnblockUserResult = { ok: true };
