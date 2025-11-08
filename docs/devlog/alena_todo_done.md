@@ -65,6 +65,12 @@ Not required for evaluation — used for organization and pull request preparati
 	-/+  addFriend() added more checks, added more return types
 	+ /friends/:id"  Route to add friend
 
+### UserManager
+	+ removeFriend()
+
+### Makefile
+	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats
+
 ## FRONTEND
 
 ### TESTS

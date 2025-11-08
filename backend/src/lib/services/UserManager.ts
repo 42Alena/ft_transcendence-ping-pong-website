@@ -175,15 +175,16 @@ export class UserManager {
 	//add friend only on 1 site(me) 
 	async addFriend(
 		meId: Domain.UserId,
-		targetId: Domain.UserId): Promise<Domain.AddFriendResult> {
+		targetId: Domain.UserId
+	): Promise<Domain.AddFriendResult> {
 
 		if (meId === targetId)
 			return { ok: false, reason: "self" };
 
-		if (! (await this.existsById(targetId)))
+		if (!(await this.existsById(targetId)))
 			return { ok: false, reason: "not_found" };
 
-		if( await this.isBlockedByMeOrByOther(meId, targetId))
+		if (await this.isBlockedByMeOrByOther(meId, targetId))
 			return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
@@ -194,15 +195,21 @@ export class UserManager {
 		return { ok: true };
 	}
 
-	async removeFriend(
-		userId: Domain.UserId,
-		friendId: Domain.UserId
-	): Promise<number> {
 
-		return await this.dbTableFriends()
-			.where({ userId, friendId })
+	async removeFriend(
+		meId: Domain.UserId,
+		targetId: Domain.UserId
+	): Promise<Domain.RemoveFriendResult> {
+
+		if (meId === targetId)
+			return { ok: false, reason: "self" };
+
+		await this.dbTableFriends()
+			.where({ userId: meId, friendId: targetId })
 			.delete();
 
+		// always OK (idempotent)
+		return { ok: true };
 	}
 
 	async isFriend(
@@ -264,7 +271,7 @@ export class UserManager {
 		const row = await this.dbTableBlocks()
 			.where({ userId: meId, blockedId: targetId })
 			.orWhere({ userId: targetId, blockedId: meId })
-			.first('userId'); 
+			.first('userId');
 		return !!row;
 	}
 
