@@ -6,15 +6,13 @@ import * as Validate from '../lib/utils/validators';
 import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
 import { authRequiredOptions } from './utils';
-import { sendError, sendOK } from '../lib/utils/http';
+import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserSelf } from '../lib/mappers/user';
 
 
 
 
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
-
-
 
 
 	/* 
@@ -103,7 +101,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
-		
+
 		reply.header('set-cookie', `auth=${loginSessionId}; Path=/;  HttpOnly;`); //`backtig is a literal string to put value
 
 
@@ -113,7 +111,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 
 
-	fastify.post("/auth/logout", authRequiredOptions, async (req, res: FastifyReply) => {
+	fastify.post("/auth/logout", authRequiredOptions, async (req, reply: FastifyReply) => {
 
 		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
 		const userId = (req as API.UserAwareRequest).userId;
@@ -124,11 +122,11 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		try {
 
 			await userManager.deleteLoginSession(loginSessionId, userId)
-			res.header('set-cookie', "auth="); //`backtig is a literal string to put value
-			return sendOK(res, null, 204); //204 No Content
+			reply.header('set-cookie', "auth="); //`backtig is a literal string to put value
+			return sendNoContent(reply);
 		} catch (e: any) {
 
-			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
+			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
 		}
 
 	});

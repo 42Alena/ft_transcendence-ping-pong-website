@@ -94,10 +94,10 @@ if [[ -z "${BOB_ID:-}" || -z "${CAROL_ID:-}" ]]; then
 fi
 echo
 
-echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
-hr
-curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-echo
+# echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
+# hr
+# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+# echo
 
 # echo "=== 9) Alice adds Bob and Carol → POST /friends/:id ==="
 # hr
@@ -136,10 +136,10 @@ echo
 # curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
 # echo
 
-echo "=== 16) GET /users/me/blocks (as Alice) — expect empty initially ==="
-hr
-curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
-echo
+# echo "=== 16) GET /users/me/blocks (as Alice) — expect empty initially ==="
+# hr
+# curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
+# echo
 
 # echo "=== 17) Alice blocks Bob → POST /blocks/:id ==="
 # hr

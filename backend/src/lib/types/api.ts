@@ -25,7 +25,8 @@ export type PasswordHash = string;   //backend only!
 export type ApiError = { error: string; code?: string; details?: unknown };
 
 //________USER
-export type GetUserParams = { userId: UserId };
+export type GetUserParams = { userId: UserId }; //for /users/:userId (GET/HEAD/etc.)
+export type TargetIdParams = { id: UserId }; //for /friends/:id (POST/DELETE)
 
 //_______REQ bodies (waht client POST)___________
 
@@ -41,13 +42,6 @@ export type LoginBody = {
 	passwordPlain: PasswordPlain;
 };
 
-
-//______________User shape (what clients see)_____________
-// export type UserPublic = {
-// 	id: UserId;
-// 	displayName: DisplayName;
-// 	avatarUrl: AvatarUrl | null;
-// };
 
 
 //_________PROFILE__send_ to_FRONTEND___________________

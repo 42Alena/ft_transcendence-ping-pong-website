@@ -22,7 +22,8 @@ export function sendError(
 	return reply.status(statusCode).send({ error, field })
 }
 
-
+//add friena/remove...
+//return sendNoContent(reply);
 export function sendNoContent(
 	reply: FastifyReply
 ): FastifyReply {
