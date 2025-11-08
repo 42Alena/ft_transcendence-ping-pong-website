@@ -163,7 +163,7 @@ export class UserManager {
 	async getMyFriends(userId: Domain.UserId): Promise<Domain.User[]> {
 
 		const rows = await this.dbTableUser()
-			.join( 'friends', 'users.id', 'friends.friendId') //join users and friends tables
+			.join('friends', 'users.id', 'friends.friendId') //join users and friends tables
 			.where('friends.userId', userId)                 // WHERE f.userId = :userId
 			.select('users.*')                             // only user columns
 			.orderBy('users.displayName');
@@ -174,18 +174,24 @@ export class UserManager {
 
 	//friend only on 1 site, without approval
 	async addFriend(
-		userId: Domain.UserId,
-		friendId: Domain.UserId) {
+		meId: Domain.UserId,
+		targetId: Domain.UserId): Promise<Domain.AddFriendResult> {
 
-		if (userId === friendId)
-			throw new Error(" userId and friendId must be different");
+		if (meId === targetId)
+			return { ok: false, reason: "self" };
 
+		if (! await this.existsById(targetId))
+			return { ok: false, reason: "not_found" };
+
+		if(! await this.isBlockedByMeOrByOther(meId, targetId))
+			return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
-			.insert({ userId, friendId })
+			.insert({ meId, targetId })
 			.onConflict(['userId', 'friendId'])
 			.ignore();
 
+		return { ok: true };
 	}
 
 	async removeFriend(
@@ -215,7 +221,7 @@ export class UserManager {
 	async getMyBlocks(userId: Domain.UserId): Promise<Domain.User[]> {
 
 		const rows = await this.dbTableUser()
-			.join( 'blocks', 'users.id', 'blocks.blockedId') //join users and blocks tables
+			.join('blocks', 'users.id', 'blocks.blockedId') //join users and blocks tables
 			.where('blocks.userId', userId)                 // who I blocked
 			.select('users.*')                             // only user columns
 			.orderBy('users.displayName');
@@ -244,13 +250,23 @@ export class UserManager {
 
 	}
 
-	async isBlocked(viewerId: Domain.UserId, targetId: Domain.UserId): Promise<boolean> {
+	async isBlocked(meId: Domain.UserId, targetId: Domain.UserId): Promise<boolean> {
 
-		const row = await this.dbTableBlocks().where({ userId: viewerId, blockedId: targetId }).first();
+		const row = await this.dbTableBlocks().where({ userId: meId, blockedId: targetId }).first();
 		return !!row;
 	}
 
 
+	async isBlockedByMeOrByOther(
+		meId: Domain.UserId,
+		targetId: Domain.UserId
+	): Promise<boolean> {
+		const row = await this.dbTableBlocks()
+			.where({ userId: meId, blockedId: targetId })
+			.orWhere({ userId: targetId, blockedId: meId })
+			.first('userId'); 
+		return !!row;
+	}
 
 
 	// //____Status: online | ofline

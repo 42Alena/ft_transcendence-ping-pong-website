@@ -56,6 +56,29 @@ export type RegisterUserParams = {
 };
 
 
+//_____________FRIENDS__________________
+
+
+export type AddFriendResult =
+  | { ok: true }
+  | { ok: false; reason: "self" | "not_found" | "blocked" };
+
+
+export type RemoveFriendResult = { ok: true };
+
+//__________________BLOCKS____________________________
+
+export type BlockUserResult =
+  | { ok: true }
+  | { ok: false; reason: "self" | "not_found" };
+
+
+export type UnblockUserResult = { ok: true };
+
+
+
+
+
 //_____________MATCH______________________
 export type MatchResult = {
 	opponentId: UserId;

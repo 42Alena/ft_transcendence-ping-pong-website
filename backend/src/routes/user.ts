@@ -57,7 +57,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			return sendOK(reply, toUserPublic(user))
 		});
 
-/* 
+
 
 	//____________________/ME: FRIENDS_______________________
 
@@ -86,12 +86,12 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 		return sendOK(reply, myBlocks.map(toUserPublic));
 	});
- */
+
 
 	// ______________FRIENDS: ADD: POST /friends/:id_____________
 
 
-/* 	fastify.post<{ Params: API.TargetIdParams }>(
+ 	fastify.post<{ Params: API.TargetIdParams }>(
 		"/friends/:id",
 		authRequiredOptions,
 		async (req, reply) => {
@@ -107,12 +107,15 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			await userManager.addFriend(meId, friendId);
 
 			return sendNoContent(reply);
-		}); */
+		}); 
 
 
 
 
 	// ______________FRIENDS:    DELETE /friends/:id_____________
+
+
+	
 	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
 	// ______________BLOCKS:    DELETE /blocks/:id_____________
 

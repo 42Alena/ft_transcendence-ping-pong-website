@@ -40,9 +40,39 @@ Not required for evaluation — used for organization and pull request preparati
 
 	- loginSession id: set expire date?
 
+	-TODO ROUTES: 
 
+	// ______________FRIENDS:    DELETE /friends/:id_____________
+	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
+	// ______________BLOCKS:    DELETE /blocks/:id_____________
+
+	//_________________SETTINGS: CHANGE AVATAR____________
+	//_________________SETTINGS: CHANGE DISPLAY NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: DELETE USER____________
+	
+	
+	//_________________ONLINE/OFFLINE____________
+
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
 
+## BACKEND
+	+ types for add/delete friends
+	+ types for block/unblock
+	+ isBlockedByMeOrByOther()
+
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 ## DB
 	-user table; deleted 'last seen'
 	-sessions: added created at + ping update
