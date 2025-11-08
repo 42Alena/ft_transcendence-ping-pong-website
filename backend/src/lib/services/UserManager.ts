@@ -172,7 +172,7 @@ export class UserManager {
 	}
 
 
-	//friend only on 1 site, without approval
+	//add friend only on 1 site(me) 
 	async addFriend(
 		meId: Domain.UserId,
 		targetId: Domain.UserId): Promise<Domain.AddFriendResult> {
@@ -180,14 +180,14 @@ export class UserManager {
 		if (meId === targetId)
 			return { ok: false, reason: "self" };
 
-		if (! await this.existsById(targetId))
+		if (! (await this.existsById(targetId)))
 			return { ok: false, reason: "not_found" };
 
-		if(! await this.isBlockedByMeOrByOther(meId, targetId))
+		if( await this.isBlockedByMeOrByOther(meId, targetId))
 			return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
-			.insert({ meId, targetId })
+			.insert({ userId: meId, friendId: targetId })
 			.onConflict(['userId', 'friendId'])
 			.ignore();
 
