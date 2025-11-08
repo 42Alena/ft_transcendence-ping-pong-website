@@ -6,25 +6,93 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pong</title>
+
+
+  <!-- start: (ALena): reset.css is conflicting with tailwind. Some styles will not be applied. This reset is from 2011 year -->
+  <!-- Delete all file reset.css or disable smth what you dont need in reset.css  Start with commenting out line below: <link rel="stylesheet" href="styles/reset.css" />-->
   <link rel="stylesheet" href="styles/reset.css" />
+<!-- end: (ALena):  -->
+
   <link rel="stylesheet" href="styles/style.css" />
+
+  <!-- start: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+   <!--  end: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
+
+   <!-- start: (Alena): your versin is 2.2 and newer one is 4, that I added above.  Line with 2.2 candbe deleted-->
   <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <!-- end (Alena): -->
+
+
+   <style>
+    .dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 10;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0;
+}
+   </style>
 </head>
 
 <body>
   <header class="main-header max-width-container border">
-    <div class="main-header__grid max-width border">
-      <div class="main-header__logo border">
+    <div id="header-navbar" style="display: flex; flex-direction: row; flex: 1; justify-content: space-between; align-items: center;">
+      <div id="header-navbar-logo" style="padding: 10px;">
         <a href="#" onclick="displayPage('welcome')">
           <img src="images/logo.png" alt="logo of the page" />
         </a>
       </div>
-      <div class="main-header__profile_name border">
-        <h1>Hello, you!</h1>
-      </div>
-      <div class="main-header__profile">
-        <a href="#" onclick="displayPage('account')">
-          <img src="images/profile/orange.png" alt="avatar profile" width="50px" height="50px" /></a>
+     <div id="header-navbar-user" style="display: flex; flex-direction: row; align-items: center; padding: 10px;">
+      <span class="dropdown">
+          <a href="#" style="display: flex; align-items: center; text-decoration: none;">
+              <span id="logged-user" style="margin-right: 10px;">
+                  Hello, you!
+              </span>
+              <div id="logged-user-avatar">
+                  <img src="images/profile/orange.png" alt="User Avatar" width="50" height="50">
+              </div>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="#" onclick="setAccountPage('register')" ><span class="iconf-user"></span>Register</a>
+              </li>
+              <li>
+                <a href="#" onclick="setAccountPage('login')" ><span class="iconf-user"></span>Login</a>
+              </li>
+              <li>
+                  <a href="#" onclick="setAccountPage('profile')"><span class="iconf-user"></span> View my profile</a>
+              </li>
+              <li>
+                  <a rel="nofollow" href="#"><span class="iconf-power-off"></span> <b>Logout</b></a>
+              </li>
+          </ul>
+      </span>
       </div>
     </div>
   </header>
@@ -37,9 +105,7 @@
               <img src="images/chat.png" alt="chat page" /></a>
           </li>
           <!-- <li><a href="#" onclick="display('game')">
-                    <img src="images/play.png" alt="game page"></a></li></a></li>
-                  <li><a href="#" onclick="display('leaderboard')">
-                    <img src="images/leaderboard.png" alt="chat page"></a></li></a></li> -->
+                    <img src="images/play.png" alt="game page"></a></li></a></li> -->
         </ul>
       </nav>
       <div class="board-container border" id="board">
@@ -99,9 +165,9 @@
             <button type="button" id="loginButton">
               <a href="#" onclick="setAccountPage('login')"> Login</a>
             </button>
-            <button type="button" id="profile">
+            <!-- <button type="button" id="profile">
               <a href="#" onclick="setAccountPage('profile')"> Profile</a>
-            </button>
+            </button> -->
           </div>
           <div class="account-register" id="registerPage" style="flex-direction: column;">
             <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
@@ -198,7 +264,7 @@
                         <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
                           height="50px" />
                       </label>
-                      <input type="file" id="edit-avatar" name="reg-user_avatar" style="display: none" />
+                      <input type="file" id="edit-avatar" name="edit-user_avatar" style="display: none"/>
                     </p>
                     <p class="form-group">
                       <label class="col-md-3 control-label">Username:</label>
@@ -207,29 +273,37 @@
                     </div>
                     </p>
                     <p class="form-group">
-                      <label class="col-lg-3 control-label">Display Name:</label>
+                      <p class="form-group">
+                      <label class="col-lg-3 control-label" for="edit-displayName">Display Name:</label>
+                      </p>
                     <div class="col-lg-8">
-                      <input class="form-control" type="text" value="Pallo">
+                      <input class="form-control" id="edit-displayName" name="edit-user_displayName" type="text" value="Pallo">
                     </div>
                     </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label">Old Password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" type="password" value="aaaaaaaaa">
-                    </div>
+                    <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                    <button type="submit" id="editDisplayNameButton" style="cursor: pointer">Change display name</button>
                     </p>
+                      <p class="form-group">
+                        <label class="col-md-3 control-label" for="edit-oldPass">Old Password:</label>
+                      <div class="col-md-8">
+                        <input class="form-control" id="edit-oldPass" name="edit-user_oldPass" type="password" value="aaaaaaaaa">
+                      </div>
+                      </p>
+                      <p class="form-group">
+                        <label class="col-md-3 control-label" for="edit-newPass">New Password:</label>
+                      <div class="col-md-8">
+                        <input class="form-control" id="edit-newPass" name="edit-user_newPass" type="password" value="aaaaaaaaa">
+                      </div>
+                      </p>
+                       <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                       <button type="submit" id="editPasswordButton" style="cursor: pointer">Change password</button>
+                       </p>
                     <p class="form-group">
-                      <label class="col-md-3 control-label">New password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" type="password" value="aaaaaaaaa">
-                    </div>
-                    </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
+                      <!-- <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
                       <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes" style="margin-right: 10px;">
                       <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
-                    </p>
+                    </p> -->
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
                       <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
                     </p>

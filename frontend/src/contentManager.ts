@@ -30,7 +30,7 @@ function displayPage(text: string) : void
 		accP.style.display = "flex";
 		/*choice page and profile page momenterely are set here
 		 so each time you click on the profile avatar you check to choose page*/
-		choicePage.style.display = "flex";
+		// choicePage.style.display = "flex";
 		profP.style.display = "none"
 		chatP.style.display = "none";
 		welcP.style.display = "none";
