@@ -62,6 +62,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ types for add/delete friends
 	+ types for block/unblock
 	+ isBlockedByMeOrByOther()
+	-/+  addFriend() added more checks, added more return types
+	+ /friends/:id"  Route to add friend
 
 ## FRONTEND
 

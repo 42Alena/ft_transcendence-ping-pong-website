@@ -91,23 +91,34 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	// ______________FRIENDS: ADD: POST /friends/:id_____________
 
 
- 	fastify.post<{ Params: API.TargetIdParams }>(
+	fastify.post<{ Params: API.TargetIdParams }>(
 		"/friends/:id",
 		authRequiredOptions,
 		async (req, reply) => {
 
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-			const {id: friendId} = req.params;  // friendId: string (UserId)
+			const { id: targetId } = req.params;  // targetId : string (UserId)
 
-			if (!await userManager.existsById(friendId)) {
-				return sendError(reply, "User not found", "id", 404);
+			if (meId === targetId) {
+				return sendError(reply, "Cannot add yourself", "id", 400);
 			}
 
-			await userManager.addFriend(meId, friendId);
 
-			return sendNoContent(reply);
-		}); 
+
+			const result = await userManager.addFriend(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
+			if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
+
+			return sendError(reply, "Cannot add friend", "id", 400); //never comes here with new if checks
+
+		});
 
 
 
@@ -115,7 +126,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	// ______________FRIENDS:    DELETE /friends/:id_____________
 
 
-	
+
 	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
 	// ______________BLOCKS:    DELETE /blocks/:id_____________
 
@@ -123,8 +134,8 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	//_________________SETTINGS: CHANGE DISPLAY NAME____________
 	//_________________SETTINGS: CHANGE PASSWORD NAME____________
 	//_________________SETTINGS: DELETE USER____________
-	
-	
+
+
 	//_________________ONLINE/OFFLINE____________
 
 }

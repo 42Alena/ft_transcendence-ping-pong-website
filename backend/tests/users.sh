@@ -94,37 +94,37 @@ if [[ -z "${BOB_ID:-}" || -z "${CAROL_ID:-}" ]]; then
 fi
 echo
 
-# echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 9) Alice adds Bob and Carol → POST /friends/:id ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
-# curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 9) Alice adds Bob and Carol → POST /friends/:id ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
+curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 10) GET /users/me/friends (as Alice) — should list Bob & Carol ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 10) GET /users/me/friends (as Alice) — should list Bob & Carol ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 11) Idempotency: re-add same friends — expect 200/204 and no duplicates ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
-# curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 11) Idempotency: re-add same friends — expect 200/204 and no duplicates ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
+curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 12) Bob adds Alice (to make Alice↔Bob mutual) ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 12) Bob adds Alice (to make Alice↔Bob mutual) ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 13) GET /users/me/friends (as Bob) — should include Alice ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" | jq_or_cat
-# echo
+echo "=== 13) GET /users/me/friends (as Bob) — should include Alice ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" | jq_or_cat
+echo
 
 # echo "=== 14) Alice removes Carol → DELETE /friends/:id ==="
 # hr
