@@ -68,6 +68,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ created /users/me/friends
 	+ created /users/me/blocks
 
+
 ### Usermanager
 	+ createUser()
 	+ saveUserInDb() changed
@@ -77,10 +78,16 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## FRONTEND
 
+### .gitignore
+    - untracked folder for tests.tmp and added it in gitignore
+
 ### TESTS
 	+ created tests in backend/tests/users.sh   (to run in terminal)
-	<!-- + to run tests: make backend-tests -->
-
+	+ to run tests in terminal
+	```bash
+	 make backend
+	 backend/tests/users.sh
+```
 
 ## 📘 DOCUMENTATION
 | jq  => formats JSON nicely; without it you’ll see one long line.
