@@ -50,8 +50,9 @@ db: check-tools
 	cd "$(DB_DIR)" && ./setup_db.sh
 	
 # runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
-backend-tests:
-	cd "$(BACKEND_DIR)" && npm run backend-tests
+backend-tests: db
+	cd "$(BACKEND_DIR)" &&  ./tests/users.sh
+	# cd "$(BACKEND_DIR)" && npm run backend-tests
 
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:

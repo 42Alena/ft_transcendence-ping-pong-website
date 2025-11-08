@@ -1,7 +1,9 @@
-# 0. Make it executable: chmod +x backend/tests/users.sh
-# 1. run in terminal: backend/tests/users.sh
-
 #!/usr/bin/env bash
+
+# 0. Make it executable: chmod +x backend/tests/users.sh
+#  1. in 1.terminal make backend
+# 2. in 2.terminal: make backend-tests
+
 # backend/tests/users.sh
 set -euo pipefail
 

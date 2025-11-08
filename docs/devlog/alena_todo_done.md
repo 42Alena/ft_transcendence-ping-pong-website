@@ -76,10 +76,15 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### Makefile
 	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats
+	+ added backend tests run 
 
 ## FRONTEND
 
 ### TESTS
+```
+	#  1. in 1.terminal make backend
+	# 2. in 2.terminal: make backend-tests
+```
 
 ## 📘 DOCUMENTATION
 

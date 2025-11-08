@@ -175,13 +175,13 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 			const { id: targetId } = req.params;  // targetId : string (UserId)
 
-			const result = await userManager.removeFriend(meId, targetId);
+			const result = await userManager.unblockUser(meId, targetId);
 
 			if (result.ok)
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "self") return sendError(reply, "Cannot remove yourself", "id", 400);
+			if (result.reason === "self") return sendError(reply, "Cannot unblock yourself", "id", 400);
 
 		});
 
