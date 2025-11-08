@@ -67,7 +67,7 @@ export type AddFriendResult =
 // export type RemoveFriendResult = { ok: true };
 export type RemoveFriendResult = 
   | { ok: true }
-  | { ok: false; reason: "self" | "not_found"  };
+  | { ok: false; reason: "self"};
 
 
 //__________________BLOCKS____________________________

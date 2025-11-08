@@ -100,12 +100,6 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 			const { id: targetId } = req.params;  // targetId : string (UserId)
 
-			if (meId === targetId) {
-				return sendError(reply, "Cannot add yourself", "id", 400);
-			}
-
-
-
 			const result = await userManager.addFriend(meId, targetId);
 
 			if (result.ok)
@@ -116,7 +110,6 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
 			if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
 
-			return sendError(reply, "Cannot add friend", "id", 400); //never comes here with new if checks
 
 		});
 
@@ -125,6 +118,25 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	// ______________FRIENDS:    DELETE /friends/:id_____________
 
+
+	fastify.delete<{ Params: API.TargetIdParams }>(
+		"/friends/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.removeFriend(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot remove yourself", "id", 400);
+
+		});
 
 
 	// ______________BLOCKS: ADD :POST  /blocks/:id_____________

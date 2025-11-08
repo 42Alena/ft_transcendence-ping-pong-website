@@ -68,6 +68,9 @@ Not required for evaluation — used for organization and pull request preparati
 ### UserManager
 	+ removeFriend()
 
+### /user routes
+	+ delete /friends/:id  => delete friend
+
 ### Makefile
 	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats
 
