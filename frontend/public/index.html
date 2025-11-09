@@ -76,17 +76,15 @@
         </div>
       </div>
     </header>
-    <main class="main flex justify-center border">
+    <main class="flex justify-center border">
       <section class="grid grid-cols-[70px_1fr] grid-rows-[1fr] bg-white w-full max-w-5xl border">
-        <nav class="nav border">
-          <ul>
-            <li>
+        <nav class="grid grid-rows-[1fr] bg-[#90ee90] border">
+          <ul class="flex flex-col justify-start p-2.5 items-center">
+            <li class="text-center p-1 leading-none">
               <a href="#chat" onclick="displayPage('chat')">
                 <img src="images/chat.png" alt="chat page"
               /></a>
             </li>
-            <!-- <li><a href="#" onclick="display('game')">
-                    <img src="images/play.png" alt="game page"></a></li></a></li> -->
           </ul>
         </nav>
         <div class="w-full h-full relative border" id="board">
