@@ -1,3 +1,4 @@
+// DOMAIN = use FOR BACKEND ONLY
 /* 
 https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html
 INFO: this types can be used for all project
@@ -10,60 +11,55 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
-export type UserStatus = 'online' | 'offline';
-export type GameResult = 'won' | 'lost';
 
+//_______________Primitives, single source of truth_____________
 export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
-export type AvatarUrl = string;
-
+export type AvatarUrl = string  | null;
+export type TimeSec = number | null; // unix epoch seconds or null
 
 
 export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash = string;
-
 export type LoginSessionId = string;
 
-//___________USER_______________________________
+export type UserStatus = 'online' | 'offline';
+export type GameResult = 'won' | 'lost';
 
-// Domain (internal)
+
+//___________USER_____FOR DOMAIN(BACKEND) only__________________________
+
+
 export type User = {
 	readonly id: UserId;
 	username: Username;
 	displayName: DisplayName;
-	avatarUrl: AvatarUrl | null;
-	lastSeenAt: Date | null;
+	avatarUrl: AvatarUrl;
+
+	// Store timestamps as epoch seconds (number) or null if never seen.
+	lastSeenAt: TimeSec;   //TODO: schould be removed when created  new user?. Will updated on login
+	
+	// Backend-only field; never expose to clients.
+	passwordHash: PasswordHash;
+
+
+	// later/optionally :
+	// deletedAt?: TimeSec;
+};
+
+export type RegisterUserParams = {
+  username: Username;
+  displayName: DisplayName;
+  passwordPlain: PasswordPlain;
+  avatarUrl: AvatarUrl;
 };
 
 
-// User { id: UserId; displayName: DisplayName }
-export type UserBasic = Pick<User, 'id' | 'displayName'>;
-
-//    User without the private login field
-export type UserPublic = {
-	id: UserId;
-	displayName: DisplayName;
-	avatarUrl: AvatarUrl | null;
-};
-
-
-//_________PROFILE_____________________
-export type UserUpdateProfile = {
-	displayName?: DisplayName;
-	avatarUrl?: AvatarUrl | null;
-};
-
-export type UserChangePAssword = {
-	curPassPlain: PasswordPlain;
-	newPassPlain: PasswordPlain;
-};
-
-
-//_____________MATCH
+//_____________MATCH______________________
 export type MatchResult = {
 	opponentId: UserId;
-	date: Date;
+	// date: Date;                //TODO: change from DAte to number as in DB
 	result: GameResult;
 };
 

@@ -25,96 +25,86 @@ Not required for evaluation — used for organization and pull request preparati
 -----------------------
 
 ##_____________  TODO FOR FUTURE:
-- USER: 
-	-lastSeenAt(change logic for  for online/ offline)
+
 - ROUTES/USer
 	- add data validation (deleted from User constructor)
 
 - Tournament:
 	- unique alias(insttead displayname) for tournament only, not globally
-- use in routes with shemas
 
-- user, gdpr
-
-  - Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-  - userStatus TEXT NOT NULL DEFAULT 'online'       -- 'online' | 'offline' (User.userStatus)
-  -   CHECK (userStatus IN ('online', 'offline')),
-  - add last activity date/time
-  - add user created timestamp
-
-- `DELETE /users/:id` → remove account; **anonymize** references in `matches` so statistics remain but PII does 
-
-	- POST /users/:id/anonymize` → mask personal fields while keeping account for gameplay history
-
-	- registration
-	- login. After will return generated secret session acces token/string
-	online/offline /not in db./ laschange after last activity (beacon each 1m for backend)
-	update profile/ change pass(check subject)  put method
-	add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
-	
-	Registration
-
+- USER: 
+	-lastSeenAt(change logic for  for online/ offline)
+   [] make in authRequiredOptions and Usermanager(fkt) updating online in lastSeenAt
 	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
-------------------------
+	- add conversion for Time from number to Date, if needed
+
+	- loginSession id: set expire date?
+
+
 ### ======    NEW PULLREQUESTS   ================================================================
+
+## DB
+	-user table; deleted 'last seen'
+	-sessions: added created at + ping update
+ 	-deleted for login expired/ping
+	+ added for blcoks "who i blocked index"
+	- deleted index for friends and blocks, that already in primary key
+
+## BACKEND
+	- added 2 types for own and other profile
+	-deleted profile basic
+	-changed types to send from backend to frontend: userPublic + userSelf
+	-changed for login, logout, registration route from /user to /auth to avoid confusion with /user/..profiles
+
+	- added GET /users/:id (public profile)
+
+    -added GET /me   (own profile/settings)
+	- created utils/https.ts and moved there  moved sendOk(),sendErr() for all routes
+	-created lib/mappers/user.ts and moved mappers to API from class
+	-changed time from Date to number, because DB saved as number(no need conversion for now, will add conversion if needed) 
+	-added types.db and moved there UserDbRow 
+	-corrected auth cookie visability in another routes
+	+ corrected logic in hook prehandler
+	+ created /users/me/friends
+	+ created /users/me/blocks
+
+
+### Usermanager
+	+ createUser()
+	+ saveUserInDb() changed
+	+ existsById()
+	+ getUserByUsername()
+	+getMyFriends()
 
 ## FRONTEND
 
-### API 
-Summary
-- Created `src/api/` and moved my existing frontend API helpers there.
-- This is a mechanical separation (file moves + import path updates only.  No features added, no logic changed, no UI changes.).
-- Sets up a small Fastify client layer for the frontend.
+### .gitignore
+    - untracked folder for tests.tmp and added it in gitignore
 
-Why
-- Central place for fetch/cookies/CORS, JSON parsing, and typed responses.
-- Prepares the frontend for upcoming endpoints while I finish key backend routes.
-
-
-Notes for frontend
-- Components can import from `src/api/` (e.g., `api.auth.register(...)`) instead of using `fetch` directly.
-- If you push HTML/Tailwind with element IDs, I will wire up the calls from this client layer—no need to worry about headers or cookies in the UI.
-
-Next steps
-- After (or in parallel with) finishing backend routes,  I will implement the Fastify client functions and DTO types here.
-- Planned endpoints include: `/user/register`, `/auth/login`, `/users/:id`, etc.
-
-
-## Tailwind
-### connected tailwind to frontend. The easiest way that possible:
-```bash
-  <!-- start: (ALena): reset.css is conflicting with tailwind. Some styles will not be applied. This reset is from 2011 year -->
-  <!-- Delete all file reset.css or disable smth what you dont need in reset.css  Start with commenting out line below: <link rel="stylesheet" href="styles/reset.css" />-->
-  <link rel="stylesheet" href="styles/reset.css" />
-<!-- end: (ALena):  -->
-
-  <link rel="stylesheet" href="styles/style.css" />
-
-  <!-- start: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
-   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-   <!--  end: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
-
-   <!-- start: (Alena): your versin is 2.2 and newer one is 4, that I added above.  Line with 2.2 candbe deleted-->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
-  <!-- end (Alena): -->
-```
 ### TESTS
+	+ created tests in backend/tests/users.sh   (to run in terminal)
+	+ to run tests in terminal
+	```bash
+	 make backend
+	 backend/tests/users.sh
+```
 
+## 📘 DOCUMENTATION
+| jq  => formats JSON nicely; without it you’ll see one long line.
 
 ## 🔗 LINKS / HELP
-Tailwind:
-	https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4
+
+
+
+
+
+
 --------------------------
-### ======    OLD PULLREQUESTS   ================================================================
----------------------------------
-
-
-
-------------------------
-
+### ======    OLD PULLREQUESTS   ================================================================================================================================
 ## DB
  - deleted roows with login expire. Not requiered
  - add timecreation stamp for login
+
 
 ## BACKEND
 ### USermanager:
@@ -141,15 +131,16 @@ Tailwind:
 1.LOGIN TEST:
 ```bash
 #  0. register:
- curl localhost:3000/user/register -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+ curl localhost:3000/auth/register -X POST -H "Content-type: application/json" -d '{"username": "hello", "passwordPlain": "cbadsafsdfaer1Fferagraeg", "displayName": "admnasdf" }' -v 
+
 #  2. check login
- curl localhost:3000/user/login -X POST -H "Content-type: application/json" -d '{"username": "dcba2", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
+ curl localhost:3000/auth/login -X POST -H "Content-type: application/json" -d '{"username": "hello", "passwordPlain": "cbadsafsdfaer1Fferagraeg"}' -v
 
  #3. check cookie auth
-#  curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 
+#   curl localhost:3000/auth/check  -H "Content-type: application/json" -H "cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d" -v 
  
  #4. logout. add decorators to extract auth cookie 9change cookie from terminal auth:
-  curl localhost:3000/user/logout -X POST -v -H 'Cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d'
+  curl localhost:3000/auth/logout -X POST -v -H 'Cookie: auth=3f630bb5d981e3415728a7ec0681d35f9d2eb79384bb07f3d1f316ab2862b10d'
 
 
 ```

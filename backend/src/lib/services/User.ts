@@ -8,86 +8,25 @@
 
 
 
-import type *  as Types from '../types/types';
-// import * as Validate from '../utils/validators';
-
-/* 
-(Alena) Declined DTO suggestion — explanation in UserDto.ts
-(Luis) Suggestion to improve the profile method with DTOs
-...
-*/
-// (Luis importing the DTOs to ensure consistency between class and DTOs)
-// import { UserDbDTO, UserProfileDTO, MatchResultDTO, CreateUserDTO, UserSummaryDTO } from '../../dto/UserDTO';
-
-// If only this file needs it, keep it local:
-type UserInit = Types.User & { passwordHash: Types.PasswordHash };
-
-export class User implements Types.User {
-
-	readonly id: Types.UserId; 				// set in constructor, read anywhere in programm, not changeable
-	username: Types.Username;
-	displayName: Types.DisplayName;
-	passwordHash: Types.PasswordHash;
-	avatarUrl: Types.AvatarUrl | null;     //allow "no avatar" yet; //for .jpg/.png (later)
-	lastSeenAt: Date | null;                    //changed from userStatus
+import type *  as Domain from '../types/domain';
 
 
-	constructor(init:  UserInit) {
+export class User implements Domain.User {
+
+	readonly id: Domain.UserId; 				// set in constructor, read anywhere in programm, not changeable
+	username: Domain.Username;
+	displayName: Domain.DisplayName;
+	passwordHash: Domain.PasswordHash;
+	avatarUrl: Domain.AvatarUrl;     //allowed "no avatar" yet; //for .jpg/.png (later)
+	lastSeenAt: Domain.TimeSec;                    //changed from userStatus
+
+
+	constructor(init: Domain.User ) {
 		this.id = init.id;
 		this.username = init.username;
 		this.displayName = init.displayName;
 		this.passwordHash = init.passwordHash;
-		this.avatarUrl = init.avatarUrl ?? null;
-		this.lastSeenAt = init.lastSeenAt ?? null;
+		this.avatarUrl = init.avatarUrl;
+		this.lastSeenAt = init.lastSeenAt;
 	}
-
-	// Conversion: DB row =>  User  
-	static fromDB(row: Record<string, any>): User {
-		return new User({
-			id: row.id as Types.UserId,
-			username: row.username as Types.Username,
-			displayName: row.displayName as Types.DisplayName,
-			passwordHash: row.passwordHash as Types.PasswordHash,
-			avatarUrl: (row.avatarUrl ?? null) as Types.AvatarUrl | null,
-			lastSeenAt: row.lastSeenAt ? new Date(row.lastSeenAt) : null,
-		})
-	}
-
-
-	// Conversion:    User =>  DB row
-	toDB() {
-		return {
-			id: this.id,
-			username: this.username,
-			displayName: this.displayName,
-			passwordHash: this.passwordHash,
-			avatarUrl: this.avatarUrl,
-			lastSeenAt: this.lastSeenAt ? this.lastSeenAt.toISOString() : null,
-		}
-	}
-
-
-
-	/* return a clean object for frontend (id, name, wins, losses,  online)
-	This is needed for /user/register and /user/profile
-	@Task for profile: name,avatar,friends+onlinestatus,stats(wins/losses),match history
-	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-	*/
-	toPublicProfile(): Types.UserPublic {
-		return {
-			id: this.id,
-			displayName: this.displayName,
-			avatarUrl: this.avatarUrl,
-		};
-	}
-
-	toBasicProfile(): Types.UserBasic {
-		return {
-			id: this.id,
-			displayName: this.displayName,
-		};
-	}
-
-
 }
-

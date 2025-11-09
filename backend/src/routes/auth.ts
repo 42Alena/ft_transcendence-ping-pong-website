@@ -1,45 +1,18 @@
-import type { DoneFuncWithErrOrRes, FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+
+import type { FastifyInstance, FastifyReply } from 'fastify';
 import { UserManager } from '../lib/services/UserManager';
-import type *  as Types from '../lib/types/api';
-import { User } from '../lib/services/User';
+import type *  as API from '../lib/types/api';
+import * as Validate from '../lib/utils/validators';
 import { generateId, generateSessionToken } from '../lib/utils/randomId';
 import { hashPassword, verifyPassword } from '../lib/utils/password';
-import * as Validate from '../lib/utils/validators';
 import { authRequiredOptions } from './utils';
+import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
+import { toUserSelf } from '../lib/mappers/user';
 
 
-//sendOK(res, user.toPublicProfile(), 201); for non 200
-export function sendOK<T>(res: FastifyReply, payload: T, statusCode = 200) {
-	return res.status(statusCode).send(payload);
-}
 
-export function sendError(
-	res: FastifyReply,
-	error: string,
-	field: string,
-	statusCode = 400): FastifyReply {
-	// { [field]: error }
-	return res.status(statusCode).send({ error, field })
-}
 
-/* 
-	/*  "/user/register" 
-	GOAL: create user record in users db table
-
-	   validate username/passow/avatar
-	   pass -> encryptPassword (bcrypt / sha512) -> passwordHash
-	   save in db
-
-	   OPTIONAL goal: create access token right away and return it
-	   return access token optional
-	fastify.get('/res', handler)
-	dont trimm passwordPlain(can have empty chars)
-
-	*/
 export function registerAuthRoutes(fastify: FastifyInstance, userManager: UserManager) {
-
-
-
 
 
 	/* 
@@ -51,10 +24,10 @@ update profile/ change pass(check subject)  put method
 add to db  one table for access token. userId, expireDate/valid(if experid, hten delete it), expireToken . Each time after login must be NEW acess token.(Logout must delete this access token)
 
 */
-	fastify.post("/user/register", async (req, res: FastifyReply) => {
+	fastify.post("/auth/register", async (req, reply: FastifyReply) => {
 		console.log('Register user', req.body)
-		const body = req.body as Types.RegisterBody;
-		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.RegisterBody;
+		const body = req.body as API.RegisterBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as API.RegisterBody;
 
 		const username = Validate.normalizeName(body.username)
 		const displayName = Validate.normalizeName(body.displayName)
@@ -62,40 +35,37 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const avatarUrl = Validate.normalizeString(body.avatarUrl)
 
 		//username
-		if (!username) { return sendError(res, "No user name", "userName") }
+		if (!username) { return sendError(reply, "No user name", "username") }
 		const validateUsernameError = Validate.validateName(username);
-		if (validateUsernameError) { return sendError(res, validateUsernameError, "userame") }
+		if (validateUsernameError) { return sendError(reply, validateUsernameError, "username") }
 
 		//display name
-		if (!displayName) { return sendError(res, "No display name", "displayName") }
+		if (!displayName) { return sendError(reply, "No display name", "displayName") }
 		const validateDisplayNameError = Validate.validateName(displayName);
-		if (validateDisplayNameError) { return sendError(res, validateDisplayNameError, "displayName") }
-		if (await userManager.isDisplayNameTaken(displayName)) { return sendError(res, "Display name is taken", "displayName") }
+		if (validateDisplayNameError) { return sendError(reply, validateDisplayNameError, "displayName") }
+		if (await userManager.isDisplayNameTaken(displayName)) { return sendError(reply, "Display name is taken", "displayName") }
 
 		//passwordPlain
-		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
+		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
 		const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
-		if (validatePassError) { return sendError(res, validatePassError, "passwordPlain") }
+		if (validatePassError) { return sendError(reply, validatePassError, "passwordPlain") }
 
 
-		// check uniq displayname
 		try {
 
-			const newUser = new User({
-				id: generateId(),
+			const newUser = await userManager.registerUser({
 				username,
 				displayName,
-				passwordHash: await hashPassword(passwordPlain),
+				passwordPlain,
 				avatarUrl: avatarUrl ? avatarUrl : null,
-				lastSeenAt: null,
 			})
-			console.debug("Saving new user", newUser)
-			await userManager.saveUser(newUser)
-			res.header('set-cookie', `usr=${newUser.id}`);
+			console.debug("Saving new user", newUser) //TODO: comment out, for tests now
 
-			return sendOK(res, newUser.toPublicProfile(), 201); // 201 Created
+			reply.header('set-cookie', `usr=${newUser.id}`);
+
+			return sendOK(reply, toUserSelf(newUser), 201); // 201 Created
 		} catch (e: any) {
-			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
+			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already exist"}%   
 		}
 
 	});
@@ -107,59 +77,56 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 	
 	   check usernmae and rawPassword
 			  check if user with (username, encryptPssword(rawPassword))
-	   save acccess token  : set expiry = add Date.now() + 7d
+	   save acccess token  : set expiry = add Date.now() + 7d //TODO: change from DAte to number as in DB
 	   return access token
-	   res.header('set-cookie', 'auth=accessToken') */
-	fastify.post("/user/login", async (req, res: FastifyReply) => {
+	   reply.header('set-cookie', 'auth=accessToken') */
+	fastify.post("/auth/login", async (req, reply: FastifyReply) => {
 		console.log('Login user', req.body)
-		const body = req.body as Types.LoginBody;
-		// const { username, displayName, passwordPlain, avatarUrl } = req.body as Types.LoginBody;
+		const body = req.body as API.LoginBody;
+		// const { username, displayName, passwordPlain, avatarUrl } = req.body as API.LoginBody;
 
 		const username = Validate.normalizeName(body.username)
 		const passwordPlain = body.passwordPlain;
 
-
-		if (!username) { return sendError(res, "No user name", "userName") }
-		if (!passwordPlain) { return sendError(res, "No password", "passwordPlain") }
-
-
+		if (!username) { return sendError(reply, "No user name", "username") }
+		if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
 
 		const user = await userManager.getUserByUsername(username);
 
-		if (!user) { return sendError(res, "No user", "username", 401) }
+		if (!user) { return sendError(reply, "No user", "username", 401) }
 
-		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(res, "incorrect password", "passwordPlain", 401) }
+		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
 
 		const loginSessionId = generateSessionToken();
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
 
-		res.header('set-cookie', `auth=${loginSessionId}`); //`backtig is a literal string to put value
+		reply.header('set-cookie', `auth=${loginSessionId}; Path=/;  HttpOnly;`); //`backtig is a literal string to put value
 
-		// sends user.toPublicProfile() JSON with HTTP 201(user created)
-		return sendOK(res, user.toPublicProfile(), 201)
+
+		return sendOK(reply, toUserSelf(user))
 	});
 
 
 
 
-	fastify.post("/user/logout", authRequiredOptions, async (req, res: FastifyReply) => {
+	fastify.post("/auth/logout", authRequiredOptions, async (req, reply: FastifyReply) => {
 
-		const loginSessionId = (req as Types.UserAwareRequest).loginSessionId;
-		const userId = (req as Types.UserAwareRequest).userId;
+		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
+		const userId = (req as API.UserAwareRequest).userId;
 
-		console.log(loginSessionId, userId);
+		// console.log(loginSessionId, userId);
 
 
 		try {
 
 			await userManager.deleteLoginSession(loginSessionId, userId)
-			res.header('set-cookie', "auth="); //`backtig is a literal string to put value
-			return sendOK(res, null, 204); //204 No Content
+			reply.header('set-cookie', "auth="); //`backtig is a literal string to put value
+			return sendNoContent(reply);
 		} catch (e: any) {
 
-			return res.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
+			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
 		}
 
 	});

@@ -1,7 +1,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
-import *  as Types from '../types/types';
+import *  as Types from '../types/domain';
 import * as Validate from '../utils/validators';
 import { User } from './User';
 import { UserManager } from './UserManager';

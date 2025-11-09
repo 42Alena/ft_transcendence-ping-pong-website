@@ -9,7 +9,7 @@
 		addMatch(opponentId: Types.UserId, result: Types.GameResult) {
 			this.matchHistory.push({
 				opponentId: opponentId,
-				date: new Date(),
+				date: new Date(),  //TODO: change from Date to number
 				result: result
 			});
 		}

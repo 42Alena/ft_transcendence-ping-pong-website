@@ -24,6 +24,9 @@ export type PasswordHash = string;   //backend only!
 //for 4xx,5xx errors
 export type ApiError = { error: string; code?: string; details?: unknown };
 
+//________USER
+export type GetUserParams = { userId: UserId }; //for /users/:userId (GET/HEAD/etc.)
+export type TargetIdParams = { id: UserId }; //for /friends/:id (POST/DELETE)
 
 //_______REQ bodies (waht client POST)___________
 
@@ -40,14 +43,27 @@ export type LoginBody = {
 };
 
 
-//______________User shape (what clients see)_____________
+
+//_________PROFILE__send_ to_FRONTEND___________________
+
+
+//   all  others public users. Without username(all other users)
 export type UserPublic = {
 	id: UserId;
-	displayName: DisplayName;
+	displayName: DisplayName;    //public
 	avatarUrl: AvatarUrl | null;
 };
 
-//______________RES COMMON______________
+//    User's own profile with username
+// User { id: UserId; displayName: DisplayName, ... }
+export type UserSelf = UserPublic & {
+	readonly username: Username;       //only for own profile
+};
+
+
+
+
+//______________REPLY COMMON______________
 
 export type MeResponse = UserPublic;
 
