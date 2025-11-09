@@ -89,24 +89,25 @@
         </nav>
         <div class="w-full h-full relative border" id="board">
           <div class="relative w-full h-full flex justify-center items-center" id="welcomePage">Welcome page</div>
-          <div class="chat" id="chatPage">
-            <div class="chat-left border">
+          <div class="chat relative w-full h-full grid grid-cols-[300px_1fr] bg-[#ffb6c1]" id="chatPage">
+            <div class="flex flex-col border">
               <div class="chat-tab">
                 <button
-                  class="tablinks"
+                  class="tablinks flex-1 bg-inherit float-left border outline-none cursor-pointer py-3.5 px-4 transition duration-300 hover:bg-[#808080] active:bg-[#ccc]"
                   id="defaultOpen"
                   onclick="displayList(event, 'chat')"
                 >
                   Chats
                 </button>
-                <button class="tablinks" onclick="displayList(event, 'users')">
+                <button  class="tablinks flex-1 bg-inherit float-left border outline-none cursor-pointer py-3.5 px-4 transition duration-300 hover:bg-[#808080] active:bg-[#ccc]" onclick="displayList(event, 'users')">
                   Users
                 </button>
               </div>
-              <div class="chat-left__list">
-                <div class="chat-left__list-dms" id="list-dms"></div>
+              <div class="flex grow flex-col">
+                <div class="flex relative flex-col h-[60px] overflow-auto grow gap-2.5" id="list-dms"></div>
+                <!-- no need to do list-users since it will be created by js -->
                 <div
-                  class="chat-left__list-dms"
+                  class="flex relative flex-col h-[60px] overflow-auto grow gap-2.5"
                   id="list-users"
                   style="display: none"
                 >
