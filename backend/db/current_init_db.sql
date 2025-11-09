@@ -16,10 +16,8 @@ CREATE TABLE IF NOT EXISTS users (
     passwordHash TEXT NOT NULL, -- hashed password
     displayName TEXT UNIQUE NOT NULL, -- unique public name
     avatarUrl TEXT, -- optional
-    lastSeenAt INTEGER, -- epoch; derive "online"
-    deletedAt INTEGER NOT NULL DEFAULT 0, -- GDPR soft-delete flag
-    createdAt INTEGER NOT NULL DEFAULT(unixepoch ()),
-    updatedAt INTEGER NOT NULL DEFAULT(unixepoch ())
+    lastSeenAt INTEGER  NULL DEFAULT(unixepoch ()),
+    deletedAt INTEGER NOT NULL DEFAULT 0 -- GDPR soft-delete flag
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_users_username_nocase ON users (username COLLATE NOCASE);
@@ -32,32 +30,36 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_users_display_nocase ON users (displayName C
 CREATE TABLE IF NOT EXISTS login_sessions (
     id TEXT PRIMARY KEY, -- random string (cookie value)
     userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    createdAt INTEGER NOT NULL DEFAULT(unixepoch ())  
+    createdAt INTEGER NOT NULL DEFAULT(unixepoch ())
 );
 
 CREATE INDEX IF NOT EXISTS i_login_sessions_user ON login_sessions (userId);
 
--- =========================
--- FRIENDS  (User friend list)
--- =========================
-CREATE TABLE IF NOT EXISTS friends (
-    userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    friendId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    createdAt INTEGER NOT NULL DEFAULT(unixepoch ()),
-    PRIMARY KEY (userId, friendId),
-    CHECK (userId <> friendId)
-);
 
 -- =========================
--- BLOCKS  (User block list)
+-- FRIENDS  (User friend list: directed) 
+-- =========================
+CREATE TABLE IF NOT EXISTS friends (
+    userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    friendId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    CHECK (userId <> friendId),
+    PRIMARY KEY (userId, friendId)
+);
+
+
+-- =========================
+-- BLOCKS  (User block list directed) 
 -- =========================
 CREATE TABLE IF NOT EXISTS blocks (
-    userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    blockedId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    createdAt INTEGER NOT NULL DEFAULT(unixepoch ()),
-    PRIMARY KEY (userId, blockedId),
-    CHECK (userId <> blockedId)
+    userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    blockedId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    CHECK (userId <> blockedId),
+    PRIMARY KEY (userId, blockedId)  -- WHERE userId = ? => uses the PK index = who I blocked
 );
+
+--  who blocks me? / am I blocked by X?
+CREATE INDEX IF NOT EXISTS idx_blocks_blockedId ON blocks(blockedId);
+
 
 -- =========================
 -- CHAT  (public + DMs + invites)

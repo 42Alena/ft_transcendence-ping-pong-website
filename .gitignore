@@ -144,4 +144,7 @@ backend/db/*.db-wal
 backend/db/*.db-shm
 backend/db/*-journal
 
+# --- Project local tests outputs (keep out of repo) ---
 
+# Cookies / sessions created by tests
+.tmp_cookies/

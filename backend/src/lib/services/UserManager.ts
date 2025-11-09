@@ -1,10 +1,14 @@
 // Used information from links
-//  https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+//  https://www.Domaincriptlang.org/docs/handbook/2/mapped-types.html
 import { Knex, QueryBuilder } from 'knex';
-import *  as Types from '../types/types';
+
+import *  as Domain from '../types/domain';
 
 import { db } from './DB';
-import { User } from './User';
+import { User } from './User';           // class used only here
+import { userFromDbRow, userToDbRow } from '../mappers/user_db';
+import { generateId } from '../utils/randomId';
+import { hashPassword } from '../utils/password';
 
 export class UserManager {
 
@@ -14,56 +18,82 @@ export class UserManager {
 	dbTableLoginSessions: any
 
 	constructor() {
+		// Typed table factories (//= () => anonym fkt =factory fkt)
 		this.dbTableUser = () => db<User>('users');
-		this.dbTableFriends = () =>db('friends');
-		this.dbTableBlocks = () =>db('blocks');
-		this.dbTableLoginSessions = () => db('login_sessions'); //= () => anonym fkt =factory fkt
+		this.dbTableFriends = () => db('friends');
+		this.dbTableBlocks = () => db('blocks');
+		this.dbTableLoginSessions = () => db('login_sessions');
 	}
 
-	async getUserByUsername(username: Types.Username): Promise<User | null> {
+
+
+	//_______________bool: existence_____________________
+	async existsById(userId: Domain.UserId): Promise<boolean> {
+		const row = await this.dbTableUser().where({ id: userId }).first("id");
+		return !!row;
+	}
+
+	async existsByUsername(username: Domain.Username): Promise<boolean> {
+		const row = await this.dbTableUser().where({ username }).first("id");
+		return !!row;
+	}
+
+
+	//_______________READ__________________
+	async getUserByUsername(username: Domain.Username): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ username: username }).first()
 		if (!row) {
 			return null;
 		}
-		return User.fromDB(row)
+		return userFromDbRow(row)
 	}
 
-
-
-	async getUserById(userId: Types.UserId): Promise<User | null> {
+	async getUserById(userId: Domain.UserId): Promise<Domain.User | null> {
 		const row = await this.dbTableUser().where({ id: userId }).first()
 		if (!row) {
 			return null;
 		}
-		return User.fromDB(row)
+		return userFromDbRow(row)
 	}
 
 
-	//____________SAVE_____________________________
-	//now for tet only. TODO: delete later
-	async saveUser(newUser: User) {
-		const data = newUser.toDB()
-		console.debug("Saving user", data)
-		await this.dbTableUser().insert(data);
-	}
-
-
-
-	//___________________GET
-	async getAllUsers(): Promise<User[]> {
+	async getAllUsers(): Promise<Domain.User[]> {
 		const dbUsers = await this.dbTableUser().select('*')
-		return (dbUsers || []).map(User.fromDB);
+		return (dbUsers || []).map(userFromDbRow);
 	}
 
-	//__________is NAME...
-	async isUsernameTaken(username: string): Promise<boolean> {
+	//__________REGISTER + SAVE inDB_____________
+	async registerUser(params: Domain.RegisterUserParams): Promise<Domain.User> {
+		const user = new User({
+			id: generateId(),
+			username: params.username,
+			displayName: params.displayName,
+			passwordHash: await hashPassword(params.passwordPlain),
+			avatarUrl: params.avatarUrl,
+			lastSeenAt: null, // set on login/ping later
+		})
+
+		await this.saveUserInDb(user);   // reuse the single insert path
+		return user;
+	};
+
+
+	async saveUserInDb(user: Domain.User): Promise<void> {
+		const dbRow = userToDbRow(user);
+		console.debug("Saving user", dbRow)   //TODO: comment out, for tests now
+		await this.dbTableUser().insert(dbRow);
+	}
+
+
+	//__________is UNIQUE____________________ 
+	async isUsernameTaken(username: Domain.Username): Promise<boolean> {
 		const row = await this.dbTableUser()
 			.whereRaw('LOWER(displayName) = LOWER(?)', [username])
 			.first();
 		return !!row;
 	}
 
-	async isDisplayNameTaken(displayName: string): Promise<boolean> {
+	async isDisplayNameTaken(displayName: Domain.DisplayName): Promise<boolean> {
 		const row = await this.dbTableUser()
 			.whereRaw('LOWER(displayName) = LOWER(?)', [displayName])
 			.first();
@@ -73,21 +103,25 @@ export class UserManager {
 	//____________________LOGIN SESSION KEY________________
 
 	async getUserIdByLoginSession(
-		loginSessionId: Types.LoginSessionId
-	): Promise<Types.UserId | null> {
+		loginSessionId: Domain.LoginSessionId
+	): Promise<Domain.UserId | null> {
 
 		if (!loginSessionId) return null;
 
 		const row = await this.dbTableLoginSessions()
 			.where({ id: loginSessionId })
-			.first() as { userId: Types.UserId } | undefined;;
+			.first() as
+			| { userId: Domain.UserId }
+			| undefined;;
 
 		if (!row) return null;
 
 		return row.userId;
 	}
 
-	async isLoginSessionExist(loginSessionId: Types.LoginSessionId): Promise<boolean> {
+
+
+	async isLoginSessionExist(loginSessionId: Domain.LoginSessionId): Promise<boolean> {
 		if (!loginSessionId) return false;
 		const row = await this.dbTableLoginSessions()
 			.where({ id: loginSessionId })
@@ -97,8 +131,8 @@ export class UserManager {
 
 
 	async saveLoginSession(
-		loginSessionId: Types.LoginSessionId,
-		userId: Types.UserId
+		loginSessionId: Domain.LoginSessionId,
+		userId: Domain.UserId
 	) {
 
 		await this.dbTableLoginSessions()
@@ -108,9 +142,10 @@ export class UserManager {
 
 
 	//___________________LOGOUT______________
+
 	async deleteLoginSession(
-		loginSessionId: Types.LoginSessionId,
-		userId: Types.UserId
+		loginSessionId: Domain.LoginSessionId,
+		userId: Domain.UserId
 	): Promise<boolean> {
 
 		if (!loginSessionId || !userId) return false;
@@ -125,10 +160,22 @@ export class UserManager {
 
 	//_________________FRIENDS______________________
 
+	async getMyFriends(userId: Domain.UserId): Promise<Domain.User[]> {
+
+		const rows = await this.dbTableUser()
+			.join( 'friends', 'users.id', 'friends.friendId') //join users and friends tables
+			.where('friends.userId', userId)                 // WHERE f.userId = :userId
+			.select('users.*')                             // only user columns
+			.orderBy('users.displayName');
+
+		return rows.map(userFromDbRow);
+	}
+
+
 	//friend only on 1 site, without approval
 	async addFriend(
-		userId: Types.UserId,
-		friendId: Types.UserId) {
+		userId: Domain.UserId,
+		friendId: Domain.UserId) {
 
 		if (userId === friendId)
 			throw new Error(" userId and friendId must be different");
@@ -142,8 +189,8 @@ export class UserManager {
 	}
 
 	async removeFriend(
-		userId: Types.UserId,
-		friendId: Types.UserId
+		userId: Domain.UserId,
+		friendId: Domain.UserId
 	): Promise<number> {
 
 		return await this.dbTableFriends()
@@ -153,8 +200,8 @@ export class UserManager {
 	}
 
 	async isFriend(
-		viewerId: Types.UserId,
-		targetId: Types.UserId
+		viewerId: Domain.UserId,
+		targetId: Domain.UserId
 	): Promise<boolean> {
 		const row = await this.dbTableFriends()
 			.where({ userId: viewerId, friendId: targetId })
@@ -165,8 +212,20 @@ export class UserManager {
 
 	//_________________BLOCKED______________________
 
+	async getMyBlocks(userId: Domain.UserId): Promise<Domain.User[]> {
+
+		const rows = await this.dbTableUser()
+			.join( 'blocks', 'users.id', 'blocks.blockedId') //join users and blocks tables
+			.where('blocks.userId', userId)                 // who I blocked
+			.select('users.*')                             // only user columns
+			.orderBy('users.displayName');
+
+		return rows.map(userFromDbRow);
+	}
+
+
 	//blocked only on 1 site
-	async blockUser(userId: Types.UserId, blockedId: Types.UserId) {
+	async blockUser(userId: Domain.UserId, blockedId: Domain.UserId) {
 
 		if (userId === blockedId)
 			throw new Error(" userId and blockedId: must be different");
@@ -179,13 +238,13 @@ export class UserManager {
 
 	}
 
-	async unblockUser(userId: Types.UserId, blockedId: Types.UserId): Promise<number> {
+	async unblockUser(userId: Domain.UserId, blockedId: Domain.UserId): Promise<number> {
 
 		return await this.dbTableBlocks().where({ userId, blockedId }).del();
 
 	}
 
-	async isBlocked(viewerId: Types.UserId, targetId: Types.UserId): Promise<boolean> {
+	async isBlocked(viewerId: Domain.UserId, targetId: Domain.UserId): Promise<boolean> {
 
 		const row = await this.dbTableBlocks().where({ userId: viewerId, blockedId: targetId }).first();
 		return !!row;
@@ -196,7 +255,7 @@ export class UserManager {
 
 	// //____Status: online | ofline
 
-	// setStatus(status: Types.UserStatus) {
+	// setStatus(status: Domain.UserStatus) {
 	// 	this.userStatus = status;
 	// }
 
