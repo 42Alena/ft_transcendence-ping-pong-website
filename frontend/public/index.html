@@ -128,58 +128,43 @@
                 </div>
               </div>
             </div>
-            <div class="chat-right">
+            <div class="flex flex-col">
               <div
                 id="start-chat"
-                style="
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  height: 100%;
-                  background-color: white;
-                "
+                class="flex justify-center items-center h-full bg-white"
               >
                 Start a converstion
               </div>
-              <div id="userProfile" style="display: none; height: 100%"></div>
+              <div id="userProfile" class="h-full" style="display: none;"></div>
               <div
                 id="conversation"
-                style="display: none; flex-direction: column; height: 100%"
-                class="border"
+                style="display: none;"
+                class="border flex-col h-full"
               >
                 <div
-                  class="chat-right__header"
+                  class="flex items-center justify-center gap-2.5 py-3.5 px-4 h-[45px] w-full"
                   id="chat-info"
-                  style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                    padding: 14px 16px;
-                    height: 45px;
-                    width: 100%;
-                  "
                 ></div>
-                <div class="chat-right__body border" style="flex: 1">
-                  <div class="chat-right__box border">
+                <div class="flex grow flex-col p-[1em] gap-2.5 flex-1 border">
+                  <div class="flex flex-col h-[60px] grow gap-2.5 p-[1em] bg-white border">
                     <!-- <div class="chat-right__stamp border">stamp</div> -->
-                    <div class="chat-right__bubble border" id="bubble"></div>
-                    <div class="chat-right__textArea border">
-                      <div class="chat-right__textArea-input border">
+                    <div class="flex flex-col grow overflow-auto p-[1em] gap-2.5 bg-white max-w-full border" id="bubble"></div>
+                    <div class="flex h-auto gap-2.5 p-[1em] border">
+                      <div class="block grow bg-white p-[0.5em] content-center border">
                         <div
-                          class="chat-right__textAreas-input-text border"
+                          class="w-full border"
                           id="input"
                         >
                           <input
                             id="text-box"
                             type="text"
-                            class="chat-right__textAreas-input-text border"
+                            class="w-full border"
                             placeholder="Send message"
                           />
                         </div>
                       </div>
                       <div
-                        class="chat-right__textArea-submitIcon border"
+                        class="block ml-auto content-center bg-[#0fffff] border"
                         onclick="captureInput()"
                       >
                         Send
