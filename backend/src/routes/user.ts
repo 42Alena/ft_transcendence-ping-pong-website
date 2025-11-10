@@ -187,7 +187,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	//_________________SETTINGS: CHANGE AVATAR____________
 	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD ____________
 	//_________________SETTINGS: DELETE USER____________
 
 
