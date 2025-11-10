@@ -88,6 +88,7 @@ function setAccountPage(text : string)
 	welcP.style.display = "none";
 	regP.style.display = "none";
 	logP.style.display = "none";
+	gameP.style.display = "none";
 	if (text == "login")
 	{
 		loginPage.style.display = "flex";
