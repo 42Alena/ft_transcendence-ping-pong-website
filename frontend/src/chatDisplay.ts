@@ -58,7 +58,7 @@ function addBubble(role : string, content : string)
 	bubbleDiv.appendChild(historyConversation);
 }
 
-function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
+function displayConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
 
 	userProfileDiv.style.display = "none";
 	fillConversationInfo(name, avatar);
@@ -144,7 +144,7 @@ function addElement(name : string, id : string, avatar : string) {
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
 	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
-	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
+	newDiv.onclick = function() { displayConversationHistory(id, chatList, name, avatar)};
     newDiv.className = "chat-left__list-dms-item border";
 	newDiv.style.display = "flex";
 	newDiv.style.alignItems = "center";

@@ -6,93 +6,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pong</title>
-
-
-  <!-- start: (ALena): reset.css is conflicting with tailwind. Some styles will not be applied. This reset is from 2011 year -->
-  <!-- Delete all file reset.css or disable smth what you dont need in reset.css  Start with commenting out line below: <link rel="stylesheet" href="styles/reset.css" />-->
   <link rel="stylesheet" href="styles/reset.css" />
-<!-- end: (ALena):  -->
-
   <link rel="stylesheet" href="styles/style.css" />
-
-  <!-- start: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
-   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-   <!--  end: (Alena): added tailwind version 4 from: https://tailwindcss.com/docs/installation/play-cdn  -->
-
-   <!-- start: (Alena): your versin is 2.2 and newer one is 4, that I added above.  Line with 2.2 candbe deleted-->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
-  <!-- end (Alena): -->
-
-
-   <style>
-    .dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    display: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 10;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu li {
-    padding: 10px;
-}
-
-.dropdown-menu li a {
-    text-decoration: none;
-    color: #333;
-}
-
-.dropdown-menu li a:hover {
-    background-color: #f0f0f0;
-}
-   </style>
+<!--    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+  <style>
+  </style>
 </head>
 
 <body>
   <header class="main-header max-width-container border">
-    <div id="header-navbar" style="display: flex; flex-direction: row; flex: 1; justify-content: space-between; align-items: center;">
+    <div id="header-navbar"
+      style="display: flex; flex-direction: row; flex: 1; justify-content: space-between; align-items: center;">
       <div id="header-navbar-logo" style="padding: 10px;">
         <a href="#" onclick="displayPage('welcome')">
-          <img src="images/logo.png" alt="logo of the page" />
+          <img src="images/logo.png" alt="logo of the page" width="100" height="50" />
         </a>
       </div>
-     <div id="header-navbar-user" style="display: flex; flex-direction: row; align-items: center; padding: 10px;">
-      <span class="dropdown">
+      <div id="header-navbar-user" style="display: flex; flex-direction: row; align-items: center; padding: 10px;">
+        <span class="dropdown">
           <a href="#" style="display: flex; align-items: center; text-decoration: none;">
-              <span id="logged-user" style="margin-right: 10px;">
-                  Hello, you!
-              </span>
-              <div id="logged-user-avatar">
-                  <img src="images/profile/orange.png" alt="User Avatar" width="50" height="50">
-              </div>
+            <span id="logged-user" style="margin-right: 10px;">
+              Hello, you!
+            </span>
+            <div id="logged-user-avatar">
+              <img src="images/profile/profile.png" alt="User Avatar" width="50" height="50">
+            </div>
           </a>
           <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#" onclick="setAccountPage('register')" ><span class="iconf-user"></span>Register</a>
-              </li>
-              <li>
-                <a href="#" onclick="setAccountPage('login')" ><span class="iconf-user"></span>Login</a>
-              </li>
-              <li>
-                  <a href="#" onclick="setAccountPage('profile')"><span class="iconf-user"></span> View my profile</a>
-              </li>
-              <li>
-                  <a rel="nofollow" href="#"><span class="iconf-power-off"></span> <b>Logout</b></a>
-              </li>
+            <li>
+              <a href="#" onclick="setAccountPage('register')"><span class="iconf-user"></span>Register</a>
+            </li>
+            <li>
+              <a href="#" onclick="setAccountPage('login')"><span class="iconf-user"></span>Login</a>
+            </li>
+            <li>
+              <a href="#" onclick="setAccountPage('profile')"><span class="iconf-user"></span> View my profile</a>
+            </li>
+            <li>
+              <a rel="nofollow" href="#"><span class="iconf-power-off"></span> <b>Logout</b></a>
+            </li>
           </ul>
-      </span>
+        </span>
       </div>
     </div>
   </header>
@@ -102,14 +56,20 @@
         <ul>
           <li>
             <a href="#chat" onclick="displayPage('chat')">
-              <img src="images/chat.png" alt="chat page" /></a>
+              <img src="images/icons/chat.png" alt="chat page" width="50" height="50" /></a>
           </li>
-          <!-- <li><a href="#" onclick="display('game')">
-                    <img src="images/play.png" alt="game page"></a></li></a></li> -->
+          <li>
+            <a href="#" onclick="displayPage('game')">
+              <img src="images/icons/play.png" alt="game page" width="50" height="50"></a>
+          </li>
+          <li>
+            <a href="#" onclick="displayPage('tournament')">
+              <img src="images/icons/tournament.png" alt="game page" width="50" height="50"></a>
+          </li>
         </ul>
       </nav>
       <div class="board-container border" id="board">
-        <div class="welcome" id="welcomePage">
+        <div class="welcome" id="welcomePage" style="display: flex;">
           Welcome page
         </div>
         <div class="chat" id="chatPage">
@@ -121,20 +81,24 @@
             <div class="chat-left__list">
               <div class="chat-left__list-dms" id="list-dms"></div>
               <div class="chat-left__list-dms" id="list-users" style="display: none;">
-               <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;" onclick="displayProf()">
-                <div class="border">
-                  <img src="images/profile/blue.png" width="30" height="30">
+                <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;"
+                  onclick="displayProf()">
+                  <div class="border">
+                    <img src="images/profile/blue.png" width="30" height="30">
+                  </div>
+                  <div>Eos</div>
                 </div>
-                <div>Eos</div>
               </div>
-            </div>
             </div>
           </div>
           <div class="chat-right">
-            <div id="start-chat" style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: white;">Start a converstion</div>
+            <div id="start-chat"
+              style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: white;">
+              Start a converstion</div>
             <div id="userProfile" style="display: none; height: 100%;"></div>
             <div id="conversation" style="display: none; flex-direction: column; height: 100%;" class="border">
-              <div class="chat-right__header" id="chat-info" style="display: flex;  align-items: center; justify-content: center; gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
+              <div class="chat-right__header" id="chat-info"
+                style="display: flex;  align-items: center; justify-content: center; gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
               </div>
               <div class="chat-right__body border" style="flex: 1">
                 <div class="chat-right__box border">
@@ -142,21 +106,21 @@
                   <div class="chat-right__bubble border" id="bubble">
                   </div>
                   <div class="chat-right__textArea border">
-                  <div class="chat-right__textArea-input border">
-                    <div class="chat-right__textAreas-input-text border" id="input">
-                      <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
-                        placeholder="Send message" />
+                    <div class="chat-right__textArea-input border">
+                      <div class="chat-right__textAreas-input-text border" id="input">
+                        <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
+                          placeholder="Send message" />
+                      </div>
                     </div>
-                  </div>
-                  <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
-                    Send
-                  </div>
+                    <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
+                      Send
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
+        </div>
         <div class="account" id="accountPage" style="display: none;">
           <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
             <button type="button" id="registerButton">
@@ -196,9 +160,10 @@
                 </button>
               </p>
             </form>
-             <div class="errors border" id="reg-errors">Error box</div>
+            <div class="errors border" id="reg-errors">Error box</div>
           </div>
-          <div class="account-login" id="loginPage" style="background-color: white; display: none; flex-direction: column;">
+          <div class="account-login" id="loginPage"
+            style="background-color: white; display: none; flex-direction: column;">
             <form action="http://127.0.0.1:8080" method="post" id="login">
               <p>
                 <label for="login-username">Username:</label>
@@ -241,10 +206,14 @@
                 </div>
                 <div class="actions" id="acc-actions"
                   style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" type="button" id="add-remove-friend__header" style="display: flex; justify-content: center;">Remove friend</button>
-                  <button class="block-friend" type="button" id="block-unblock-friend__header" style="display: flex; justify-content: center;">Block</button>
-                  <button class="invite-friend" type="button" id="send-message__header" style="display: flex; justify-content: center;">Send message</button>
-                  <button class="invite-friend" type="button" id="invite-friend__header" style="display: flex; justify-content: center;">Invite to game</button>
+                  <button class="add-friend" type="button" id="add-remove-friend__header"
+                    style="display: flex; justify-content: center;">Remove friend</button>
+                  <button class="block-friend" type="button" id="block-unblock-friend__header"
+                    style="display: flex; justify-content: center;">Block</button>
+                  <button class="invite-friend" type="button" id="send-message__header"
+                    style="display: flex; justify-content: center;">Send message</button>
+                  <button class="invite-friend" type="button" id="invite-friend__header"
+                    style="display: flex; justify-content: center;">Invite to game</button>
                 </div>
               </div>
             </div>
@@ -264,7 +233,7 @@
                         <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
                           height="50px" />
                       </label>
-                      <input type="file" id="edit-avatar" name="edit-user_avatar" style="display: none"/>
+                      <input type="file" id="edit-avatar" name="edit-user_avatar" style="display: none" />
                     </p>
                     <p class="form-group">
                       <label class="col-md-3 control-label">Username:</label>
@@ -273,31 +242,35 @@
                     </div>
                     </p>
                     <p class="form-group">
-                      <p class="form-group">
+                    <p class="form-group">
                       <label class="col-lg-3 control-label" for="edit-displayName">Display Name:</label>
-                      </p>
+                    </p>
                     <div class="col-lg-8">
-                      <input class="form-control" id="edit-displayName" name="edit-user_displayName" type="text" value="Pallo">
+                      <input class="form-control" id="edit-displayName" name="edit-user_displayName" type="text"
+                        value="Pallo">
                     </div>
                     </p>
                     <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
-                    <button type="submit" id="editDisplayNameButton" style="cursor: pointer">Change display name</button>
+                      <button type="submit" id="editDisplayNameButton" style="cursor: pointer">Change display
+                        name</button>
                     </p>
-                      <p class="form-group">
-                        <label class="col-md-3 control-label" for="edit-oldPass">Old Password:</label>
-                      <div class="col-md-8">
-                        <input class="form-control" id="edit-oldPass" name="edit-user_oldPass" type="password" value="aaaaaaaaa">
-                      </div>
-                      </p>
-                      <p class="form-group">
-                        <label class="col-md-3 control-label" for="edit-newPass">New Password:</label>
-                      <div class="col-md-8">
-                        <input class="form-control" id="edit-newPass" name="edit-user_newPass" type="password" value="aaaaaaaaa">
-                      </div>
-                      </p>
-                       <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
-                       <button type="submit" id="editPasswordButton" style="cursor: pointer">Change password</button>
-                       </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label" for="edit-oldPass">Old Password:</label>
+                    <div class="col-md-8">
+                      <input class="form-control" id="edit-oldPass" name="edit-user_oldPass" type="password"
+                        value="aaaaaaaaa">
+                    </div>
+                    </p>
+                    <p class="form-group">
+                      <label class="col-md-3 control-label" for="edit-newPass">New Password:</label>
+                    <div class="col-md-8">
+                      <input class="form-control" id="edit-newPass" name="edit-user_newPass" type="password"
+                        value="aaaaaaaaa">
+                    </div>
+                    </p>
+                    <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                      <button type="submit" id="editPasswordButton" style="cursor: pointer">Change password</button>
+                    </p>
                     <p class="form-group">
                       <!-- <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
@@ -305,13 +278,15 @@
                       <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
                     </p> -->
                     <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;" value="Delete Account">
+                      <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;"
+                        value="Delete Account">
                     </p>
                     </p>
-                </form>
+                  </form>
                 </div>
               </div>
-              <div class="account-profile__page-friends border" id="friends" style="display: none; flex-direction: column;">
+              <div class="account-profile__page-friends border" id="friends"
+                style="display: none; flex-direction: column;">
                 <div>
                   <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked users</button>
                 </div>
@@ -323,8 +298,7 @@
                         <div class="status-circle-off"></div>
                         Offline
                       </div>
-                      <div class="friend-action"
-                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
                         <button class="block-friend" type="button" id="block-friend__page">block</button>
                       </div>
@@ -337,13 +311,12 @@
                         <div class="status-circle-on"></div>
                         Online
                       </div>
-                      <div class="friend-action"
-                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="remove-friend" type="button">remove friend</button>
                         <button class="block-friend" type="button">block</button>
                       </div>
                     </div>
-                </div>
+                  </div>
                 </div>
                 <div id="blockedList" style="display: none; padding: 5px;">
                   <div class="friend" style="display: flex; align-items: center; padding: 10px;">
@@ -351,15 +324,14 @@
                     <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
                       <div class="friend-name" style="display: flex; align-items: center;">Zorro
                       </div>
-                      <div class="friend-action"
-                        style="display: flex; justify-content: flex-start; margin-top: 10px;">
+                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
                         <button class="block-friend" type="button">unblock</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-             <div class="account-profile__page-matches border" id="matches" style="display: none;">
+              <div class="account-profile__page-matches border" id="matches" style="display: none;">
                 <div class="account-profile__page-matches-stats">
                   <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
                     style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
@@ -382,7 +354,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="acc-matches border" id="acc-stats-details" style="display: grid; grid-template-rows: 50px 1fr;">
+                <div class="acc-matches border" id="acc-stats-details"
+                  style="display: grid; grid-template-rows: 50px 1fr;">
                   <div class="acc-matches__header border"
                     style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
                     <div class="opponent border" style="display: flex; justify-content: center; align-items: center;">
@@ -404,6 +377,69 @@
             </div>
           </div>
         </div>
+        <div id="gamePage" class="container"
+          style="display: none; width: 100%; justify-content: center; align-items: center; background-color: black;">
+          <div id="setupGame"
+            style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
+            <div id="setupNumberPlayers"
+              style="display: flex; flex-direction: row; width: 100%; height: 100%; gap: 10px; justify-content: center; align-items: center;">
+              <button type="button" name="setOnePlayerButton" onclick="setOnePlayer(true)">
+                One Player
+              </button>
+              <button type="button" name="setTwoPlayerButton" onclick="setOnePlayer(false)">
+                Two Players
+              </button>
+            </div>
+            <div id="setUpPlayers"
+              style="display: none; flex-direction: column; height: 100%; justify-content: center; align-items: center; gap: 10px">
+              <div id="setupDisplayName"
+                style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px">
+                <div id="displayNamePlayerOne">
+                  <label for="namePlayerOne" style="color: white;">Player one</label>
+                  <div style="display: flex; flex-direction: row;">
+                    <input id="namePlayerOne" type="text" name="game-player-name-1"
+                      placeholder="Enter your display name" style="flex-grow:2;" />
+                    <button type="button" onclick="saveDisplayName(1)">OK</button>
+                  </div>
+                </div>
+                <div id="displayNamePlayerTwo" style="display: block;">
+                  <label for="namePlayerTwo" style="color: white; display: block;">Player two</label>
+                  <div style="display: flex; flex-direction: row;">
+                    <input class="input-d" id="namePlayerTwo" type="text" name="game-player-name-2"
+                      placeholder="Enter your display name" />
+                    <button type="button" onclick="saveDisplayName(2)">OK</button>
+                  </div>
+                </div>
+              </div>
+              <div id="Setinstructions" style="display: none;">
+                PLAYER 1 - W and S <br />
+                PLAYER 2 - ARROW KEYS <br />
+                P - PAUSE <br />
+                ESC - QUIT <br />
+              </div>
+              <div id="startButton">
+                <button id="runButton" style="display: none;">Start game</button>
+              </div>
+            </div>
+          </div>
+          <div id="gameScreen"
+            style="display: none; justify-content: center; align-items: center; width: 640px; height: 480px;">
+            <canvas id="myCanvas" style="display: none; background-color: black;border: 1px solid blue" width="640"
+              height="480"></canvas>
+          </div>
+          <div id="gameOverScreen"
+            style="display: none; flex-direction: column; justify-content: center; align-items: center; width: 640px; height: 480px; background-color: paleturquoise;">
+            <div id="result"
+              style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+              GAME OVER
+              <div id="winner-text"></div>
+            </div>
+            <div id="nextGame">
+              <button type="button">Play Again</button>
+              <button type="button">New Game</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -415,13 +451,12 @@
       </ul>
     </div>
   </footer>
-  <!-- insert scripts  here like this -->
   <script src="dist/accountDisplay.js"></script>
   <script src="dist/contentManager.js"></script>
   <script src="dist/chatDisplay.js"></script>
+  <script src="dist/gameLogic.js"></script>
   <script src="dist/user.js" type="module"></script>
   <script src="dist/chat.js" type="module"></script>
-  <!-- <script src=""></script> -->
 </body>
 
 </html>
