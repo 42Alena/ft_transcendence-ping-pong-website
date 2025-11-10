@@ -259,18 +259,16 @@
               <div class="flex border" id="reg-errors">Error box</div>
             </div>
             <div
-              class="account-login"
+              class="flex flex-col bg-inherit"
               id="loginPage"
               style="
-                background-color: white;
-                display: none;
-                flex-direction: column;
-              "
+                display: none;"
             >
-              <form action="http://127.0.0.1:8080" method="post" id="login">
+              <form action="http://127.0.0.1:8080" method="post" id="login" class="border bg-purple-300">
                 <p>
                   <label for="login-username">Username:</label>
                   <input
+                  class="bg-white"
                     type="text"
                     id="login-username"
                     name="login-user_username"
@@ -280,6 +278,7 @@
                 <p>
                   <label for="login-password">Password:</label>
                   <input
+                  class="bg-white"
                     type="password"
                     id="login-password"
                     name="login-user_password"
@@ -287,10 +286,11 @@
                   />
                 </p>
                 <p class="submitButton">
+                  <span class="block h-[1em]"></span>
                   <button
                     type="submit"
                     id="submitLogButton"
-                    style="cursor: pointer"
+                    class="cursor-pointer border"
                   >
                     Login
                   </button>
