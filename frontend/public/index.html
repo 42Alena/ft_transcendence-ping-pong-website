@@ -186,23 +186,24 @@
               </div>
             </div>
           </div>
-          <div class="account" id="accountPage" style="display: none">
+          <div class="relative w-full h-full flex items-center justify-center bg-white" id="accountPage" style="display: none">
             <div
-              class="account-register"
+              class="flex flex-col bg-inherit"
               id="registerPage"
-              style="flex-direction: column"
+              style="display: none;"
             >
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
+                class="border bg-blue-300"
               >
-                <p class="profile-picture">
+                <p class="flex items-center justify-center">
                   <label for="reg-avatar">
                     <img
                       src="images/profile/grey.png"
-                      style="cursor: pointer"
+                      class="cursor-pointer"
                       width="50px"
                       height="50px"
                     />
@@ -214,27 +215,30 @@
                     style="display: none"
                   />
                 </p>
-                <p class="reg-form-field">
+                <p>
                   <label for="reg-username">Username (login)</label>
                   <input
+                  class="bg-white"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
                     required
                   />
                 </p>
-                <p class="reg-form-field">
+                <p>
                   <label for="reg-displayName">Display Name (public)</label>
                   <input
+                   class="bg-white"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
                     required
                   />
                 </p>
-                <p class="reg-form-field">
+                <p>
                   <label for="reg-password">Password</label>
                   <input
+                   class="bg-white"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
@@ -242,17 +246,17 @@
                   />
                 </p>
                 <p class="submitButton">
-                  <span style="display: block; height: 1em"></span>
+                  <span class="block h-[1em]"></span>
                   <button
                     type="submit"
                     id="submitRegButton"
-                    style="cursor: pointer"
+                    class="cursor-pointer border"
                   >
                     Register
                   </button>
                 </p>
               </form>
-              <div class="errors border" id="reg-errors">Error box</div>
+              <div class="flex border" id="reg-errors">Error box</div>
             </div>
             <div
               class="account-login"
