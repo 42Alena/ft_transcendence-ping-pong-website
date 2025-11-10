@@ -2,7 +2,6 @@
 const registerPage : any = document.getElementById("registerPage");
 const loginPage : any = document.getElementById("loginPage");
 const profilePage : any = document.getElementById("profilePage");
-const choicePage : any = document.getElementById("pageChoice");
 //register form
 const registerForm : any = document.getElementById("register");
 const regAvatar : any = document.getElementById("reg-avatar");
@@ -91,7 +90,6 @@ function setAccountPage(text : string)
 	if (text == "login")
 	{
 		loginPage.style.display = "flex";
-		choicePage.style.display = "none";
 		registerPage.style.display = "none";
 		profilePage.style.display = "none";
 
@@ -99,7 +97,6 @@ function setAccountPage(text : string)
 	else if (text == "register")
 	{
 		registerPage.style.display = "flex";
-		choicePage.style.display = "none";
 		loginPage.style.display = "none";
 		profilePage.style.display = "none";
 	}
@@ -109,7 +106,6 @@ function setAccountPage(text : string)
 		accP.appendChild(profilePage);
 		displayPersonalProfile();
 		profileFriendPage.style.display = "none";
-		choicePage.style.display = "none";
 		loginPage.style.display = "none";
 		registerPage.style.display = "none";
 	}
