@@ -306,28 +306,48 @@
               </form>
               <div class="errors border" id="log-errors">Error box</div>
             </div>
-              <div class="bg-white w-full h-full grid grid-rows-[150px_30px_1fr] border" id="profilePage" style="display: none;">
-            <div class="grid grid-cols-3 bg-amber-500  border" id="acc-profile-header"> 
-              <div class="flex justify-center items-center border" id="acc-avatar">
-                <img src="images/profile/orange.png" alt="" id="acc-profile-avatar" width="100px" height="100px">
-              </div>
-              <div class="flex flex-col border" id="acc-info">
-                <div class="flex-1 flex items-center border" id="acc-username">
-                  <p>
-                    Username: Pinco
-                  </p>
+            <div
+              class="grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              id="profilePage"
+              style="display: none"
+            >
+              <div
+                class="grid grid-cols-3 border bg-amber-500"
+                id="acc-profile-header"
+              >
+                <div
+                  class="flex items-center justify-center border"
+                  id="acc-avatar"
+                >
+                  <img
+                    src="images/profile/orange.png"
+                    alt=""
+                    id="acc-profile-avatar"
+                    width="100px"
+                    height="100px"
+                  />
                 </div>
-                <div class="flex-1 flex items-center border" id="acc-displayName">
-                  <p id="temp-displayname">
-                    Display Name: Pallo
-                  </p>
+                <div class="flex flex-col border" id="acc-info">
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-username"
+                  >
+                    <p>Username: Pinco</p>
+                  </div>
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-displayName"
+                  >
+                    <p id="temp-displayname">Display Name: Pallo</p>
+                  </div>
                 </div>
-              </div>
-              <div class="flex flex-col border" id="acc-options;">
-                <div class="flex items-center h-[50px] gap-2.5 mt-2.5">
-                  <div class="w-[15px] h-[15px] rounded-full bg-green-700 border-2 border-black ml-[5px]"></div>
-                  <div class="">ONLINE</div>
-                </div>
+                <div class="flex flex-col border" id="acc-options;">
+                  <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
+                    <div
+                      class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
+                    ></div>
+                    <div class="">ONLINE</div>
+                  </div>
                   <div
                     class="mt-2.5 grid-cols-4 gap-[5px] text-xs"
                     id="acc-actions"
@@ -362,128 +382,88 @@
                       Invite now
                     </button>
                   </div>
-                  <!-- <div class="actions" id="acc-actions"
-                  style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" type="button" id="add-remove-friend__header"
-                    style="display: flex; justify-content: center;">Remove friend</button>
-                  <button class="block-friend" type="button" id="block-unblock-friend__header"
-                    style="display: flex; justify-content: center;">Block</button>
-                  <button class="invite-friend" type="button" id="send-message__header"
-                    style="display: flex; justify-content: center;">Send message</button>
-                  <button class="invite-friend" type="button" id="invite-friend__header"
-                    style="display: flex; justify-content: center;">Invite to game</button>
-                </div> -->
                 </div>
               </div>
               <div
-                class="account-profile__menu border"
+                class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
                 id="acc-profile-menu"
-                style="background-color: burlywood; cursor: pointer"
               >
-                <div
-                  class="account-profile__menu-settings border"
-                  id="acc-settings"
-                >
-                  SETTINGS
-                </div>
-                <div
-                  class="account-profile__menu-friends border"
-                  id="acc-friends"
-                >
-                  FRIENDS
-                </div>
-                <div
-                  class="account-profile__menu-matches border"
-                  id="acc-matches"
-                >
-                  MATCHES
-                </div>
+                <div id="acc-settings">SETTINGS</div>
+                <div id="acc-friends">FRIENDS</div>
+                <div id="acc-matches">MATCHES</div>
               </div>
-              <div
-                class="account-profile__page border"
-                id="acc-profile-page"
-                style="background-color: antiquewhite"
-              >
+              <div id="acc-profile-page">
                 <div
-                  class="account-profile__page-settings border"
+                  class="flex h-full w-full items-center justify-center border text-left text-sm"
                   id="update-settings"
                 >
-                  <div class="account-profile__page-settings-pi border">
-                    <h3>Edit information</h3>
-                    <form
-                      class="update-settings-form"
-                      role="updateSettings"
-                      id="settings"
-                    >
-                      <div class="profile-picture">
+                  <div
+                    class="flex h-full w-full flex-col items-center justify-center border"
+                  >
+                    <form class="bg-teal-200 border" role="updateSettings" id="settings">
+                      <div class="flex items-center justify-center">
                         <label for="edit-avatar">
                           <img
                             src="images/profile/orange.png"
                             id="avatarImgEdit"
-                            style="cursor: pointer"
                             width="50px"
                             height="50px"
+                            class="cursor-pointer"
                           />
                         </label>
                         <input
                           type="file"
                           id="edit-avatar"
                           name="edit-user_avatar"
-                          style="display: none"
+                          class="hidden"
                         />
                       </div>
-                      <div class="form-group">
-                        <label class="col-md-3 control-label">Username:</label>
-                        <div class="col-md-8">
+                      <div>
+                        <label class="text-xl table-cell">Username:</label>
+                        <div>
                           <input
-                            class="form-control"
                             type="text"
                             value="Pinco"
                             readonly
+                            class="text-xl bg-white"
                           />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <p class="form-group">
+                      <div>
+                        <p>
                           <label
-                            class="col-lg-3 control-label"
                             for="edit-displayName"
+                            class="table-cell text-xl"
                             >Display Name:</label
                           >
                         </p>
-                        <div class="col-lg-8">
+                        <div>
                           <input
-                            class="form-control"
                             id="edit-displayName"
                             name="edit-user_displayName"
                             type="text"
                             value="Pallo"
+                            class="text-xl  bg-white"
                           />
                         </div>
                       </div>
-                      <div
-                        class="form-group"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
-                      >
+                      <span class="block h-[1em]"></span>
+                      <div class="flex items-center justify-center text-sm">
                         <button
                           type="submit"
                           id="editDisplayNameButton"
-                          style="cursor: pointer"
+                          class="cursor-pointer border border-black rounded-full p-[5px]"
                         >
                           Change display name
                         </button>
                       </div>
-                      <div class="form-group">
-                        <label class="col-md-3 control-label" for="edit-oldPass"
+                      <div>
+                        <label class="table-cell text-xl" for="edit-oldPass"
                           >Old Password:</label
                         >
-                        <div class="col-md-8">
+                        <div>
                           <input
-                            class="form-control"
+                            class="text-xl  bg-white"
                             id="edit-oldPass"
                             name="edit-user_oldPass"
                             type="password"
@@ -491,13 +471,13 @@
                           />
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label class="col-md-3 control-label" for="edit-newPass"
+                      <div>
+                        <label class="table-cell text-xl" for="edit-newPass"
                           >New Password:</label
                         >
-                        <div class="col-md-8">
+                        <div>
                           <input
-                            class="form-control"
+                            class="text-xl  bg-white"
                             id="edit-newPass"
                             name="edit-user_newPass"
                             type="password"
@@ -505,35 +485,23 @@
                           />
                         </div>
                       </div>
+                      <span class="block h-[1em]"></span>
                       <div
-                        class="form-group"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
-                      >
+                        class="flex items-center justify-center text-sm">
                         <button
                           type="submit"
                           id="editPasswordButton"
-                          style="cursor: pointer"
+                          class="cursor-pointer border border-black rounded-full p-[5px]"
                         >
                           Change password
                         </button>
                       </div>
-                      <div class="form-group">
-                        <p
-                          class="col-md-8"
-                          style="
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                          "
-                        >
+                      <div>
+                        <p class="flex items-center justify-center text-sm">
                           <input
                             type="submit"
                             name="delete_account"
-                            class="btn btn-primary"
+                            class="cursor-pointer border border-black rounded-full p-[5px]"
                             style="margin: 10px 0"
                             value="Delete Account"
                           />

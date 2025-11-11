@@ -378,15 +378,15 @@ form {
   border-radius: 1em;
 }
 
-label {
+/* label {
   display: table-cell;
   font-size: 20px;
-}
+} */
 
-input {
+/* input {
   display: table-cell;
   font-size: 20px;
-}
+} */
 
 .profile-picture,
 .submitButton {
@@ -541,37 +541,35 @@ input {
   text-decoration: underline;
 }
 
-    .dropdown {
-        position: relative;
-      }
+.dropdown {
+  position: relative;
+}
 
-      .dropdown-menu {
-        display: none;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        position: absolute;
-        z-index: 10;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
+.dropdown-menu {
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-      .dropdown:hover .dropdown-menu {
-        display: block;
-      }
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
 
-      .dropdown-menu li {
-        padding: 10px;
-      }
+.dropdown-menu li {
+  padding: 10px;
+}
 
-      .dropdown-menu li a {
-        text-decoration: none;
-        color: #333;
-      }
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
 
-      .dropdown-menu li a:hover {
-        background-color: #f0f0f0;
-      }
-
-
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+}
