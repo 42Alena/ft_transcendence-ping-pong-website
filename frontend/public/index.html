@@ -154,9 +154,8 @@
             Welcome page
           </div>
           <div
-            class="relative grid h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="hidden relative h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
             id="chatPage"
-            style="display: none"
           >
             <div class="flex flex-col border">
               <div class="flex overflow-hidden border bg-[#f1f1f1]">
@@ -255,14 +254,12 @@
             </div>
           </div>
           <div
-            class="relative flex h-full w-full items-center justify-center bg-white"
+            class="relative h-full w-full items-center justify-center bg-white hidden"
             id="accountPage"
-            style="display: none"
           >
             <div
-              class="flex flex-col bg-inherit"
+              class="hidden flex-col bg-inherit"
               id="registerPage"
-              style="display: none"
             >
               <form
                 action="http://127.0.0.1:8080"
@@ -331,9 +328,9 @@
               <div class="flex border" id="reg-errors">Error box</div>
             </div>
             <div
-              class="flex flex-col bg-inherit"
+              class="hidden flex-col bg-inherit"
               id="loginPage"
-              style="display: none"
+
             >
               <form
                 action="http://127.0.0.1:8080"
@@ -375,9 +372,8 @@
               <div class="errors border" id="log-errors">Error box</div>
             </div>
             <div
-              class="grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
               id="profilePage"
-              style="display: none"
             >
               <div
                 class="grid grid-cols-3 border bg-amber-500"

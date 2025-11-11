@@ -224,9 +224,9 @@ function displayProf() {
 	blockedList.style.display = "none";
 	friendList.style.display = "flex";
 	displayUserProfile();
-	userProfileDiv.appendChild(profilePage);
+	userProfileDiv.appendChild(profP);
 	userProfileDiv.style.display = "block";
-	profilePage.style.display = "grid";
+	profP.classList.add("grid");
 	profileFriendPage.style.display = "flex";
 	toggle = true;
 }
