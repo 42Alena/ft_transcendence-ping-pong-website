@@ -28,14 +28,18 @@ function displayList(event : any, text : string) {
   }
   if (text == 'chat')
   {
-	listDmsDiv.style.display = "block";
-	listUsersDiv.style.display = "none";
+	listDmsDiv.classList.add("flex");
+	listDmsDiv.classList.remove("hidden");
+	listUsersDiv.classList.add("hidden");
+	listUsersDiv.classList.remove("flex");
 
   }
   else
   {
-	listUsersDiv.style.display = "block";
-	listDmsDiv.style.display = "none";
+	listDmsDiv.classList.add("hidden");
+	listDmsDiv.classList.remove("flex");
+	listUsersDiv.classList.add("flex");
+	listUsersDiv.classList.remove("hidden");
   }
   event.currentTarget.className += " active";
 }

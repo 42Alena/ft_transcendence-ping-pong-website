@@ -9,73 +9,73 @@
 
     <style>
       .dropdown {
-  position: relative;
-}
+        position: relative;
+      }
 
-.dropdown-menu {
-  display: none;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  position: absolute;
-  z-index: 10;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+      .dropdown-menu {
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        position: absolute;
+        z-index: 10;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
 
-.dropdown-menu li {
-  padding: 10px;
-}
+      .dropdown-menu li {
+        padding: 10px;
+      }
 
-.dropdown-menu li a {
-  text-decoration: none;
-  color: #333;
-}
+      .dropdown-menu li a {
+        text-decoration: none;
+        color: #333;
+      }
 
-.dropdown-menu li a:hover {
-  background-color: #f0f0f0;
-}
+      .dropdown-menu li a:hover {
+        background-color: #f0f0f0;
+      }
 
- .chat-left__list-dms-item {
-  display: block;
-  background-color: white;
-  max-width: 100%;
-  padding: 10px;
-}
+      .chat-left__list-dms-item {
+        display: block;
+        background-color: white;
+        max-width: 100%;
+        padding: 10px;
+      }
 
-.chat-right__bubble {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow: auto;
-  padding: 1em;
-  gap: 10px;
-  background-color: white;
-  max-width: 100%;
-}
+      .chat-right__bubble {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        overflow: auto;
+        padding: 1em;
+        gap: 10px;
+        background-color: white;
+        max-width: 100%;
+      }
 
-.chat-right__bubble-sent {
-  display: block;
-  position: relative;
-  height: auto;
-  background-color: lightskyblue;
-  max-width: 75%;
-}
+      .chat-right__bubble-sent {
+        display: block;
+        position: relative;
+        height: auto;
+        background-color: lightskyblue;
+        max-width: 75%;
+      }
 
-.chat-right__bubble-received {
-  display: block;
-  margin-left: auto;
-  position: relative;
-  max-width: 75%;
-  height: auto;
-  justify-content: flex-end;
-  background-color: mediumaquamarine;
-}
+      .chat-right__bubble-received {
+        display: block;
+        margin-left: auto;
+        position: relative;
+        max-width: 75%;
+        height: auto;
+        justify-content: flex-end;
+        background-color: mediumaquamarine;
+      }
     </style>
   </head>
 
@@ -154,7 +154,7 @@
             Welcome page
           </div>
           <div
-            class="hidden relative h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
             id="chatPage"
           >
             <div class="flex flex-col border">
@@ -175,14 +175,13 @@
               </div>
               <div class="flex grow flex-col">
                 <div
-                  class="relative flex h-[60px] grow flex-col gap-2.5 overflow-auto"
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
                   id="list-dms"
                 ></div>
                 <!-- no need to do list-users since it will be created by js -->
                 <div
-                  class="relative flex h-[60px] grow flex-col gap-2.5 overflow-auto"
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
                   id="list-users"
-                  style="display: none"
                 >
                   <div
                     class="chat-left__list-dms-item border"
@@ -254,19 +253,16 @@
             </div>
           </div>
           <div
-            class="relative h-full w-full items-center justify-center bg-white hidden"
+            class="relative hidden h-full w-full items-center justify-center bg-white"
             id="accountPage"
           >
-            <div
-              class="hidden flex-col bg-inherit"
-              id="registerPage"
-            >
+            <div class="hidden flex-col bg-inherit" id="registerPage">
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="table rounded-xl p-1 border bg-blue-300"
+                class="table rounded-xl border bg-blue-300 p-1"
               >
                 <p class="flex items-center justify-center">
                   <label class="table-cell text-xl" for="reg-avatar">
@@ -285,9 +281,11 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-username">Username (login)</label>
+                  <label class="table-cell text-xl" for="reg-username"
+                    >Username (login)</label
+                  >
                   <input
-                    class="table-cell text-xl bg-white"
+                    class="table-cell bg-white text-xl"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
@@ -295,9 +293,11 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-displayName">Display Name (public)</label>
+                  <label class="table-cell text-xl" for="reg-displayName"
+                    >Display Name (public)</label
+                  >
                   <input
-                    class="table-cell text-xl bg-white"
+                    class="table-cell bg-white text-xl"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
@@ -305,9 +305,11 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-password">Password</label>
+                  <label class="table-cell text-xl" for="reg-password"
+                    >Password</label
+                  >
                   <input
-                    class="table-cell text-xl bg-white"
+                    class="table-cell bg-white text-xl"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
@@ -327,21 +329,19 @@
               </form>
               <div class="flex border" id="reg-errors">Error box</div>
             </div>
-            <div
-              class="hidden flex-col bg-inherit"
-              id="loginPage"
-
-            >
+            <div class="hidden flex-col bg-inherit" id="loginPage">
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 id="login"
-                class="table rounded-xl p-1 border bg-purple-300"
+                class="table rounded-xl border bg-purple-300 p-1"
               >
                 <p>
-                  <label class="table-cell text-xl" for="login-username">Username:</label>
+                  <label class="table-cell text-xl" for="login-username"
+                    >Username:</label
+                  >
                   <input
-                    class="table-cell text-xl bg-white"
+                    class="table-cell bg-white text-xl"
                     type="text"
                     id="login-username"
                     name="login-user_username"
@@ -349,17 +349,19 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="login-password">Password:</label>
+                  <label class="table-cell text-xl" for="login-password"
+                    >Password:</label
+                  >
                   <input
-                   class="table-cell text-xl bg-white"
+                    class="table-cell bg-white text-xl"
                     type="password"
                     id="login-password"
                     name="login-user_password"
                     required
                   />
                 </p>
-                 <span class="block h-[1em]"></span>
-               <p class="flex justify-center">
+                <span class="block h-[1em]"></span>
+                <p class="flex justify-center">
                   <button
                     type="submit"
                     id="submitLogButton"
@@ -413,7 +415,7 @@
                     <div class="">ONLINE</div>
                   </div>
                   <div
-                    class="mt-2.5 grid-cols-4 gap-[5px] text-xs hidden"
+                    class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs"
                     id="acc-actions"
                   >
                     <button
@@ -463,7 +465,11 @@
                   <div
                     class="flex h-full w-full flex-col items-center justify-center border"
                   >
-                    <form class="table rounded-xl p-1 border bg-blue-300" role="updateSettings" id="settings">
+                    <form
+                      class="table rounded-xl border bg-blue-300 p-1"
+                      role="updateSettings"
+                      id="settings"
+                    >
                       <div class="flex items-center justify-center">
                         <label for="edit-avatar">
                           <img
@@ -482,13 +488,13 @@
                         />
                       </div>
                       <div>
-                        <label class="text-xl table-cell">Username:</label>
+                        <label class="table-cell text-xl">Username:</label>
                         <div>
                           <input
                             type="text"
                             value="Pinco"
                             readonly
-                            class="text-xl bg-white"
+                            class="bg-white text-xl"
                           />
                         </div>
                       </div>
@@ -506,7 +512,7 @@
                             name="edit-user_displayName"
                             type="text"
                             value="Pallo"
-                            class="text-xl  bg-white"
+                            class="bg-white text-xl"
                           />
                         </div>
                       </div>
@@ -515,7 +521,7 @@
                         <button
                           type="submit"
                           id="editDisplayNameButton"
-                          class="cursor-pointer border border-black rounded-full p-[5px]"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
                         >
                           Change display name
                         </button>
@@ -526,7 +532,7 @@
                         >
                         <div>
                           <input
-                            class="text-xl  bg-white"
+                            class="bg-white text-xl"
                             id="edit-oldPass"
                             name="edit-user_oldPass"
                             type="password"
@@ -540,7 +546,7 @@
                         >
                         <div>
                           <input
-                            class="text-xl  bg-white"
+                            class="bg-white text-xl"
                             id="edit-newPass"
                             name="edit-user_newPass"
                             type="password"
@@ -549,12 +555,11 @@
                         </div>
                       </div>
                       <span class="block h-[1em]"></span>
-                      <div
-                        class="flex items-center justify-center text-sm">
+                      <div class="flex items-center justify-center text-sm">
                         <button
                           type="submit"
                           id="editPasswordButton"
-                          class="cursor-pointer border border-black rounded-full p-[5px]"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
                         >
                           Change password
                         </button>
@@ -564,7 +569,7 @@
                           <input
                             type="submit"
                             name="delete_account"
-                            class="cursor-pointer border border-black rounded-full p-[5px]"
+                            class="cursor-pointer rounded-full border border-black p-[5px]"
                             style="margin: 10px 0"
                             value="Delete Account"
                           />
@@ -573,10 +578,7 @@
                     </form>
                   </div>
                 </div>
-                <div
-                  class="flex-col p-2.5 gap-[15px] hidden"
-                  id="friends"
-                >
+                <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
                   <div>
                     <button
                       class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
@@ -588,37 +590,27 @@
                     </button>
                   </div>
                   <div id="friendsList" class="flex; p-[5px]">
-                    <div
-                      class="friend flex items-center p-2.5 border"
-                    >
+                    <div class="friend flex items-center border p-2.5">
                       <img
                         src="images/profile/purple.png"
                         alt=""
                         width="100px"
                         height="100px"
                       />
-                      <div
-                        class="flex flex-col ml-2.5"
-                        id="friend-description"
-                      >
-                        <div
-                          class="flex items-center gap-2"
-                          id="friend-name"
-                        >
+                      <div class="ml-2.5 flex flex-col" id="friend-description">
+                        <div class="flex items-center gap-2" id="friend-name">
                           <div>Mafalda</div>
-                      </div>
-                        <div
-                          class="friend-action flex justify-start gap-1 "
-                        >
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
                           <button
-                            class="flex justify-center border rounded-sm w-[60px]"
+                            class="flex w-[60px] justify-center rounded-sm border"
                             type="button"
                             id="remove-friend__page"
                           >
                             remove
                           </button>
                           <button
-                           class="flex justify-center border rounded-sm w-[60px]"
+                            class="flex w-[60px] justify-center rounded-sm border"
                             type="button"
                             id="block-friend__page"
                           >
@@ -629,28 +621,20 @@
                     </div>
                   </div>
                   <div id="blockedList" class="hidden p-[5px]">
-                    <div
-                      class="friend flex items-center p-2.5 border"
-                    >
+                    <div class="friend flex items-center border p-2.5">
                       <img
                         src="images/profile/purple.png"
                         alt=""
                         width="100px"
                         height="100px"
                       />
-                      <div
-                        class="flex flex-col ml-2.5"
-                      >
-                        <div
-                          class="flex items-center gap-2"
-                        >
+                      <div class="ml-2.5 flex flex-col">
+                        <div class="flex items-center gap-2">
                           <div>Zorro</div>
-                      </div>
-                        <div
-                          class="friend-action flex justify-start gap-1 "
-                        >
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
                           <button
-                            class="flex justify-center border rounded-sm w-[60px]"
+                            class="flex w-[60px] justify-center rounded-sm border"
                             type="button"
                           >
                             remove
@@ -660,84 +644,59 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="flex-col gap-2.5 hidden"
-                  id="matches"
-                >
-                  <div class="grid grid-rows-auto h-full items-center">
+                <div class="hidden flex-col gap-2.5" id="matches">
+                  <div class="grid-rows-auto grid h-full items-center">
                     <div
-                      class="flex justify-center w-full border"
+                      class="flex w-full justify-center border"
                       id="acc-stats"
                     >
                       <strong>Quick Stats</strong>
                     </div>
-                    <div
-                      class="grid grid-cols-4 border"
-                    >
-                      <div class="text-center p-2.5 border">
+                    <div class="grid grid-cols-4 border">
+                      <div class="border p-2.5 text-center">
                         3
-                        <span class="block mt-[5px]">Current Ranking</span>
+                        <span class="mt-[5px] block">Current Ranking</span>
                       </div>
-                      <div class="text-center p-2.5 border">
+                      <div class="border p-2.5 text-center">
                         12-10
-                        <span class="block mt-[5px]">W-L</span>
+                        <span class="mt-[5px] block">W-L</span>
                       </div>
-                      <div class="text-center p-2.5 border">
+                      <div class="border p-2.5 text-center">
                         22
-                        <span class="block mt-[5px]">Tot games</span>
+                        <span class="mt-[5px] block">Tot games</span>
                       </div>
-                      <div class="text-center p-2.5 border">
+                      <div class="border p-2.5 text-center">
                         54%
-                        <span class="block mt-[5px]">Average wins</span>
+                        <span class="mt-[5px] block">Average wins</span>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="grid grid-rows[50px_1fr] border"
+                    class="grid-rows[50px_1fr] grid border"
                     id="acc-stats-details"
                   >
-                    <div
-                      class="flex justify-center w-full border"
-                    >
+                    <div class="flex w-full justify-center border">
                       <strong>Matches</strong>
                     </div>
-                    <div
-                      class="w-full grid grid-cols-3 border"
-                    >
-                      <div
-                        class="flex justify-center items-center border"
-                      >
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex items-center justify-center border">
                         opponent
                       </div>
-                      <div
-                        class="flex justify-center items-center border"
-                      >
+                      <div class="flex items-center justify-center border">
                         date
                       </div>
-                      <div
-                       class="flex justify-center items-center border"
-                      >
+                      <div class="flex items-center justify-center border">
                         score
                       </div>
                     </div>
-                    <div
-                      class="w-full grid grid-cols-3 border"
-                    >
-                      <div
-                        class="flex justify-center p-2.5 border"
-                      >
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex justify-center border p-2.5">
                         opponent 1
                       </div>
-                      <div
-                        class="flex justify-center p-2.5 border"
-                      >
+                      <div class="flex justify-center border p-2.5">
                         5/10/25
                       </div>
-                      <div
-                        class="flex justify-center p-2.5 border"
-                      >
-                        3-2
-                      </div>
+                      <div class="flex justify-center border p-2.5">3-2</div>
                     </div>
                   </div>
                 </div>
