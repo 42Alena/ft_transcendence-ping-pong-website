@@ -64,7 +64,8 @@ function addBubble(role : string, content : string)
 
 function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
 
-	userProfileDiv.style.display = "none";
+	userProfileDiv.classList.add("hidden");
+	userProfileDiv.classList.remove("block");
 	fillConversationInfo(name, avatar);
 	currChatId = id;
 	const existingBubble = document.getElementById('history-conv');
@@ -125,8 +126,10 @@ function fillConversationInfo(name : string, avatar : string) {
 	avatarDiv.appendChild(avatarImg);
 	chatInfoDiv.appendChild(avatarDiv);
 
-	conversationDiv.style.display = "flex";
-	startConvDiv.style.display = "none";
+	conversationDiv.classList.add("flex");
+	conversationDiv.classList.remove("hidden");
+	startConvDiv.classList.add("hidden");
+	startConvDiv.classList.remove("flex");
 }
 
 function addElement(name : string, id : string, avatar : string) {
@@ -139,7 +142,6 @@ function addElement(name : string, id : string, avatar : string) {
 	avatImg.width = 30;
 	avatImg.height = 30;
 	avatDiv.appendChild(avatImg);
-	avatDiv.className = "border";
 	newDiv.appendChild(avatDiv);
 
 	const userDiv = document.createElement("div");
@@ -149,10 +151,10 @@ function addElement(name : string, id : string, avatar : string) {
 	newDiv.appendChild(userDiv);
 	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
 	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
-    newDiv.className = "chat-left__list-dms-item border";
-	newDiv.style.display = "flex";
-	newDiv.style.alignItems = "center";
-	newDiv.style.gap = "10px";
+    // newDiv.className = "chat-left__list-dms-item border";
+	newDiv.classList.add("flex", "items-center", "gap-2.5", "border", "p-2.5", "bg-white");
+	// newDiv.style.alignItems = "center";
+	// newDiv.style.gap = "10px";
     listDmsDiv.append(newDiv);
 }
 
@@ -223,15 +225,18 @@ inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 });
 
 function displayProf() {
-	startConvDiv.style.display = "none";
-	conversationDiv.style.display = "none";
+	startConvDiv.classList.add("hidden");
+	startConvDiv.classList.remove("flex");
+	conversationDiv.classList.add("hidden");
+	conversationDiv.classList.remove("flex");
 	blockedList.classList.add("hidden");
 	blockedList.classList.remove("flex");
 	friendList.classList.add("flex");
 	friendList.classList.remove("hidden");
 	displayUserProfile();
 	userProfileDiv.appendChild(profP);
-	userProfileDiv.style.display = "block";
+	userProfileDiv.classList.add("block");
+	userProfileDiv.classList.remove("hidden");
 	profP.classList.add("grid");
 	profP.classList.remove("hidden")
 	friendsPage.classList.add("flex");
