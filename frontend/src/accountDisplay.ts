@@ -13,7 +13,6 @@ const profileActions : any = document.getElementById("acc-actions"); //buttons
 //buttons
 const profileAddRemFriend : any = document.getElementById("add-remove-friend__header");
 const profileBlockUnbFriend : any = document.getElementById("block-unblock-friend__header");
-const profileFriendPage : any = document.getElementById("friends");
 //settings page
 const profileMenuSettings : any = document.getElementById("acc-settings");
 const profileSettingsPage : any = document.getElementById("update-settings");
@@ -48,7 +47,6 @@ profileBlockUnbFriend.addEventListener("click", (event : any) => {
 		isBlocked = false;
 	}
 });
-/*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
 {
 	console.log(`text: ${text}`);
@@ -90,7 +88,10 @@ function setAccountPage(text : string)
 		logP.classList.remove("flex");
 		regP.classList.add("hidden");
 		regP.classList.remove("flex");
-		profileFriendPage.style.display = "none";
+		friendsPage.classList.add("hidden");
+		friendsPage.classList.remove("flex");
+		matchesPage.classList.add("hidden");
+		matchesPage.classList.remove("flex");
 	}
 }
 
@@ -123,79 +124,116 @@ function displayBlockedFriends() {
 	if (toggle == false)
 	{
 		blockButton.textContent = "See friends";
-		blockedList.style.display = "flex";
-		friendList.style.display = "none";
+		blockedList.classList.add("flex");
+		blockedList.classList.remove("hidden");
+		friendList.classList.add("hidden");
+		friendList.classList.remove("flex");
 		toggle = true;
 	}
 	else
 	{
 		blockButton.textContent = "See blocked users";
-		friendList.style.display = "flex";
-		blockedList.style.display = "none";
+		blockedList.classList.add("hidden");
+		blockedList.classList.remove("flex");
+		friendList.classList.add("flex");
+		friendList.classList.remove("hidden");
 		toggle = false;
 	}
 }
 
-blockButton.style.display = "block";
+// blockButton.classList.add("block");
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
-	settingsPage.style.display = "flex";
-	friendsPage.style.display = "none";
-	matchesPage.style.display = "none";
+	settingsPage.classList.add("flex");
+	settingsPage.classList.remove("hidden");
+	friendsPage.classList.add("hidden");
+	friendsPage.classList.remove("flex");
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
 });
 
 friendsDiv.addEventListener("click", (event : any) => {
-	friendsPage.style.display = "flex";
-	settingsPage.style.display = "none";
-	matchesPage.style.display = "none";
+	friendsPage.classList.add("flex");
+	friendsPage.classList.remove("hidden");
+	settingsPage.classList.add("hidden");
+	settingsPage.classList.remove("flex");
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
 });
 
 matchesDiv.addEventListener("click", (event : any) => {
-	matchesPage.style.display = "flex";
-	settingsPage.style.display = "none";
-	friendsPage.style.display = "none";
+	matchesPage.classList.add("flex");
+	matchesPage.classList.remove("hidden");
+	settingsPage.classList.add("hidden");
+	settingsPage.classList.remove("flex");
+	friendsPage.classList.add("hidden");
+	friendsPage.classList.remove("flex");
 });
 
 function displayPersonalProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Pallo";
-	profileActions.style.display = "none"; //flex for others' view
+	// profileActions.style.display = "none"; //flex for others' view
+	profileActions.classList.add("hidden");
+	profileActions.classList.remove("flex");
 //header username
-profileUsername.style.display = "flex"; //none for others' view
+// profileUsername.style.display = "flex"; //none for others' view
+profileUsername.classList.add("flex");
+profileUsername.classList.remove("hidden");
 //settings menu + settings page
-profileMenuSettings.style.display = "block"; //none for others' view
-profileSettingsPage.style.display = "flex"; //none for others' view
+// profileMenuSettings.style.display = "block"; //none for others' view
+profileMenuSettings.classList.add("block");
+profileMenuSettings.classList.remove("hidden");
+// profileSettingsPage.style.display = "flex"; //none for others' view
+profileSettingsPage.classList.add("flex");
+profileSettingsPage.classList.remove("hidden");
+
 //friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
-  element.style.display = 'flex';
+  element.classList.add("flex");
+  element.classList.remove("hidden");
 });
 profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
 toggle = true;
 displayBlockedFriends();
-blockButton.style.display = "block";
+// blockButton.style.display = "block";
+blockButton.classList.add("block");
+blockButton.classList.remove("hidden");
 }
 
 function displayUserProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Eos";
-	profileActions.style.display = "flex"; //flex for others' view
-	matchesPage.style.display = "none";
+	// profileActions.style.display = "flex"; //flex for others' view
+	profileActions.classList.add("flex");
+	profileActions.classList.remove("hidden");
+	// matchesPage.style.display = "none";
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
 //header username
-profileUsername.style.display = "none"; //none for others' view
+// profileUsername.style.display = "none"; //none for others' view
+profileUsername.classList.add("hidden");
+profileUsername.classList.remove("flex");
 //settings menu + settings page
-profileMenuSettings.style.display = "none"; //none for others' view
-profileSettingsPage.style.display = "none"; //none for others' view
+// profileMenuSettings.style.display = "none"; //none for others' view
+profileMenuSettings.classList.add("hidden");
+profileMenuSettings.classList.remove("block");
+// profileSettingsPage.style.display = "none"; //none for others' view
+profileSettingsPage.classList.add("hidden");
+profileSettingsPage.classList.remove("flex");
 //friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
-  element.style.display = 'none';
+  element.classList.add("hidden");
+  element.classList.remove("flex");
 });
 // profileFriendsPageButtons.style.display = "none"; //none for others' view
 //change avatar in header
 profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
-blockButton.style.display = "none";
+blockButton.classList.add("hidden");
+blockButton.classList.remove("block");
 
 }

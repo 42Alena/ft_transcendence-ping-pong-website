@@ -221,12 +221,16 @@ inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 function displayProf() {
 	startConvDiv.style.display = "none";
 	conversationDiv.style.display = "none";
-	blockedList.style.display = "none";
-	friendList.style.display = "flex";
+	blockedList.classList.add("hidden");
+	blockedList.classList.remove("flex");
+	friendList.classList.add("flex");
+	friendList.classList.remove("hidden");
 	displayUserProfile();
 	userProfileDiv.appendChild(profP);
 	userProfileDiv.style.display = "block";
 	profP.classList.add("grid");
-	profileFriendPage.style.display = "flex";
+	profP.classList.remove("hidden")
+	friendsPage.classList.add("flex");
+	friendsPage.classList.remove("hidden");
 	toggle = true;
 }
