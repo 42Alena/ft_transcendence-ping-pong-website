@@ -76,19 +76,32 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### Makefile
 	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats
-	+ added backend tests run 
+	+/- updated `db`
+	+ change path for db for absolute
+	+  `tests` 
 
 ## FRONTEND
+ 	+  settings to tsconfig.json file:
+	```bash  
+    //New settings for frontend (interval = setInterval(draw, 20);)
+    // These settings make the frontend TypeScript compiler use browser (DOM) APIs, so setInterval is typed as a number (the actual browser handle). 
+    // Setting "types": [] disables auto-including ambient @types/* (like Node), preventing accidental NodeJS.Timeout mismatches.
+
+    "lib": ["ES2020", "DOM"],
+    "types": []
+	```
+
 
 ### TESTS
 ```
-	#  1. in 1.terminal make backend
-	# 2. in 2.terminal: make backend-tests
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make backend-tests
 ```
 
-## 📘 DOCUMENTATION
 
-## 🔗 LINKS / HELP
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
 ---------------------------------
@@ -140,12 +153,6 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## 📘 DOCUMENTATION
 | jq  => formats JSON nicely; without it you’ll see one long line.
-
-## 🔗 LINKS / HELP
-
-
-
-
 
 
 --------------------------

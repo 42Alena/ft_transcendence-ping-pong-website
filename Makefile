@@ -7,10 +7,11 @@ SHELL := /bin/bash
 FRONTEND_DIR := frontend
 BACKEND_DIR  := backend
 DB_DIR       := backend/db
+DB_FILE := pong.db
 DB_FILL 	 := $(DB_DIR)/test_fill_users_dev.sql
-DB         	 := $(DB_DIR)/pong.db
+DB      := $(abspath $(DB_DIR)/$(DB_FILE))
 DC           := docker compose
-
+ 
 # git
 GIT_REMOTE ?= origin
 GIT_MAIN   ?= main
@@ -44,16 +45,27 @@ backend:
 frontend:
 	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
 
-db: check-tools
-	@rm $(DB_DIR)/pong.db*
-	@chmod +x "$(DB_DIR)/setup_db.sh"
-	cd "$(DB_DIR)" && ./setup_db.sh
+# old
+# db: check-tools
+# 	@rm $(DB_DIR)/pong.db*
+# 	@chmod +x "$(DB_DIR)/setup_db.sh"
+# 	cd "$(DB_DIR)" && ./setup_db.sh
 	
 # runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
-backend-tests: db
-	cd "$(BACKEND_DIR)" &&  ./tests/users.sh
-	# cd "$(BACKEND_DIR)" && npm run backend-tests
+# backend-tests:
+# 	cd "$(BACKEND_DIR)" && npm run backend-tests
 
+
+db: check-tools
+	@mkdir -p "$(DB_DIR)"
+	@rm -f "$(DB_DIR)/$(DB_FILE)" "$(DB_DIR)/$(DB_FILE)-wal" "$(DB_DIR)/$(DB_FILE)-shm"
+	@DB_PATH="$(DB)" "$(DB_DIR)/setup_db.sh"
+
+tests: db
+	@BASE_URL=http://localhost:3000 backend/tests/users.sh
+
+# tests: db
+# 	cd "$(BACKEND_DIR)" &&  ./users.sh
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:
 	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }
