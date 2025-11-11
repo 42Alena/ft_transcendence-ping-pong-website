@@ -511,12 +511,13 @@
                   </div>
                 </div>
                 <div
-                  class="account-profile__page-friends border"
+                  class="flex flex-col p-2.5 gap-[15px]"
                   id="friends"
-                  style="display: none; flex-direction: column"
+                  style="display: none;"
                 >
                   <div>
                     <button
+                      class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                       type="button"
                       id="blockButton"
                       onclick="displayBlockedFriends()"
@@ -524,10 +525,9 @@
                       See blocked users
                     </button>
                   </div>
-                  <div id="friendsList" style="display: flex; padding: 5px">
+                  <div id="friendsList" class="flex; p-[5px]">
                     <div
-                      class="friend"
-                      style="display: flex; align-items: center; padding: 10px"
+                      class="friend flex items-center p-2.5 border"
                     >
                       <img
                         src="images/profile/purple.png"
@@ -536,38 +536,27 @@
                         height="100px"
                       />
                       <div
-                        class="friend-info"
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          margin-left: 10px;
-                        "
+                        class="flex flex-col ml-2.5"
+                        id="friend-description"
                       >
                         <div
-                          class="friend-name"
-                          style="display: flex; align-items: center"
+                          class="flex items-center gap-2"
+                          id="friend-name"
                         >
-                          Mafalda
-                          <div class="status-circle-off"></div>
-                          Offline
-                        </div>
+                          <div>Mafalda</div>
+                      </div>
                         <div
-                          class="friend-action"
-                          style="
-                            display: flex;
-                            justify-content: flex-start;
-                            margin-top: 10px;
-                          "
+                          class="friend-action flex justify-start gap-1 "
                         >
                           <button
-                            class="remove-friend"
+                            class="flex justify-center border rounded-sm w-[60px]"
                             type="button"
                             id="remove-friend__page"
                           >
-                            remove friend
+                            remove
                           </button>
                           <button
-                            class="block-friend"
+                           class="flex justify-center border rounded-sm w-[60px]"
                             type="button"
                             id="block-friend__page"
                           >
@@ -576,85 +565,33 @@
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="friend"
-                      style="display: flex; align-items: center; padding: 10px"
-                    >
-                      <img
-                        src="images/profile/green.png"
-                        alt=""
-                        width="100px"
-                        height="100px"
-                      />
-                      <div
-                        class="friend-info"
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          margin-left: 10px;
-                        "
-                      >
-                        <div
-                          class="friend-name"
-                          style="display: flex; align-items: center"
-                        >
-                          Kevin
-                          <div class="status-circle-on"></div>
-                          Online
-                        </div>
-                        <div
-                          class="friend-action"
-                          style="
-                            display: flex;
-                            justify-content: flex-start;
-                            margin-top: 10px;
-                          "
-                        >
-                          <button class="remove-friend" type="button">
-                            remove friend
-                          </button>
-                          <button class="block-friend" type="button">
-                            block
-                          </button>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                   <div id="blockedList" style="display: none; padding: 5px">
                     <div
-                      class="friend"
-                      style="display: flex; align-items: center; padding: 10px"
+                      class="friend flex items-center p-2.5 border"
                     >
                       <img
-                        src="images/profile/blue.png"
+                        src="images/profile/purple.png"
                         alt=""
                         width="100px"
                         height="100px"
                       />
                       <div
-                        class="friend-info"
-                        style="
-                          display: flex;
-                          flex-direction: column;
-                          margin-left: 10px;
-                        "
+                        class="flex flex-col ml-2.5"
                       >
                         <div
-                          class="friend-name"
-                          style="display: flex; align-items: center"
+                          class="flex items-center gap-2"
                         >
-                          Zorro
-                        </div>
+                          <div>Zorro</div>
+                      </div>
                         <div
-                          class="friend-action"
-                          style="
-                            display: flex;
-                            justify-content: flex-start;
-                            margin-top: 10px;
-                          "
+                          class="friend-action flex justify-start gap-1 "
                         >
-                          <button class="block-friend" type="button">
-                            unblock
+                          <button
+                            class="flex justify-center border rounded-sm w-[60px]"
+                            type="button"
+                          >
+                            remove
                           </button>
                         </div>
                       </div>
