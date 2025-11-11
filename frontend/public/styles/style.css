@@ -371,19 +371,19 @@
   /* justify-content: center; */
 }
 
-form {
+/* form {
   display: table;
   padding: 1em;
   border: 1px solid #cccccc;
   border-radius: 1em;
 }
 
-/* label {
+label {
   display: table-cell;
   font-size: 20px;
-} */
+}
 
-/* input {
+input {
   display: table-cell;
   font-size: 20px;
 } */

@@ -52,12 +52,12 @@ let isBlocked = true;
 profileAddRemFriend.addEventListener("click", (event : any) => {
 	if (isFriend == false)
 	{
-		profileAddRemFriend.textContent = "Add friend";
+		profileAddRemFriend.textContent = "Add";
 		isFriend = true;
 	}
 	else
 	{
-		profileAddRemFriend.textContent = "Remove friend";
+		profileAddRemFriend.textContent = "Remove";
 		isFriend = false;
 	}
 });
@@ -202,7 +202,7 @@ function displayPersonalProfile () {
 //header username
 profileUsername.style.display = "flex"; //none for others' view
 //settings menu + settings page
-profileMenuSettings.style.display = "flex"; //none for others' view
+profileMenuSettings.style.display = "block"; //none for others' view
 profileSettingsPage.style.display = "flex"; //none for others' view
 //friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');

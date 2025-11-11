@@ -201,10 +201,10 @@
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="border bg-blue-300"
+                class="table rounded-xl p-1 border bg-blue-300"
               >
                 <p class="flex items-center justify-center">
-                  <label for="reg-avatar">
+                  <label class="table-cell text-xl" for="reg-avatar">
                     <img
                       src="images/profile/grey.png"
                       class="cursor-pointer"
@@ -220,9 +220,9 @@
                   />
                 </p>
                 <p>
-                  <label for="reg-username">Username (login)</label>
+                  <label class="table-cell text-xl" for="reg-username">Username (login)</label>
                   <input
-                    class="bg-white"
+                    class="table-cell text-xl bg-white"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
@@ -230,9 +230,9 @@
                   />
                 </p>
                 <p>
-                  <label for="reg-displayName">Display Name (public)</label>
+                  <label class="table-cell text-xl" for="reg-displayName">Display Name (public)</label>
                   <input
-                    class="bg-white"
+                    class="table-cell text-xl bg-white"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
@@ -240,17 +240,17 @@
                   />
                 </p>
                 <p>
-                  <label for="reg-password">Password</label>
+                  <label class="table-cell text-xl" for="reg-password">Password</label>
                   <input
-                    class="bg-white"
+                    class="table-cell text-xl bg-white"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
                     required
                   />
                 </p>
+                <span class="block h-[1em]"></span>
                 <p class="submitButton">
-                  <span class="block h-[1em]"></span>
                   <button
                     type="submit"
                     id="submitRegButton"
@@ -271,12 +271,12 @@
                 action="http://127.0.0.1:8080"
                 method="post"
                 id="login"
-                class="border bg-purple-300"
+                class="table rounded-xl p-1 border bg-purple-300"
               >
                 <p>
-                  <label for="login-username">Username:</label>
+                  <label class="table-cell text-xl" for="login-username">Username:</label>
                   <input
-                    class="bg-white"
+                    class="table-cell text-xl bg-white"
                     type="text"
                     id="login-username"
                     name="login-user_username"
@@ -284,9 +284,9 @@
                   />
                 </p>
                 <p>
-                  <label for="login-password">Password:</label>
+                  <label class="table-cell text-xl" for="login-password">Password:</label>
                   <input
-                    class="bg-white"
+                   class="table-cell text-xl bg-white"
                     type="password"
                     id="login-password"
                     name="login-user_password"
@@ -400,7 +400,7 @@
                   <div
                     class="flex h-full w-full flex-col items-center justify-center border"
                   >
-                    <form class="bg-teal-200 border" role="updateSettings" id="settings">
+                    <form class="table rounded-xl p-1 border bg-blue-300" role="updateSettings" id="settings">
                       <div class="flex items-center justify-center">
                         <label for="edit-avatar">
                           <img
