@@ -222,6 +222,7 @@ function displayUserProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Eos";
 	profileActions.style.display = "flex"; //flex for others' view
+	matchesPage.style.display = "none";
 //header username
 profileUsername.style.display = "none"; //none for others' view
 //settings menu + settings page

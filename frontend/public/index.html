@@ -5,10 +5,78 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pong</title>
-    <link rel="stylesheet" href="styles/style.css" />
     <link href="dist/output.css" rel="stylesheet" />
 
-    <style></style>
+    <style>
+      .dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+}
+
+ .chat-left__list-dms-item {
+  display: block;
+  background-color: white;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.chat-right__bubble {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+  padding: 1em;
+  gap: 10px;
+  background-color: white;
+  max-width: 100%;
+}
+
+.chat-right__bubble-sent {
+  display: block;
+  position: relative;
+  height: auto;
+  background-color: lightskyblue;
+  max-width: 75%;
+}
+
+.chat-right__bubble-received {
+  display: block;
+  margin-left: auto;
+  position: relative;
+  max-width: 75%;
+  height: auto;
+  justify-content: flex-end;
+  background-color: mediumaquamarine;
+}
+    </style>
   </head>
 
   <body
@@ -599,123 +667,81 @@
                   </div>
                 </div>
                 <div
-                  class="account-profile__page-matches border"
+                  class="flex flex-col gap-2.5"
                   id="matches"
                   style="display: none"
                 >
-                  <div class="account-profile__page-matches-stats">
+                  <div class="grid grid-rows-auto h-full items-center">
                     <div
-                      class="account-profile__page-matches-summary border"
+                      class="flex justify-center w-full border"
                       id="acc-stats"
-                      width="100%"
-                      style="display: flex; justify-content: center"
                     >
                       <strong>Quick Stats</strong>
                     </div>
                     <div
-                      class="statsList border"
-                      style="
-                        display: grid;
-                        grid-template-columns: repeat(4, 1fr);
-                      "
+                      class="grid grid-cols-4 border"
                     >
-                      <div class="stat border">
+                      <div class="text-center p-2.5 border">
                         3
-                        <span class="stat_name">Current Ranking</span>
+                        <span class="block mt-[5px]">Current Ranking</span>
                       </div>
-                      <div class="stat border">
+                      <div class="text-center p-2.5 border">
                         12-10
-                        <span class="stat_name">W-L</span>
+                        <span class="block mt-[5px]">W-L</span>
                       </div>
-                      <div class="stat border">
+                      <div class="text-center p-2.5 border">
                         22
-                        <span class="stat_name">Tot games</span>
+                        <span class="block mt-[5px]">Tot games</span>
                       </div>
-                      <div class="stat border">
+                      <div class="text-center p-2.5 border">
                         54%
-                        <span class="stat_name">Average wins</span>
+                        <span class="block mt-[5px]">Average wins</span>
                       </div>
                     </div>
                   </div>
                   <div
-                    class="acc-matches border"
+                    class="grid grid-rows[50px_1fr] border"
                     id="acc-stats-details"
-                    style="display: grid; grid-template-rows: 50px 1fr"
                   >
                     <div
-                      class="acc-matches__header border"
-                      style="
-                        width: 100%;
-                        display: grid;
-                        grid-template-columns: repeat(3, 1fr);
-                      "
+                      class="flex justify-center w-full border"
+                    >
+                      <strong>Matches</strong>
+                    </div>
+                    <div
+                      class="w-full grid grid-cols-3 border"
                     >
                       <div
-                        class="opponent border"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                        class="flex justify-center items-center border"
                       >
                         opponent
                       </div>
                       <div
-                        class="date border"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                        class="flex justify-center items-center border"
                       >
                         date
                       </div>
                       <div
-                        class="score border"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                       class="flex justify-center items-center border"
                       >
                         score
                       </div>
                     </div>
                     <div
-                      class="acc-matches__content border"
-                      style="
-                        width: 100%;
-                        display: grid;
-                        grid-template-columns: repeat(3, 1fr);
-                      "
+                      class="w-full grid grid-cols-3 border"
                     >
                       <div
-                        class="border"
-                        style="
-                          display: flex;
-                          align-items: center;
-                          padding: 10px;
-                        "
+                        class="flex items-center p-2.5 border"
                       >
                         opponent 1
                       </div>
                       <div
-                        class="border"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                        class="flex items-center p-2.5 border"
                       >
                         5/10/25
                       </div>
                       <div
-                        class="border"
-                        style="
-                          display: flex;
-                          justify-content: center;
-                          align-items: center;
-                        "
+                        class="flex items-center p-2.5 border"
                       >
                         3-2
                       </div>
