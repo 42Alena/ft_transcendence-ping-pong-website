@@ -28,7 +28,6 @@ function displayPage(text: string) : void
 			canvas.style.display = "none";
 			gameisOn = false;
 		}
-		profP.style.display = "none";
 	}
 	else if(text == 'welcome')
 	{
@@ -50,7 +49,6 @@ function displayPage(text: string) : void
 			canvas.style.display = "none";
 			gameisOn = false;
 		}
-		profP.style.display = "none";
 	}
 	else if (text == 'game')
 	{
@@ -72,6 +70,5 @@ function displayPage(text: string) : void
 		accP.style.display = "none";
 		regP.style.display = "none";
 		logP.style.display = "none";
-		profP.style.display = "none";
 	}
 }
