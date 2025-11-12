@@ -18,15 +18,11 @@ chatTab.click();
 function displayList(event : any, text : string) {
   var i, tablinks;
 
-  let tabcontent : any = document.getElementsByClassName("chat-left__list-dms");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  if (text == 'chat')
+   if (text == 'chat')
   {
 	listDmsDiv.classList.add("flex");
 	listDmsDiv.classList.remove("hidden");
@@ -115,14 +111,16 @@ function fillConversationInfo(name : string, avatar : string) {
 
 	avatarDiv.className = "chat-right__header-avatar";
 	avatarDiv.setAttribute('id', 'contact-avatar');
-	avatarDiv.style.width = '45px';
-	avatarDiv.style.height = '45px';
-	avatarDiv.style.overflow = 'hidden';
-	avatarDiv.style.padding = '5px';
+	avatarDiv.classList.add("w-[45px]", "h-[45px]", "overflow-hidden", "p-1.25");
+	// avatarDiv.style.width = '45px';
+	// avatarDiv.style.height = '45px';
+	// avatarDiv.style.overflow = 'hidden';
+	// avatarDiv.style.padding = '5px';
 	avatarImg.src = avatar;
-	avatarImg.style.width = '100%';
-	avatarImg.style.height = '100%';
-	avatarImg.style.objectFit = 'cover';
+	avatarImg.classList.add("w-full", "h-full", "object-cover")
+	// avatarImg.style.width = '100%';
+	// avatarImg.style.height = '100%';
+	// avatarImg.style.objectFit = 'cover';
 	avatarDiv.appendChild(avatarImg);
 	chatInfoDiv.appendChild(avatarDiv);
 
@@ -149,12 +147,8 @@ function addElement(name : string, id : string, avatar : string) {
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
 	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
-    // newDiv.className = "chat-left__list-dms-item border";
 	newDiv.classList.add("flex", "items-center", "gap-2.5", "border", "p-2.5", "bg-white");
-	// newDiv.style.alignItems = "center";
-	// newDiv.style.gap = "10px";
     listDmsDiv.append(newDiv);
 }
 

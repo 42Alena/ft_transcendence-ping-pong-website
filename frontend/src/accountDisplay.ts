@@ -173,18 +173,14 @@ matchesDiv.addEventListener("click", (event : any) => {
 function displayPersonalProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Pallo";
-	// profileActions.style.display = "none"; //flex for others' view
 	profileActions.classList.add("hidden");
 	profileActions.classList.remove("flex");
-//header username
-// profileUsername.style.display = "flex"; //none for others' view
+
 profileUsername.classList.add("flex");
 profileUsername.classList.remove("hidden");
-//settings menu + settings page
-// profileMenuSettings.style.display = "block"; //none for others' view
+
 profileMenuSettings.classList.add("block");
 profileMenuSettings.classList.remove("hidden");
-// profileSettingsPage.style.display = "flex"; //none for others' view
 profileSettingsPage.classList.add("flex");
 profileSettingsPage.classList.remove("hidden");
 
@@ -195,10 +191,7 @@ friendsButtons.forEach((button) => {
   element.classList.add("flex");
   element.classList.remove("hidden");
 });
-profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
-toggle = true;
-displayBlockedFriends();
-// blockButton.style.display = "block";
+profileAvatarImg.src = "images/profile/orange.png";
 blockButton.classList.add("block");
 blockButton.classList.remove("hidden");
 }
@@ -206,32 +199,22 @@ blockButton.classList.remove("hidden");
 function displayUserProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Eos";
-	// profileActions.style.display = "flex"; //flex for others' view
 	profileActions.classList.add("flex");
 	profileActions.classList.remove("hidden");
-	// matchesPage.style.display = "none";
 	matchesPage.classList.add("hidden");
 	matchesPage.classList.remove("flex");
-//header username
-// profileUsername.style.display = "none"; //none for others' view
 profileUsername.classList.add("hidden");
 profileUsername.classList.remove("flex");
-//settings menu + settings page
-// profileMenuSettings.style.display = "none"; //none for others' view
 profileMenuSettings.classList.add("hidden");
 profileMenuSettings.classList.remove("block");
-// profileSettingsPage.style.display = "none"; //none for others' view
 profileSettingsPage.classList.add("hidden");
 profileSettingsPage.classList.remove("flex");
-//friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
   element.classList.add("hidden");
   element.classList.remove("flex");
 });
-// profileFriendsPageButtons.style.display = "none"; //none for others' view
-//change avatar in header
 profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
 blockButton.classList.add("hidden");
 blockButton.classList.remove("block");

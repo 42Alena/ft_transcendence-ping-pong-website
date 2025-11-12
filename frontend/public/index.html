@@ -6,77 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pong</title>
     <link href="dist/output.css" rel="stylesheet" />
-
-    <style>
-      .dropdown {
-        position: relative;
-      }
-
-      .dropdown-menu {
-        display: none;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        position: absolute;
-        z-index: 10;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .dropdown:hover .dropdown-menu {
-        display: block;
-      }
-
-      .dropdown-menu li {
-        padding: 10px;
-      }
-
-      .dropdown-menu li a {
-        text-decoration: none;
-        color: #333;
-      }
-
-      .dropdown-menu li a:hover {
-        background-color: #f0f0f0;
-      }
-
-      .chat-left__list-dms-item {
-        display: block;
-        background-color: white;
-        max-width: 100%;
-        padding: 10px;
-      }
-
-      .chat-right__bubble {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        overflow: auto;
-        padding: 1em;
-        gap: 10px;
-        background-color: white;
-        max-width: 100%;
-      }
-
-      .chat-right__bubble-sent {
-        display: block;
-        position: relative;
-        height: auto;
-        background-color: lightskyblue;
-        max-width: 75%;
-      }
-
-      .chat-right__bubble-received {
-        display: block;
-        margin-left: auto;
-        position: relative;
-        max-width: 75%;
-        height: auto;
-        justify-content: flex-end;
-        background-color: mediumaquamarine;
-      }
-    </style>
   </head>
 
   <body
@@ -158,16 +87,16 @@
             id="chatPage"
           >
             <div class="flex flex-col border">
-              <div class="flex overflow-hidden border bg-[#f1f1f1]">
+              <div class="chat-tab flex overflow-hidden border bg-[#f1f1f1]">
                 <button
-                  class="flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none hover:bg-[#808080] active:bg-[#ccc]"
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
                   id="defaultOpen"
                   onclick="displayList(event, 'chat')"
                 >
                   Chats
                 </button>
                 <button
-                  class="flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none hover:bg-[#808080] active:bg-[#ccc]"
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
                   onclick="displayList(event, 'users')"
                 >
                   Users
