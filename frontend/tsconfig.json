@@ -108,7 +108,14 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+
+    //New settings for frontend (interval = setInterval(draw, 20);)
+    // These settings make the frontend TypeScript compiler use browser (DOM) APIs, so setInterval is typed as a number (the actual browser handle). 
+    // Setting "types": [] disables auto-including ambient @types/* (like Node), preventing accidental NodeJS.Timeout mismatches.
+
+    "lib": ["ES2020", "DOM"],
+    "types": []
   },
   "include": [
     "./src/*.ts"
