@@ -630,7 +630,70 @@
               </div>
             </div>
           </div>
+          <div id="gamePage" class="container"
+          style="display: none; width: 100%; justify-content: center; align-items: center; background-color: black;">
+          <div id="setupGame"
+            style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
+            <div id="setupNumberPlayers"
+              style="display: flex; flex-direction: row; width: 100%; height: 100%; gap: 10px; justify-content: center; align-items: center;">
+              <button type="button" name="setOnePlayerButton" onclick="setOnePlayer(true)">
+                One Player
+              </button>
+              <button type="button" name="setTwoPlayerButton" onclick="setOnePlayer(false)">
+                Two Players
+              </button>
+            </div>
+            <div id="setUpPlayers"
+              style="display: none; flex-direction: column; height: 100%; justify-content: center; align-items: center; gap: 10px">
+              <div id="setupDisplayName"
+                style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px">
+                <div id="displayNamePlayerOne">
+                  <label for="namePlayerOne" style="color: white;">Player one</label>
+                  <div style="display: flex; flex-direction: row;">
+                    <input id="namePlayerOne" type="text" name="game-player-name-1"
+                      placeholder="Enter your display name" style="flex-grow:2;" />
+                    <button type="button" onclick="saveDisplayName(1)">OK</button>
+                  </div>
+                </div>
+                <div id="displayNamePlayerTwo" style="display: block;">
+                  <label for="namePlayerTwo" style="color: white; display: block;">Player two</label>
+                  <div style="display: flex; flex-direction: row;">
+                    <input class="input-d" id="namePlayerTwo" type="text" name="game-player-name-2"
+                      placeholder="Enter your display name" />
+                    <button type="button" onclick="saveDisplayName(2)">OK</button>
+                  </div>
+                </div>
+              </div>
+              <div id="Setinstructions" style="display: none;">
+                PLAYER 1 - W and S <br />
+                PLAYER 2 - ARROW KEYS <br />
+                P - PAUSE <br />
+                ESC - QUIT <br />
+              </div>
+              <div id="startButton">
+                <button id="runButton" style="display: none;">Start game</button>
+              </div>
+            </div>
+          </div>
+          <div id="gameScreen"
+            style="display: none; justify-content: center; align-items: center; width: 640px; height: 480px;">
+            <canvas id="myCanvas" style="display: none; background-color: black;border: 1px solid blue" width="640"
+              height="480"></canvas>
+          </div>
+          <div id="gameOverScreen"
+            style="display: none; flex-direction: column; justify-content: center; align-items: center; width: 640px; height: 480px; background-color: paleturquoise;">
+            <div id="result"
+              style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+              GAME OVER
+              <div id="winner-text"></div>
+            </div>
+            <div id="nextGame">
+              <button type="button">Play Again</button>
+              <button type="button">New Game</button>
+            </div>
+          </div>
         </div>
+      </div>
       </section>
     </main>
     <footer class="flex justify-center border bg-[#90ee90]">
@@ -641,12 +704,11 @@
         <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
       </div>
     </footer>
-    <!-- insert scripts  here like this -->
-    <script src="dist/accountDisplay.js"></script>
+      <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>
-    <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/gameLogic.js"></script>
+  <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
-    <!-- <script src=""></script> -->
-  </body>
+    </body>
 </html>

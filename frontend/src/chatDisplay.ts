@@ -58,7 +58,7 @@ function addBubble(role : string, content : string)
 	bubbleDiv.appendChild(historyConversation);
 }
 
-function dispalyConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
+function displayConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
 
 	userProfileDiv.classList.add("hidden");
 	userProfileDiv.classList.remove("block");
@@ -147,7 +147,7 @@ function addElement(name : string, id : string, avatar : string) {
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	newDiv.onclick = function() { dispalyConversationHistory(id, chatList, name, avatar)};
+	newDiv.onclick = function() { displayConversationHistory(id, chatList, name, avatar)};
 	newDiv.classList.add("flex", "items-center", "gap-2.5", "border", "p-2.5", "bg-white");
     listDmsDiv.append(newDiv);
 }
