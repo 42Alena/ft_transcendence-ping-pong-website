@@ -27,3 +27,5 @@ fi
 
 echo "Database initialized at $DB_PATH"
 echo "You can start the server now."
+
+

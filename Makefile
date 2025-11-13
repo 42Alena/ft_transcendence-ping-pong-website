@@ -1,14 +1,20 @@
 .PHONY: all setup check-tools frontend backend db backend-tests \
         up down logs reset-db ps rebuild-backend db-tables db-ping\
-		 db-fill db-wipe-users db-show-users db-count
+		 db-fill db-wipe-users db-show-users db-count\
+		 git-help git-main-update git-branch-update git-stats git-changes
 SHELL := /bin/bash
 
 FRONTEND_DIR := frontend
 BACKEND_DIR  := backend
 DB_DIR       := backend/db
+DB_FILE := pong.db
 DB_FILL 	 := $(DB_DIR)/test_fill_users_dev.sql
-DB         	 := $(DB_DIR)/pong.db
+DB      := $(abspath $(DB_DIR)/$(DB_FILE))
 DC           := docker compose
+ 
+# git
+GIT_REMOTE ?= origin
+GIT_MAIN   ?= main
 
 # Detect lockfiles to prefer reproducible installs
 FRONT_LOCK := $(FRONTEND_DIR)/package-lock.json
@@ -39,15 +45,27 @@ backend:
 frontend:
 	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
 
-db: check-tools
-	@rm $(DB_DIR)/pong.db*
-	@chmod +x "$(DB_DIR)/setup_db.sh"
-	cd "$(DB_DIR)" && ./setup_db.sh
+# old
+# db: check-tools
+# 	@rm $(DB_DIR)/pong.db*
+# 	@chmod +x "$(DB_DIR)/setup_db.sh"
+# 	cd "$(DB_DIR)" && ./setup_db.sh
 	
 # runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
-backend-tests:
-	cd "$(BACKEND_DIR)" && npm run backend-tests
+# backend-tests:
+# 	cd "$(BACKEND_DIR)" && npm run backend-tests
 
+
+db: check-tools
+	@mkdir -p "$(DB_DIR)"
+	@rm -f "$(DB_DIR)/$(DB_FILE)" "$(DB_DIR)/$(DB_FILE)-wal" "$(DB_DIR)/$(DB_FILE)-shm"
+	@DB_PATH="$(DB)" "$(DB_DIR)/setup_db.sh"
+
+tests: db
+	@BASE_URL=http://localhost:3000 backend/tests/users.sh
+
+# tests: db
+# 	cd "$(BACKEND_DIR)" &&  ./users.sh
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:
 	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }
@@ -111,4 +129,53 @@ db-show-users:
 db-count:
 	@sqlite3 "$(DB)" "SELECT COUNT(*) AS users FROM users;"
 
-# === end Database: quick dev/test commands ===
+
+
+# GIT HELPFULL COMMANDS
+
+
+git-help:
+	@cur=$$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "?"); \
+	echo "Current branch: $$cur"; \
+	echo ""; \
+	printf "  %-20s %s\n" "git-main-update"   "(on $(GIT_MAIN)) Fetch --prune + fast-forward $(GIT_MAIN)"; \
+	printf "  %-20s %s\n" "git-branch-update" "(on feature) Update $(GIT_MAIN), then merge $(GIT_MAIN) → current branch"; \
+	printf "  %-20s %s\n" "git-stats"         "(any branch) Diff stats vs $(GIT_REMOTE)/$(GIT_MAIN) ... HEAD"; \
+	printf "  %-20s %s\n" "git-changes"       "(any branch) List changed files vs $(GIT_REMOTE)/$(GIT_MAIN) ... HEAD"; \
+	echo ""; \
+	echo "Notes: no rebase, no force; main stays linear (pull --ff-only)."
+
+# Must be run on 'main'. Fast-forward only.
+git-main-update:
+	@set -e; \
+	cur=$$(git rev-parse --abbrev-ref HEAD); \
+	[ "$$cur" = "$(GIT_MAIN)" ] || { echo "✖ You must be on '$(GIT_MAIN)' (now: $$cur)"; exit 1; }; \
+	git fetch --prune $(GIT_REMOTE); \
+	git pull --ff-only $(GIT_REMOTE) $(GIT_MAIN); \
+	echo "✔ $(GIT_MAIN) is up-to-date with $(GIT_REMOTE)/$(GIT_MAIN)"
+
+# Run on a feature branch: update main, then merge main → current branch (no rebase/force).
+git-branch-update:
+	@set -e; \
+	if ! git diff --quiet || ! git diff --cached --quiet; then echo "✖ Working tree not clean. Commit or stash first."; exit 1; fi; \
+	branch=$$(git rev-parse --abbrev-ref HEAD); \
+	[ "$$branch" != "$(GIT_MAIN)" ] || { echo "✖ You are on '$(GIT_MAIN)'. Use 'make git-main-update' instead."; exit 1; }; \
+	git fetch --prune $(GIT_REMOTE); \
+	(git switch $(GIT_MAIN) >/dev/null 2>&1 || git checkout $(GIT_MAIN) >/dev/null); \
+	git pull --ff-only $(GIT_REMOTE) $(GIT_MAIN); \
+	(git switch "$$branch" >/dev/null 2>&1 || git checkout "$$branch" >/dev/null); \
+	git merge --no-ff --no-edit $(GIT_MAIN) || { echo "⚠ Merge conflicts. Resolve and commit."; exit 1; }; \
+	echo "✔ merged $(GIT_MAIN) → $$branch"
+
+# Read-only: short summary like "3 files changed, 12 insertions(+), 7 deletions(-)"
+git-stats:
+	@set -e; \
+	git fetch --prune $(GIT_REMOTE) >/dev/null; \
+	git diff --shortstat $(GIT_REMOTE)/$(GIT_MAIN)...HEAD || true
+
+# Read-only: list changed files with status (A/M/D/R...)
+git-changes:
+	@set -e; \
+	git fetch --prune $(GIT_REMOTE) >/dev/null; \
+	echo "Files changed vs $(GIT_REMOTE)/$(GIT_MAIN):"; \
+	git diff --name-status $(GIT_REMOTE)/$(GIT_MAIN)...HEAD || true

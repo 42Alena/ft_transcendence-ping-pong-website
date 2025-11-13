@@ -1,7 +1,9 @@
-# 0. Make it executable: chmod +x backend/tests/users.sh
-# 1. run in terminal: backend/tests/users.sh
-
 #!/usr/bin/env bash
+
+# 0. Make it executable: chmod +x backend/tests/users.sh
+#  1. in 1.terminal make backend
+# 2. in 2.terminal: make backend-tests
+
 # backend/tests/users.sh
 set -euo pipefail
 
@@ -94,88 +96,88 @@ if [[ -z "${BOB_ID:-}" || -z "${CAROL_ID:-}" ]]; then
 fi
 echo
 
-# echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 8) GET /users/me/friends (as Alice) — expect empty initially ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 9) Alice adds Bob and Carol → POST /friends/:id ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
-# curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 9) Alice adds Bob and Carol → POST /friends/:id ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
+curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 10) GET /users/me/friends (as Alice) — should list Bob & Carol ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 10) GET /users/me/friends (as Alice) — should list Bob & Carol ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 11) Idempotency: re-add same friends — expect 200/204 and no duplicates ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
-# curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 11) Idempotency: re-add same friends — expect 200/204 and no duplicates ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$BOB_ID"   -b "$ALICE_COOKIE" | jq_or_cat || true
+curl -sS -X POST "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 12) Bob adds Alice (to make Alice↔Bob mutual) ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 12) Bob adds Alice (to make Alice↔Bob mutual) ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 13) GET /users/me/friends (as Bob) — should include Alice ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" | jq_or_cat
-# echo
+echo "=== 13) GET /users/me/friends (as Bob) — should include Alice ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 14) Alice removes Carol → DELETE /friends/:id ==="
-# hr
-# curl -sS -X DELETE "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 14) Alice removes Carol → DELETE /friends/:id ==="
+hr
+curl -sS -X DELETE "$BASE_URL/friends/$CAROL_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 15) GET /users/me/friends (as Alice) — Carol should be gone ==="
-# hr
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 15) GET /users/me/friends (as Alice) — Carol should be gone ==="
+hr
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
-# echo "=== 16) GET /users/me/blocks (as Alice) — expect empty initially ==="
-# hr
-# curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 16) GET /users/me/blocks (as Alice) — expect empty initially ==="
+hr
+curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 17) Alice blocks Bob → POST /blocks/:id ==="
-# hr
-# curl -sS -X POST "$BASE_URL/blocks/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 17) Alice blocks Bob → POST /blocks/:id ==="
+hr
+curl -sS -X POST "$BASE_URL/blocks/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 18) GET /users/me/blocks (as Alice) — should list Bob ==="
-# hr
-# curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 18) GET /users/me/blocks (as Alice) — should list Bob ==="
+hr
+curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 19) Alice tries to add Bob again while blocked — expect 400/403 ==="
-# hr
-# curl -i -sS -X POST "$BASE_URL/friends/$BOB_ID" -b "$ALICE_COOKIE" | sed -n '1,20p' || true
-# echo
+echo "=== 19) Alice tries to add Bob again while blocked — expect 400/403 ==="
+hr
+curl -i -sS -X POST "$BASE_URL/friends/$BOB_ID" -b "$ALICE_COOKIE" | sed -n '1,20p' || true
+echo
 
-# echo "=== 20) Bob tries to add Alice while blocked — expect 400/403 ==="
-# hr
-# curl -i -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | sed -n '1,20p' || true
-# echo
+echo "=== 20) Bob tries to add Alice while blocked — expect 400/403 ==="
+hr
+curl -i -sS -X POST "$BASE_URL/friends/$ALICE_ID" -b "$BOB_COOKIE" | sed -n '1,20p' || true
+echo
 
-# echo "=== 21) Alice unblocks Bob → DELETE /blocks/:id ==="
-# hr
-# curl -sS -X DELETE "$BASE_URL/blocks/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 21) Alice unblocks Bob → DELETE /blocks/:id ==="
+hr
+curl -sS -X DELETE "$BASE_URL/blocks/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 22) GET /users/me/blocks (as Alice) — should be empty again ==="
-# hr
-# curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
-# echo
+echo "=== 22) GET /users/me/blocks (as Alice) — should be empty again ==="
+hr
+curl -sS "$BASE_URL/users/me/blocks" -b "$ALICE_COOKIE" | jq_or_cat || true
+echo
 
-# echo "=== 23) Now adding Bob should succeed again (sanity check) ==="
-# hr
-# curl -sS -X POST "$BASE_URL/friends/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
-# curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
-# echo
+echo "=== 23) Now adding Bob should succeed again (sanity check) ==="
+hr
+curl -sS -X POST "$BASE_URL/friends/$BOB_ID" -b "$ALICE_COOKIE" | jq_or_cat || true
+curl -sS "$BASE_URL/users/me/friends" -b "$ALICE_COOKIE" | jq_or_cat
+echo
 
 
 echo "✅ Done."

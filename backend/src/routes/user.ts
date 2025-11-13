@@ -57,7 +57,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			return sendOK(reply, toUserPublic(user))
 		});
 
-/* 
+
 
 	//____________________/ME: FRIENDS_______________________
 
@@ -73,6 +73,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 		return sendOK(reply, myFriends.map(toUserPublic));
 	});
 
+
 	//____________________/ME: BLOKS_______________________
 
 	//all who I blocked
@@ -86,42 +87,110 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 		return sendOK(reply, myBlocks.map(toUserPublic));
 	});
- */
+
 
 	// ______________FRIENDS: ADD: POST /friends/:id_____________
 
-
-/* 	fastify.post<{ Params: API.TargetIdParams }>(
+	//add friend
+	fastify.post<{ Params: API.TargetIdParams }>(
 		"/friends/:id",
 		authRequiredOptions,
 		async (req, reply) => {
 
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-			const {id: friendId} = req.params;  // friendId: string (UserId)
+			const { id: targetId } = req.params;  // targetId : string (UserId)
 
-			if (!await userManager.existsById(friendId)) {
-				return sendError(reply, "User not found", "id", 404);
-			}
+			const result = await userManager.addFriend(meId, targetId);
 
-			await userManager.addFriend(meId, friendId);
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
 
-			return sendNoContent(reply);
-		}); */
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
+			if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
+
+
+		});
 
 
 
 
 	// ______________FRIENDS:    DELETE /friends/:id_____________
+
+	// delete friend
+	fastify.delete<{ Params: API.TargetIdParams }>(
+		"/friends/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.removeFriend(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot remove yourself", "id", 400);
+
+		});
+
+
 	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
+
+	//block user
+	fastify.post<{ Params: API.TargetIdParams }>(
+		"/blocks/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.blockUser(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot block yourself", "id", 400);
+
+		});
+
+
 	// ______________BLOCKS:    DELETE /blocks/:id_____________
+
+	//unblock user
+	fastify.delete<{ Params: API.TargetIdParams }>(
+		"/blocks/:id",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { id: targetId } = req.params;  // targetId : string (UserId)
+
+			const result = await userManager.unblockUser(meId, targetId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot unblock yourself", "id", 400);
+
+		});
 
 	//_________________SETTINGS: CHANGE AVATAR____________
 	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD ____________
 	//_________________SETTINGS: DELETE USER____________
-	
-	
+
+
 	//_________________ONLINE/OFFLINE____________
 
 }

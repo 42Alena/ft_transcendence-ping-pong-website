@@ -40,9 +40,71 @@ Not required for evaluation — used for organization and pull request preparati
 
 	- loginSession id: set expire date?
 
+	-TODO ROUTES: 
 
+	// ______________FRIENDS:    DELETE /friends/:id_____________
+	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
+	// ______________BLOCKS:    DELETE /blocks/:id_____________
+
+	//_________________SETTINGS: CHANGE AVATAR____________
+	//_________________SETTINGS: CHANGE DISPLAY NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: DELETE USER____________
+	
+	
+	//_________________ONLINE/OFFLINE____________
+
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
 
+## BACKEND
+	+ types for add/delete friends
+	+ types for block/unblock
+	+ isBlockedByMeOrByOther()
+	-/+  addFriend() added more checks, added more return types
+	+ /friends/:id"  Route to add friend
+
+### UserManager
+	+ removeFriend()
+	+/- updated blockUser() with type and check
+	+/- updated unblockUser() with type and check
+
+### /user routes
+	+ delete /friends/:id  => delete friend
+	+ /blocks/:id"   => block user
+
+### Makefile
+	+ helpful git commands: to update main branch/ to update banch(update main and then branch)/git stats
+	+/- updated `db`
+	+ change path for db for absolute
+	+  `tests` 
+
+## FRONTEND
+ 	+  settings to tsconfig.json file:
+	```bash  
+    //New settings for frontend (interval = setInterval(draw, 20);)
+    // These settings make the frontend TypeScript compiler use browser (DOM) APIs, so setInterval is typed as a number (the actual browser handle). 
+    // Setting "types": [] disables auto-including ambient @types/* (like Node), preventing accidental NodeJS.Timeout mismatches.
+
+    "lib": ["ES2020", "DOM"],
+    "types": []
+	```
+
+
+### TESTS
+```
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make backend-tests
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 ## DB
 	-user table; deleted 'last seen'
 	-sessions: added created at + ping update
@@ -91,12 +153,6 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## 📘 DOCUMENTATION
 | jq  => formats JSON nicely; without it you’ll see one long line.
-
-## 🔗 LINKS / HELP
-
-
-
-
 
 
 --------------------------
