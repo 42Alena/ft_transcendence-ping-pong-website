@@ -19,10 +19,6 @@ function displayPage(text: string) : void
 		gameP.classList.remove("flex");
 		setGame.classList.add("hidden");
 		setGame.classList.remove("block");
-		playersNum.classList.add("hidden");
-		playersNum.classList.remove("flex");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
@@ -49,10 +45,6 @@ function displayPage(text: string) : void
 		gameP.classList.remove("flex");
 		setGame.classList.add("hidden");
 		setGame.classList.remove("block");
-		playersNum.classList.add("hidden");
-		playersNum.classList.remove("flex");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
@@ -67,29 +59,12 @@ function displayPage(text: string) : void
 			gameisOn = false;
 		}
 	}
-	else if (text == 'game')
+	else if (text == 'game' || text == 'tournament')
 	{
+		console.log(`${text}`);
 		gameP.classList.add("flex");
 		gameP.classList.remove("hidden");
-		setGame.classList.add("block");
-		setGame.classList.remove("hidden");
-		playersNum.classList.add("flex");
-		playersNum.classList.remove("hidden");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
-		gameOverDiv.classList.add("hidden");
-		gameOverDiv.classList.remove("flex");
-		instruction.classList.add("hidden");
-  		instruction.classList.remove("block");
-		runButton.classList.add("hidden");
-  		runButton.classList.remove("block");
-		if (gameisOn)
-		{
-			clearInterval(interval);
-			canvas.classList.add("hidden");
-			canvas.classList.remove("block");
-			gameisOn = false;
-		}
+		setGameType(text);
 		welcP.classList.add("hidden");
 		welcP.classList.remove("flex");
 		chatP.classList.remove("grid");

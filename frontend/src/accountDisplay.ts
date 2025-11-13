@@ -67,10 +67,6 @@ function setAccountPage(text : string)
 		gameP.classList.remove("flex");
 		setGame.classList.add("hidden");
 		setGame.classList.remove("block");
-		playersNum.classList.add("hidden");
-		playersNum.classList.remove("flex");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
@@ -96,10 +92,6 @@ function setAccountPage(text : string)
 		gameP.classList.remove("flex");
 		setGame.classList.add("hidden");
 		setGame.classList.remove("block");
-		playersNum.classList.add("hidden");
-		playersNum.classList.remove("flex");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
@@ -130,10 +122,6 @@ function setAccountPage(text : string)
 		gameP.classList.remove("flex");
 		setGame.classList.add("hidden");
 		setGame.classList.remove("block");
-		playersNum.classList.add("hidden");
-		playersNum.classList.remove("flex");
-		alias.classList.add("hidden");
-		alias.classList.remove("flex");
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");

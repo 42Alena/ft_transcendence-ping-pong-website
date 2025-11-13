@@ -5,14 +5,20 @@ let pageIndex = 1;
 let displayNamePlayerOne : string;
 let displayNamePlayerTwo : string;
 
-
 //setup game
-const playersNum : any = document.getElementById("setupNumberPlayers");
-const alias : any = document.getElementById("setUpPlayers");
+const setGame : any = document.getElementById("setUpGame");
+const aliasPage : any = document.getElementById("setUpPlayers");
+const aliasPlayerOneDiv : any = document.getElementById("aliasPlayerOne");
+const aliasPlayerTwoDiv : any = document.getElementById("aliasPlayerTwo");
+const aliasPlayerThreeDiv : any = document.getElementById("aliasPlayerThree");
+const aliasPlayerFourDiv : any = document.getElementById("aliasPlayerFour");
+
+const aliasPlayerOneInput : any = document.getElementById("namePlayerOne");
+const aliasPlayerTwoInput : any = document.getElementById("namePlayerTwo");
+const aliasPlayerThreeInput : any = document.getElementById("namePlayerThree");
+const aliasPlayerFourInput : any = document.getElementById("namePlayerFour");
+
 const instruction : any = document.getElementById("Setinstructions");
-const setGame : any = document.getElementById("setupGame");
-const inputPlayerOne : any = document.getElementById("namePlayerOne");
-const inputNamePlayerTwo : any = document.getElementById("namePlayerTwo");
 const gameScreenDiv : any = document.getElementById("gameScreen");
 const resultDiv : any = document.getElementById("result");
 const inputFieldPlayerOne : any = document.getElementById("displayNamePlayerOne")
@@ -20,80 +26,180 @@ const inputPlayerTwo : any = document.getElementById("displayNamePlayerTwo");
 const winnerTextDiv : any = document.getElementById("winner-text");
 let enableAI : boolean = true;
 let gameisOn : boolean = false;
+let isTournament : boolean;
 
-function setOnePlayer(value : boolean)
+function setGameType(text : string)
 {
-  //reset
-  inputPlayerOne.value = "";
-  inputNamePlayerTwo.value = "";
-  inputPlayerOne.disabled = false;
-  inputNamePlayerTwo.disabled = false;
-  if (value == true)
+  if (text == "game")
+    isTournament = false;
+  else
+    isTournament = true;
+  console.log(`${isTournament}`);
+  setGame.classList.add("flex");
+  setGame.classList.remove("hidden");
+  aliasPage.classList.add("flex");
+  aliasPage.classList.remove("hideen");
+  aliasSelection();
+  gameOverDiv.classList.add("hidden");
+  gameOverDiv.classList.remove("flex");
+  instruction.classList.add("hidden");
+  instruction.classList.remove("block");
+  runButton.classList.add("hidden");
+  runButton.classList.remove("block");
+  if (gameisOn)
   {
-    inputPlayerTwo.classList.add("hidden");
-    inputPlayerTwo.classList.remove("block");
-    enableAI = true;
-  }
-  else 
-  {
-    enableAI = false;
-    inputPlayerTwo.classList.add("block");
-    inputPlayerTwo.classList.remove("hidden");
-  }
-  playersNum.classList.add("hidden");
-  playersNum.classList.remove("flex");
-  alias.classList.add("flex");
-  alias.classList.remove("hidden");
-  setAlias();
-}
-
-function setAlias() {
-  if (enableAI)
-  {
-    displayNamePlayerTwo = "AI";
+    clearInterval(interval);
+    canvas.classList.add("hidden");
+    canvas.classList.remove("block");
+    gameisOn = false;
   }
 }
 
-function showStartButton() {
-  runButton.classList.add("block");
-  runButton.classList.remove("hidden");
-}
-
-function saveDisplayName(player : number) {
-  if (player == 1)
+function aliasSelection()
+{
+  if (isTournament == false)
   {
-    displayNamePlayerOne = inputPlayerOne.value;
-    inputPlayerOne.disabled = true;
+    aliasPlayerThreeDiv.classList.add("hidden");
+    aliasPlayerThreeDiv.classList.remove("block");
+    aliasPlayerFourDiv.classList.add("hidden");
+    aliasPlayerFourDiv.classList.remove("block");
   }
   else
   {
-    displayNamePlayerTwo = inputNamePlayerTwo.value;
-    inputNamePlayerTwo.disabled = true;
-  }
-
-  if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
-  {
-    setTimeout(showStartButton, 1000);
-    instruction.classList.add("block");
-    instruction.classList.remove("hidden");
+    aliasPlayerThreeDiv.classList.add("block");
+    aliasPlayerThreeDiv.classList.remove("hidden");
+    aliasPlayerFourDiv.classList.add("block");
+    aliasPlayerFourDiv.classList.remove("hidden");
   }
 }
 
-inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
-	if (event.key == "Enter")
-	{
-		displayNamePlayerOne = inputPlayerOne.value;
-    saveDisplayName(1);
-	}
-});
+function turnOn(activeButton : any, offButtonId : any, playerNumber : string)
+{
+  const offButton : any = document.getElementById(offButtonId);
 
-inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
-	if (event.key == "Enter")
-	{
-		displayNamePlayerTwo = inputNamePlayerTwo.value;
-    saveDisplayName(2);
-	}
-});
+  activeButton.classList.remove('bg-green-300', 'hover:bg-green-500');
+  activeButton.classList.add('bg-green-600', 'hover:bg-green-700');
+  
+  offButton.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+  offButton.classList.add('bg-gray-300', 'hover:bg-gray-500');
+
+  switch (playerNumber)
+  {
+    case "playerOne":
+      aliasPlayerOneInput.value = "AI";
+      break;
+    case "playerTwo":
+      aliasPlayerTwoInput.value = "AI";
+      break;
+    case "playerThree":
+      aliasPlayerThreeInput.value = "AI";
+      break;
+    case "playerFour":
+      aliasPlayerFourInput.value = "AI";
+      break;
+  }
+
+}
+
+function turnOff(activeButton : any, onButtonId : any, playerNumber : string)
+{
+  const onButton : any = document.getElementById(onButtonId);
+
+  activeButton.classList.remove('bg-gray-300', 'hover:bg-gray-500');
+  activeButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
+
+  onButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+  onButton.classList.add('bg-green-300', 'hover:bg-green-500');
+
+  switch (playerNumber)
+  {
+    case "playerOne":
+      aliasPlayerOneInput.value = "";
+      break;
+    case "playerTwo":
+      aliasPlayerTwoInput.value = "";
+      break;
+    case "playerThree":
+      aliasPlayerThreeInput.value = "";
+      break;
+    case "playerFour":
+      aliasPlayerFourInput.value = "";
+      break;
+  }
+}
+// function setOnePlayer(value : boolean)
+// {
+//   //reset
+//   inputPlayerOne.value = "";
+//   inputNamePlayerTwo.value = "";
+//   inputPlayerOne.disabled = false;
+//   inputNamePlayerTwo.disabled = false;
+//   if (value == true)
+//   {
+//     inputPlayerTwo.classList.add("hidden");
+//     inputPlayerTwo.classList.remove("block");
+//     enableAI = true;
+//   }
+//   else 
+//   {
+//     enableAI = false;
+//     inputPlayerTwo.classList.add("block");
+//     inputPlayerTwo.classList.remove("hidden");
+//   }
+//   playersNum.classList.add("hidden");
+//   playersNum.classList.remove("flex");
+//   alias.classList.add("flex");
+//   alias.classList.remove("hidden");
+//   setAlias();
+// }
+
+// function setAlias() {
+//   if (enableAI)
+//   {
+//     displayNamePlayerTwo = "AI";
+//   }
+// }
+
+// function showStartButton() {
+//   runButton.classList.add("block");
+//   runButton.classList.remove("hidden");
+// }
+
+// function saveDisplayName(player : number) {
+//   if (player == 1)
+//   {
+//     displayNamePlayerOne = inputPlayerOne.value;
+//     inputPlayerOne.disabled = true;
+//   }
+//   else
+//   {
+//     displayNamePlayerTwo = inputNamePlayerTwo.value;
+//     inputNamePlayerTwo.disabled = true;
+//   }
+
+//   if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
+//   {
+//     setTimeout(showStartButton, 1000);
+//     instruction.classList.add("block");
+//     instruction.classList.remove("hidden");
+//   }
+// }
+
+// inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
+// 	if (event.key == "Enter")
+// 	{
+// 		displayNamePlayerOne = inputPlayerOne.value;
+//     saveDisplayName(1);
+// 	}
+// });
+
+// inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
+// 	if (event.key == "Enter")
+// 	{
+// 		displayNamePlayerTwo = inputNamePlayerTwo.value;
+//     saveDisplayName(2);
+// 	}
+// });
 
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
@@ -383,10 +489,10 @@ function resetGame() {
 const runButton : any = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
 
-  alias.classList.add("hidden");
-  alias.classList.remove("flex");
-  playersNum.classList.add("hidden");
-  playersNum.classList.remove("flex");
+  aliasPage.classList.add("hidden");
+  aliasPage.classList.remove("flex");
+  // playersNum.classList.add("hidden");
+  // playersNum.classList.remove("flex");
   instruction.classList.add("hidden");
   instruction.classList.remove("block");
   setGame.classList.add("hidden");
