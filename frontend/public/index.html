@@ -649,7 +649,7 @@
             >
               <div
                 id="setupNumberPlayers"
-                class="gap-2.5 flex h-full w-full flex-row items-center justify-center"
+                class="flex h-full w-full flex-row items-center justify-center gap-2.5"
               >
                 <button
                   class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
@@ -670,11 +670,11 @@
               </div>
               <div
                 id="setUpPlayers"
-                class="gap-2.5 hidden h-full flex-col items-center justify-center"
+                class="hidden h-full flex-col items-center justify-center gap-2.5"
               >
                 <div
                   id="setupDisplayName"
-                  class="gap-2.5 flex flex-row items-center justify-center"
+                  class="flex flex-row items-center justify-center gap-2.5"
                 >
                   <div id="displayNamePlayerOne" class="block">
                     <label for="namePlayerOne" class="text-black"
@@ -688,7 +688,11 @@
                         placeholder="Enter your display name"
                         class="flex-2 bg-white"
                       />
-                      <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(1)">
+                      <button
+                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                        type="button"
+                        onclick="saveDisplayName(1)"
+                      >
                         <div>OK</div>
                       </button>
                     </div>
@@ -705,7 +709,11 @@
                         name="game-player-name-2"
                         placeholder="Enter your display name"
                       />
-                       <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(2)">
+                      <button
+                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                        type="button"
+                        onclick="saveDisplayName(2)"
+                      >
                         <div>OK</div>
                       </button>
                     </div>
@@ -718,8 +726,12 @@
                   ESC - QUIT <br />
                 </div>
                 <div id="startButton">
-                  <button id="runButton" class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
->Start game</button>
+                  <button
+                    id="runButton"
+                    class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  >
+                    Start game
+                  </button>
                 </div>
               </div>
             </div>
@@ -746,10 +758,18 @@
                 <div id="winner-text"></div>
               </div>
               <div id="nextGame" class="flex flex-row gap-2.5">
-                <button type="button" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
->Play Again</button>
-                <button type="button" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
->New Game</button>
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Play Again
+                </button>
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  New Game
+                </button>
               </div>
             </div>
           </div>
