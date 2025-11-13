@@ -9,7 +9,7 @@ import { User } from './User';           // class used only here
 import { userFromDbRow, userToDbRow } from '../mappers/user_db';
 import { generateId } from '../utils/randomId';
 import { hashPassword } from '../utils/password';
-import { normalizeName, validateName } from '../utils/validators';
+import { normalizeName, validateName, validatePassword } from '../utils/validators';
 
 export class UserManager {
 
@@ -320,13 +320,45 @@ export class UserManager {
 
 		return { ok: true };
 	};
+	
+	
+	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+	
+		async changePassword(
+			meId: Domain.UserId,
+			newPassword: Domain.PasswordPlain,
+		): Promise<Domain.ChangePasswordResult> {
+	
+	
+			const me = await this.getUserById(meId);
+			if (!me)
+				return { ok: false, reason: "not_me" };
 
+			const validationError = validatePassword(newPassword, me.username, me.displayName);
+			if (validationError) {
+				return { ok: false, reason: "weak_password",  message: validationError, };
+			}
+			
+			const hashedPassword = hashPassword(newPassword)
+			
+			console.log("password", newPassword, hashedPassword);  
+
+			//update
+			await this.dbTableUser()
+				.update( {passwordHash: hashedPassword})
+				.where({ id: meId });
+	
+			return { ok: true };
+		};
+	
 
 
 
 
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
-	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+
+
+	
 	//_________________/ME/SETTINGS: DELETE USER____________
 
 

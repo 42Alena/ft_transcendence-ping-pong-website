@@ -54,8 +54,7 @@ Not required for evaluation — used for organization and pull request preparati
 	-TODO ROUTES: 
 
 	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD ____________
 	//_________________SETTINGS: DELETE USER____________
 	
 	//_________________ONLINE/OFFLINE____________
@@ -67,8 +66,14 @@ Not required for evaluation — used for organization and pull request preparati
 ## BACKEND
 ### UserManager
 	+ changeDisplayName()
+	+ changePassword()
+
 ### User_routes
 	+ To change Display Name: /users/me/display-name
+	
+### domain types
+	+ ChangeDomainNameResult
+	+ ChangePasswordResult
 
 ## FRONTEND
 

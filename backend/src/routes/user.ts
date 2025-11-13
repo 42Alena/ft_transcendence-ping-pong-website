@@ -197,7 +197,6 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	Uses in UserManager: changeDisplayName(userId, newDisplayName)
 	// reason: "not_me" |  "taken_displayname" | "weak_displayname"};
 	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH */
-
 	fastify.patch("/users/me/display-name", authRequiredOptions, async (req, reply) => {
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
@@ -229,10 +228,52 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 	});
 
+	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+	/* 
+	Change password
+Route: PATCH /users/me/password
+Auth: required
+Body: { "currentPassword": "...", "newPassword": "..." }
+Checks:
+verify currentPassword against stored hash
+validate newPassword (min length, etc.)
+hash new password, save
+optionally invalidate all other login sessions
+Uses in UserManager: changePassword(userId, currentPassword, newPassword)
+	
+	*/
+	fastify.patch("/users/me/change-password", authRequiredOptions, async (req, reply) => {
 
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+
+		const { displayName: newDisplayName } = req.body as { displayName: API.DisplayName };
+		console.log('Change display name', req.body)
+
+
+		if (!newDisplayName) { return sendError(reply, "No display name", "displayName") }
+
+
+		const result = await userManager.changeDisplayName(meId, newDisplayName);
+
+		if (result.ok)
+			return sendNoContent(reply);                  // 204
+
+		// map domain reasons to HTTP
+		if (result.reason === "not_me") return sendError(reply, "User not found", "id", 404);
+
+		if (result.reason === "taken_displayname") return sendError(reply, "Displayname is taken", "displayname", 409);
+
+		if (result.reason === "weak_displayname") {
+			return sendError(reply,
+				result.message ?? "Displayname is weak", // from validateName()
+				"displayname",
+				400);
+		}
+
+	});
 
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
-	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
 	//_________________/ME/SETTINGS: DELETE USER____________
 
 

@@ -63,7 +63,15 @@ export type ChangeDomainNameResult =
   | {
       ok: false;
       reason: "not_me" | "taken_displayname" | "weak_displayname";
-      message?: string;   // <-- optional test
+      message?: string;   // <-- from validateName()
+    };
+
+	export type ChangePasswordResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: "not_me" |  "weak_password";
+      message?: string;   // <-- from validatePassword()
     };
 
 

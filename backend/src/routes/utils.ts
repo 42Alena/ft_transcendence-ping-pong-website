@@ -34,29 +34,3 @@ export const authRequiredOptions = {
 	}
 };
 
-
-
-
-
-/* 
-old working: saved before rewriting. can be deleted later
-export const authRequiredOptions = {
-	async preHandler(req: FastifyRequest, reply: FastifyReply, done: DoneFuncWithErrOrRes) {
-		const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
-		console.log('Hello from prehandler', loginSessionId)
-
-		if (!loginSessionId) {
-			return reply.status(401).send({ error: "need cookies", field: "auth" })
-		}
-
-		const userId = await (this as any).userManager.getUserIdByLoginSession(loginSessionId);
-		if (!userId) {
-			return reply.status(401).send('preHandler: no userId')
-		}
-		(req as API.UserAwareRequest).userId = userId;
-
-		done()
-	}
-};
-
-*/
