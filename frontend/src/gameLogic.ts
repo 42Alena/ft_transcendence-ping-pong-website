@@ -30,16 +30,20 @@ function setOnePlayer(value : boolean)
   inputNamePlayerTwo.disabled = false;
   if (value == true)
   {
-    inputPlayerTwo.style.display = "none";
+    inputPlayerTwo.classList.add("hidden");
+    inputPlayerTwo.classList.remove("block");
     enableAI = true;
   }
   else 
   {
     enableAI = false;
-    inputPlayerTwo.style.display = "block";
+    inputPlayerTwo.classList.add("block");
+    inputPlayerTwo.classList.remove("hidden");
   }
-  playersNum.style.display = "none";
-  alias.style.display = "flex";
+  playersNum.classList.add("hidden");
+  playersNum.classList.remove("flex");
+  alias.classList.add("flex");
+  alias.classList.remove("hidden");
   setAlias();
 }
 
@@ -51,7 +55,8 @@ function setAlias() {
 }
 
 function showStartButton() {
-  runButton.style.display = "block";
+  runButton.classList.add("block");
+  runButton.classList.remove("hidden");
 }
 
 function saveDisplayName(player : number) {
@@ -68,8 +73,9 @@ function saveDisplayName(player : number) {
 
   if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
   {
-    setTimeout(showStartButton, 3000);
-    instruction.style.display = "block";
+    setTimeout(showStartButton, 1000);
+    instruction.classList.add("block");
+    instruction.classList.remove("hidden");
   }
 }
 
@@ -77,6 +83,7 @@ inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
 	if (event.key == "Enter")
 	{
 		displayNamePlayerOne = inputPlayerOne.value;
+    saveDisplayName(1);
 	}
 });
 
@@ -84,18 +91,35 @@ inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
 	if (event.key == "Enter")
 	{
 		displayNamePlayerTwo = inputNamePlayerTwo.value;
+    saveDisplayName(2);
 	}
 });
 
-//ask about name to display
-//ask number of players
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
+let pauseFlag : boolean = false;
 
-function keyDownHandler(e : any) {
-
+function keyDownHandler(e: any) {
   if (gameisOn)
+  {
+    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
+    {
       e.preventDefault();
+    }
+    if (e.key == "p")
+    {
+      if (pauseFlag == false)
+      {
+        clearInterval(interval);
+        pauseFlag = true;
+      }
+      else
+      {
+        startGame();
+        pauseFlag = false;
+      }
+    }
+  }
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -112,10 +136,14 @@ function keyDownHandler(e : any) {
   }
 }
 
-function keyUpHandler(e : any) {
-
-  if (gameisOn)
-    e.preventDefault();
+function keyUpHandler(e: any) {
+   if (gameisOn)
+  {
+    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
+    {
+      e.preventDefault();
+    }
+  }
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -131,8 +159,6 @@ function keyUpHandler(e : any) {
     paddleLeft.down = false;
   }
 }
-
-
 //game over
 
 class Paddle {
@@ -180,8 +206,8 @@ class Ball {
 
 	constructor () {
 		this.lenght = 12;
-		this.dx = 2;
-		this.dy = -2;
+		this.dx = 3;
+		this.dy = -3;
 		this.color = "red";
 		this.x = canvas.width / 2 - this.lenght / 2;
 		this.y = canvas.height / 2 - this.lenght / 2;
@@ -282,7 +308,7 @@ function draw() {
     }
   }
 
-   if (paddleLeft.down) {
+  if (paddleLeft.down) {
     paddleLeft.y += 7;
     if (paddleLeft.y + paddleLeft.lenght > canvas.height) {
       paddleLeft.y = canvas.height - paddleLeft.lenght;
@@ -318,16 +344,18 @@ function draw() {
   {
     if (score.playerLeft == 3)
     {
-      winnerTextDiv.textContent = displayNamePlayerOne;
+      winnerTextDiv.textContent = displayNamePlayerOne + " won";
       score.playerLeft++;
     }
     else
     {
-      winnerTextDiv.textContent = displayNamePlayerTwo;
+      winnerTextDiv.textContent = displayNamePlayerTwo + " won";
       score.playerRight++;
     }
-    gameOverDiv.style.display = "flex";
-    gameScreenDiv.style.display = "none";
+    gameOverDiv.classList.add("flex");
+    gameOverDiv.classList.remove("hidden");
+    gameScreenDiv.classList.add("hidden");
+    gameScreenDiv.classList.remove("flex");
     
     clearInterval(interval);
   }
@@ -355,16 +383,24 @@ function resetGame() {
 const runButton : any = document.getElementById("runButton");
 runButton.addEventListener("click", () => {
 
-  alias.style.display = "none;"
-  playersNum.style.display = "none";
-  instruction.style.display = "none";
-  setGame.style.display = "none";
-  gameP.style.display = "flex";
-  canvas.style.display = "block";
-  runButton.style.display = "none";
-  instruction.style.display = "none";
-  gameOverDiv.style.display = "none";
-  gameScreenDiv.style.display = "flex";
+  alias.classList.add("hidden");
+  alias.classList.remove("flex");
+  playersNum.classList.add("hidden");
+  playersNum.classList.remove("flex");
+  instruction.classList.add("hidden");
+  instruction.classList.remove("block");
+  setGame.classList.add("hidden");
+  setGame.classList.remove("block");
+  gameP.classList.add("flex");
+  gameP.classList.remove("hidden");
+  canvas.classList.add("blockk");
+  canvas.classList.remove("hidden");
+  runButton.classList.add("hidden");
+  runButton.classList.remove("block");
+  gameOverDiv.classList.add("hidden");
+  gameOverDiv.classList.remove("flex");
+  gameScreenDiv.classList.add("flex");
+  gameScreenDiv.classList.remove("hidden");
   resetGame();
   startGame();
 });

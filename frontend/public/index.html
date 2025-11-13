@@ -1,462 +1,794 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="box-border">
+  <head>
+    <link rel="icon" href="images/favicon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pong</title>
+    <link href="styles/output.css" rel="stylesheet" />
+  </head>
 
-<head>
-  <link rel="icon" href="images/favicon.png" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pong</title>
-  <link rel="stylesheet" href="styles/reset.css" />
-  <link rel="stylesheet" href="styles/style.css" />
-<!--    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
-  <style>
-  </style>
-</head>
-
-<body>
-  <header class="main-header max-width-container border">
-    <div id="header-navbar"
-      style="display: flex; flex-direction: row; flex: 1; justify-content: space-between; align-items: center;">
-      <div id="header-navbar-logo" style="padding: 10px;">
-        <a href="#" onclick="displayPage('welcome')">
-          <img src="images/logo.png" alt="logo of the page" width="100" height="50" />
-        </a>
-      </div>
-      <div id="header-navbar-user" style="display: flex; flex-direction: row; align-items: center; padding: 10px;">
-        <span class="dropdown">
-          <a href="#" style="display: flex; align-items: center; text-decoration: none;">
-            <span id="logged-user" style="margin-right: 10px;">
-              Hello, you!
+  <body
+    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#90ee90]"
+  >
+    <header class="flex justify-center bg-[#90ee90]">
+      <div class="w-full max-w-5xl border">
+        <div
+          id="header-navbar"
+          class="flex flex-1 flex-row items-center justify-between"
+        >
+          <div id="header-navbar-logo" class="p-2.5">
+            <a href="#" onclick="displayPage('welcome')">
+              <img
+                src="images/logo.png"
+                alt="logo of the page"
+                width="100"
+                height="50"
+              />
+            </a>
+          </div>
+          <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
+            <span class="dropdown">
+              <a href="#" class="flex items-center no-underline">
+                <span id="logged-user" class="mr-2.5"> Hello, you! </span>
+                <div id="logged-user-avatar">
+                  <img
+                    src="images/profile/orange.png"
+                    alt="User Avatar"
+                    width="50"
+                    height="50"
+                  />
+                </div>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="#" onclick="setAccountPage('register')"
+                    ><span></span>Register</a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('login')"
+                    ><span></span>Login</a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('profile')"
+                    ><span></span> View my profile</a
+                  >
+                </li>
+                <li>
+                  <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
+                </li>
+              </ul>
             </span>
-            <div id="logged-user-avatar">
-              <img src="images/profile/profile.png" alt="User Avatar" width="50" height="50">
-            </div>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="#" onclick="setAccountPage('register')"><span class="iconf-user"></span>Register</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="flex justify-center border">
+      <section
+        class="grid w-full max-w-5xl grid-cols-[70px_1fr] grid-rows-[1fr] border bg-white"
+      >
+        <nav class="grid grid-rows-[1fr] border bg-[#90ee90]">
+          <ul class="flex flex-col items-center justify-start p-2.5">
+            <li class="p-1 text-center leading-none">
+              <a href="#chat" onclick="displayPage('chat')">
+                <img src="images/icons/chat.png" alt="chat page"
+              /></a>
             </li>
-            <li>
-              <a href="#" onclick="setAccountPage('login')"><span class="iconf-user"></span>Login</a>
+            <li class="p-1 text-center leading-none">
+              <a href="#chat" onclick="displayPage('game')">
+                <img src="images/icons/play.png" alt="chat page"
+              /></a>
             </li>
-            <li>
-              <a href="#" onclick="setAccountPage('profile')"><span class="iconf-user"></span> View my profile</a>
-            </li>
-            <li>
-              <a rel="nofollow" href="#"><span class="iconf-power-off"></span> <b>Logout</b></a>
+            <li class="p-1 text-center leading-none">
+              <a href="#chat" onclick="displayPage('tournament')">
+                <img src="images/icons/tournament.png" alt="chat page"
+              /></a>
             </li>
           </ul>
-        </span>
-      </div>
-    </div>
-  </header>
-  <main class="main max-width-container border">
-    <section class="main-section max-width border">
-      <nav class="nav border">
-        <ul>
-          <li>
-            <a href="#chat" onclick="displayPage('chat')">
-              <img src="images/icons/chat.png" alt="chat page" width="50" height="50" /></a>
-          </li>
-          <li>
-            <a href="#" onclick="displayPage('game')">
-              <img src="images/icons/play.png" alt="game page" width="50" height="50"></a>
-          </li>
-          <li>
-            <a href="#" onclick="displayPage('tournament')">
-              <img src="images/icons/tournament.png" alt="game page" width="50" height="50"></a>
-          </li>
-        </ul>
-      </nav>
-      <div class="board-container border" id="board">
-        <div class="welcome" id="welcomePage" style="display: flex;">
-          Welcome page
-        </div>
-        <div class="chat" id="chatPage">
-          <div class="chat-left border">
-            <div class="chat-tab">
-              <button class="tablinks" id="defaultOpen" onclick="displayList(event, 'chat')">Chats</button>
-              <button class="tablinks" onclick="displayList(event, 'users')">Users</button>
-            </div>
-            <div class="chat-left__list">
-              <div class="chat-left__list-dms" id="list-dms"></div>
-              <div class="chat-left__list-dms" id="list-users" style="display: none;">
-                <div class="chat-left__list-dms-item border" style="display: flex; align-items: center; gap: 10px;"
-                  onclick="displayProf()">
-                  <div class="border">
-                    <img src="images/profile/blue.png" width="30" height="30">
-                  </div>
-                  <div>Eos</div>
-                </div>
-              </div>
-            </div>
+        </nav>
+        <div class="relative h-full w-full border" id="board">
+          <div
+            class="relative flex h-full w-full items-center justify-center"
+            id="welcomePage"
+          >
+            Welcome page
           </div>
-          <div class="chat-right">
-            <div id="start-chat"
-              style="display: flex; justify-content: center; align-items: center; height: 100%; background-color: white;">
-              Start a converstion</div>
-            <div id="userProfile" style="display: none; height: 100%;"></div>
-            <div id="conversation" style="display: none; flex-direction: column; height: 100%;" class="border">
-              <div class="chat-right__header" id="chat-info"
-                style="display: flex;  align-items: center; justify-content: center; gap: 10px; padding: 14px 16px; height: 45px; width: 100%;">
-              </div>
-              <div class="chat-right__body border" style="flex: 1">
-                <div class="chat-right__box border">
-                  <!-- <div class="chat-right__stamp border">stamp</div> -->
-                  <div class="chat-right__bubble border" id="bubble">
-                  </div>
-                  <div class="chat-right__textArea border">
-                    <div class="chat-right__textArea-input border">
-                      <div class="chat-right__textAreas-input-text border" id="input">
-                        <input id="text-box" type="text" class="chat-right__textAreas-input-text border"
-                          placeholder="Send message" />
-                      </div>
-                    </div>
-                    <div class="chat-right__textArea-submitIcon border" onclick="captureInput()">
-                      Send
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="account" id="accountPage" style="display: none;">
-          <div class="account-login-reg-choice" id="pageChoice" style="display: flex;">
-            <button type="button" id="registerButton">
-              <a href="#" onclick="setAccountPage('register')"> Register</a>
-            </button>
-            <button type="button" id="loginButton">
-              <a href="#" onclick="setAccountPage('login')"> Login</a>
-            </button>
-            <!-- <button type="button" id="profile">
-              <a href="#" onclick="setAccountPage('profile')"> Profile</a>
-            </button> -->
-          </div>
-          <div class="account-register" id="registerPage" style="flex-direction: column;">
-            <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register">
-              <p class="profile-picture">
-                <label for="reg-avatar">
-                  <img src="images/profile/grey.png" style="cursor: pointer" width="50px" height="50px" />
-                </label>
-                <input type="file" id="reg-avatar" name="reg-user_avatar" style="display: none" />
-              </p>
-              <p class="reg-form-field">
-                <label for="reg-username">Username (login)</label>
-                <input type="text" id="reg-username" name="reg-user_username" required />
-              </p>
-              <p class="reg-form-field">
-                <label for="reg-displayName">Display Name (public)</label>
-                <input type="text" id="reg-displayName" name="reg-user_displayName" required />
-              </p>
-              <p class="reg-form-field">
-                <label for="reg-password">Password</label>
-                <input type="password" id="reg-password" name="reg-user_password" required />
-              </p>
-              <p class="submitButton">
-                <span style="display: block; height: 1em;"></span>
-                <button type="submit" id="submitRegButton" style="cursor: pointer">
-                  Register
+          <div
+            class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            id="chatPage"
+          >
+            <div class="flex flex-col border">
+              <div class="chat-tab flex overflow-hidden border bg-[#f1f1f1]">
+                <button
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
+                  id="defaultOpen"
+                  onclick="displayList(event, 'chat')"
+                >
+                  Chats
                 </button>
-              </p>
-            </form>
-            <div class="errors border" id="reg-errors">Error box</div>
-          </div>
-          <div class="account-login" id="loginPage"
-            style="background-color: white; display: none; flex-direction: column;">
-            <form action="http://127.0.0.1:8080" method="post" id="login">
-              <p>
-                <label for="login-username">Username:</label>
-                <input type="text" id="login-username" name="login-user_username" required />
-              </p>
-              <p>
-                <label for="login-password">Password:</label>
-                <input type="password" id="login-password" name="login-user_password" required />
-              </p>
-              <p class="submitButton">
-                <button type="submit" id="submitLogButton" style="cursor: pointer">
-                  Login
+                <button
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
+                  onclick="displayList(event, 'users')"
+                >
+                  Users
                 </button>
-              </p>
-            </form>
-            <div class="errors border" id="log-errors">Error box</div>
+              </div>
+              <div class="flex grow flex-col">
+                <div
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
+                  id="list-dms"
+                ></div>
+                <!-- no need to do list-users since it will be created by js -->
+                <div
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
+                  id="list-users"
+                >
+                  <div
+                    class="flex items-center gap-2.5 border bg-white p-2.5"
+                    onclick="displayProf()"
+                  >
+                    <div>
+                      <img
+                        src="images/profile/blue.png"
+                        width="30"
+                        height="30"
+                      />
+                    </div>
+                    <div>Eos</div>
+                  </div>
+                </div>
+                <!-- no need to do list-users since it will be created by js -->
+              </div>
+            </div>
+            <div class="flex flex-col">
+              <div
+                id="start-chat"
+                class="flex h-full items-center justify-center bg-white"
+              >
+                Start a converstion
+              </div>
+              <div id="userProfile" class="hidden h-full"></div>
+              <div id="conversation" class="hidden h-full flex-col border">
+                <div
+                  class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
+                  id="chat-info"
+                ></div>
+                <div class="flex flex-1 grow flex-col gap-2.5 border p-[1em]">
+                  <div
+                    class="flex h-[60px] grow flex-col gap-2.5 border bg-white p-[1em]"
+                  >
+                    <!-- <div class="chat-right__stamp border">stamp</div> -->
+                    <div
+                      class="flex max-w-full grow flex-col gap-2.5 overflow-auto border bg-white p-[1em]"
+                      id="bubble"
+                    ></div>
+                    <div class="flex h-auto gap-2.5 border p-[1em]">
+                      <div
+                        class="block grow content-center border bg-white p-[0.5em]"
+                      >
+                        <div class="w-full border" id="input">
+                          <input
+                            id="text-box"
+                            type="text"
+                            class="w-full border"
+                            placeholder="Send message"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="ml-auto block content-center border bg-[#0fffff]"
+                        onclick="captureInput()"
+                      >
+                        Send
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="account-profile border" id="profilePage" style="background-color: beige; display: none;">
-            <div class="account-profile__header border" id="acc-profile-header" style="background-color: aliceblue;">
-              <div class="account-profile_header-avatar border" id="acc-avatar">
-                <img src="images/profile/orange.png" alt="" id="acc-profile-avatar" width="100px" height="100px">
+          <div
+            class="relative hidden h-full w-full items-center justify-center bg-white"
+            id="accountPage"
+          >
+            <div class="hidden flex-col bg-inherit" id="registerPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                enctype="multipart/form-data"
+                id="register"
+                class="table rounded-xl border bg-blue-300 p-1"
+              >
+                <p class="flex items-center justify-center">
+                  <label class="table-cell text-xl" for="reg-avatar">
+                    <img
+                      src="images/profile/grey.png"
+                      class="cursor-pointer"
+                      width="50px"
+                      height="50px"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="reg-avatar"
+                    name="reg-user_avatar"
+                    class="hidden"
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-username"
+                    >Username (login)</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="reg-username"
+                    name="reg-user_username"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-displayName"
+                    >Display Name (public)</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="reg-displayName"
+                    name="reg-user_displayName"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-password"
+                    >Password</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="password"
+                    id="reg-password"
+                    name="reg-user_password"
+                    required
+                  />
+                </p>
+                <span class="block h-[1em]"></span>
+                <p class="flex justify-center">
+                  <button
+                    type="submit"
+                    id="submitRegButton"
+                    class="cursor-pointer border"
+                  >
+                    Register
+                  </button>
+                </p>
+              </form>
+              <div class="flex border" id="reg-errors">Error box</div>
+            </div>
+            <div class="hidden flex-col bg-inherit" id="loginPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                id="login"
+                class="table rounded-xl border bg-purple-300 p-1"
+              >
+                <p>
+                  <label class="table-cell text-xl" for="login-username"
+                    >Username:</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="login-username"
+                    name="login-user_username"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="login-password"
+                    >Password:</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="password"
+                    id="login-password"
+                    name="login-user_password"
+                    required
+                  />
+                </p>
+                <span class="block h-[1em]"></span>
+                <p class="flex justify-center">
+                  <button
+                    type="submit"
+                    id="submitLogButton"
+                    class="cursor-pointer border"
+                  >
+                    Login
+                  </button>
+                </p>
+              </form>
+              <div class="errors border" id="log-errors">Error box</div>
+            </div>
+            <div
+              class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              id="profilePage"
+            >
+              <div
+                class="grid grid-cols-3 border bg-amber-500"
+                id="acc-profile-header"
+              >
+                <div
+                  class="flex items-center justify-center border"
+                  id="acc-avatar"
+                >
+                  <img
+                    src="images/profile/orange.png"
+                    alt=""
+                    id="acc-profile-avatar"
+                    width="100px"
+                    height="100px"
+                  />
+                </div>
+                <div class="flex flex-col border" id="acc-info">
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-username"
+                  >
+                    <p>Username: Pinco</p>
+                  </div>
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-displayName"
+                  >
+                    <p id="temp-displayname">Display Name: Pallo</p>
+                  </div>
+                </div>
+                <div class="flex flex-col border" id="acc-options;">
+                  <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
+                    <div
+                      class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
+                    ></div>
+                    <div class="">ONLINE</div>
+                  </div>
+                  <div
+                    class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs"
+                    id="acc-actions"
+                  >
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="add-remove-friend__header"
+                    >
+                      Remove
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="block-unblock-friend__header"
+                    >
+                      Block
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="send-message__header"
+                    >
+                      Send message
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="invite-friend__header"
+                    >
+                      Invite now
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="account-profile_header-info border" id="acc-info">
-                <div class="account-profile_header-info-username border" id="acc-username">
-                  <p>
-                    Username: Pinco
-                  </p>
-                </div>
-                <div class="account-profile_header-info-displayName border" id="acc-displayName">
-                  <p id="temp-displayname">
-                    Display Name: Pallo
-                  </p>
-                </div>
+              <div
+                class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
+                id="acc-profile-menu"
+              >
+                <div id="acc-settings">SETTINGS</div>
+                <div id="acc-friends">FRIENDS</div>
+                <div id="acc-matches">MATCHES</div>
               </div>
-              <div class="account-profile_header-options border" id="acc-options;"
-                style="display: flex; flex-direction: column;">
-                <div class="status" style="display: flex; height: 50px; gap: 10px; margin-top: 10px;">
-                  <div class="status-circle-on"></div>
-                  <div class="status-word">ONLINE</div>
+              <div id="acc-profile-page">
+                <div
+                  class="flex h-full w-full items-center justify-center border text-left text-sm"
+                  id="update-settings"
+                >
+                  <div
+                    class="flex h-full w-full flex-col items-center justify-center border"
+                  >
+                    <form
+                      class="table rounded-xl border bg-blue-300 p-1"
+                      role="updateSettings"
+                      id="settings"
+                    >
+                      <div class="flex items-center justify-center">
+                        <label for="edit-avatar">
+                          <img
+                            src="images/profile/orange.png"
+                            id="avatarImgEdit"
+                            width="50px"
+                            height="50px"
+                            class="cursor-pointer"
+                          />
+                        </label>
+                        <input
+                          type="file"
+                          id="edit-avatar"
+                          name="edit-user_avatar"
+                          class="hidden"
+                        />
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl">Username:</label>
+                        <div>
+                          <input
+                            type="text"
+                            value="Pinco"
+                            readonly
+                            class="bg-white text-xl"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p>
+                          <label
+                            for="edit-displayName"
+                            class="table-cell text-xl"
+                            >Display Name:</label
+                          >
+                        </p>
+                        <div>
+                          <input
+                            id="edit-displayName"
+                            name="edit-user_displayName"
+                            type="text"
+                            value="Pallo"
+                            class="bg-white text-xl"
+                          />
+                        </div>
+                      </div>
+                      <span class="block h-[1em]"></span>
+                      <div class="flex items-center justify-center text-sm">
+                        <button
+                          type="submit"
+                          id="editDisplayNameButton"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
+                        >
+                          Change display name
+                        </button>
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl" for="edit-oldPass"
+                          >Old Password:</label
+                        >
+                        <div>
+                          <input
+                            class="bg-white text-xl"
+                            id="edit-oldPass"
+                            name="edit-user_oldPass"
+                            type="password"
+                            value="aaaaaaaaa"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl" for="edit-newPass"
+                          >New Password:</label
+                        >
+                        <div>
+                          <input
+                            class="bg-white text-xl"
+                            id="edit-newPass"
+                            name="edit-user_newPass"
+                            type="password"
+                            value="aaaaaaaaa"
+                          />
+                        </div>
+                      </div>
+                      <span class="block h-[1em]"></span>
+                      <div class="flex items-center justify-center text-sm">
+                        <button
+                          type="submit"
+                          id="editPasswordButton"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
+                        >
+                          Change password
+                        </button>
+                      </div>
+                      <div>
+                        <p class="flex items-center justify-center text-sm">
+                          <input
+                            type="submit"
+                            name="delete_account"
+                            class="my-2.5 cursor-pointer rounded-full border border-black p-[5px]"
+                            value="Delete Account"
+                          />
+                        </p>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div class="actions" id="acc-actions"
-                  style="display: none; grid-template-columns: repeat(4, 1fr); margin-top: 10px;">
-                  <button class="add-friend" type="button" id="add-remove-friend__header"
-                    style="display: flex; justify-content: center;">Remove friend</button>
-                  <button class="block-friend" type="button" id="block-unblock-friend__header"
-                    style="display: flex; justify-content: center;">Block</button>
-                  <button class="invite-friend" type="button" id="send-message__header"
-                    style="display: flex; justify-content: center;">Send message</button>
-                  <button class="invite-friend" type="button" id="invite-friend__header"
-                    style="display: flex; justify-content: center;">Invite to game</button>
+                <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
+                  <div>
+                    <button
+                      class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="blockButton"
+                      onclick="displayBlockedFriends()"
+                    >
+                      See blocked users
+                    </button>
+                  </div>
+                  <div id="friendsList" class="flex; p-[5px]">
+                    <div class="friend flex items-center border p-2.5">
+                      <img
+                        src="images/profile/purple.png"
+                        alt=""
+                        width="100px"
+                        height="100px"
+                      />
+                      <div class="ml-2.5 flex flex-col" id="friend-description">
+                        <div class="flex items-center gap-2" id="friend-name">
+                          <div>Mafalda</div>
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                            id="remove-friend__page"
+                          >
+                            remove
+                          </button>
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                            id="block-friend__page"
+                          >
+                            block
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="blockedList" class="hidden p-[5px]">
+                    <div class="friend flex items-center border p-2.5">
+                      <img
+                        src="images/profile/purple.png"
+                        alt=""
+                        width="100px"
+                        height="100px"
+                      />
+                      <div class="ml-2.5 flex flex-col">
+                        <div class="flex items-center gap-2">
+                          <div>Zorro</div>
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                          >
+                            remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden flex-col gap-2.5" id="matches">
+                  <div class="grid-rows-auto grid h-full items-center">
+                    <div
+                      class="flex w-full justify-center border"
+                      id="acc-stats"
+                    >
+                      <strong>Quick Stats</strong>
+                    </div>
+                    <div class="grid grid-cols-4 border">
+                      <div class="border p-2.5 text-center">
+                        3
+                        <span class="mt-[5px] block">Current Ranking</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        12-10
+                        <span class="mt-[5px] block">W-L</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        22
+                        <span class="mt-[5px] block">Tot games</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        54%
+                        <span class="mt-[5px] block">Average wins</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="grid-rows[50px_1fr] grid border"
+                    id="acc-stats-details"
+                  >
+                    <div class="flex w-full justify-center border">
+                      <strong>Matches</strong>
+                    </div>
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex items-center justify-center border">
+                        opponent
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        date
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        score
+                      </div>
+                    </div>
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex justify-center border p-2.5">
+                        opponent 1
+                      </div>
+                      <div class="flex justify-center border p-2.5">
+                        5/10/25
+                      </div>
+                      <div class="flex justify-center border p-2.5">3-2</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="account-profile__menu border" id="acc-profile-menu"
-              style="background-color: burlywood; cursor: pointer;">
-              <div class="account-profile__menu-settings border" id="acc-settings">SETTINGS</div>
-              <div class="account-profile__menu-friends border" id="acc-friends">FRIENDS</div>
-              <div class="account-profile__menu-matches border" id="acc-matches">MATCHES</div>
+          </div>
+          <div
+            id="gamePage"
+            class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+          >
+            <div
+              id="setupGame"
+              class="relative block h-[480px] w-[640px] border-2 border-blue-900 bg-sky-200"
+            >
+              <div
+                id="setupNumberPlayers"
+                class="flex h-full w-full flex-row items-center justify-center gap-2.5"
+              >
+                <button
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  name="setOnePlayerButton"
+                  onclick="setOnePlayer(true)"
+                >
+                  One Player
+                </button>
+                <button
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  name="setTwoPlayerButton"
+                  onclick="setOnePlayer(false)"
+                >
+                  Two Players
+                </button>
+              </div>
+              <div
+                id="setUpPlayers"
+                class="hidden h-full flex-col items-center justify-center gap-2.5"
+              >
+                <div
+                  id="setupDisplayName"
+                  class="flex flex-row items-center justify-center gap-2.5"
+                >
+                  <div id="displayNamePlayerOne" class="block">
+                    <label for="namePlayerOne" class="text-black"
+                      >Player one</label
+                    >
+                    <div class="flex flex-row">
+                      <input
+                        id="namePlayerOne"
+                        type="text"
+                        name="game-player-name-1"
+                        placeholder="Enter your display name"
+                        class="flex-2 bg-white"
+                      />
+                      <button
+                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                        type="button"
+                        onclick="saveDisplayName(1)"
+                      >
+                        <div>OK</div>
+                      </button>
+                    </div>
+                  </div>
+                  <div id="displayNamePlayerTwo" class="block">
+                    <label for="namePlayerTwo" class="text-black"
+                      >Player two</label
+                    >
+                    <div class="flex flex-row">
+                      <input
+                        class="flex-2 bg-white"
+                        id="namePlayerTwo"
+                        type="text"
+                        name="game-player-name-2"
+                        placeholder="Enter your display name"
+                      />
+                      <button
+                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                        type="button"
+                        onclick="saveDisplayName(2)"
+                      >
+                        <div>OK</div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="Setinstructions" class="hidden">
+                  PLAYER 1 - W and S <br />
+                  PLAYER 2 - ARROW KEYS <br />
+                  P - PAUSE <br />
+                  ESC - QUIT <br />
+                </div>
+                <div id="startButton">
+                  <button
+                    id="runButton"
+                    class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  >
+                    Start game
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="account-profile__page border" id="acc-profile-page" style="background-color: antiquewhite;">
-              <div class="account-profile__page-settings border" id="update-settings">
-                <div class="account-profile__page-settings-pi border">
-                  <h3>Edit information</h3>
-                  <form class="update-settings-form" role="updateSettings" id="settings">
-                    <p class="profile-picture">
-                      <label for="edit-avatar">
-                        <img src="images/profile/orange.png" id="avatarImgEdit" style="cursor: pointer" width="50px"
-                          height="50px" />
-                      </label>
-                      <input type="file" id="edit-avatar" name="edit-user_avatar" style="display: none" />
-                    </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label">Username:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" type="text" value="Pinco" readonly>
-                    </div>
-                    </p>
-                    <p class="form-group">
-                    <p class="form-group">
-                      <label class="col-lg-3 control-label" for="edit-displayName">Display Name:</label>
-                    </p>
-                    <div class="col-lg-8">
-                      <input class="form-control" id="edit-displayName" name="edit-user_displayName" type="text"
-                        value="Pallo">
-                    </div>
-                    </p>
-                    <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
-                      <button type="submit" id="editDisplayNameButton" style="cursor: pointer">Change display
-                        name</button>
-                    </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label" for="edit-oldPass">Old Password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="edit-oldPass" name="edit-user_oldPass" type="password"
-                        value="aaaaaaaaa">
-                    </div>
-                    </p>
-                    <p class="form-group">
-                      <label class="col-md-3 control-label" for="edit-newPass">New Password:</label>
-                    <div class="col-md-8">
-                      <input class="form-control" id="edit-newPass" name="edit-user_newPass" type="password"
-                        value="aaaaaaaaa">
-                    </div>
-                    </p>
-                    <p class="form-group" style="display: flex; justify-content: center; align-items: center;">
-                      <button type="submit" id="editPasswordButton" style="cursor: pointer">Change password</button>
-                    </p>
-                    <p class="form-group">
-                      <!-- <label class="col-md-3 control-label"><span style="display: block; height: 20px;"></span></label>
-                    <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="submit" name="save_changes" class="btn btn-primary" value="Save Changes" style="margin-right: 10px;">
-                      <input type="submit" name="cancel_changes" class="btn btn-default" value="Cancel">
-                    </p> -->
-                    <p class="col-md-8" style="display: flex; justify-content: center; align-items: center;">
-                      <input type="submit" name="delete_account" class="btn btn-primary" style="margin: 10px 0;"
-                        value="Delete Account">
-                    </p>
-                    </p>
-                  </form>
-                </div>
+            <div
+              id="gameScreen"
+              class="hidden h-[600px] w-[800px] items-center justify-center"
+            >
+              <canvas
+                id="myCanvas"
+                class="hidden; border-2 border-blue-950 bg-black"
+                width="800"
+                height="600"
+              ></canvas>
+            </div>
+            <div
+              id="gameOverScreen"
+              class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
+            >
+              <div
+                id="result"
+                class="flex; flex-col items-center justify-center text-center"
+              >
+                GAME OVER
+                <div id="winner-text"></div>
               </div>
-              <div class="account-profile__page-friends border" id="friends"
-                style="display: none; flex-direction: column;">
-                <div>
-                  <button type="button" id="blockButton" onclick="displayBlockedFriends()">See blocked users</button>
-                </div>
-                <div id="friendsList" style="display: flex; padding: 5px;">
-                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/purple.png" alt="" width="100px" height="100px">
-                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
-                      <div class="friend-name" style="display: flex; align-items: center;">Mafalda
-                        <div class="status-circle-off"></div>
-                        Offline
-                      </div>
-                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="remove-friend" type="button" id="remove-friend__page">remove friend</button>
-                        <button class="block-friend" type="button" id="block-friend__page">block</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/green.png" alt="" width="100px" height="100px">
-                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
-                      <div class="friend-name" style="display: flex; align-items: center;">Kevin
-                        <div class="status-circle-on"></div>
-                        Online
-                      </div>
-                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="remove-friend" type="button">remove friend</button>
-                        <button class="block-friend" type="button">block</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="blockedList" style="display: none; padding: 5px;">
-                  <div class="friend" style="display: flex; align-items: center; padding: 10px;">
-                    <img src="images/profile/blue.png" alt="" width="100px" height="100px">
-                    <div class="friend-info" style="display: flex; flex-direction: column; margin-left: 10px;">
-                      <div class="friend-name" style="display: flex; align-items: center;">Zorro
-                      </div>
-                      <div class="friend-action" style="display: flex; justify-content: flex-start; margin-top: 10px;">
-                        <button class="block-friend" type="button">unblock</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="account-profile__page-matches border" id="matches" style="display: none;">
-                <div class="account-profile__page-matches-stats">
-                  <div class="account-profile__page-matches-summary border" id="acc-stats" width="100%"
-                    style="display: flex; justify-content: center;"><strong>Quick Stats</strong></div>
-                  <div class="statsList border" style="display: grid; grid-template-columns: repeat(4, 1fr);">
-                    <div class="stat border">
-                      3
-                      <span class="stat_name">Current Ranking</span>
-                    </div>
-                    <div class="stat border">
-                      12-10
-                      <span class="stat_name">W-L</span>
-                    </div>
-                    <div class="stat border">
-                      22
-                      <span class="stat_name">Tot games</span>
-                    </div>
-                    <div class="stat border">
-                      54%
-                      <span class="stat_name">Average wins</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="acc-matches border" id="acc-stats-details"
-                  style="display: grid; grid-template-rows: 50px 1fr;">
-                  <div class="acc-matches__header border"
-                    style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
-                    <div class="opponent border" style="display: flex; justify-content: center; align-items: center;">
-                      opponent</div>
-                    <div class="date border" style="display: flex; justify-content: center; align-items: center;">date
-                    </div>
-                    <div class="score border" style="display: flex; justify-content: center; align-items: center;">score
-                    </div>
-                  </div>
-                  <div class="acc-matches__content border"
-                    style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
-                    <div class="border" style="display: flex; align-items: center; padding: 10px">opponent 1</div>
-                    <div class="border" style="display: flex; justify-content: center; align-items: center;">5/10/25
-                    </div>
-                    <div class="border" style="display: flex; justify-content: center; align-items: center;">3-2</div>
-                  </div>
-                </div>
+              <div id="nextGame" class="flex flex-row gap-2.5">
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Play Again
+                </button>
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  New Game
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div id="gamePage" class="container"
-          style="display: none; width: 100%; justify-content: center; align-items: center; background-color: black;">
-          <div id="setupGame"
-            style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
-            <div id="setupNumberPlayers"
-              style="display: flex; flex-direction: row; width: 100%; height: 100%; gap: 10px; justify-content: center; align-items: center;">
-              <button type="button" name="setOnePlayerButton" onclick="setOnePlayer(true)">
-                One Player
-              </button>
-              <button type="button" name="setTwoPlayerButton" onclick="setOnePlayer(false)">
-                Two Players
-              </button>
-            </div>
-            <div id="setUpPlayers"
-              style="display: none; flex-direction: column; height: 100%; justify-content: center; align-items: center; gap: 10px">
-              <div id="setupDisplayName"
-                style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px">
-                <div id="displayNamePlayerOne">
-                  <label for="namePlayerOne" style="color: white;">Player one</label>
-                  <div style="display: flex; flex-direction: row;">
-                    <input id="namePlayerOne" type="text" name="game-player-name-1"
-                      placeholder="Enter your display name" style="flex-grow:2;" />
-                    <button type="button" onclick="saveDisplayName(1)">OK</button>
-                  </div>
-                </div>
-                <div id="displayNamePlayerTwo" style="display: block;">
-                  <label for="namePlayerTwo" style="color: white; display: block;">Player two</label>
-                  <div style="display: flex; flex-direction: row;">
-                    <input class="input-d" id="namePlayerTwo" type="text" name="game-player-name-2"
-                      placeholder="Enter your display name" />
-                    <button type="button" onclick="saveDisplayName(2)">OK</button>
-                  </div>
-                </div>
-              </div>
-              <div id="Setinstructions" style="display: none;">
-                PLAYER 1 - W and S <br />
-                PLAYER 2 - ARROW KEYS <br />
-                P - PAUSE <br />
-                ESC - QUIT <br />
-              </div>
-              <div id="startButton">
-                <button id="runButton" style="display: none;">Start game</button>
-              </div>
-            </div>
-          </div>
-          <div id="gameScreen"
-            style="display: none; justify-content: center; align-items: center; width: 640px; height: 480px;">
-            <canvas id="myCanvas" style="display: none; background-color: black;border: 1px solid blue" width="640"
-              height="480"></canvas>
-          </div>
-          <div id="gameOverScreen"
-            style="display: none; flex-direction: column; justify-content: center; align-items: center; width: 640px; height: 480px; background-color: paleturquoise;">
-            <div id="result"
-              style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-              GAME OVER
-              <div id="winner-text"></div>
-            </div>
-            <div id="nextGame">
-              <button type="button">Play Again</button>
-              <button type="button">New Game</button>
-            </div>
-          </div>
-        </div>
+      </section>
+    </main>
+    <footer class="flex justify-center border bg-[#90ee90]">
+      <div
+        class="grid w-full max-w-5xl grid-cols-[1fr_1fr] gap-[2em] border p-[1em]"
+      >
+        <div class="border text-center">We Are trAScendeLs</div>
+        <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
       </div>
-    </section>
-  </main>
-  <footer class="main-footer max-width-container border">
-    <div class="main-footer__grid max-width border">
-      <p class="main-footer__copyright border">TRANSCENDENCE</p>
-      <ul class="main-footer__links border">
-        Made by Alena, Luis, Sveva 2025
-      </ul>
-    </div>
-  </footer>
-  <script src="dist/accountDisplay.js"></script>
-  <script src="dist/contentManager.js"></script>
-  <script src="dist/chatDisplay.js"></script>
-  <script src="dist/gameLogic.js"></script>
-  <script src="dist/user.js" type="module"></script>
-  <script src="dist/chat.js" type="module"></script>
-</body>
-
+    </footer>
+    <script src="dist/accountDisplay.js"></script>
+    <script src="dist/contentManager.js"></script>
+    <script src="dist/chatDisplay.js"></script>
+    <script src="dist/gameLogic.js"></script>
+    <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/chat.js" type="module"></script>
+  </body>
 </html>

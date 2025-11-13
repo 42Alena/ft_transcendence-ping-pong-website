@@ -1,50 +1,22 @@
 //pages
-const registerPage : any = document.getElementById("registerPage");
-const loginPage : any = document.getElementById("loginPage");
-const profilePage : any = document.getElementById("profilePage");
-const choicePage : any = document.getElementById("pageChoice");
+
+const regP : any = document.getElementById('registerPage');
+const logP: any = document.getElementById('loginPage');
+const profP : any = document.getElementById('profilePage');
 //register form
 const registerForm : any = document.getElementById("register");
 const regAvatar : any = document.getElementById("reg-avatar");
-const submitButton : any = document.getElementById("submitRegButton"); //button
-//login form
-const loginForm : any = document.getElementById("login");
-const loginButton : any = document.getElementById("submitLogingButton"); //button
 //profile page
 const profileUsername : any = document.getElementById("acc-username");
-const profileDisplayName : any = document.getElementById("acc-displayName");
-const profileAvatar : any = document.getElementById("acc-avatar");
 const profileAvatarImg : any = document.getElementById("acc-profile-avatar");
 const profileActions : any = document.getElementById("acc-actions"); //buttons
 //buttons
 const profileAddRemFriend : any = document.getElementById("add-remove-friend__header");
 const profileBlockUnbFriend : any = document.getElementById("block-unblock-friend__header");
-const profileSendMess : any = document.getElementById("send-message__header");
-const profileInviteFriend : any = document.getElementById("invite-friend__header");
 //settings page
 const profileMenuSettings : any = document.getElementById("acc-settings");
 const profileSettingsPage : any = document.getElementById("update-settings");
-const profileSettingsForm : any = document.getElementById("settings");
-//friend page
-const profileFriendPage : any = document.getElementById("friends");
-//buttons
-const removeFriend : any = document.getElementById("remove-friend__page");
-const blockFriend : any = document.getElementById("block-friend__page");
-
 const tempdisplayN : any = document.getElementById("temp-displayname");
-
-//events on registration
-registerForm.addEventListener("submit", (event : any) => {
-	// (Alena) begin temporary for error
-	const errorsElm = document.getElementById('reg-errors');
-	// (Alena) begin temporary for error
-});
-
-//event on login
-loginForm.addEventListener("submit", (event));
-
-//event on setting page
-profileSettingsForm.addEventListener("submit", (event));
 
 //events on profile button
 let isFriend = false;
@@ -53,15 +25,16 @@ let isBlocked = true;
 profileAddRemFriend.addEventListener("click", (event : any) => {
 	if (isFriend == false)
 	{
-		profileAddRemFriend.textContent = "Add friend";
+		profileAddRemFriend.textContent = "Add";
 		isFriend = true;
 	}
 	else
 	{
-		profileAddRemFriend.textContent = "Remove friend";
+		profileAddRemFriend.textContent = "Remove";
 		isFriend = false;
 	}
 });
+
 profileBlockUnbFriend.addEventListener("click", (event : any) => {
 	if (isBlocked == false)
 	{
@@ -74,77 +47,113 @@ profileBlockUnbFriend.addEventListener("click", (event : any) => {
 		isBlocked = false;
 	}
 });
-profileInviteFriend.addEventListener("click", (event));
-profileSendMess.addEventListener("click", (event));
-// removeFriend.addEventListener("click", (event));
-// blockFriend.addEventListener("click", (event));
-
-/*Releated to display register or login form on choice page */
 function setAccountPage(text : string)
 {
-	accP.style.display = "flex";
-	profP.style.display = "none"
-	chatP.style.display = "none";
-	welcP.style.display = "none";
-	regP.style.display = "none";
-	logP.style.display = "none";
-	gameP.style.display = "none";
+	accP.classList.add("flex");
+	accP.classList.remove("hidden");
+	chatP.classList.remove("grid");
+	chatP.classList.add("hidden");
+	welcP.classList.add("hidden");
+	welcP.classList.remove("flex");
 	if (text == "login")
 	{
-		loginPage.style.display = "flex";
-		choicePage.style.display = "none";
-		registerPage.style.display = "none";
-		profilePage.style.display = "none";
+		logP.classList.add("flex");
+		logP.classList.remove("hidden");
+		regP.classList.add("hidden");
+		regP.classList.remove("flex");
+		profP.classList.add("hidden");
+		profP.classList.remove("grid");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 
 	}
 	else if (text == "register")
 	{
-		registerPage.style.display = "flex";
-		choicePage.style.display = "none";
-		loginPage.style.display = "none";
-		profilePage.style.display = "none";
+		regP.classList.add("flex");
+		regP.classList.remove("hidden");
+		logP.classList.add("hidden");
+		logP.classList.remove("flex");
+		profP.classList.add("hidden");
+		profP.classList.remove("grid");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 	}
 	else if (text == "profile")
 	{
-		profilePage.style.display = "grid";
-		accP.appendChild(profilePage);
+		profP.classList.add("grid");
+		profP.classList.remove("hidden");
+		accP.appendChild(profP);
 		displayPersonalProfile();
-		profileFriendPage.style.display = "none";
-		choicePage.style.display = "none";
-		loginPage.style.display = "none";
-		registerPage.style.display = "none";
+		logP.classList.add("hidden");
+		logP.classList.remove("flex");
+		regP.classList.add("hidden");
+		regP.classList.remove("flex");
+		friendsPage.classList.add("hidden");
+		friendsPage.classList.remove("flex");
+		matchesPage.classList.add("hidden");
+		matchesPage.classList.remove("flex");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 	}
 }
 
 // It makes the preview of the avatar the user wants to upload
 regAvatar.addEventListener("change", (event : any) => {
-	console.log('change event caught');
 	const img : any = document.getElementById("avatar");
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
 
-
-/* Releated to profile page */
-
-/* Implementation to choose which profile page to display: personal or other's users*/
-/* Now just change the value of each element to display different profile pages
- I will implement logic after getting visibility flag for server*/
-//header friend actions
-// profileActions.style.display = "none"; //flex for others' view
-// //header username
-// profileUsername.style.display = "flex"; //none for others' view
-// //settings menu + settings page
-// profileMenuSettings.style.display = "flex"; //none for others' view
-// profileSettingsPage.style.display = "flex"; //none for others' view
-// //friends button requests in friend page
-// const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
-// friendsButtons.forEach((button) => {
-//   const element = button as HTMLElement;
-//   element.style.display = 'flex';
-// });
-// // profileFriendsPageButtons.style.display = "none"; //none for others' view
-// //change avatar in header
-// profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv : any = document.getElementById("acc-settings");
@@ -167,80 +176,99 @@ function displayBlockedFriends() {
 	if (toggle == false)
 	{
 		blockButton.textContent = "See friends";
-		blockedList.style.display = "flex";
-		friendList.style.display = "none";
+		blockedList.classList.add("flex");
+		blockedList.classList.remove("hidden");
+		friendList.classList.add("hidden");
+		friendList.classList.remove("flex");
 		toggle = true;
 	}
 	else
 	{
 		blockButton.textContent = "See blocked users";
-		friendList.style.display = "flex";
-		blockedList.style.display = "none";
+		blockedList.classList.add("hidden");
+		blockedList.classList.remove("flex");
+		friendList.classList.add("flex");
+		friendList.classList.remove("hidden");
 		toggle = false;
 	}
 }
 
-blockButton.style.display = "block";
+// blockButton.classList.add("block");
 //event on each menu div
 settingsDiv.addEventListener("click", (event : any) => {
-	settingsPage.style.display = "flex";
-	friendsPage.style.display = "none";
-	matchesPage.style.display = "none";
+	settingsPage.classList.add("flex");
+	settingsPage.classList.remove("hidden");
+	friendsPage.classList.add("hidden");
+	friendsPage.classList.remove("flex");
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
 });
 
 friendsDiv.addEventListener("click", (event : any) => {
-	friendsPage.style.display = "flex";
-	settingsPage.style.display = "none";
-	matchesPage.style.display = "none";
+	friendsPage.classList.add("flex");
+	friendsPage.classList.remove("hidden");
+	settingsPage.classList.add("hidden");
+	settingsPage.classList.remove("flex");
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
 });
 
 matchesDiv.addEventListener("click", (event : any) => {
-	matchesPage.style.display = "flex";
-	settingsPage.style.display = "none";
-	friendsPage.style.display = "none";
+	matchesPage.classList.add("flex");
+	matchesPage.classList.remove("hidden");
+	settingsPage.classList.add("hidden");
+	settingsPage.classList.remove("flex");
+	friendsPage.classList.add("hidden");
+	friendsPage.classList.remove("flex");
 });
 
 function displayPersonalProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Pallo";
-	profileActions.style.display = "none"; //flex for others' view
-//header username
-profileUsername.style.display = "flex"; //none for others' view
-//settings menu + settings page
-profileMenuSettings.style.display = "flex"; //none for others' view
-profileSettingsPage.style.display = "flex"; //none for others' view
+	profileActions.classList.add("hidden");
+	profileActions.classList.remove("flex");
+
+profileUsername.classList.add("flex");
+profileUsername.classList.remove("hidden");
+
+profileMenuSettings.classList.add("block");
+profileMenuSettings.classList.remove("hidden");
+profileSettingsPage.classList.add("flex");
+profileSettingsPage.classList.remove("hidden");
+
 //friends button requests in friend page
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
-  element.style.display = 'flex';
+  element.classList.add("flex");
+  element.classList.remove("hidden");
 });
-// profileFriendsPageButtons.style.display = "none"; //none for others' view
-//change avatar in header
-profileAvatarImg.src = "images/profile/orange.png"; //blue.png for others' view
-toggle = true;
-displayBlockedFriends();
-blockButton.style.display = "block";
+profileAvatarImg.src = "images/profile/orange.png";
+blockButton.classList.add("block");
+blockButton.classList.remove("hidden");
 }
 
 function displayUserProfile () {
 
 	tempdisplayN.innerHTML = "Display name: Eos";
-	profileActions.style.display = "flex"; //flex for others' view
-//header username
-profileUsername.style.display = "none"; //none for others' view
-//settings menu + settings page
-profileMenuSettings.style.display = "none"; //none for others' view
-profileSettingsPage.style.display = "none"; //none for others' view
-//friends button requests in friend page
+	profileActions.classList.add("flex");
+	profileActions.classList.remove("hidden");
+	matchesPage.classList.add("hidden");
+	matchesPage.classList.remove("flex");
+profileUsername.classList.add("hidden");
+profileUsername.classList.remove("flex");
+profileMenuSettings.classList.add("hidden");
+profileMenuSettings.classList.remove("block");
+profileSettingsPage.classList.add("hidden");
+profileSettingsPage.classList.remove("flex");
 const friendsButtons: NodeListOf<Element> = document.querySelectorAll('.friend-action');
 friendsButtons.forEach((button) => {
   const element = button as HTMLElement;
-  element.style.display = 'none';
+  element.classList.add("hidden");
+  element.classList.remove("flex");
 });
-// profileFriendsPageButtons.style.display = "none"; //none for others' view
-//change avatar in header
 profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
-blockButton.style.display = "none";
+blockButton.classList.add("hidden");
+blockButton.classList.remove("block");
 
 }

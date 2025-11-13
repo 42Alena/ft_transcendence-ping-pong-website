@@ -18,24 +18,24 @@ chatTab.click();
 function displayList(event : any, text : string) {
   var i, tablinks;
 
-  let tabcontent : any = document.getElementsByClassName("chat-left__list-dms");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  if (text == 'chat')
+   if (text == 'chat')
   {
-	listDmsDiv.style.display = "block";
-	listUsersDiv.style.display = "none";
+	listDmsDiv.classList.add("flex");
+	listDmsDiv.classList.remove("hidden");
+	listUsersDiv.classList.add("hidden");
+	listUsersDiv.classList.remove("flex");
 
   }
   else
   {
-	listUsersDiv.style.display = "block";
-	listDmsDiv.style.display = "none";
+	listDmsDiv.classList.add("hidden");
+	listDmsDiv.classList.remove("flex");
+	listUsersDiv.classList.add("flex");
+	listUsersDiv.classList.remove("hidden");
   }
   event.currentTarget.className += " active";
 }
@@ -60,7 +60,8 @@ function addBubble(role : string, content : string)
 
 function displayConversationHistory(id : string, list : Chat[], name : string, avatar : string) {
 
-	userProfileDiv.style.display = "none";
+	userProfileDiv.classList.add("hidden");
+	userProfileDiv.classList.remove("block");
 	fillConversationInfo(name, avatar);
 	currChatId = id;
 	const existingBubble = document.getElementById('history-conv');
@@ -110,19 +111,16 @@ function fillConversationInfo(name : string, avatar : string) {
 
 	avatarDiv.className = "chat-right__header-avatar";
 	avatarDiv.setAttribute('id', 'contact-avatar');
-	avatarDiv.style.width = '45px';
-	avatarDiv.style.height = '45px';
-	avatarDiv.style.overflow = 'hidden';
-	avatarDiv.style.padding = '5px';
+	avatarDiv.classList.add("w-[45px]", "h-[45px]", "overflow-hidden", "p-1.25");
 	avatarImg.src = avatar;
-	avatarImg.style.width = '100%';
-	avatarImg.style.height = '100%';
-	avatarImg.style.objectFit = 'cover';
+	avatarImg.classList.add("w-full", "h-full", "object-cover")
 	avatarDiv.appendChild(avatarImg);
 	chatInfoDiv.appendChild(avatarDiv);
 
-	conversationDiv.style.display = "flex";
-	startConvDiv.style.display = "none";
+	conversationDiv.classList.add("flex");
+	conversationDiv.classList.remove("hidden");
+	startConvDiv.classList.add("hidden");
+	startConvDiv.classList.remove("flex");
 }
 
 function addElement(name : string, id : string, avatar : string) {
@@ -135,7 +133,6 @@ function addElement(name : string, id : string, avatar : string) {
 	avatImg.width = 30;
 	avatImg.height = 30;
 	avatDiv.appendChild(avatImg);
-	avatDiv.className = "border";
 	newDiv.appendChild(avatDiv);
 
 	const userDiv = document.createElement("div");
@@ -143,12 +140,8 @@ function addElement(name : string, id : string, avatar : string) {
     const newContent = document.createTextNode(name);
 	userDiv.appendChild(newContent);
 	newDiv.appendChild(userDiv);
-	// newDiv.onclick = function () { fillConversationInfo(name, avatar)};
 	newDiv.onclick = function() { displayConversationHistory(id, chatList, name, avatar)};
-    newDiv.className = "chat-left__list-dms-item border";
-	newDiv.style.display = "flex";
-	newDiv.style.alignItems = "center";
-	newDiv.style.gap = "10px";
+	newDiv.classList.add("flex", "items-center", "gap-2.5", "border", "p-2.5", "bg-white");
     listDmsDiv.append(newDiv);
 }
 
@@ -219,14 +212,21 @@ inputEl.addEventListener("keydown", (event : KeyboardEvent) => {
 });
 
 function displayProf() {
-	startConvDiv.style.display = "none";
-	conversationDiv.style.display = "none";
-	blockedList.style.display = "none";
-	friendList.style.display = "flex";
+	startConvDiv.classList.add("hidden");
+	startConvDiv.classList.remove("flex");
+	conversationDiv.classList.add("hidden");
+	conversationDiv.classList.remove("flex");
+	blockedList.classList.add("hidden");
+	blockedList.classList.remove("flex");
+	friendList.classList.add("flex");
+	friendList.classList.remove("hidden");
 	displayUserProfile();
-	userProfileDiv.appendChild(profilePage);
-	userProfileDiv.style.display = "block";
-	profilePage.style.display = "grid";
-	profileFriendPage.style.display = "flex";
+	userProfileDiv.appendChild(profP);
+	userProfileDiv.classList.add("block");
+	userProfileDiv.classList.remove("hidden");
+	profP.classList.add("grid");
+	profP.classList.remove("hidden")
+	friendsPage.classList.add("flex");
+	friendsPage.classList.remove("hidden");
 	toggle = true;
 }
