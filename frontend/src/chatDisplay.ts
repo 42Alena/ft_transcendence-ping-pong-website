@@ -112,15 +112,8 @@ function fillConversationInfo(name : string, avatar : string) {
 	avatarDiv.className = "chat-right__header-avatar";
 	avatarDiv.setAttribute('id', 'contact-avatar');
 	avatarDiv.classList.add("w-[45px]", "h-[45px]", "overflow-hidden", "p-1.25");
-	// avatarDiv.style.width = '45px';
-	// avatarDiv.style.height = '45px';
-	// avatarDiv.style.overflow = 'hidden';
-	// avatarDiv.style.padding = '5px';
 	avatarImg.src = avatar;
 	avatarImg.classList.add("w-full", "h-full", "object-cover")
-	// avatarImg.style.width = '100%';
-	// avatarImg.style.height = '100%';
-	// avatarImg.style.objectFit = 'cover';
 	avatarDiv.appendChild(avatarImg);
 	chatInfoDiv.appendChild(avatarDiv);
 

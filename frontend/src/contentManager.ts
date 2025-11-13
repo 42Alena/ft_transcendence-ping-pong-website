@@ -16,16 +16,23 @@ function displayPage(text: string) : void
 		welcP.classList.remove("flex");
 		accP.classList.add("hidden");
 		accP.classList.remove("flex");
-		gameP.style.display = "none";
-		setGame.style.display = "none";
-		playersNum.style.display = "none";
-		alias.style.display = "none";
-		gameOverDiv.style.display = "none";
-		instruction.style.display = "none";
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
 		if (gameisOn)
 		{
 			clearInterval(interval)
-			canvas.style.display = "none";
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
 			gameisOn = false;
 		}
 	}
@@ -37,38 +44,52 @@ function displayPage(text: string) : void
 		chatP.classList.add("hidden");
 		accP.classList.add("hidden");
 		accP.classList.remove("flex");
-		gameP.style.display = "none";
-		setGame.style.display = "none";
-		playersNum.style.display = "none";
-		alias.style.display = "none";
-		gameOverDiv.style.display = "none";
-		instruction.style.display = "none";
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
 		if (gameisOn)
 		{
-			clearInterval(interval);
-			canvas.style.display = "none";
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
 			gameisOn = false;
 		}
 	}
 	else if (text == 'game')
 	{
-		gameP.style.display = "flex";
-		setGame.style.display = "block";
-		playersNum.style.display = "flex";
-		alias.style.display = "none";
-		gameOverDiv.style.display = "none";
-		instruction.style.display = "none";
-
+		gameP.classList.add("flex");
+		gameP.classList.remove("hidden");
+		setGame.classList.add("block");
+		setGame.classList.remove("hidden");
+		playersNum.classList.add("flex");
+		playersNum.classList.remove("hidden");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
 		if (gameisOn)
 		{
 			clearInterval(interval);
-			canvas.style.display = "none";
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
 			gameisOn = false;
 		}
-		welcP.style.display = "none";
-		chatP.style.display = "none";
-		accP.style.display = "none";
-		regP.style.display = "none";
-		logP.style.display = "none";
+		welcP.classList.add("hidden");
+		welcP.classList.remove("flex");
+		chatP.classList.remove("grid");
+		chatP.classList.add("hidden");
+		accP.classList.add("hidden");
+		accP.classList.remove("flex");
 	}
 }

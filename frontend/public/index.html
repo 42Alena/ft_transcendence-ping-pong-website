@@ -19,7 +19,12 @@
         >
           <div id="header-navbar-logo" class="p-2.5">
             <a href="#" onclick="displayPage('welcome')">
-             <img src="images/logo.png" alt="logo of the page" width="100" height="50" />
+              <img
+                src="images/logo.png"
+                alt="logo of the page"
+                width="100"
+                height="50"
+              />
             </a>
           </div>
           <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
@@ -123,7 +128,7 @@
                   id="list-users"
                 >
                   <div
-                    class="flex items-center gap-2.5 border p-2.5 bg-white"
+                    class="flex items-center gap-2.5 border bg-white p-2.5"
                     onclick="displayProf()"
                   >
                     <div>
@@ -146,11 +151,8 @@
               >
                 Start a converstion
               </div>
-              <div id="userProfile" class="h-full hidden"></div>
-              <div
-                id="conversation"
-                class="h-full flex-col hidden border"
-              >
+              <div id="userProfile" class="hidden h-full"></div>
+              <div id="conversation" class="hidden h-full flex-col border">
                 <div
                   class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
                   id="chat-info"
@@ -506,8 +508,7 @@
                           <input
                             type="submit"
                             name="delete_account"
-                            class="cursor-pointer rounded-full border border-black p-[5px]"
-                            style="margin: 10px 0"
+                            class="my-2.5 cursor-pointer rounded-full border border-black p-[5px]"
                             value="Delete Account"
                           />
                         </p>
@@ -640,70 +641,121 @@
               </div>
             </div>
           </div>
-          <div id="gamePage" class="container"
-          style="display: none; width: 100%; justify-content: center; align-items: center; background-color: black;">
-          <div id="setupGame"
-            style="display: block; position: relative; width: 640px; height: 480px; border: 1px solid blue; background-color: paleturquoise;">
-            <div id="setupNumberPlayers"
-              style="display: flex; flex-direction: row; width: 100%; height: 100%; gap: 10px; justify-content: center; align-items: center;">
-              <button type="button" name="setOnePlayerButton" onclick="setOnePlayer(true)">
-                One Player
-              </button>
-              <button type="button" name="setTwoPlayerButton" onclick="setOnePlayer(false)">
-                Two Players
-              </button>
-            </div>
-            <div id="setUpPlayers"
-              style="display: none; flex-direction: column; height: 100%; justify-content: center; align-items: center; gap: 10px">
-              <div id="setupDisplayName"
-                style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px">
-                <div id="displayNamePlayerOne">
-                  <label for="namePlayerOne" style="color: white;">Player one</label>
-                  <div style="display: flex; flex-direction: row;">
-                    <input id="namePlayerOne" type="text" name="game-player-name-1"
-                      placeholder="Enter your display name" style="flex-grow:2;" />
-                    <button type="button" onclick="saveDisplayName(1)">OK</button>
+          <div
+            id="gamePage"
+            class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+          >
+            <div
+              id="setupGame"
+              class="relative block h-[480px] w-[640px] border-2 border-blue-900 bg-sky-200"
+            >
+              <div
+                id="setupNumberPlayers"
+                class="gap-2.5 flex h-full w-full flex-row items-center justify-center"
+              >
+                <button
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  name="setOnePlayerButton"
+                  onclick="setOnePlayer(true)"
+                >
+                  One Player
+                </button>
+                <button
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  name="setTwoPlayerButton"
+                  onclick="setOnePlayer(false)"
+                >
+                  Two Players
+                </button>
+              </div>
+              <div
+                id="setUpPlayers"
+                class="gap-2.5 hidden h-full flex-col items-center justify-center"
+              >
+                <div
+                  id="setupDisplayName"
+                  class="gap-2.5 flex flex-row items-center justify-center"
+                >
+                  <div id="displayNamePlayerOne" class="block">
+                    <label for="namePlayerOne" class="text-black"
+                      >Player one</label
+                    >
+                    <div class="flex flex-row">
+                      <input
+                        id="namePlayerOne"
+                        type="text"
+                        name="game-player-name-1"
+                        placeholder="Enter your display name"
+                        class="flex-2 bg-white"
+                      />
+                      <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(1)">
+                        <div>OK</div>
+                      </button>
+                    </div>
+                  </div>
+                  <div id="displayNamePlayerTwo" class="block">
+                    <label for="namePlayerTwo" class="text-black"
+                      >Player two</label
+                    >
+                    <div class="flex flex-row">
+                      <input
+                        class="flex-2 bg-white"
+                        id="namePlayerTwo"
+                        type="text"
+                        name="game-player-name-2"
+                        placeholder="Enter your display name"
+                      />
+                       <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(1)">
+                        <div>OK</div>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div id="displayNamePlayerTwo" style="display: block;">
-                  <label for="namePlayerTwo" style="color: white; display: block;">Player two</label>
-                  <div style="display: flex; flex-direction: row;">
-                    <input class="input-d" id="namePlayerTwo" type="text" name="game-player-name-2"
-                      placeholder="Enter your display name" />
-                    <button type="button" onclick="saveDisplayName(2)">OK</button>
-                  </div>
+                <div id="Setinstructions" class="hidden">
+                  PLAYER 1 - W and S <br />
+                  PLAYER 2 - ARROW KEYS <br />
+                  P - PAUSE <br />
+                  ESC - QUIT <br />
+                </div>
+                <div id="startButton">
+                  <button id="runButton" class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+>Start game</button>
                 </div>
               </div>
-              <div id="Setinstructions" style="display: none;">
-                PLAYER 1 - W and S <br />
-                PLAYER 2 - ARROW KEYS <br />
-                P - PAUSE <br />
-                ESC - QUIT <br />
-              </div>
-              <div id="startButton">
-                <button id="runButton" style="display: none;">Start game</button>
-              </div>
             </div>
-          </div>
-          <div id="gameScreen"
-            style="display: none; justify-content: center; align-items: center; width: 640px; height: 480px;">
-            <canvas id="myCanvas" style="display: none; background-color: black;border: 1px solid blue" width="640"
-              height="480"></canvas>
-          </div>
-          <div id="gameOverScreen"
-            style="display: none; flex-direction: column; justify-content: center; align-items: center; width: 640px; height: 480px; background-color: paleturquoise;">
-            <div id="result"
-              style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-              GAME OVER
-              <div id="winner-text"></div>
+            <div
+              id="gameScreen"
+              class="hidden h-[480px] w-[640px] items-center justify-center"
+            >
+              <canvas
+                id="myCanvas"
+                class="hidden; border-2 border-blue-950 bg-black"
+                width="640"
+                height="480"
+              ></canvas>
             </div>
-            <div id="nextGame">
-              <button type="button">Play Again</button>
-              <button type="button">New Game</button>
+            <div
+              id="gameOverScreen"
+              class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
+            >
+              <div
+                id="result"
+                class="flex; flex-col items-center justify-center text-center"
+              >
+                GAME OVER
+                <div id="winner-text"></div>
+              </div>
+              <div id="nextGame" class="flex flex-row gap-2.5">
+                <button type="button" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+>Play Again</button>
+                <button type="button" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+>New Game</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </section>
     </main>
     <footer class="flex justify-center border bg-[#90ee90]">
@@ -714,11 +766,11 @@
         <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
       </div>
     </footer>
-      <script src="dist/accountDisplay.js"></script>
+    <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>
     <script src="dist/gameLogic.js"></script>
-  <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
-    </body>
+  </body>
 </html>
