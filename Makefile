@@ -70,7 +70,7 @@ db: check-tools
 
 tests_user_settings: db
 	@chmod +x backend/tests/user_settings.sh
-	@BASE_URL=http://localhost:3000 backend/tests/users.sh
+	@BASE_URL=http://localhost:3000 backend/tests/user_settings.sh
 
 tests_users: db
 	@chmod +x backend/tests/users.sh

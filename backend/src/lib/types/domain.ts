@@ -60,7 +60,11 @@ export type RegisterUserParams = {
 
 export type ChangeDomainNameResult =
   | { ok: true }
-  | { ok: false; reason: "not_me" |  "taken_displayname" | "weak_displayname"};
+  | {
+      ok: false;
+      reason: "not_me" | "taken_displayname" | "weak_displayname";
+      message?: string;   // <-- optional test
+    };
 
 
 //_____________FRIENDS__________________

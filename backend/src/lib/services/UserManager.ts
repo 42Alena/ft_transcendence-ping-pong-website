@@ -9,6 +9,7 @@ import { User } from './User';           // class used only here
 import { userFromDbRow, userToDbRow } from '../mappers/user_db';
 import { generateId } from '../utils/randomId';
 import { hashPassword } from '../utils/password';
+import { normalizeName, validateName } from '../utils/validators';
 
 export class UserManager {
 
@@ -266,7 +267,7 @@ export class UserManager {
 
 
 		await this.dbTableBlocks().where({ userId: meId, blockedId: targetId }).del();
-		
+
 		return { ok: true };
 	}
 
@@ -293,17 +294,37 @@ export class UserManager {
 
 	async changeDisplayName(
 		meId: Domain.UserId,
-		passwordNew: Domain.PasswordPlain,
+		newDisplayName: Domain.DisplayName,
 	): Promise<Domain.ChangeDomainNameResult> {
 
+
+		if (!(await this.existsById(meId)))
+			return { ok: false, reason: "not_me" };
+		
+
+		const nameNormalized = normalizeName(newDisplayName);
+
+		
+		const validationError = validateName(nameNormalized);
+		if (validationError) {
+			return { ok: false, reason: "weak_displayname",  message: validationError, };
+		}
+
+		if(await this.isDisplayNameTaken(nameNormalized)) return { ok: false, reason: "taken_displayname" };
+
+		console.log('normalized', nameNormalized)
+		//update
+		await this.dbTableUser()
+			.update( {displayName: nameNormalized})
+			.where({ id: meId });
 
 		return { ok: true };
 	};
 
 
-	
 
-	
+
+
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
 	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
 	//_________________/ME/SETTINGS: DELETE USER____________

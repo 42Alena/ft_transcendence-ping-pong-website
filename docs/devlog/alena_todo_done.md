@@ -18,6 +18,17 @@ Not required for evaluation — used for organization and pull request preparati
 ## 📘 DOCUMENTATION
 
 ## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
 ---------------------------------
@@ -54,6 +65,10 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 
 ## BACKEND
+### UserManager
+	+ changeDisplayName()
+### User_routes
+	+ To change Display Name: /users/me/display-name
 
 ## FRONTEND
 
@@ -67,6 +82,16 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## 🔗 LINKS / HELP
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH 
+
+# HOW TO TEST:
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
 
 
 --------------------------
@@ -107,8 +132,9 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH
 	```
 
 
-### TESTS
-```
+
+# HOW TO TEST:
+```bash
 	#  1. in 1.terminal 
 	make backend
 
