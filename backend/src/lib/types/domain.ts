@@ -56,6 +56,13 @@ export type RegisterUserParams = {
 };
 
 
+//_____________SETTINGS__________________
+
+export type ChangeDomainNameResult =
+  | { ok: true }
+  | { ok: false; reason: "not_me" |  "taken_displayname" | "weak_displayname"};
+
+
 //_____________FRIENDS__________________
 
 

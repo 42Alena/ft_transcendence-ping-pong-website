@@ -185,10 +185,74 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 		});
 
-	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD ____________
-	//_________________SETTINGS: DELETE USER____________
+	//_________________/ME/SETTINGS: CHANGE DISPLAY NAME____________
+
+	/* Route: PATCH /users/me/display-name
+	
+	Auth: required (needs session cookie → userId)
+	
+	Body: { "displayName": "NewPublicName" }
+	
+	Checks:
+	
+	validate format (length, allowed chars)
+	
+	check if displayName is unique
+	
+	Uses in UserManager: updateDisplayName(userId, newDisplayName) */
+	// reason: "not_me" |  "taken_displayname" | "weak_displayname"};
+	fastify.patch("/users/me/display-name", authRequiredOptions, async (req, reply) => {
+		console.log('Change Password', req.body)
+		// const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+		// if (!meId) return sendError(reply, "need cookies", "auth", 401);
+
+
+		// const result = await userManager.unblockUser(meId, passwordNew);
+
+		// if (result.ok)
+		// 	return sendNoContent(reply);                  // 204
+
+		// // map domain reasons to HTTP
+		// if (result.reason === "not_me") return sendError(reply, "User not found", "id", 404);
+
+		// if (result.reason === "weak_displayname") return sendError(reply, "Displayname is weak", "displayname", 404);
+
+		// if (result.reason === "taken_displayname") return sendError(reply, "Displayname is taken", "displayname", 404);
+
+	});
+
+	/* 
+			console.log('Register user', req.body)
+			const body = req.body as API.RegisterBody;
+			// const { username, displayName, passwordPlain, avatarUrl } = req.body as API.RegisterBody;
+	
+			const username = Validate.normalizeName(body.username)
+			const displayName = Validate.normalizeName(body.displayName)
+			const passwordPlain = body.passwordPlain;
+			const avatarUrl = Validate.normalizeString(body.avatarUrl)
+	
+			//username
+			if (!username) { return sendError(reply, "No user name", "username") }
+			const validateUsernameError = Validate.validateName(username);
+			if (validateUsernameError) { return sendError(reply, validateUsernameError, "username") }
+	
+			//display name
+			if (!displayName) { return sendError(reply, "No display name", "displayName") }
+			const validateDisplayNameError = Validate.validateName(displayName);
+			if (validateDisplayNameError) { return sendError(reply, validateDisplayNameError, "displayName") }
+			if (await userManager.isDisplayNameTaken(displayName)) { return sendError(reply, "Display name is taken", "displayName") }
+	
+			//passwordPlain
+			if (!passwordPlain) { return sendError(reply, "No password", "passwordPlain") }
+			const validatePassError = Validate.validatePassword(passwordPlain, username, displayName)
+			if (validatePassError) { return sendError(reply, validatePassError, "passwordPlain") }
+	
+	
+	*/
+
+	//_________________/ME/SETTINGS: CHANGE AVATAR____________
+	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+	//_________________/ME/SETTINGS: DELETE USER____________
 
 
 	//_________________ONLINE/OFFLINE____________

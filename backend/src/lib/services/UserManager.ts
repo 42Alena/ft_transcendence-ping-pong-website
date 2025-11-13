@@ -288,6 +288,31 @@ export class UserManager {
 		return !!row;
 	}
 
+	//_________________/ME/SETTINGS: CHANGE DISPLAY NAME____________
+
+
+	async changeDisplayName(
+		meId: Domain.UserId,
+		passwordNew: Domain.PasswordPlain,
+	): Promise<Domain.ChangeDomainNameResult> {
+
+
+		return { ok: true };
+	};
+
+
+	
+
+	
+	//_________________/ME/SETTINGS: CHANGE AVATAR____________
+	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+	//_________________/ME/SETTINGS: DELETE USER____________
+
+
+	//_________________ONLINE/OFFLINE____________
+
+
+
 
 	// //____Status: online | ofline
 

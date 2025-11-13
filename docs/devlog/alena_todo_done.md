@@ -42,20 +42,35 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-TODO ROUTES: 
 
-	// ______________FRIENDS:    DELETE /friends/:id_____________
-	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
-	// ______________BLOCKS:    DELETE /blocks/:id_____________
-
 	//_________________SETTINGS: CHANGE AVATAR____________
 	//_________________SETTINGS: CHANGE DISPLAY NAME____________
 	//_________________SETTINGS: CHANGE PASSWORD NAME____________
 	//_________________SETTINGS: DELETE USER____________
 	
-	
 	//_________________ONLINE/OFFLINE____________
 
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+
+## FRONTEND
+
+### TESTS
+	+ backend/tests/user-settings.sh (to test changing: displayname, avatar. to test delete account)
+
+### Makefile
+	+ tests_user_settings
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH 
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================================================================================
 ## DB
 
 ## BACKEND
