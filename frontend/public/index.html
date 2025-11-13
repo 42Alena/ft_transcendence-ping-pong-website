@@ -28,8 +28,6 @@
             </a>
           </div>
           <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
-            <!--to change all this span after also taking care of js
-          to change in class="hidden bg-[#fff] border-[#ccc] rounded-sm absolute z-10 list-none m-0 p-0" -->
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
                 <span id="logged-user" class="mr-2.5"> Hello, you! </span>
@@ -707,7 +705,7 @@
                         name="game-player-name-2"
                         placeholder="Enter your display name"
                       />
-                       <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(1)">
+                       <button class="black border-2 border-white bg-blue-500  hover:bg-blue-700" type="button" onclick="saveDisplayName(2)">
                         <div>OK</div>
                       </button>
                     </div>
@@ -727,13 +725,13 @@
             </div>
             <div
               id="gameScreen"
-              class="hidden h-[480px] w-[640px] items-center justify-center"
+              class="hidden h-[600px] w-[800px] items-center justify-center"
             >
               <canvas
                 id="myCanvas"
                 class="hidden; border-2 border-blue-950 bg-black"
-                width="640"
-                height="480"
+                width="800"
+                height="600"
               ></canvas>
             </div>
             <div

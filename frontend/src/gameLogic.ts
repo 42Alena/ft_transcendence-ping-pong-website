@@ -73,7 +73,7 @@ function saveDisplayName(player : number) {
 
   if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
   {
-    setTimeout(showStartButton, 3000);
+    setTimeout(showStartButton, 1000);
     instruction.classList.add("block");
     instruction.classList.remove("hidden");
   }
@@ -83,6 +83,7 @@ inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
 	if (event.key == "Enter")
 	{
 		displayNamePlayerOne = inputPlayerOne.value;
+    saveDisplayName(1);
 	}
 });
 
@@ -90,6 +91,7 @@ inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
 	if (event.key == "Enter")
 	{
 		displayNamePlayerTwo = inputNamePlayerTwo.value;
+    saveDisplayName(2);
 	}
 });
 
@@ -97,24 +99,27 @@ document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
 let pauseFlag : boolean = false;
 
-function keyDownHandler(e : any) {
-
-  if (e.key == "p")
+function keyDownHandler(e: any) {
+  if (gameisOn)
   {
-    console.log("p");
-    if (pauseFlag == false)
+    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
     {
-      clearInterval(interval);``
-      pauseFlag = true;
+      e.preventDefault();
     }
-    else
+    if (e.key == "p")
     {
+      if (pauseFlag == false)
+      {
+        clearInterval(interval);
+        pauseFlag = true;
+      }
+      else
+      {
         startGame();
         pauseFlag = false;
+      }
     }
   }
-  if (gameisOn)
-      e.preventDefault();
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -131,10 +136,14 @@ function keyDownHandler(e : any) {
   }
 }
 
-function keyUpHandler(e : any) {
-
-  if (gameisOn)
-    e.preventDefault();
+function keyUpHandler(e: any) {
+   if (gameisOn)
+  {
+    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
+    {
+      e.preventDefault();
+    }
+  }
   if (!enableAI)
   {
     if (e.key === "Up" || e.key === "ArrowUp") {
@@ -150,8 +159,6 @@ function keyUpHandler(e : any) {
     paddleLeft.down = false;
   }
 }
-
-
 //game over
 
 class Paddle {
@@ -199,8 +206,8 @@ class Ball {
 
 	constructor () {
 		this.lenght = 12;
-		this.dx = 2;
-		this.dy = -2;
+		this.dx = 3;
+		this.dy = -3;
 		this.color = "red";
 		this.x = canvas.width / 2 - this.lenght / 2;
 		this.y = canvas.height / 2 - this.lenght / 2;
@@ -301,7 +308,7 @@ function draw() {
     }
   }
 
-   if (paddleLeft.down) {
+  if (paddleLeft.down) {
     paddleLeft.y += 7;
     if (paddleLeft.y + paddleLeft.lenght > canvas.height) {
       paddleLeft.y = canvas.height - paddleLeft.lenght;

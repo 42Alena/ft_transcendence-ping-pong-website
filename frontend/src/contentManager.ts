@@ -7,7 +7,6 @@ const gameP : any = document.getElementById('gamePage');
 
 function displayPage(text: string) : void
 {
-	console.log(`${text}`);
 	if (text == 'chat')
 	{
 		chatP.classList.add("grid");
@@ -28,6 +27,8 @@ function displayPage(text: string) : void
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
   		instruction.classList.remove("block");
+		runButton.classList.add("hidden");
+  		runButton.classList.remove("block");
 		if (gameisOn)
 		{
 			clearInterval(interval)
@@ -56,6 +57,8 @@ function displayPage(text: string) : void
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
   		instruction.classList.remove("block");
+		runButton.classList.add("hidden");
+  		runButton.classList.remove("block");
 		if (gameisOn)
 		{
 			clearInterval(interval)
@@ -78,6 +81,8 @@ function displayPage(text: string) : void
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
   		instruction.classList.remove("block");
+		runButton.classList.add("hidden");
+  		runButton.classList.remove("block");
 		if (gameisOn)
 		{
 			clearInterval(interval);

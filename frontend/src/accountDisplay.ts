@@ -49,7 +49,6 @@ profileBlockUnbFriend.addEventListener("click", (event : any) => {
 });
 function setAccountPage(text : string)
 {
-	console.log(`text: ${text}`);
 	accP.classList.add("flex");
 	accP.classList.remove("hidden");
 	chatP.classList.remove("grid");
@@ -58,28 +57,63 @@ function setAccountPage(text : string)
 	welcP.classList.remove("flex");
 	if (text == "login")
 	{
-		console.log(" - login");
 		logP.classList.add("flex");
 		logP.classList.remove("hidden");
 		regP.classList.add("hidden");
 		regP.classList.remove("flex");
 		profP.classList.add("hidden");
 		profP.classList.remove("grid");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 
 	}
 	else if (text == "register")
 	{
-		console.log(" - register");
 		regP.classList.add("flex");
 		regP.classList.remove("hidden");
 		logP.classList.add("hidden");
 		logP.classList.remove("flex");
 		profP.classList.add("hidden");
 		profP.classList.remove("grid");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 	}
 	else if (text == "profile")
 	{
-		console.log(" - profile");
 		profP.classList.add("grid");
 		profP.classList.remove("hidden");
 		accP.appendChild(profP);
@@ -92,12 +126,30 @@ function setAccountPage(text : string)
 		friendsPage.classList.remove("flex");
 		matchesPage.classList.add("hidden");
 		matchesPage.classList.remove("flex");
+		gameP.classList.add("hidden");
+		gameP.classList.remove("flex");
+		setGame.classList.add("hidden");
+		setGame.classList.remove("block");
+		playersNum.classList.add("hidden");
+		playersNum.classList.remove("flex");
+		alias.classList.add("hidden");
+		alias.classList.remove("flex");
+		gameOverDiv.classList.add("hidden");
+		gameOverDiv.classList.remove("flex");
+		instruction.classList.add("hidden");
+  		instruction.classList.remove("block");
+		if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
 	}
 }
 
 // It makes the preview of the avatar the user wants to upload
 regAvatar.addEventListener("change", (event : any) => {
-	console.log('change event caught');
 	const img : any = document.getElementById("avatar");
 	img.src = URL.createObjectURL(regAvatar.files[0]);
 });
