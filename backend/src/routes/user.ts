@@ -240,34 +240,47 @@ validate newPassword (min length, etc.)
 hash new password, save
 optionally invalidate all other login sessions
 Uses in UserManager: changePassword(userId, currentPassword, newPassword)
-	
+	  reason: "not_me" |  "weak_password";
 	*/
 	fastify.patch("/users/me/change-password", authRequiredOptions, async (req, reply) => {
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
 
-		const { displayName: newDisplayName } = req.body as { displayName: API.DisplayName };
-		console.log('Change display name', req.body)
+		const { currentPassword, newPassword } = req.body as API.ChangePasswordBody;
+
+		if (!currentPassword || !newPassword) {
+			return sendError(reply, "Missing password fields", "password", 400);
+		}
+		
+		console.log('Change password', req.body)
 
 
-		if (!newDisplayName) { return sendError(reply, "No display name", "displayName") }
 
 
-		const result = await userManager.changeDisplayName(meId, newDisplayName);
+
+		const result = await userManager.changePassword(meId, currentPassword, newPassword);
 
 		if (result.ok)
 			return sendNoContent(reply);                  // 204
 
 		// map domain reasons to HTTP
-		if (result.reason === "not_me") return sendError(reply, "User not found", "id", 404);
+		if (result.reason === "not_me")
+			return sendError(reply, "User not found", "id", 404);
 
-		if (result.reason === "taken_displayname") return sendError(reply, "Displayname is taken", "displayname", 409);
 
-		if (result.reason === "weak_displayname") {
+		if (result.reason === "wrong_current_password") {
+			return sendError(
+				reply,
+				"Current password is wrong",
+				"currentPassword",
+				401,
+			);
+		}
+		if (result.reason === "weak_password") {
 			return sendError(reply,
-				result.message ?? "Displayname is weak", // from validateName()
-				"displayname",
+				result.message ?? "password is weak", // from validatePassword()
+				"password",
 				400);
 		}
 

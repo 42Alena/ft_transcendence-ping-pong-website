@@ -70,7 +70,7 @@ export type ChangeDomainNameResult =
   | { ok: true }
   | {
       ok: false;
-      reason: "not_me" |  "weak_password";
+      reason: "not_me" | "wrong_current_password" | "weak_password";
       message?: string;   // <-- from validatePassword()
     };
 

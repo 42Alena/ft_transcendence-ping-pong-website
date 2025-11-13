@@ -70,10 +70,14 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### User_routes
 	+ To change Display Name: /users/me/display-name
-	
+	+ To change Password: /users/me/change-password"
+
 ### domain types
 	+ ChangeDomainNameResult
 	+ ChangePasswordResult
+
+### api types
+	+ ChangePasswordBody
 
 ## FRONTEND
 

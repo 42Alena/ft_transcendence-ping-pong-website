@@ -8,7 +8,7 @@ import { db } from './DB';
 import { User } from './User';           // class used only here
 import { userFromDbRow, userToDbRow } from '../mappers/user_db';
 import { generateId } from '../utils/randomId';
-import { hashPassword } from '../utils/password';
+import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
 
 export class UserManager {
@@ -326,6 +326,7 @@ export class UserManager {
 	
 		async changePassword(
 			meId: Domain.UserId,
+			currentPassword: Domain.PasswordPlain,
 			newPassword: Domain.PasswordPlain,
 		): Promise<Domain.ChangePasswordResult> {
 	
@@ -334,12 +335,21 @@ export class UserManager {
 			if (!me)
 				return { ok: false, reason: "not_me" };
 
+
+			const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
+
+			if (!checkCurrentVsStoredHashedPass) 
+				return { ok: false, reason: "wrong_current_password" };
+
+
+
 			const validationError = validatePassword(newPassword, me.username, me.displayName);
 			if (validationError) {
 				return { ok: false, reason: "weak_password",  message: validationError, };
 			}
 			
-			const hashedPassword = hashPassword(newPassword)
+
+			const hashedPassword = await hashPassword(newPassword)
 			
 			console.log("password", newPassword, hashedPassword);  
 
