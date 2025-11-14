@@ -43,6 +43,10 @@ export type LoginBody = {
 };
 
 
+  export type ChangePasswordBody = {
+    currentPassword: PasswordPlain;
+    newPassword: PasswordPlain;
+  };
 
 //_________PROFILE__send_ to_FRONTEND___________________
 

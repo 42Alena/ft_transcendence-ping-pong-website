@@ -18,6 +18,17 @@ Not required for evaluation — used for organization and pull request preparati
 ## 📘 DOCUMENTATION
 
 ## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
 ---------------------------------
@@ -42,20 +53,58 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-TODO ROUTES: 
 
-	// ______________FRIENDS:    DELETE /friends/:id_____________
-	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
-	// ______________BLOCKS:    DELETE /blocks/:id_____________
-
 	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD ____________
 	//_________________SETTINGS: DELETE USER____________
-	
 	
 	//_________________ONLINE/OFFLINE____________
 
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+### UserManager
+	+ changeDisplayName()
+	+ changePassword()
+
+### User_routes
+	+ To change Display Name: /users/me/display-name
+	+ To change Password: /users/me/change-password"
+
+### domain types
+	+ ChangeDomainNameResult
+	+ ChangePasswordResult
+
+### api types
+	+ ChangePasswordBody
+
+## FRONTEND
+
+### TESTS
+	+ backend/tests/user-settings.sh (to test changing: displayname, avatar. to test delete account)
+
+### Makefile
+	+ tests_user_settings
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH 
+
+# HOW TO TEST:
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================================================================================
 ## DB
 
 ## BACKEND
@@ -92,8 +141,9 @@ Not required for evaluation — used for organization and pull request preparati
 	```
 
 
-### TESTS
-```
+
+# HOW TO TEST:
+```bash
 	#  1. in 1.terminal 
 	make backend
 

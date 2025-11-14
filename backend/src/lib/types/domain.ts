@@ -56,6 +56,25 @@ export type RegisterUserParams = {
 };
 
 
+//_____________SETTINGS__________________
+
+export type ChangeDomainNameResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: "not_me" | "taken_displayname" | "weak_displayname";
+      message?: string;   // <-- from validateName()
+    };
+
+	export type ChangePasswordResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: "not_me" | "wrong_current_password" | "weak_password";
+      message?: string;   // <-- from validatePassword()
+    };
+
+
 //_____________FRIENDS__________________
 
 

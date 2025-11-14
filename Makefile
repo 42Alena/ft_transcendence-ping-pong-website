@@ -51,21 +51,32 @@ frontend:
 # 	@chmod +x "$(DB_DIR)/setup_db.sh"
 # 	cd "$(DB_DIR)" && ./setup_db.sh
 	
-# runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
-# backend-tests:
-# 	cd "$(BACKEND_DIR)" && npm run backend-tests
 
 
 db: check-tools
 	@mkdir -p "$(DB_DIR)"
 	@rm -f "$(DB_DIR)/$(DB_FILE)" "$(DB_DIR)/$(DB_FILE)-wal" "$(DB_DIR)/$(DB_FILE)-shm"
 	@DB_PATH="$(DB)" "$(DB_DIR)/setup_db.sh"
+# ___________TESTS__________________________________
 
-tests: db
-	@BASE_URL=http://localhost:3000 backend/tests/users.sh
+# runs npm script "backend-tests" from $(BACKEND_DIR)/package.json (scripts.backend-tests)
+# backend-tests:
+# 	cd "$(BACKEND_DIR)" && npm run backend-tests
+
+# old. TODO: check if needs
 
 # tests: db
 # 	cd "$(BACKEND_DIR)" &&  ./users.sh
+
+tests_user_settings: db
+	@chmod +x backend/tests/user_settings.sh
+	@BASE_URL=http://localhost:3000 backend/tests/user_settings.sh
+
+tests_users: db
+	@chmod +x backend/tests/users.sh
+	@BASE_URL=http://localhost:3000 backend/tests/users.sh
+
+
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:
 	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }

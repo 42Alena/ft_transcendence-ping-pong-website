@@ -95,7 +95,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		if (!user) { return sendError(reply, "No user", "username", 401) }
 
-		if (!verifyPassword(passwordPlain, user.passwordHash)) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
+		if (! (await verifyPassword(passwordPlain, user.passwordHash))) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
 
 		const loginSessionId = generateSessionToken();
 
