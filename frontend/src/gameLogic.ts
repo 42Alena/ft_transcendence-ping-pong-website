@@ -18,13 +18,12 @@ class Player {
     }
 }
 
-const players: Player[] = [];
+let players: Player[] = [];
 
 //setup game
 const setGame : any = document.getElementById("setUpGame");
 const aliasPage : any = document.getElementById("setUpPlayers");
-const aliasPlayerOneDiv : any = document.getElementById("aliasPlayerOne");
-const aliasPlayerTwoDiv : any = document.getElementById("aliasPlayerTwo");
+
 const aliasPlayerThreeDiv : any = document.getElementById("aliasPlayerThree");
 const aliasPlayerFourDiv : any = document.getElementById("aliasPlayerFour");
 
@@ -35,9 +34,8 @@ const aliasPlayerFourInput : any = document.getElementById("namePlayerFour");
 
 const AIPlayerOneButtonsDiv : any = document.getElementById("AIPlayerOne");
 const AIPlayerTwoButtonsDiv : any = document.getElementById("AIPlayerTwo");
-const AIPlayerThreeButtonsDiv : any = document.getElementById("AIPlayeThree");
+const AIPlayerThreeButtonsDiv : any = document.getElementById("AIPlayerThree");
 const AIPlayerFourButtonsDiv : any = document.getElementById("AIPlayerFour");
-
 
 const aliasPlayerOneButton : any = document.getElementById("okPlayerOne");
 const aliasPlayerTwoButton : any = document.getElementById("okPlayerTwo");
@@ -54,6 +52,10 @@ const AIoffButtonPlayerTwo : any = document.getElementById("AIoffPlayerTwo");
 const AIoffButtonPlayerThree : any = document.getElementById("AIoffPlayerThree");
 const AIoffButtonPlayerFour : any = document.getElementById("AIoffPlayerFour");
 
+let AIPlayerTwo : boolean = false;
+let AIPlayerThree : boolean = false;
+let AIPlayerFour : boolean = false;
+
 
 const instruction : any = document.getElementById("setInstructions");
 const gameScreenDiv : any = document.getElementById("gameScreen");
@@ -67,14 +69,22 @@ let isTournament : boolean;
 
 function setGameType(text : string)
 {
+  if (gameisOn)
+		{
+			clearInterval(interval)
+			canvas.classList.add("hidden");
+			canvas.classList.remove("block");
+			gameisOn = false;
+		}
   if (text == "game")
     isTournament = false;
   else
     isTournament = true;
-  console.log(`${isTournament}`);
   setGame.classList.add("flex");
   setGame.classList.remove("hidden");
-  //reset html
+  //reset html - make sure cleaned from previous session, maybe I can do it rigth after filling my game session structure
+  players = [];
+
   aliasPlayerOneInput.value = '';
   aliasPlayerTwoInput.value = '';
   aliasPlayerThreeInput.value = '';
@@ -82,9 +92,24 @@ function setGameType(text : string)
 
   aliasPlayerOneInput.readOnly = false;
   aliasPlayerOneButton.disabled = false;
+  aliasPlayerTwoInput.readOnly = false;
+  aliasPlayerTwoButton.disabled = false;
+  aliasPlayerThreeInput.readOnly = false;
+  aliasPlayerThreeButton.disabled = false;
+  aliasPlayerFourInput.readOnly = false;
+  aliasPlayerFourButton.disabled = false;
 
+  AIPlayerTwo = AIisOff(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+  AIPlayerThree = AIisOff(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
+  AIPlayerFour = AIisOff(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
+
+  AIPlayerTwoButtonsDiv.classList.remove("invisible");
+  AIPlayerThreeButtonsDiv.classList.remove("invisible");
+  AIPlayerFourButtonsDiv.classList.remove("invisible");
+
+  //
   aliasPage.classList.add("flex");
-  aliasPage.classList.remove("hideen");
+  aliasPage.classList.remove("hidden");
   aliasSelection();
   gameOverDiv.classList.add("hidden");
   gameOverDiv.classList.remove("flex");
@@ -119,60 +144,45 @@ function aliasSelection()
   }
 }
 
-function turnOn(activeButton : any, offButtonId : any, playerNumber : string)
-{
-  const offButton : any = document.getElementById(offButtonId);
-
-  activeButton.classList.remove('bg-green-300', 'hover:bg-green-500');
-  activeButton.classList.add('bg-green-600', 'hover:bg-green-700');
-  
-  offButton.classList.remove('bg-gray-600', 'hover:bg-gray-700');
-  offButton.classList.add('bg-gray-300', 'hover:bg-gray-500');
-
-  switch (playerNumber)
-  {
-    case "playerOne":
-      aliasPlayerOneInput.value = "AI";
-      break;
-    case "playerTwo":
-      aliasPlayerTwoInput.value = "AI";
-      break;
-    case "playerThree":
-      aliasPlayerThreeInput.value = "AI";
-      break;
-    case "playerFour":
-      aliasPlayerFourInput.value = "AI";
-      break;
-  }
-
+//Switch on/off AI button
+function AIisOn(onButton : any, offButton : any, input : any) : boolean{
+  onButton.classList.add("active");
+  offButton.classList.remove("active");
+  input.value = "AI";
+  return true;
 }
 
-function turnOff(activeButton : any, onButtonId : any, playerNumber : string)
-{
-  const onButton : any = document.getElementById(onButtonId);
-
-  activeButton.classList.remove('bg-gray-300', 'hover:bg-gray-500');
-  activeButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
-
-  onButton.classList.remove('bg-green-600', 'hover:bg-green-700');
-  onButton.classList.add('bg-green-300', 'hover:bg-green-500');
-
-  switch (playerNumber)
-  {
-    case "playerOne":
-      aliasPlayerOneInput.value = "";
-      break;
-    case "playerTwo":
-      aliasPlayerTwoInput.value = "";
-      break;
-    case "playerThree":
-      aliasPlayerThreeInput.value = "";
-      break;
-    case "playerFour":
-      aliasPlayerFourInput.value = "";
-      break;
-  }
+function AIisOff(onButton : any, offButton : any, input : any) : boolean{
+  onButton.classList.remove("active");
+  offButton.classList.add("active");
+  input.value = "";
+  return false;
 }
+
+AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
+  AIPlayerTwo = AIisOn(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+});
+
+AIoffButtonPlayerTwo.addEventListener("click", (event : any) => {
+   AIPlayerTwo = AIisOff(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+});
+
+AIonButtonPlayerThree.addEventListener("click", (even: any) => {
+   AIPlayerThree = AIisOn(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
+});
+
+AIoffButtonPlayerThree.addEventListener("click", (event : any) => {
+  AIPlayerThree = AIisOff(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
+});
+
+AIonButtonPlayerFour.addEventListener("click", (even: any) => {
+  AIPlayerFour = AIisOn(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
+});
+
+AIoffButtonPlayerFour.addEventListener("click", (event : any) => {
+  AIPlayerFour = AIisOff(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
+});
+
 function initGame()
 {
   if (aliasPlayerOneButton.disabled && aliasPlayerTwoButton.disabled && !isTournament)
@@ -181,14 +191,27 @@ function initGame()
     instruction.classList.add("block");
     instruction.classList.remove("hidden");
   }
+  else if (aliasPlayerOneButton.disabled && aliasPlayerTwoButton.disabled && aliasPlayerThreeButton.disable && aliasPlayerFourButton.disable && isTournament)
+  {
+    setTimeout(showStartButton, 1000);
+    instruction.classList.add("block");
+    instruction.classList.remove("hidden");
+    //show match to play
+  }
 }
 
 aliasPlayerOneButton.addEventListener("click", (event : any) =>
 {
+  if ( aliasPlayerOneInput.value == "AI")
+  {
+      aliasPlayerOneInput.value = "Choose another alias";
+      return;
+  }
+
   for (let i = 0; i < players.length; i++)
   {
-    if (players[i].name == aliasPlayerOneInput.value || aliasPlayerOneInput.value == "AI") {
-      aliasPlayerOneInput.value = "Choose another alias";
+    if (players[i].name == aliasPlayerOneInput.value) {
+      aliasPlayerOneInput.value = '';
       return;
     }
   }
@@ -197,102 +220,93 @@ aliasPlayerOneButton.addEventListener("click", (event : any) =>
   const player = new Player(aliasPlayerOneInput.value, 0, false);
   players.push(player);
   initGame();
-
 });
 
 aliasPlayerTwoButton.addEventListener("click", (event : any) =>
 {
-  let AIon : boolean = true;
 
-  if (aliasPlayerTwoInput.value != "AI")
+  console.log(`player 2 ${AIPlayerTwo}`);
+  console.log(`${aliasPlayerTwoInput.value}`);
+  if (aliasPlayerTwoInput.value == "AI" && !AIPlayerTwo || aliasPlayerTwoInput.value == '')
   {
-    AIon = false;
-    for (let i = 0; i < players.length; i++)
-    {
-      if (players[i].name == aliasPlayerTwoInput.value) {
-        aliasPlayerTwoInput.value = "Choose another alias";
-        return;
-      }
+     aliasPlayerTwoInput.value = '';
+    return;
+  }
+  else if (aliasPlayerTwoInput.value == '')
+    return; 
+  for (let i = 0; i < players.length; i++)
+  {
+    if (players[i].name == aliasPlayerTwoInput.value) {
+      aliasPlayerTwoInput.value = '';
+      return;
     }
   }
   AIPlayerTwoButtonsDiv.classList.add("invisible");
   aliasPlayerTwoInput.readOnly = true;
   aliasPlayerTwoButton.disabled = true;
-  const player = new Player(aliasPlayerTwoInput.value, 0, AIon);
+  const player = new Player(aliasPlayerTwoInput.value, 0, AIPlayerTwo);
   players.push(player);
   initGame();
 });
 
 aliasPlayerThreeButton.addEventListener("click", (event : any) =>
 {
-  let AIon : boolean = true;
+  console.log(`player 2 ${AIPlayerThree}`);
+  console.log(`${aliasPlayerThreeInput.value}`);
+  if (aliasPlayerThreeInput.value == "AI" && !AIPlayerThree)
+  {
+     aliasPlayerThreeInput.value = '';
+    return;
+  }
+  else if (aliasPlayerThreeInput.value == '')
+    return;
   if (aliasPlayerThreeInput.value != "AI")
   {
-    AIon = false;
     for (let i = 0; i < players.length; i++)
     {
       if (players[i].name == aliasPlayerThreeInput.value) {
-        aliasPlayerThreeInput.value = "Choose another alias";
-        break;
+
+        aliasPlayerThreeInput.value = '';
+        return;
       }
     }
   }
   AIPlayerThreeButtonsDiv.classList.add("invisible");
   aliasPlayerThreeInput.readOnly = true;
   aliasPlayerThreeButton.disabled = true;
-  const player = new Player(aliasPlayerThreeInput.value, 0, AIon);
+  const player = new Player(aliasPlayerThreeInput.value, 0, AIPlayerThree);
   players.push(player);
   initGame();
 });
 
 aliasPlayerFourButton.addEventListener("click", (event : any) =>
 {
-  let AIon : boolean = true;
+  console.log(`player 2 ${AIPlayerFour}`);
+  console.log(`${aliasPlayerFourInput.value}`);
+  if (aliasPlayerFourInput.value == "AI" && !AIPlayerFour)
+  {
+     aliasPlayerFourInput.value = '';
+    return;
+  }
+  else if (aliasPlayerFourInput.value == '')
+    return;
   if (aliasPlayerFourInput.value != "AI")
   {
-    AIon = false;
     for (let i = 0; i < players.length; i++)
     {
       if (players[i].name == aliasPlayerFourInput.value) {
-        aliasPlayerFourInput.value = "Choose another alias";
-        break;
+        aliasPlayerFourInput.value = '';
+        return;
       }
     }
   }
   AIPlayerFourButtonsDiv.classList.add("invisible");
   aliasPlayerFourInput.readOnly = true;
   aliasPlayerFourButton.disabled = true;
-  const player = new Player(aliasPlayerFourInput.value, 0, AIon);
+  const player = new Player(aliasPlayerFourInput.value, 0, AIPlayerFour);
   players.push(player);
   initGame();
 });
-
-
-// function setOnePlayer(value : boolean)
-// {
-//   //reset
-//   inputPlayerOne.value = "";
-//   inputNamePlayerTwo.value = "";
-//   inputPlayerOne.disabled = false;
-//   inputNamePlayerTwo.disabled = false;
-//   if (value == true)
-//   {
-//     inputPlayerTwo.classList.add("hidden");
-//     inputPlayerTwo.classList.remove("block");
-//     enableAI = true;
-//   }
-//   else 
-//   {
-//     enableAI = false;
-//     inputPlayerTwo.classList.add("block");
-//     inputPlayerTwo.classList.remove("hidden");
-//   }
-//   playersNum.classList.add("hidden");
-//   playersNum.classList.remove("flex");
-//   alias.classList.add("flex");
-//   alias.classList.remove("hidden");
-//   setAlias();
-// }
 
 function showStartButton() {
   runButton.classList.add("block");

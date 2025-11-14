@@ -474,6 +474,9 @@
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
+  .bg-gray-500 {
+    background-color: var(--color-gray-500);
+  }
   .bg-gray-600 {
     background-color: var(--color-gray-600);
   }
@@ -688,8 +691,17 @@
 .chat-tab button.active {
   background-color: #ccc;
 }
-.ai-button button.active {
-  background-color: ;
+.ai-button-on:hover {
+  background-color: darkgreen;
+}
+.ai-button-on.active {
+  background-color: green;
+}
+.ai-button-off:hover {
+  background-color: darkgray;
+}
+.ai-button-off.active {
+  background-color: grey;
 }
 @property --tw-rotate-x {
   syntax: "*";

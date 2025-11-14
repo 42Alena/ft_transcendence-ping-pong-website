@@ -77,6 +77,18 @@
   background-color: #ccc;
 }
 
-.ai-button button.active {
-  background-color: ;
+.ai-button-on:hover {
+  background-color: darkgreen;
+}
+
+.ai-button-on.active {
+  background-color: green;
+}
+
+.ai-button-off:hover {
+  background-color: darkgray;
+}
+
+.ai-button-off.active {
+  background-color: grey;
 }
