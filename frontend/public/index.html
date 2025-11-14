@@ -1,665 +1,896 @@
 <!doctype html>
 <html lang="en" class="box-border">
+  <head>
+    <link rel="icon" href="images/favicon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pong</title>
+    <link href="styles/output.css" rel="stylesheet" />
+  </head>
 
-<head>
-  <link rel="icon" href="images/favicon.png" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pong</title>
-  <link href="styles/output.css" rel="stylesheet" />
-</head>
-
-<body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#90ee90]">
-  <header class="flex justify-center bg-[#90ee90]">
-    <div class="w-full max-w-5xl border">
-      <div id="header-navbar" class="flex flex-1 flex-row items-center justify-between">
-        <div id="header-navbar-logo" class="p-2.5">
-          <a href="#" onclick="displayPage('welcome')">
-            <img src="images/logo.png" alt="logo of the page" width="100" height="50" />
-          </a>
-        </div>
-        <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
-          <span class="dropdown">
-            <a href="#" class="flex items-center no-underline">
-              <span id="logged-user" class="mr-2.5"> Hello, you! </span>
-              <div id="logged-user-avatar">
-                <img src="images/profile/orange.png" alt="User Avatar" width="50" height="50" />
-              </div>
+  <body
+    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#90ee90]"
+  >
+    <header class="flex justify-center bg-[#90ee90]">
+      <div class="w-full max-w-5xl border">
+        <div
+          id="header-navbar"
+          class="flex flex-1 flex-row items-center justify-between"
+        >
+          <div id="header-navbar-logo" class="p-2.5">
+            <a href="#" onclick="displayPage('welcome')">
+              <img
+                src="images/logo.png"
+                alt="logo of the page"
+                width="100"
+                height="50"
+              />
             </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#" onclick="setAccountPage('register')"><span></span>Register</a>
-              </li>
-              <li>
-                <a href="#" onclick="setAccountPage('login')"><span></span>Login</a>
-              </li>
-              <li>
-                <a href="#" onclick="setAccountPage('profile')"><span></span> View my profile</a>
-              </li>
-              <li>
-                <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
-              </li>
-            </ul>
-          </span>
+          </div>
+          <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
+            <span class="dropdown">
+              <a href="#" class="flex items-center no-underline">
+                <span id="logged-user" class="mr-2.5"> Hello, you! </span>
+                <div id="logged-user-avatar">
+                  <img
+                    src="images/profile/orange.png"
+                    alt="User Avatar"
+                    width="50"
+                    height="50"
+                  />
+                </div>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="#" onclick="setAccountPage('register')"
+                    ><span></span>Register</a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('login')"
+                    ><span></span>Login</a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('profile')"
+                    ><span></span> View my profile</a
+                  >
+                </li>
+                <li>
+                  <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
+                </li>
+              </ul>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
-  <main class="flex justify-center border">
-    <section class="grid w-full max-w-5xl grid-cols-[70px_1fr] grid-rows-[1fr] border bg-white">
-      <nav class="grid grid-rows-[1fr] border bg-[#90ee90]">
-        <ul class="flex flex-col items-center justify-start p-2.5">
-          <li class="p-1 text-center leading-none">
-            <a href="#chat" onclick="displayPage('chat')">
-              <img src="images/icons/chat.png" alt="chat page" /></a>
-          </li>
-          <li class="p-1 text-center leading-none">
-            <a href="#" onclick="displayPage('game')">
-              <img src="images/icons/play.png" alt="chat page" /></a>
-          </li>
-          <li class="p-1 text-center leading-none">
-            <a href="#" onclick="displayPage('tournament')">
-              <img src="images/icons/tournament.png" alt="chat page" /></a>
-          </li>
-        </ul>
-      </nav>
-      <div class="relative h-full w-full border" id="board">
-        <div class="relative flex h-full w-full items-center justify-center" id="welcomePage">
-          Welcome page
-        </div>
-        <div class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]" id="chatPage">
-          <div class="flex flex-col border">
-            <div class="chat-tab flex overflow-hidden border bg-[#f1f1f1]">
-              <button
-                class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
-                id="defaultOpen" onclick="displayList(event, 'chat')">
-                Chats
-              </button>
-              <button
-                class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
-                onclick="displayList(event, 'users')">
-                Users
-              </button>
+    </header>
+    <main class="flex justify-center border">
+      <section
+        class="grid w-full max-w-5xl grid-cols-[70px_1fr] grid-rows-[1fr] border bg-white"
+      >
+        <nav class="grid grid-rows-[1fr] border bg-[#90ee90]">
+          <ul class="flex flex-col items-center justify-start p-2.5">
+            <li class="p-1 text-center leading-none">
+              <a href="#chat" onclick="displayPage('chat')">
+                <img src="images/icons/chat.png" alt="chat page"
+              /></a>
+            </li>
+            <li class="p-1 text-center leading-none">
+              <a href="#" onclick="displayPage('game')">
+                <img src="images/icons/play.png" alt="chat page"
+              /></a>
+            </li>
+            <li class="p-1 text-center leading-none">
+              <a href="#" onclick="displayPage('tournament')">
+                <img src="images/icons/tournament.png" alt="chat page"
+              /></a>
+            </li>
+          </ul>
+        </nav>
+        <div class="relative h-full w-full border" id="board">
+          <div
+            class="relative flex h-full w-full items-center justify-center"
+            id="welcomePage"
+          >
+            Welcome page
+          </div>
+          <div
+            class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            id="chatPage"
+          >
+            <div class="flex flex-col border">
+              <div class="chat-tab flex overflow-hidden border bg-[#f1f1f1]">
+                <button
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
+                  id="defaultOpen"
+                  onclick="displayList(event, 'chat')"
+                >
+                  Chats
+                </button>
+                <button
+                  class="tablinks flex-1 cursor-pointer border bg-inherit px-4 py-3.5 transition duration-300 outline-none"
+                  onclick="displayList(event, 'users')"
+                >
+                  Users
+                </button>
+              </div>
+              <div class="flex grow flex-col">
+                <div
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
+                  id="list-dms"
+                ></div>
+                <!-- no need to do list-users since it will be created by js -->
+                <div
+                  class="relative flex h-[60px] grow flex-col overflow-auto"
+                  id="list-users"
+                >
+                  <div
+                    class="flex items-center gap-2.5 border bg-white p-2.5"
+                    onclick="displayProf()"
+                  >
+                    <div>
+                      <img
+                        src="images/profile/blue.png"
+                        width="30"
+                        height="30"
+                      />
+                    </div>
+                    <div>Eos</div>
+                  </div>
+                </div>
+                <!-- no need to do list-users since it will be created by js -->
+              </div>
             </div>
-            <div class="flex grow flex-col">
-              <div class="relative flex h-[60px] grow flex-col overflow-auto" id="list-dms"></div>
-              <!-- no need to do list-users since it will be created by js -->
-              <div class="relative flex h-[60px] grow flex-col overflow-auto" id="list-users">
-                <div class="flex items-center gap-2.5 border bg-white p-2.5" onclick="displayProf()">
+            <div class="flex flex-col">
+              <div
+                id="start-chat"
+                class="flex h-full items-center justify-center bg-white"
+              >
+                Start a converstion
+              </div>
+              <div id="userProfile" class="hidden h-full"></div>
+              <div id="conversation" class="hidden h-full flex-col border">
+                <div
+                  class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
+                  id="chat-info"
+                ></div>
+                <div class="flex flex-1 grow flex-col gap-2.5 border p-[1em]">
+                  <div
+                    class="flex h-[60px] grow flex-col gap-2.5 border bg-white p-[1em]"
+                  >
+                    <!-- <div class="chat-right__stamp border">stamp</div> -->
+                    <div
+                      class="flex max-w-full grow flex-col gap-2.5 overflow-auto border bg-white p-[1em]"
+                      id="bubble"
+                    ></div>
+                    <div class="flex h-auto gap-2.5 border p-[1em]">
+                      <div
+                        class="block grow content-center border bg-white p-[0.5em]"
+                      >
+                        <div class="w-full border" id="input">
+                          <input
+                            id="text-box"
+                            type="text"
+                            class="w-full border"
+                            placeholder="Send message"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="ml-auto block content-center border bg-[#0fffff]"
+                        onclick="captureInput()"
+                      >
+                        Send
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative hidden h-full w-full items-center justify-center bg-white"
+            id="accountPage"
+          >
+            <div class="hidden flex-col bg-inherit" id="registerPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                enctype="multipart/form-data"
+                id="register"
+                class="table rounded-xl border bg-blue-300 p-1"
+              >
+                <p class="flex items-center justify-center">
+                  <label class="table-cell text-xl" for="reg-avatar">
+                    <img
+                      src="images/profile/grey.png"
+                      class="cursor-pointer"
+                      width="50px"
+                      height="50px"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="reg-avatar"
+                    name="reg-user_avatar"
+                    class="hidden"
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-username"
+                    >Username (login)</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="reg-username"
+                    name="reg-user_username"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-displayName"
+                    >Display Name (public)</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="reg-displayName"
+                    name="reg-user_displayName"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="reg-password"
+                    >Password</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="password"
+                    id="reg-password"
+                    name="reg-user_password"
+                    required
+                  />
+                </p>
+                <span class="block h-[1em]"></span>
+                <p class="flex justify-center">
+                  <button
+                    type="submit"
+                    id="submitRegButton"
+                    class="cursor-pointer border"
+                  >
+                    Register
+                  </button>
+                </p>
+              </form>
+              <div class="flex border" id="reg-errors">Error box</div>
+            </div>
+            <div class="hidden flex-col bg-inherit" id="loginPage">
+              <form
+                action="http://127.0.0.1:8080"
+                method="post"
+                id="login"
+                class="table rounded-xl border bg-purple-300 p-1"
+              >
+                <p>
+                  <label class="table-cell text-xl" for="login-username"
+                    >Username:</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="text"
+                    id="login-username"
+                    name="login-user_username"
+                    required
+                  />
+                </p>
+                <p>
+                  <label class="table-cell text-xl" for="login-password"
+                    >Password:</label
+                  >
+                  <input
+                    class="table-cell bg-white text-xl"
+                    type="password"
+                    id="login-password"
+                    name="login-user_password"
+                    required
+                  />
+                </p>
+                <span class="block h-[1em]"></span>
+                <p class="flex justify-center">
+                  <button
+                    type="submit"
+                    id="submitLogButton"
+                    class="cursor-pointer border"
+                  >
+                    Login
+                  </button>
+                </p>
+              </form>
+              <div class="errors border" id="log-errors">Error box</div>
+            </div>
+            <div
+              class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              id="profilePage"
+            >
+              <div
+                class="grid grid-cols-3 border bg-amber-500"
+                id="acc-profile-header"
+              >
+                <div
+                  class="flex items-center justify-center border"
+                  id="acc-avatar"
+                >
+                  <img
+                    src="images/profile/orange.png"
+                    alt=""
+                    id="acc-profile-avatar"
+                    width="100px"
+                    height="100px"
+                  />
+                </div>
+                <div class="flex flex-col border" id="acc-info">
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-username"
+                  >
+                    <p>Username: Pinco</p>
+                  </div>
+                  <div
+                    class="flex flex-1 items-center border"
+                    id="acc-displayName"
+                  >
+                    <p id="temp-displayname">Display Name: Pallo</p>
+                  </div>
+                </div>
+                <div class="flex flex-col border" id="acc-options;">
+                  <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
+                    <div
+                      class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
+                    ></div>
+                    <div class="">ONLINE</div>
+                  </div>
+                  <div
+                    class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs"
+                    id="acc-actions"
+                  >
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="add-remove-friend__header"
+                    >
+                      Remove
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="block-unblock-friend__header"
+                    >
+                      Block
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="send-message__header"
+                    >
+                      Send message
+                    </button>
+                    <button
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="invite-friend__header"
+                    >
+                      Invite now
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
+                id="acc-profile-menu"
+              >
+                <div id="acc-settings">SETTINGS</div>
+                <div id="acc-friends">FRIENDS</div>
+                <div id="acc-matches">MATCHES</div>
+              </div>
+              <div id="acc-profile-page">
+                <div
+                  class="flex h-full w-full items-center justify-center border text-left text-sm"
+                  id="update-settings"
+                >
+                  <div
+                    class="flex h-full w-full flex-col items-center justify-center border"
+                  >
+                    <form
+                      class="table rounded-xl border bg-blue-300 p-1"
+                      role="updateSettings"
+                      id="settings"
+                    >
+                      <div class="flex items-center justify-center">
+                        <label for="edit-avatar">
+                          <img
+                            src="images/profile/orange.png"
+                            id="avatarImgEdit"
+                            width="50px"
+                            height="50px"
+                            class="cursor-pointer"
+                          />
+                        </label>
+                        <input
+                          type="file"
+                          id="edit-avatar"
+                          name="edit-user_avatar"
+                          class="hidden"
+                        />
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl">Username:</label>
+                        <div>
+                          <input
+                            type="text"
+                            value="Pinco"
+                            readonly
+                            class="bg-white text-xl"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p>
+                          <label
+                            for="edit-displayName"
+                            class="table-cell text-xl"
+                            >Display Name:</label
+                          >
+                        </p>
+                        <div>
+                          <input
+                            id="edit-displayName"
+                            name="edit-user_displayName"
+                            type="text"
+                            value="Pallo"
+                            class="bg-white text-xl"
+                          />
+                        </div>
+                      </div>
+                      <span class="block h-[1em]"></span>
+                      <div class="flex items-center justify-center text-sm">
+                        <button
+                          type="submit"
+                          id="editDisplayNameButton"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
+                        >
+                          Change display name
+                        </button>
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl" for="edit-oldPass"
+                          >Old Password:</label
+                        >
+                        <div>
+                          <input
+                            class="bg-white text-xl"
+                            id="edit-oldPass"
+                            name="edit-user_oldPass"
+                            type="password"
+                            value="aaaaaaaaa"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label class="table-cell text-xl" for="edit-newPass"
+                          >New Password:</label
+                        >
+                        <div>
+                          <input
+                            class="bg-white text-xl"
+                            id="edit-newPass"
+                            name="edit-user_newPass"
+                            type="password"
+                            value="aaaaaaaaa"
+                          />
+                        </div>
+                      </div>
+                      <span class="block h-[1em]"></span>
+                      <div class="flex items-center justify-center text-sm">
+                        <button
+                          type="submit"
+                          id="editPasswordButton"
+                          class="cursor-pointer rounded-full border border-black p-[5px]"
+                        >
+                          Change password
+                        </button>
+                      </div>
+                      <div>
+                        <p class="flex items-center justify-center text-sm">
+                          <input
+                            type="submit"
+                            name="delete_account"
+                            class="my-2.5 cursor-pointer rounded-full border border-black p-[5px]"
+                            value="Delete Account"
+                          />
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
                   <div>
-                    <img src="images/profile/blue.png" width="30" height="30" />
+                    <button
+                      class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="blockButton"
+                      onclick="displayBlockedFriends()"
+                    >
+                      See blocked users
+                    </button>
                   </div>
-                  <div>Eos</div>
-                </div>
-              </div>
-              <!-- no need to do list-users since it will be created by js -->
-            </div>
-          </div>
-          <div class="flex flex-col">
-            <div id="start-chat" class="flex h-full items-center justify-center bg-white">
-              Start a converstion
-            </div>
-            <div id="userProfile" class="hidden h-full"></div>
-            <div id="conversation" class="hidden h-full flex-col border">
-              <div class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5" id="chat-info"></div>
-              <div class="flex flex-1 grow flex-col gap-2.5 border p-[1em]">
-                <div class="flex h-[60px] grow flex-col gap-2.5 border bg-white p-[1em]">
-                  <!-- <div class="chat-right__stamp border">stamp</div> -->
-                  <div class="flex max-w-full grow flex-col gap-2.5 overflow-auto border bg-white p-[1em]" id="bubble">
-                  </div>
-                  <div class="flex h-auto gap-2.5 border p-[1em]">
-                    <div class="block grow content-center border bg-white p-[0.5em]">
-                      <div class="w-full border" id="input">
-                        <input id="text-box" type="text" class="w-full border" placeholder="Send message" />
+                  <div id="friendsList" class="flex; p-[5px]">
+                    <div class="friend flex items-center border p-2.5">
+                      <img
+                        src="images/profile/purple.png"
+                        alt=""
+                        width="100px"
+                        height="100px"
+                      />
+                      <div class="ml-2.5 flex flex-col" id="friend-description">
+                        <div class="flex items-center gap-2" id="friend-name">
+                          <div>Mafalda</div>
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                            id="remove-friend__page"
+                          >
+                            remove
+                          </button>
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                            id="block-friend__page"
+                          >
+                            block
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div class="ml-auto block content-center border bg-[#0fffff]" onclick="captureInput()">
-                      Send
+                  </div>
+                  <div id="blockedList" class="hidden p-[5px]">
+                    <div class="friend flex items-center border p-2.5">
+                      <img
+                        src="images/profile/purple.png"
+                        alt=""
+                        width="100px"
+                        height="100px"
+                      />
+                      <div class="ml-2.5 flex flex-col">
+                        <div class="flex items-center gap-2">
+                          <div>Zorro</div>
+                        </div>
+                        <div class="friend-action flex justify-start gap-1">
+                          <button
+                            class="flex w-[60px] justify-center rounded-sm border"
+                            type="button"
+                          >
+                            remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hidden flex-col gap-2.5" id="matches">
+                  <div class="grid-rows-auto grid h-full items-center">
+                    <div
+                      class="flex w-full justify-center border"
+                      id="acc-stats"
+                    >
+                      <strong>Quick Stats</strong>
+                    </div>
+                    <div class="grid grid-cols-4 border">
+                      <div class="border p-2.5 text-center">
+                        3
+                        <span class="mt-[5px] block">Current Ranking</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        12-10
+                        <span class="mt-[5px] block">W-L</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        22
+                        <span class="mt-[5px] block">Tot games</span>
+                      </div>
+                      <div class="border p-2.5 text-center">
+                        54%
+                        <span class="mt-[5px] block">Average wins</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="grid-rows[50px_1fr] grid border"
+                    id="acc-stats-details"
+                  >
+                    <div class="flex w-full justify-center border">
+                      <strong>Matches</strong>
+                    </div>
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex items-center justify-center border">
+                        opponent
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        date
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        score
+                      </div>
+                    </div>
+                    <div class="grid w-full grid-cols-3 border">
+                      <div class="flex justify-center border p-2.5">
+                        opponent 1
+                      </div>
+                      <div class="flex justify-center border p-2.5">
+                        5/10/25
+                      </div>
+                      <div class="flex justify-center border p-2.5">3-2</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="relative hidden h-full w-full items-center justify-center bg-white" id="accountPage">
-          <div class="hidden flex-col bg-inherit" id="registerPage">
-            <form action="http://127.0.0.1:8080" method="post" enctype="multipart/form-data" id="register"
-              class="table rounded-xl border bg-blue-300 p-1">
-              <p class="flex items-center justify-center">
-                <label class="table-cell text-xl" for="reg-avatar">
-                  <img src="images/profile/grey.png" class="cursor-pointer" width="50px" height="50px" />
-                </label>
-                <input type="file" id="reg-avatar" name="reg-user_avatar" class="hidden" />
-              </p>
-              <p>
-                <label class="table-cell text-xl" for="reg-username">Username (login)</label>
-                <input class="table-cell bg-white text-xl" type="text" id="reg-username" name="reg-user_username"
-                  required />
-              </p>
-              <p>
-                <label class="table-cell text-xl" for="reg-displayName">Display Name (public)</label>
-                <input class="table-cell bg-white text-xl" type="text" id="reg-displayName" name="reg-user_displayName"
-                  required />
-              </p>
-              <p>
-                <label class="table-cell text-xl" for="reg-password">Password</label>
-                <input class="table-cell bg-white text-xl" type="password" id="reg-password" name="reg-user_password"
-                  required />
-              </p>
-              <span class="block h-[1em]"></span>
-              <p class="flex justify-center">
-                <button type="submit" id="submitRegButton" class="cursor-pointer border">
-                  Register
-                </button>
-              </p>
-            </form>
-            <div class="flex border" id="reg-errors">Error box</div>
-          </div>
-          <div class="hidden flex-col bg-inherit" id="loginPage">
-            <form action="http://127.0.0.1:8080" method="post" id="login"
-              class="table rounded-xl border bg-purple-300 p-1">
-              <p>
-                <label class="table-cell text-xl" for="login-username">Username:</label>
-                <input class="table-cell bg-white text-xl" type="text" id="login-username" name="login-user_username"
-                  required />
-              </p>
-              <p>
-                <label class="table-cell text-xl" for="login-password">Password:</label>
-                <input class="table-cell bg-white text-xl" type="password" id="login-password"
-                  name="login-user_password" required />
-              </p>
-              <span class="block h-[1em]"></span>
-              <p class="flex justify-center">
-                <button type="submit" id="submitLogButton" class="cursor-pointer border">
-                  Login
-                </button>
-              </p>
-            </form>
-            <div class="errors border" id="log-errors">Error box</div>
-          </div>
-          <div class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white" id="profilePage">
-            <div class="grid grid-cols-3 border bg-amber-500" id="acc-profile-header">
-              <div class="flex items-center justify-center border" id="acc-avatar">
-                <img src="images/profile/orange.png" alt="" id="acc-profile-avatar" width="100px" height="100px" />
-              </div>
-              <div class="flex flex-col border" id="acc-info">
-                <div class="flex flex-1 items-center border" id="acc-username">
-                  <p>Username: Pinco</p>
-                </div>
-                <div class="flex flex-1 items-center border" id="acc-displayName">
-                  <p id="temp-displayname">Display Name: Pallo</p>
-                </div>
-              </div>
-              <div class="flex flex-col border" id="acc-options;">
-                <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
-                  <div class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"></div>
-                  <div class="">ONLINE</div>
-                </div>
-                <div class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs" id="acc-actions">
-                  <button
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button" id="add-remove-friend__header">
-                    Remove
-                  </button>
-                  <button
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button" id="block-unblock-friend__header">
-                    Block
-                  </button>
-                  <button
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button" id="send-message__header">
-                    Send message
-                  </button>
-                  <button
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button" id="invite-friend__header">
-                    Invite now
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
-              id="acc-profile-menu">
-              <div id="acc-settings">SETTINGS</div>
-              <div id="acc-friends">FRIENDS</div>
-              <div id="acc-matches">MATCHES</div>
-            </div>
-            <div id="acc-profile-page">
-              <div class="flex h-full w-full items-center justify-center border text-left text-sm" id="update-settings">
-                <div class="flex h-full w-full flex-col items-center justify-center border">
-                  <form class="table rounded-xl border bg-blue-300 p-1" role="updateSettings" id="settings">
-                    <div class="flex items-center justify-center">
-                      <label for="edit-avatar">
-                        <img src="images/profile/orange.png" id="avatarImgEdit" width="50px" height="50px"
-                          class="cursor-pointer" />
-                      </label>
-                      <input type="file" id="edit-avatar" name="edit-user_avatar" class="hidden" />
-                    </div>
-                    <div>
-                      <label class="table-cell text-xl">Username:</label>
-                      <div>
-                        <input type="text" value="Pinco" readonly class="bg-white text-xl" />
-                      </div>
-                    </div>
-                    <div>
-                      <p>
-                        <label for="edit-displayName" class="table-cell text-xl">Display Name:</label>
-                      </p>
-                      <div>
-                        <input id="edit-displayName" name="edit-user_displayName" type="text" value="Pallo"
-                          class="bg-white text-xl" />
-                      </div>
-                    </div>
-                    <span class="block h-[1em]"></span>
-                    <div class="flex items-center justify-center text-sm">
-                      <button type="submit" id="editDisplayNameButton"
-                        class="cursor-pointer rounded-full border border-black p-[5px]">
-                        Change display name
+          <div
+            id="gamePage"
+            class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+          >
+            <div
+              id="setUpGame"
+              class="flex h-[480px] w-[640px] justify-center border-2 border-blue-900 bg-sky-200 p-2.5"
+            >
+              <div
+                id="setUpPlayers"
+                class="flex h-full flex-wrap items-center justify-center gap-5"
+              >
+                <div id="aliasPlayerOne">
+                  <label for="namePlayerOne" class="text-black"
+                    >Player one</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerOne"
+                      type="text"
+                      name="playerOne"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerOne"
+                    >OK</button>
+                  </div>
+                  <div id="AIPlayerOne" class="invisible mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIOnPlayerOne"
+                        onclick="turnOn(this, 'AIoffPlayerOne', 'playerOne')"
+                        class="flex h-6 w-6 items-center justify-center border bg-green-300 hover:bg-green-500"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerOne"
+                        onclick="turnOff(this, 'AIOnPlayerOne', 'playerOne')"
+                        class="flex h-6 w-6 items-center justify-center border bg-gray-600 hover:bg-gray-800"
+                      >
+                        <span class="text-sm">off</span>
                       </button>
                     </div>
-                    <div>
-                      <label class="table-cell text-xl" for="edit-oldPass">Old Password:</label>
-                      <div>
-                        <input class="bg-white text-xl" id="edit-oldPass" name="edit-user_oldPass" type="password"
-                          value="aaaaaaaaa" />
-                      </div>
-                    </div>
-                    <div>
-                      <label class="table-cell text-xl" for="edit-newPass">New Password:</label>
-                      <div>
-                        <input class="bg-white text-xl" id="edit-newPass" name="edit-user_newPass" type="password"
-                          value="aaaaaaaaa" />
-                      </div>
-                    </div>
-                    <span class="block h-[1em]"></span>
-                    <div class="flex items-center justify-center text-sm">
-                      <button type="submit" id="editPasswordButton"
-                        class="cursor-pointer rounded-full border border-black p-[5px]">
-                        Change password
+                  </div>
+                </div>
+                <div id="aliasPlayerTwo">
+                  <label for="namePlayerTwo" class="text-black"
+                    >Player two</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerTwo"
+                      type="text"
+                      name="playerTwo"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button" id="okPlayerTwo"
+                    >OK</button>
+                  </div>
+                  <div id="AIPlayerTwo" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIOnPlayerTwo"
+                        onclick="turnOn(this, 'AIoffPlayerTwo', 'playerTwo')"
+                        class="flex h-6 w-6 items-center justify-center border bg-green-300 hover:bg-green-500"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerTwo"
+                        onclick="turnOff(this, 'AIOnPlayerTwo', 'playerTwo')"
+                        class="flex h-6 w-6 items-center justify-center border bg-gray-600 hover:bg-gray-800"
+                      >
+                        <span class="text-sm">off</span>
                       </button>
                     </div>
-                    <div>
-                      <p class="flex items-center justify-center text-sm">
-                        <input type="submit" name="delete_account"
-                          class="my-2.5 cursor-pointer rounded-full border border-black p-[5px]"
-                          value="Delete Account" />
-                      </p>
+                  </div>
+                </div>
+                <div id="aliasPlayerThree" class="-mt-50">
+                  <label for="namePlayerThree" class="text-black"
+                    >Player three</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerThree"
+                      type="text"
+                      name="playerThree"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button" id="okPlayerThree"
+                    ></button>
+                    <div
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                    >
+                      OK
                     </div>
-                  </form>
+                  </div>
+                  <div id="AIPlayerThree" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIOnPlayerThree"
+                        onclick="turnOn(this, 'AIoffPlayerThree', 'playerThree')"
+                        class="flex h-6 w-6 items-center justify-center border bg-green-300 hover:bg-green-500"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerThree"
+                        onclick="turnOff(this, 'AIOnPlayerThree', 'playerThree')"
+                        class="flex h-6 w-6 items-center justify-center border bg-gray-600 hover:bg-gray-800"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="aliasPlayerFour" class="-mt-50">
+                  <label for="namePlayerFour" class="text-black"
+                    >Player four</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerFour"
+                      type="text"
+                      name="playerFour"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button" id="okPlayerFour"
+                    ></button>
+                    <div
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                    >
+                      OK
+                    </div>
+                  </div>
+                  <div id="AIPlayerFour" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIOnPlayerFour"
+                        onclick="turnOn(this, 'AIoffPlayerFour', 'playerFour')"
+                        class="flex h-6 w-6 items-center justify-center border bg-green-300 hover:bg-green-500"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerFour"
+                        onclick="turnOff(this, 'AIOnPlayerFour', 'playerFour')"
+                        class="flex h-6 w-6 items-center justify-center border bg-gray-600 hover:bg-gray-800"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
-                <div>
-                  <button
-                    class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button" id="blockButton" onclick="displayBlockedFriends()">
-                    See blocked users
-                  </button>
-                </div>
-                <div id="friendsList" class="flex; p-[5px]">
-                  <div class="friend flex items-center border p-2.5">
-                    <img src="images/profile/purple.png" alt="" width="100px" height="100px" />
-                    <div class="ml-2.5 flex flex-col" id="friend-description">
-                      <div class="flex items-center gap-2" id="friend-name">
-                        <div>Mafalda</div>
-                      </div>
-                      <div class="friend-action flex justify-start gap-1">
-                        <button class="flex w-[60px] justify-center rounded-sm border" type="button"
-                          id="remove-friend__page">
-                          remove
-                        </button>
-                        <button class="flex w-[60px] justify-center rounded-sm border" type="button"
-                          id="block-friend__page">
-                          block
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="blockedList" class="hidden p-[5px]">
-                  <div class="friend flex items-center border p-2.5">
-                    <img src="images/profile/purple.png" alt="" width="100px" height="100px" />
-                    <div class="ml-2.5 flex flex-col">
-                      <div class="flex items-center gap-2">
-                        <div>Zorro</div>
-                      </div>
-                      <div class="friend-action flex justify-start gap-1">
-                        <button class="flex w-[60px] justify-center rounded-sm border" type="button">
-                          remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            </div>
+            <div id="setInstructions" class="hidden"></div>
+            <div id="startButton">
+              <button
+                id="runButton"
+                class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+              >
+                Start game
+              </button>
+            </div>
+            <div
+              id="gameScreen"
+              class="hidden h-[600px] w-[800px] items-center justify-center"
+            >
+              <canvas
+                id="myCanvas"
+                class="hidden; border-2 border-blue-950 bg-black"
+                width="800"
+                height="600"
+              ></canvas>
+            </div>
+            <div
+              id="gameOverScreen"
+              class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
+            >
+              <div
+                id="result"
+                class="flex; flex-col items-center justify-center text-center"
+              >
+                GAME OVER
+                <div id="winner-text"></div>
               </div>
-              <div class="hidden flex-col gap-2.5" id="matches">
-                <div class="grid-rows-auto grid h-full items-center">
-                  <div class="flex w-full justify-center border" id="acc-stats">
-                    <strong>Quick Stats</strong>
-                  </div>
-                  <div class="grid grid-cols-4 border">
-                    <div class="border p-2.5 text-center">
-                      3
-                      <span class="mt-[5px] block">Current Ranking</span>
-                    </div>
-                    <div class="border p-2.5 text-center">
-                      12-10
-                      <span class="mt-[5px] block">W-L</span>
-                    </div>
-                    <div class="border p-2.5 text-center">
-                      22
-                      <span class="mt-[5px] block">Tot games</span>
-                    </div>
-                    <div class="border p-2.5 text-center">
-                      54%
-                      <span class="mt-[5px] block">Average wins</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="grid-rows[50px_1fr] grid border" id="acc-stats-details">
-                  <div class="flex w-full justify-center border">
-                    <strong>Matches</strong>
-                  </div>
-                  <div class="grid w-full grid-cols-3 border">
-                    <div class="flex items-center justify-center border">
-                      opponent
-                    </div>
-                    <div class="flex items-center justify-center border">
-                      date
-                    </div>
-                    <div class="flex items-center justify-center border">
-                      score
-                    </div>
-                  </div>
-                  <div class="grid w-full grid-cols-3 border">
-                    <div class="flex justify-center border p-2.5">
-                      opponent 1
-                    </div>
-                    <div class="flex justify-center border p-2.5">
-                      5/10/25
-                    </div>
-                    <div class="flex justify-center border p-2.5">3-2</div>
-                  </div>
-                </div>
+              <div id="nextGame" class="flex flex-row gap-2.5">
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Play Again
+                </button>
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  New Game
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div id="gamePage" class="relative hidden h-full w-full flex-col items-center justify-center bg-black">
-          <div id="setUpGame"
-            class="flex h-[480px] w-[640px] justify-center border-2 border-blue-900 bg-sky-200 p-2.5">
-            <div id="setUpPlayers" class="flex flex-wrap h-full items-center justify-center gap-5">
-              <div id="aliasPlayerOne">
-                <label for="namePlayerOne" class="text-black">Player one</label>
-                <div class="flex flex-row">
-                  <input id="namePlayerOne" type="text" name="playerOne" placeholder="Enter your display name"
-                    class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-                <div id="AIPlayerOne" class="flex flex-row mt-0.5 invisible">
-                  <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                    <span class="text-lg">AI</span>
-                  </button>
-                  <div class="flex flex-row">
-                    <button id="AIOnPlayerOne" onclick="turnOn(this, 'AIoffPlayerOne', 'playerOne')"
-                      class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                      <span class="text-sm">on</span>
-                    </button>
-                    <button id="AIoffPlayerOne" onclick="turnOff(this, 'AIOnPlayerOne', 'playerOne')"
-                      class="flex items-center justify-center border w-6 h-6 bg-gray-600 hover:bg-gray-800">
-                      <span class="text-sm">off</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div id="aliasPlayerTwo">
-                <label for="namePlayerTwo" class="text-black">Player two</label>
-                <div class="flex flex-row">
-                  <input id="namePlayerTwo" type="text" name="playerTwo" placeholder="Enter your display name"
-                    class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-                <div id="AIPlayerTwo" class="flex flex-row mt-0.5">
-                  <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                    <span class="text-lg">AI</span>
-                  </button>
-                  <div class="flex flex-row">
-                    <button id="AIOnPlayerTwo" onclick="turnOn(this, 'AIoffPlayerTwo', 'playerTwo')"
-                      class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                      <span class="text-sm">on</span>
-                    </button>
-                    <button id="AIoffPlayerTwo" onclick="turnOff(this, 'AIOnPlayerTwo', 'playerTwo')"
-                      class="flex items-center justify-center border w-6 h-6 bg-gray-600 hover:bg-gray-800">
-                      <span class="text-sm">off</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div id="aliasPlayerThree" class="-mt-50">
-                <label for="namePlayerThree" class="text-black">Player three</label>
-                <div class="flex flex-row">
-                  <input id="namePlayerThree" type="text" name="playerThree" placeholder="Enter your display name"
-                    class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-                <div id="AIPlayerThree" class="flex flex-row mt-0.5">
-                  <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                    <span class="text-lg">AI</span>
-                  </button>
-                  <div class="flex flex-row">
-                    <button id="AIOnPlayerThree" onclick="turnOn(this, 'AIoffPlayerThree', 'playerThree')"
-                      class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                      <span class="text-sm">on</span>
-                    </button>
-                    <button id="AIoffPlayerThree" onclick="turnOff(this, 'AIOnPlayerThree', 'playerThree')"
-                      class="flex items-center justify-center border w-6 h-6 bg-gray-600 hover:bg-gray-800">
-                      <span class="text-sm">off</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-               <div id="aliasPlayerFour" class="-mt-50">
-                <label for="namePlayerFour" class="text-black">Player four</label>
-                <div class="flex flex-row">
-                  <input id="namePlayerFour" type="text" name="playerFour" placeholder="Enter your display name"
-                    class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-                <div id="AIPlayerFour" class="flex flex-row mt-0.5">
-                  <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                    <span class="text-lg">AI</span>
-                  </button>
-                  <div class="flex flex-row">
-                    <button id="AIOnPlayerFour" onclick="turnOn(this, 'AIoffPlayerFour', 'playerFour')"
-                      class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                      <span class="text-sm">on</span>
-                    </button>
-                    <button id="AIoffPlayerFour" onclick="turnOff(this, 'AIOnPlayerFour', 'playerFour')"
-                      class="flex items-center justify-center border w-6 h-6 bg-gray-600 hover:bg-gray-800">
-                      <span class="text-sm">off</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="Setinstructions" class="hidden">
-          </div>
-        <div id="startButton">
-          <button id="runButton"
-            class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">
-            Start game
-          </button>
-        </div>
+      </section>
+    </main>
+    <footer class="flex justify-center border bg-[#90ee90]">
+      <div
+        class="grid w-full max-w-5xl grid-cols-[1fr_1fr] gap-[2em] border p-[1em]"
+      >
+        <div class="border text-center">We Are trAScendeLs</div>
+        <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
       </div>
-      </div>
-      <div id="gameScreen" class="hidden h-[600px] w-[800px] items-center justify-center">
-        <canvas id="myCanvas" class="hidden; border-2 border-blue-950 bg-black" width="800" height="600"></canvas>
-      </div>
-      <div id="gameOverScreen" class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300">
-        <div id="result" class="flex; flex-col items-center justify-center text-center">
-          GAME OVER
-          <div id="winner-text"></div>
-        </div>
-        <div id="nextGame" class="flex flex-row gap-2.5">
-          <button type="button"
-            class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">
-            Play Again
-          </button>
-          <button type="button"
-            class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">
-            New Game
-          </button>
-        </div>
-      </div>
-      </div>
-      <!-- <div id="tournamentPage" class="hidden h-full justify-center items-center">
-        <div id="tournamentSetUp" class="flex w-[660px] h-[480px] bg-red-300 border-2 border-red-500">
-          <div id="tournamentPlayers" class="flex flex-wrap justify-evenly ">
-            <div id="tourPlayerOne" class="flex flex-col justify-center border border-red-500">
-              <div id="tourDisplayNameOne">
-                <label for="tourNamePlayerOne" class="text-black">Player one</label>
-                <div class="flex flex-row">
-                  <input id="tourNamePlayerOne" type="text" name="game-player-name-1"
-                    placeholder="Enter your display name" class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-              </div>
-              <div id="tournamentAIOptionPlayerOne" class="flex flex-row mt-0.5">
-                <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                  <span class="text-lg">AI</span>
-                </button>
-                <div class="flex flex-row">
-                  <button id="onButton1" onclick="turnOn(this, this, 'offButton')"
-                    class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                    <span class="text-sm">on</span>
-                  </button>
-                  <button id="offButton" onclick="turnOff(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-gray-300 hover:bg-gray-500">
-                    <span class="text-sm">off</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="tourPlayerTw0" class="flex flex-col justify-center border border-red-500">
-              <div id="tourDisplayNameTwo">
-                <label for="tourNamePlayerTwo" class="text-black">Player two</label>
-                <div class="flex flex-row">
-                  <input id="tourNamePlayertwo" type="text" name="game-player-name-1"
-                    placeholder="Enter your display name" class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-              </div>
-              <div id="tournamentAIOptionPlayerTwo" class="flex flex-row mt-0.5">
-                <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                  <span class="text-lg">AI</span>
-                </button>
-                <div class="flex flex-row">
-                  <button id="onButton" onclick="turnOn(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                    <span class="text-sm">on</span>
-                  </button>
-                  <button id="offButton" onclick="turnOff(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-gray-300 hover:bg-gray-500">
-                    <span class="text-sm">off</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="tourPlayerOne" class="block border border-red-500">
-              <div id="tourDisplayNameOne">
-                <label for="tourNamePlayerOne" class="text-black">Player one</label>
-                <div class="flex flex-row">
-                  <input id="tourNamePlayerOne" type="text" name="game-player-name-1"
-                    placeholder="Enter your display name" class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-              </div>
-              <div id="tournamentAIOptionPlayerOne" class="flex flex-row mt-0.5">
-                <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                  <span class="text-lg">AI</span>
-                </button>
-                <div class="flex flex-row">
-                  <button id="onButton" onclick="turnOn(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                    <span class="text-sm">on</span>
-                  </button>
-                  <button id="offButton" onclick="turnOff(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-gray-300 hover:bg-gray-500">
-                    <span class="text-sm">off</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="tourPlayerOne" class="block border border-red-500">
-              <div id="tourDisplayNameOne">
-                <label for="tourNamePlayerOne" class="text-black">Player one</label>
-                <div class="flex flex-row">
-                  <input id="tourNamePlayerOne" type="text" name="game-player-name-1"
-                    placeholder="Enter your display name" class="flex-2 bg-white" />
-                  <button class="black border-2 border-white bg-blue-500 hover:bg-blue-700" type="button"
-                  >
-                  </button>
-                  <div class="black border-2 border-white bg-blue-500 hover:bg-blue-700">OK</div>
-                </div>
-              </div>
-              <div id="tournamentAIOptionPlayerOne" class="flex flex-row mt-0.5">
-                <button class="flex items-center justify-center w-6 h-6 bg-inherit">
-                  <span class="text-lg">AI</span>
-                </button>
-                <div class="flex flex-row">
-                  <button id="onButton" onclick="turnOn(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-green-300 hover:bg-green-500">
-                    <span class="text-sm">on</span>
-                  </button>
-                  <button id="offButton" onclick="turnOff(this)"
-                    class="flex items-center justify-center border w-6 h-6 bg-gray-300 hover:bg-gray-500">
-                    <span class="text-sm">off</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      </div>
-    </section>
-  </main>
-  <footer class="flex justify-center border bg-[#90ee90]">
-    <div class="grid w-full max-w-5xl grid-cols-[1fr_1fr] gap-[2em] border p-[1em]">
-      <div class="border text-center">We Are trAScendeLs</div>
-      <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
-    </div>
-  </footer>
-  <script src="dist/accountDisplay.js"></script>
-  <script src="dist/contentManager.js"></script>
-  <script src="dist/chatDisplay.js"></script>
-  <script src="dist/gameLogic.js"></script>
-  <script src="dist/api/user.js" type="module"></script>
-  <script src="dist/api/chat.js" type="module"></script>
-</body>
-
+    </footer>
+    <script src="dist/accountDisplay.js"></script>
+    <script src="dist/contentManager.js"></script>
+    <script src="dist/chatDisplay.js"></script>
+    <script src="dist/gameLogic.js"></script>
+    <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/chat.js" type="module"></script>
+  </body>
 </html>
