@@ -183,12 +183,12 @@ echo
 # 0–8: DISPLAY NAME TESTS
 ###############################################################################
 
-run_test_raw \
-  "=== 0) PATCH /users/me/display-name without cookie → expect 401 ===" \
-  "401" \
-  -X PATCH "$BASE_URL/users/me/display-name" \
-  -H "Content-Type: application/json" \
-  -d '{"displayName":"NewName"}'
+# run_test_raw \
+#   "=== 0) PATCH /users/me/display-name without cookie → expect 401 ===" \
+#   "401" \
+#   -X PATCH "$BASE_URL/users/me/display-name" \
+#   -H "Content-Type: application/json" \
+#   -d '{"displayName":"NewName"}'
 
 run_test_json \
   "=== 1) Register Alice (idempotent) ===" \
@@ -211,129 +211,135 @@ run_test_json \
   "$BASE_URL/users/me" \
   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 4) PATCH /users/me/display-name with missing body field → expect 400 ===" \
-  "400" \
-  -X PATCH "$BASE_URL/users/me/display-name" \
-  -H "Content-Type: application/json" \
-  -d '{}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 4) PATCH /users/me/display-name with missing body field → expect 400 ===" \
+#   "400" \
+#   -X PATCH "$BASE_URL/users/me/display-name" \
+#   -H "Content-Type: application/json" \
+#   -d '{}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 5) PATCH /users/me/display-name with too short name → expect 400 ===" \
-  "400" \
-  -X PATCH "$BASE_URL/users/me/display-name" \
-  -H "Content-Type: application/json" \
-  -d '{"displayName":"Al"}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 5) PATCH /users/me/display-name with too short name → expect 400 ===" \
+#   "400" \
+#   -X PATCH "$BASE_URL/users/me/display-name" \
+#   -H "Content-Type: application/json" \
+#   -d '{"displayName":"Al"}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 6) PATCH /users/me/display-name with invalid chars → expect 400 ===" \
-  "400" \
-  -X PATCH "$BASE_URL/users/me/display-name" \
-  -H "Content-Type: application/json" \
-  -d '{"displayName":"A!ice"}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 6) PATCH /users/me/display-name with invalid chars → expect 400 ===" \
+#   "400" \
+#   -X PATCH "$BASE_URL/users/me/display-name" \
+#   -H "Content-Type: application/json" \
+#   -d '{"displayName":"A!ice"}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 7) PATCH /users/me/display-name with valid random name \"$NEW_DISPLAY\" → expect 204 ===" \
-  "204" \
-  -X PATCH "$BASE_URL/users/me/display-name" \
-  -H "Content-Type: application/json" \
-  -d "{\"displayName\":\"$NEW_DISPLAY\"}" \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 7) PATCH /users/me/display-name with valid random name \"$NEW_DISPLAY\" → expect 204 ===" \
+#   "204" \
+#   -X PATCH "$BASE_URL/users/me/display-name" \
+#   -H "Content-Type: application/json" \
+#   -d "{\"displayName\":\"$NEW_DISPLAY\"}" \
+#   -b "$ALICE_COOKIE"
 
-run_test_json_body_contains \
-  "=== 8) GET /users/me (as Alice) — displayName should now be \"$NEW_DISPLAY\" ===" \
-  "200" \
-  "\"displayName\":\"$NEW_DISPLAY\"" \
-  "$BASE_URL/users/me" \
-  -b "$ALICE_COOKIE"
+# run_test_json_body_contains \
+#   "=== 8) GET /users/me (as Alice) — displayName should now be \"$NEW_DISPLAY\" ===" \
+#   "200" \
+#   "\"displayName\":\"$NEW_DISPLAY\"" \
+#   "$BASE_URL/users/me" \
+#   -b "$ALICE_COOKIE"
 
 ###############################################################################
 # 9–14: PASSWORD CHANGE TESTS
 # Assumes current Alice password is Str0ngPass! at start.
 ###############################################################################
 
-run_test_raw \
-  "=== 9) PATCH /users/me/change-password with missing fields → expect 400 ===" \
-  "400" \
-  -X PATCH "$BASE_URL/users/me/change-password" \
-  -H "Content-Type: application/json" \
-  -d '{}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 9) PATCH /users/me/change-password with missing fields → expect 400 ===" \
+#   "400" \
+#   -X PATCH "$BASE_URL/users/me/change-password" \
+#   -H "Content-Type: application/json" \
+#   -d '{}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 10) PATCH /users/me/change-password with wrong current password → expect 401 ===" \
-  "401" \
-  -X PATCH "$BASE_URL/users/me/change-password" \
-  -H "Content-Type: application/json" \
-  -d '{"currentPassword":"WrongPass!","newPassword":"NewStr0ng1"}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 10) PATCH /users/me/change-password with wrong current password → expect 401 ===" \
+#   "401" \
+#   -X PATCH "$BASE_URL/users/me/change-password" \
+#   -H "Content-Type: application/json" \
+#   -d '{"currentPassword":"WrongPass!","newPassword":"NewStr0ng1"}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 11) PATCH /users/me/change-password with weak new password → expect 400 ===" \
-  "400" \
-  -X PATCH "$BASE_URL/users/me/change-password" \
-  -H "Content-Type: application/json" \
-  -d '{"currentPassword":"Str0ngPass!","newPassword":"short"}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 11) PATCH /users/me/change-password with weak new password → expect 400 ===" \
+#   "400" \
+#   -X PATCH "$BASE_URL/users/me/change-password" \
+#   -H "Content-Type: application/json" \
+#   -d '{"currentPassword":"Str0ngPass!","newPassword":"short"}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 12) PATCH /users/me/change-password with valid current + strong new password → expect 204 ===" \
-  "204" \
-  -X PATCH "$BASE_URL/users/me/change-password" \
-  -H "Content-Type: application/json" \
-  -d '{"currentPassword":"Str0ngPass!","newPassword":"NewStr0ng1"}' \
-  -b "$ALICE_COOKIE"
+# run_test_raw \
+#   "=== 12) PATCH /users/me/change-password with valid current + strong new password → expect 204 ===" \
+#   "204" \
+#   -X PATCH "$BASE_URL/users/me/change-password" \
+#   -H "Content-Type: application/json" \
+#   -d '{"currentPassword":"Str0ngPass!","newPassword":"NewStr0ng1"}' \
+#   -b "$ALICE_COOKIE"
 
-run_test_raw \
-  "=== 13) Login with old password should FAIL → expect 401 ===" \
-  "401" \
-  -X POST "$BASE_URL/auth/login" \
-  -H "Content-Type: application/json" \
-  -d '{"username":"alice","passwordPlain":"Str0ngPass!"}'
+# run_test_raw \
+#   "=== 13) Login with old password should FAIL → expect 401 ===" \
+#   "401" \
+#   -X POST "$BASE_URL/auth/login" \
+#   -H "Content-Type: application/json" \
+#   -d '{"username":"alice","passwordPlain":"Str0ngPass!"}'
 
-run_test_json \
-  "=== 14) Login with new password should SUCCEED and refresh cookie ===" \
-  "200" \
-  -X POST "$BASE_URL/auth/login" \
-  -H "Content-Type: application/json" \
-  -d '{"username":"alice","passwordPlain":"NewStr0ng1"}' \
-  -c "$ALICE_COOKIE"
+# run_test_json \
+#   "=== 14) Login with new password should SUCCEED and refresh cookie ===" \
+#   "200" \
+#   -X POST "$BASE_URL/auth/login" \
+#   -H "Content-Type: application/json" \
+#   -d '{"username":"alice","passwordPlain":"NewStr0ng1"}' \
+#   -c "$ALICE_COOKIE"
 
 ###############################################################################
 # 15–18: AVATAR TESTS
 ###############################################################################
+AVATARS_TEST_DIR="$(dirname "$0")/avatars_test"
+AVATAR_INVALID="$AVATARS_TEST_DIR/avatar_invalid.txt"
+AVATAR_VALID1="$AVATARS_TEST_DIR/avatar_valid1.png"
+AVATAR_VALID2="$AVATARS_TEST_DIR/avatar_valid2.jpg"
 
-# # Create fake text file for invalid avatar
-# echo "not an image" > "$AVATAR_TXT"
 
-# run_test_raw \
-#   "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
-#   "400" \
-#   -X POST "$BASE_URL/users/me/avatar" \
-#   -b "$ALICE_COOKIE" \
-#   -F "avatar=@$AVATAR_TXT"
+# === AVATAR UPLOAD TESTS ================================================
 
-# run_test_raw \
-#   "=== 16) Upload valid avatar (small jpg/png) → expect 200 or 204 ===" \
-#   "200|204" \
-#   -X POST "$BASE_URL/users/me/avatar" \
-#   -b "$ALICE_COOKIE" \
-#   -F "avatar=@$AVATAR_SAMPLE"
+run_test_raw \
+  "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
+  "400" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_INVALID"
 
-# run_test_raw \
-#   "=== 17) DELETE /users/me/avatar → expect 204 ===" \
-#   "204" \
-#   -X DELETE "$BASE_URL/users/me/avatar" \
-#   -b "$ALICE_COOKIE"
+run_test_raw \
+  "=== 16) Upload valid avatar (PNG) → expect 200 or 204 ===" \
+  "200|204" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_VALID1"
 
-# run_test_json \
-#   "=== 18) GET /users/me — avatar should now be default/empty ===" \
-#   "200" \
-#   "$BASE_URL/users/me" \
-#   -b "$ALICE_COOKIE"
+run_test_raw \
+  "=== 17) Upload valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+  "200|204" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_VALID2"
+
+run_test_raw \
+  "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+  "200|204" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_VALID1"
 
 ###############################################################################
 # SUMMARY

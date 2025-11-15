@@ -10,7 +10,10 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 
 ## BACKEND
-
+### UserManager
+### User_routes
+### domain types
+### api types
 ## FRONTEND
 
 ### TESTS
@@ -61,9 +64,43 @@ Not required for evaluation — used for organization and pull request preparati
 
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
-## DB
 
 ## BACKEND
+	+ created start point for avatar path: backend/src/config.ts 
+	+ UPLOAD_DIR 
+
+### UserManager
+	+ changeAvatar()
+
+### User_routes
+	+ to change avatar: "/users/me/avatar"
+
+### domain types
+	+ ChangeAvatarResult
+
+### TESTS
+	- commented out other tests
+	+ add test to check avatar
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+## BACKEND
+	npm i @fastify/multipart --save
+	https://github.com/fastify/fastify-multipart
 ### UserManager
 	+ changeDisplayName()
 	+ changePassword()

@@ -362,11 +362,25 @@ export class UserManager {
 		};
 	
 
-
-
-
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
 
+			async changeAvatar(
+			meId: Domain.UserId,
+			avatarUrlNew: Domain.AvatarUrl,
+		): Promise<Domain.ChangeAvatarResult> {
+
+			const me = await this.getUserById(meId);
+			if (!me)
+				return { ok: false, reason: "not_me" };
+
+			//update
+			await this.dbTableUser()
+				.update( {avatarUrl: avatarUrlNew})
+				.where({ id: meId });
+	
+			return { ok: true };
+
+		};
 
 	
 	//_________________/ME/SETTINGS: DELETE USER____________

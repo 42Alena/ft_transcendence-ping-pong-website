@@ -16,7 +16,7 @@ import { UserId, UserStatus, MatchResult } from './types/types';
 export type Username = string;
 export type DisplayName = string;
 export type UserId = string;
-export type AvatarUrl = string  | null;
+export type AvatarUrl = string | null;
 export type TimeSec = number | null; // unix epoch seconds or null
 
 
@@ -39,7 +39,7 @@ export type User = {
 
 	// Store timestamps as epoch seconds (number) or null if never seen.
 	lastSeenAt: TimeSec;   //TODO: schould be removed when created  new user?. Will updated on login
-	
+
 	// Backend-only field; never expose to clients.
 	passwordHash: PasswordHash;
 
@@ -49,58 +49,64 @@ export type User = {
 };
 
 export type RegisterUserParams = {
-  username: Username;
-  displayName: DisplayName;
-  passwordPlain: PasswordPlain;
-  avatarUrl: AvatarUrl;
+	username: Username;
+	displayName: DisplayName;
+	passwordPlain: PasswordPlain;
+	avatarUrl: AvatarUrl;
 };
 
 
 //_____________SETTINGS__________________
 
 export type ChangeDomainNameResult =
-  | { ok: true }
-  | {
-      ok: false;
-      reason: "not_me" | "taken_displayname" | "weak_displayname";
-      message?: string;   // <-- from validateName()
-    };
+	| { ok: true }
+	| {
+		ok: false;
+		reason: "not_me" | "taken_displayname" | "weak_displayname";
+		message?: string;   // <-- from validateName()
+	};
 
-	export type ChangePasswordResult =
-  | { ok: true }
-  | {
-      ok: false;
-      reason: "not_me" | "wrong_current_password" | "weak_password";
-      message?: string;   // <-- from validatePassword()
-    };
+export type ChangePasswordResult =
+	| { ok: true }
+	| {
+		ok: false;
+		reason: "not_me" | "wrong_current_password" | "weak_password";
+		message?: string;   // <-- from validatePassword()
+	};
 
+export type ChangeAvatarResult =
+	| { ok: true }
+	| {
+		ok: false;
+		reason: "not_me";};
 
 //_____________FRIENDS__________________
 
 
 export type AddFriendResult =
-  | { ok: true }
-  | { ok: false; reason: "self" | "not_found" | "blocked" };
+	| { ok: true }
+	| { ok: false; reason: "self" | "not_found" | "blocked" };
 
 
 // export type RemoveFriendResult = { ok: true };
-export type RemoveFriendResult = 
-  | { ok: true }
-  | { ok: false; reason: "self"};
+export type RemoveFriendResult =
+	| { ok: true }
+	| { ok: false;
+		reason: "self" };
 
 
 //__________________BLOCKS____________________________
 
 export type BlockUserResult =
-  | { ok: true }
-  | { ok: false; reason: "self"  };
+	| { ok: true }
+	| { ok: false; 
+		reason: "self" };
 
 
-export type UnblockUserResult = { ok: true }
- | { ok: false; reason: "self"};
-
-
-
+export type UnblockUserResult = 
+ 	|{ ok: true }
+	| { ok: false;
+		 reason: "self" };
 
 
 //_____________MATCH______________________

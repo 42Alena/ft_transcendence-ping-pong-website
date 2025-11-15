@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     username TEXT UNIQUE NOT NULL, -- login handle
     passwordHash TEXT NOT NULL, -- hashed password
     displayName TEXT UNIQUE NOT NULL, -- unique public name
-    avatarUrl TEXT, -- optional
+    avatarUrl TEXT, -- nullable, default NULL by registration
     lastSeenAt INTEGER  NULL DEFAULT(unixepoch ()),
     deletedAt INTEGER NOT NULL DEFAULT 0 -- GDPR soft-delete flag
 );
