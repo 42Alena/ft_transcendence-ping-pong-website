@@ -10,7 +10,10 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 
 ## BACKEND
-
+### UserManager
+### User_routes
+### domain types
+### api types
 ## FRONTEND
 
 ### TESTS
@@ -64,6 +67,8 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 
 ## BACKEND
+	npm i @fastify/multipart --save
+	https://github.com/fastify/fastify-multipart
 ### UserManager
 	+ changeDisplayName()
 	+ changePassword()

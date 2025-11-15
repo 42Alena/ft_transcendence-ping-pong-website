@@ -313,8 +313,8 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
   <input type="file" name="avatar">
 </form>
 	*/
-	// fastify.post("/users/me/avatar", authRequiredOptions, async (req, reply) => {
-	fastify.post("/users/me/avatar", async (req, reply) => {
+	fastify.post("/users/me/avatar", authRequiredOptions, async (req, reply) => {
+
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
@@ -346,10 +346,16 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 			dst // dst
 		);
 
+		console.log('Change avatar', req.body)
 
-		return sendOK(reply, { avatarUrl: dst });  //   url where saved
+		const result = await userManager.changeAvatar(meId, dst);
 
+		if(result.ok)
+			return sendOK(reply, { avatarUrl: dst });  //   url where saved
 
+		// map domain reasons to HTTP
+		if (result.reason === "not_me")
+			return sendError(reply, "User not found", "id", 404);
 
 
 	});
