@@ -333,12 +333,12 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 			return sendError(reply, "Avatar: size", "avatar", 400);
 
 		//get userId for path
-		const userId = "me"
+		
 		const extention = extname(files[0].filename)
 		const dst = join(
 			UPLOAD_DIR,
 			'/',
-			`${userId}${extention}`
+			`${meId}${extention}`
 		);
 		console.log("saving to ", dst)
 		await rename(
@@ -347,42 +347,9 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 		);
 
 
+// return sendOK(reply);  // what to send? url where saved
 
 
-		// files[0].type // "file"
-		// files[0].filepath
-		// files[0].fieldname
-		// files[0].filename
-		// files[0].encoding
-		// files[0].mimetype
-		// files[0].fields // other parsed parts
-
-		// // process a single file
-		// // also, consider that if you allow to upload multiple files
-		// // you must consume all files otherwise the promise will never fulfill
-		// const data = await req.file()
-
-		// data.file // stream
-		// data.fields // other parsed parts
-		// data.fieldname
-		// data.filename
-		// data.encoding
-		// data.mimetype
-
-		// // to accumulate the file in memory! Be careful!
-		// //
-		// // await data.toBuffer() // Buffer
-		// //
-		// // or
-
-		// await pipeline(data.file, createWriteStream(data.filename))
-
-		// // be careful of permission issues on disk and not overwrite
-		// // sensitive files that could cause security risks
-
-		// // also, consider that if the file stream is not consumed, the promise will never fulfill
-
-		// reply.send()
 
 
 	});
