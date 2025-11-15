@@ -4,6 +4,14 @@ import { authRequiredOptions } from './utils';
 import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserPublic, toUserSelf } from '../lib/mappers/user';
 import type * as API from '../lib/types/api';
+//for file upload
+import { createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import { rename } from 'node:fs/promises';
+import { extname, join } from 'node:path';
+import { UPLOAD_DIR } from '../config';
+
+
 
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
@@ -252,11 +260,8 @@ Uses in UserManager: changePassword(userId, currentPassword, newPassword)
 		if (!currentPassword || !newPassword) {
 			return sendError(reply, "Missing password fields", "password", 400);
 		}
-		
+
 		console.log('Change password', req.body)
-
-
-
 
 
 		const result = await userManager.changePassword(meId, currentPassword, newPassword);
@@ -287,6 +292,101 @@ Uses in UserManager: changePassword(userId, currentPassword, newPassword)
 	});
 
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
+
+	/* 
+	Change / upload avatar
+Route: POST /users/me/avatar
+or PATCH /users/me/avatar (your choice; I’d use POST because of file upload)
+Auth: required
+Input: multipart form with file field, e.g. avatar
+Checks:
+validate file type (PNG/JPEG only, size limit)
+store file on disk (or in static folder) → get avatarUrl
+Uses in UserManager: updateAvatar(userId, avatarUrl
+store for users: backend/avatars/users
+default: backend/avatars/default/default.png
+
+curl localhost:3000/users/me/avatar -X POST -F "file=@avatars/default/default.png;filename=me.png" 
+
+https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="avatar">
+</form>
+	*/
+	// fastify.post("/users/me/avatar", authRequiredOptions, async (req, reply) => {
+	fastify.post("/users/me/avatar", async (req, reply) => {
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+
+		// stores files to tmp dir and return files
+		const files = await req.saveRequestFiles()
+		console.log('Incoming files', files)
+
+		if (files.length !== 1)
+			return sendError(reply, "Avatar: one file only", "avatar", 400);
+
+		if (!(files[0].mimetype.startsWith("image/")))
+			return sendError(reply, "Avatar: png or jpeg only", "avatar", 400);
+
+		if (files[0].file.bytesRead < 100)
+			return sendError(reply, "Avatar: size", "avatar", 400);
+
+		//get userId for path
+		const userId = "me"
+		const extention = extname(files[0].filename)
+		const dst = join(
+			UPLOAD_DIR,
+			'/',
+			`${userId}${extention}`
+		);
+		console.log("saving to ", dst)
+		await rename(
+			files[0].filepath, // src
+			dst // dst
+		);
+
+
+
+
+		// files[0].type // "file"
+		// files[0].filepath
+		// files[0].fieldname
+		// files[0].filename
+		// files[0].encoding
+		// files[0].mimetype
+		// files[0].fields // other parsed parts
+
+		// // process a single file
+		// // also, consider that if you allow to upload multiple files
+		// // you must consume all files otherwise the promise will never fulfill
+		// const data = await req.file()
+
+		// data.file // stream
+		// data.fields // other parsed parts
+		// data.fieldname
+		// data.filename
+		// data.encoding
+		// data.mimetype
+
+		// // to accumulate the file in memory! Be careful!
+		// //
+		// // await data.toBuffer() // Buffer
+		// //
+		// // or
+
+		// await pipeline(data.file, createWriteStream(data.filename))
+
+		// // be careful of permission issues on disk and not overwrite
+		// // sensitive files that could cause security risks
+
+		// // also, consider that if the file stream is not consumed, the promise will never fulfill
+
+		// reply.send()
+
+
+	});
+
 	//_________________/ME/SETTINGS: DELETE USER____________
 
 
