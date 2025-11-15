@@ -334,6 +334,12 @@ run_test_raw \
   -b "$ALICE_COOKIE" \
   -F "avatar=@$AVATAR_VALID2"
 
+run_test_raw \
+  "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+  "200|204" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_VALID1"
 
 ###############################################################################
 # SUMMARY

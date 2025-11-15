@@ -5,11 +5,13 @@ import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserPublic, toUserSelf } from '../lib/mappers/user';
 import type * as API from '../lib/types/api';
 //for file upload
-import { createWriteStream } from 'node:fs';
+import { createWriteStream} from 'node:fs';
 import { pipeline } from 'node:stream/promises';
-import { rename } from 'node:fs/promises';
+import { rename, unlink } from 'node:fs/promises';
 import { extname, join } from 'node:path';
 import { UPLOAD_DIR } from '../config';
+
+
 
 
 
@@ -318,6 +320,11 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
+		const me = await userManager.getUserById(meId);
+		if (!me) return sendError(reply, "User not found", "userId", 404);
+
+		const oldAvatarUrl = me.avatarUrl;
+
 
 		// stores files to tmp dir and return files
 		const files = await req.saveRequestFiles()
@@ -340,7 +347,8 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 			'/',
 			`${meId}${extention}`
 		);
-		console.log("saving to ", dst)
+		
+		console.log("avatar saving to ", dst)
 		await rename(
 			files[0].filepath, // src
 			dst // dst
@@ -351,7 +359,13 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 		const result = await userManager.changeAvatar(meId, dst);
 
 		if(result.ok)
+		{
+			if (oldAvatarUrl && (oldAvatarUrl !== dst))
+				await unlink(oldAvatarUrl);
+
 			return sendOK(reply, { avatarUrl: dst });  //   url where saved
+		}
+	
 
 		// map domain reasons to HTTP
 		if (result.reason === "not_me")
