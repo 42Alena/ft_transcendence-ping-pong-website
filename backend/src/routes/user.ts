@@ -333,7 +333,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 			return sendError(reply, "Avatar: size", "avatar", 400);
 
 		//get userId for path
-		
+
 		const extention = extname(files[0].filename)
 		const dst = join(
 			UPLOAD_DIR,
@@ -347,7 +347,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 		);
 
 
-// return sendOK(reply);  // what to send? url where saved
+		return sendOK(reply, { avatarUrl: dst });  //   url where saved
 
 
 
