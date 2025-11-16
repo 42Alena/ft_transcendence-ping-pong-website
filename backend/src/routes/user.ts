@@ -5,7 +5,7 @@ import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserPublic, toUserSelf } from '../lib/mappers/user';
 import type * as API from '../lib/types/api';
 //for file upload
-import { createWriteStream} from 'node:fs';
+import { createWriteStream } from 'node:fs';
 import { pipeline } from 'node:stream/promises';
 import { rename, unlink } from 'node:fs/promises';
 import { extname, join } from 'node:path';
@@ -347,7 +347,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 			'/',
 			`${meId}${extention}`
 		);
-		
+
 		console.log("avatar saving to ", dst)
 		await rename(
 			files[0].filepath, // src
@@ -358,14 +358,13 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 		const result = await userManager.changeAvatar(meId, dst);
 
-		if(result.ok)
-		{
+		if (result.ok) {
 			if (oldAvatarUrl && (oldAvatarUrl !== dst))
 				await unlink(oldAvatarUrl);
 
 			return sendOK(reply, { avatarUrl: dst });  //   url where saved
 		}
-	
+
 
 		// map domain reasons to HTTP
 		if (result.reason === "not_me")
@@ -376,6 +375,32 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 	//_________________/ME/SETTINGS: DELETE USER____________
 
+	/* 
+	delete user account
+	rename his displayname to "Deleted user":
+
+
+	*/
+	fastify.delete(
+		"/users/me/",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+
+
+			const result = await userManager.deleteAccountGDPR(meId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			if (result.reason === "not_me")
+				return sendError(reply, "User not found", "id", 404);
+
+
+
+		});
 
 	//_________________ONLINE/OFFLINE____________
 

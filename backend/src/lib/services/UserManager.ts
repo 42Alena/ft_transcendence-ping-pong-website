@@ -300,90 +300,109 @@ export class UserManager {
 
 		if (!(await this.existsById(meId)))
 			return { ok: false, reason: "not_me" };
-		
+
 
 		const nameNormalized = normalizeName(newDisplayName);
 
-		
+
 		const validationError = validateName(nameNormalized);
 		if (validationError) {
-			return { ok: false, reason: "weak_displayname",  message: validationError, };
+			return { ok: false, reason: "weak_displayname", message: validationError, };
 		}
 
-		if(await this.isDisplayNameTaken(nameNormalized)) return { ok: false, reason: "taken_displayname" };
+		if (await this.isDisplayNameTaken(nameNormalized)) return { ok: false, reason: "taken_displayname" };
 
 		console.log('normalized', nameNormalized)
 		//update
 		await this.dbTableUser()
-			.update( {displayName: nameNormalized})
+			.update({ displayName: nameNormalized })
 			.where({ id: meId });
 
 		return { ok: true };
 	};
-	
-	
+
+
 	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
-	
-		async changePassword(
-			meId: Domain.UserId,
-			currentPassword: Domain.PasswordPlain,
-			newPassword: Domain.PasswordPlain,
-		): Promise<Domain.ChangePasswordResult> {
-	
-	
-			const me = await this.getUserById(meId);
-			if (!me)
-				return { ok: false, reason: "not_me" };
+
+	async changePassword(
+		meId: Domain.UserId,
+		currentPassword: Domain.PasswordPlain,
+		newPassword: Domain.PasswordPlain,
+	): Promise<Domain.ChangePasswordResult> {
 
 
-			const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
-
-			if (!checkCurrentVsStoredHashedPass) 
-				return { ok: false, reason: "wrong_current_password" };
-
+		const me = await this.getUserById(meId);
+		if (!me)
+			return { ok: false, reason: "not_me" };
 
 
-			const validationError = validatePassword(newPassword, me.username, me.displayName);
-			if (validationError) {
-				return { ok: false, reason: "weak_password",  message: validationError, };
-			}
-			
+		const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
 
-			const hashedPassword = await hashPassword(newPassword)
-			
-			console.log("password", newPassword, hashedPassword);  
+		if (!checkCurrentVsStoredHashedPass)
+			return { ok: false, reason: "wrong_current_password" };
 
-			//update
-			await this.dbTableUser()
-				.update( {passwordHash: hashedPassword})
-				.where({ id: meId });
-	
-			return { ok: true };
-		};
-	
+
+
+		const validationError = validatePassword(newPassword, me.username, me.displayName);
+		if (validationError) {
+			return { ok: false, reason: "weak_password", message: validationError, };
+		}
+
+
+		const hashedPassword = await hashPassword(newPassword)
+
+		console.log("password", newPassword, hashedPassword);
+
+		//update
+		await this.dbTableUser()
+			.update({ passwordHash: hashedPassword })
+			.where({ id: meId });
+
+		return { ok: true };
+	};
+
 
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
 
-			async changeAvatar(
-			meId: Domain.UserId,
-			avatarUrlNew: Domain.AvatarUrl,
-		): Promise<Domain.ChangeAvatarResult> {
+	async changeAvatar(
+		meId: Domain.UserId,
+		avatarUrlNew: Domain.AvatarUrl,
+	): Promise<Domain.ChangeAvatarResult> {
 
-			const me = await this.getUserById(meId);
-			if (!me)
-				return { ok: false, reason: "not_me" };
+		const me = await this.getUserById(meId);
+		if (!me)
+			return { ok: false, reason: "not_me" };
 
-			//update
-			await this.dbTableUser()
-				.update( {avatarUrl: avatarUrlNew})
-				.where({ id: meId });
-	
-			return { ok: true };
+		//update
+		await this.dbTableUser()
+			.update({ avatarUrl: avatarUrlNew })
+			.where({ id: meId });
 
-		};
+		return { ok: true };
 
-	
+	};
+
+
 	//_________________/ME/SETTINGS: DELETE USER____________
+
+	async deleteAccountGDPR(
+		meId: Domain.UserId,
+	): Promise<Domain.ChangeAvatarResult> {
+
+		const me = await this.getUserById(meId);
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
+		// change displayname everywhere to "Deleted user" (friends, blocks, chat, games), Online/offline
+
+		//delete account
+		// await this.dbTableUser()
+		// .update( {displaName: avatarUrlNew})
+		// 	.where({ id: meId });
+
+		return { ok: true };
+
+	};
 
 
 	//_________________ONLINE/OFFLINE____________

@@ -63,7 +63,36 @@ Not required for evaluation — used for organization and pull request preparati
 	//_________________ONLINE/OFFLINE____________
 
 ------------------------
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+### UserManager
+### User_routes
+### domain types
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 
 ## BACKEND
 	+ created start point for avatar path: backend/src/config.ts 
