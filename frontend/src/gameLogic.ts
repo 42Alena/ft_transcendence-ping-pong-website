@@ -17,13 +17,13 @@ let gameisOn : boolean = false;
 function initGame()
 {
   
-  if (aliasPlayerOneButton.disabled && aliasPlayerTwoButton.disabled && !isTournament)
+  if (players.length == 2 && !isTournament)
   {
     setTimeout(showStartButton, 1000);
     instruction.classList.add("block");
     instruction.classList.remove("hidden");
   }
-  else if (aliasPlayerOneButton.disabled && aliasPlayerTwoButton.disabled && aliasPlayerThreeButton.disable && aliasPlayerFourButton.disable && isTournament)
+  else if (players.length == 4 && isTournament)
   {
     setTimeout(showStartButton, 1000);
     instruction.classList.add("block");
