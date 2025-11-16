@@ -4,6 +4,16 @@ import { authRequiredOptions } from './utils';
 import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserPublic, toUserSelf } from '../lib/mappers/user';
 import type * as API from '../lib/types/api';
+//for file upload
+import { createWriteStream} from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import { rename, unlink } from 'node:fs/promises';
+import { extname, join } from 'node:path';
+import { UPLOAD_DIR } from '../config';
+
+
+
+
 
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
@@ -252,11 +262,8 @@ Uses in UserManager: changePassword(userId, currentPassword, newPassword)
 		if (!currentPassword || !newPassword) {
 			return sendError(reply, "Missing password fields", "password", 400);
 		}
-		
+
 		console.log('Change password', req.body)
-
-
-
 
 
 		const result = await userManager.changePassword(meId, currentPassword, newPassword);
@@ -287,6 +294,86 @@ Uses in UserManager: changePassword(userId, currentPassword, newPassword)
 	});
 
 	//_________________/ME/SETTINGS: CHANGE AVATAR____________
+
+	/* 
+	Change / upload avatar
+Route: POST /users/me/avatar
+or PATCH /users/me/avatar (your choice; I’d use POST because of file upload)
+Auth: required
+Input: multipart form with file field, e.g. avatar
+Checks:
+validate file type (PNG/JPEG only, size limit)
+store file on disk (or in static folder) → get avatarUrl
+Uses in UserManager: updateAvatar(userId, avatarUrl
+store for users: backend/avatars/users
+default: backend/avatars/default/default.png
+
+curl localhost:3000/users/me/avatar -X POST -F "file=@avatars/default/default.png;filename=me.png" 
+
+https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="avatar">
+</form>
+	*/
+	fastify.post("/users/me/avatar", authRequiredOptions, async (req, reply) => {
+
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+		const me = await userManager.getUserById(meId);
+		if (!me) return sendError(reply, "User not found", "userId", 404);
+
+		const oldAvatarUrl = me.avatarUrl;
+
+
+		// stores files to tmp dir and return files
+		const files = await req.saveRequestFiles()
+		console.log('Incoming files', files)
+
+		if (files.length !== 1)
+			return sendError(reply, "Avatar: one file only", "avatar", 400);
+
+		if (!(files[0].mimetype.startsWith("image/")))
+			return sendError(reply, "Avatar: png or jpeg only", "avatar", 400);
+
+		if (files[0].file.bytesRead < 100)
+			return sendError(reply, "Avatar: size", "avatar", 400);
+
+		//get userId for path
+
+		const extention = extname(files[0].filename)
+		const dst = join(
+			UPLOAD_DIR,
+			'/',
+			`${meId}${extention}`
+		);
+		
+		console.log("avatar saving to ", dst)
+		await rename(
+			files[0].filepath, // src
+			dst // dst
+		);
+
+		console.log('Change avatar', req.body)
+
+		const result = await userManager.changeAvatar(meId, dst);
+
+		if(result.ok)
+		{
+			if (oldAvatarUrl && (oldAvatarUrl !== dst))
+				await unlink(oldAvatarUrl);
+
+			return sendOK(reply, { avatarUrl: dst });  //   url where saved
+		}
+	
+
+		// map domain reasons to HTTP
+		if (result.reason === "not_me")
+			return sendError(reply, "User not found", "id", 404);
+
+
+	});
+
 	//_________________/ME/SETTINGS: DELETE USER____________
 
 
