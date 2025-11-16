@@ -167,14 +167,17 @@ AIoffButtonPlayerFour.addEventListener("click", (event : any) => {
   AIPlayerFour = AIisOff(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
 });
 
-//add player to the list
-function checkAlias(name : string) : string
+//check/add player to the list
+function checkAlias(name : string, AIFlag : boolean) : string
 {
-  if (name == "AI" || name == '')
-  {
+  console.log(`check alias name: ${name}`)
+  console.log(`check alias AI: ${AIFlag}`)
+  if (name == "AI" && !AIFlag)
       return "";
-  }
-
+  else if (name == '')
+    return "";
+  else if (name == "AI")
+    return "AI";
   for (let i = 0; i < players.length; i++)
   {
     if (players[i].name == name) {
@@ -190,102 +193,47 @@ function addPlayer(name : string, numberPlayer : number, score : number, AI : bo
   players.push(player);
 }
 
-aliasPlayerOneButton.addEventListener("click", (event : any) =>
+function processInput(input : any, AIbuttonsDiv : any, AIFlag : boolean) : boolean
 {
-
-  aliasPlayerOneInput.value = checkAlias(aliasPlayerOneInput.value);
-  if (aliasPlayerOneInput.value != '')
+  console.log("process input");
+  const name = checkAlias(input.value, AIFlag);
+  if (name)
   {
     
-    const player = new Player(aliasPlayerOneInput.value, 0, false, 1);
-    players.push(player);
-    aliasPlayerOneInput.readOnly = true;
-    initGame();
+    addPlayer(name, 1, 0, AIFlag);
+    input.readOnly = true;
+    AIbuttonsDiv.classList.add("invisible");
+    //add green text + check
+    return true;
   }
+  input.value = '';
+  return false;
+}
+
+aliasPlayerOneButton.addEventListener("click", () =>
+{
+  const startGame = processInput(aliasPlayerOneInput, AIPlayerOneButtonsDiv, false);
+  if (startGame == true)
+      initGame();
 });
 
-aliasPlayerTwoButton.addEventListener("click", (event : any) =>
+aliasPlayerTwoButton.addEventListener("click", () =>
 {
-
-  console.log(`player 2 ${AIPlayerTwo}`);
-  console.log(`${aliasPlayerTwoInput.value}`);
-  if (aliasPlayerTwoInput.value == "AI" && !AIPlayerTwo || aliasPlayerTwoInput.value == '')
-  {
-     aliasPlayerTwoInput.value = '';
-    return;
-  }
-  else if (aliasPlayerTwoInput.value == '')
-    return; 
-  for (let i = 0; i < players.length; i++)
-  {
-    if (players[i].name == aliasPlayerTwoInput.value) {
-      aliasPlayerTwoInput.value = '';
-      return;
-    }
-  }
-  AIPlayerTwoButtonsDiv.classList.add("invisible");
-  aliasPlayerTwoInput.readOnly = true;
-  aliasPlayerTwoButton.disabled = true;
-  const player = new Player(aliasPlayerTwoInput.value, 0, AIPlayerTwo, 2);
-  players.push(player);
-  initGame();
+  const startGame = processInput(aliasPlayerTwoInput, AIPlayerTwoButtonsDiv, AIPlayerTwo);
+  if (startGame == true)
+      initGame();
 });
 
-aliasPlayerThreeButton.addEventListener("click", (event : any) =>
+aliasPlayerThreeButton.addEventListener("click", () =>
 {
-  console.log(`player 2 ${AIPlayerThree}`);
-  console.log(`${aliasPlayerThreeInput.value}`);
-  if (aliasPlayerThreeInput.value == "AI" && !AIPlayerThree)
-  {
-     aliasPlayerThreeInput.value = '';
-    return;
-  }
-  else if (aliasPlayerThreeInput.value == '')
-    return;
-  if (aliasPlayerThreeInput.value != "AI")
-  {
-    for (let i = 0; i < players.length; i++)
-    {
-      if (players[i].name == aliasPlayerThreeInput.value) {
-
-        aliasPlayerThreeInput.value = '';
-        return;
-      }
-    }
-  }
-  AIPlayerThreeButtonsDiv.classList.add("invisible");
-  aliasPlayerThreeInput.readOnly = true;
-  aliasPlayerThreeButton.disabled = true;
-  const player = new Player(aliasPlayerThreeInput.value, 0, AIPlayerThree, 3);
-  players.push(player);
-  initGame();
+  const startGame = processInput(aliasPlayerThreeInput, AIPlayerThreeButtonsDiv, AIPlayerThree);
+  if (startGame == true)
+      initGame();
 });
 
-aliasPlayerFourButton.addEventListener("click", (event : any) =>
+aliasPlayerFourButton.addEventListener("click", () =>
 {
-  console.log(`player 2 ${AIPlayerFour}`);
-  console.log(`${aliasPlayerFourInput.value}`);
-  if (aliasPlayerFourInput.value == "AI" && !AIPlayerFour)
-  {
-     aliasPlayerFourInput.value = '';
-    return;
-  }
-  else if (aliasPlayerFourInput.value == '')
-    return;
-  if (aliasPlayerFourInput.value != "AI")
-  {
-    for (let i = 0; i < players.length; i++)
-    {
-      if (players[i].name == aliasPlayerFourInput.value) {
-        aliasPlayerFourInput.value = '';
-        return;
-      }
-    }
-  }
-  AIPlayerFourButtonsDiv.classList.add("invisible");
-  aliasPlayerFourInput.readOnly = true;
-  aliasPlayerFourButton.disabled = true;
-  const player = new Player(aliasPlayerFourInput.value, 0, AIPlayerFour, 4);
-  players.push(player);
-  initGame();
+  const startGame = processInput(aliasPlayerFourInput, AIPlayerFourButtonsDiv, AIPlayerFour);
+  if (startGame == true)
+      initGame();
 });
