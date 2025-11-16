@@ -667,7 +667,9 @@
                       class="border-2 border-white bg-blue-500 hover:bg-blue-700"
                       type="button"
                       id="okPlayerOne"
-                    >OK</button>
+                    >
+                      OK
+                    </button>
                   </div>
                   <div id="AIPlayerOne" class="invisible mt-0.5 flex flex-row">
                     <button
@@ -707,8 +709,11 @@
                     />
                     <button
                       class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                      type="button" id="okPlayerTwo"
-                    >OK</button>
+                      type="button"
+                      id="okPlayerTwo"
+                    >
+                      OK
+                    </button>
                   </div>
                   <div id="AIPlayerTwo" class="mt-0.5 flex flex-row">
                     <button
@@ -725,7 +730,7 @@
                       </button>
                       <button
                         id="AIoffPlayerTwo"
-                        class="ai-button-off flex h-6 w-6 items-center justify-center border bg-gray-300 active"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
                       >
                         <span class="text-sm">off</span>
                       </button>
@@ -746,8 +751,11 @@
                     />
                     <button
                       class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                      type="button" id="okPlayerThree"
-                    >OK</button>
+                      type="button"
+                      id="okPlayerThree"
+                    >
+                      OK
+                    </button>
                   </div>
                   <div id="AIPlayerThree" class="mt-0.5 flex flex-row">
                     <button
@@ -764,7 +772,7 @@
                       </button>
                       <button
                         id="AIoffPlayerThree"
-                        class="ai-button-off flex h-6 w-6 items-center justify-center border bg-gray-300 active"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
                       >
                         <span class="text-sm">off</span>
                       </button>
@@ -785,8 +793,11 @@
                     />
                     <button
                       class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                      type="button" id="okPlayerFour"
-                    >OK</button>
+                      type="button"
+                      id="okPlayerFour"
+                    >
+                      OK
+                    </button>
                   </div>
                   <div id="AIPlayerFour" class="mt-0.5 flex flex-row">
                     <button
@@ -803,7 +814,7 @@
                       </button>
                       <button
                         id="AIoffPlayerFour"
-                        class="ai-button-off flex h-6 w-6 items-center justify-center border bg-gray-300 active"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
                       >
                         <span class="text-sm">off</span>
                       </button>
@@ -812,14 +823,44 @@
                 </div>
               </div>
             </div>
-            <div id="setInstructions" class="hidden"></div>
-            <div id="startButton">
-              <button
-                id="runButton"
-                class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+            <div
+              id="setInstructions"
+              class="hidden h-[480px] w-[640px] flex-col items-center justify-center border-2 border-blue-900 bg-sky-200"
+            >
+              <div
+                id="rules"
+                class="flex h-full w-full flex-col items-center gap-4.5"
               >
-                Start game
-              </button>
+                <div class="flex w-full flex-1 items-center justify-center">
+                  First to score to 5 wins
+                </div>
+                <div class="flex w-full flex-1 flex-row items-center border">
+                  <div
+                    class="flex flex-1 flex-col items-center justify-center border"
+                  >
+                    <div>player</div>
+                    <div>movements</div>
+                  </div>
+                  <div class="flex items-center">vs</div>
+                  <div
+                    class="flex flex-1 flex-col items-center justify-center border"
+                  >
+                    <div>player1</div>
+                    <div>movements</div>
+                  </div>
+                </div>
+                <div
+                  id="startButton"
+                  class="flex w-full flex-1 items-center justify-center"
+                >
+                  <button
+                    id="runButton"
+                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  >
+                    Start game
+                  </button>
+                </div>
+              </div>
             </div>
             <div
               id="gameScreen"

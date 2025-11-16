@@ -22,9 +22,7 @@ function displayPage(text: string) : void
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
-  		instruction.classList.remove("block");
-		runButton.classList.add("hidden");
-  		runButton.classList.remove("block");
+  		instruction.classList.remove("flex");
 		if (gameisOn)
 		{
 			clearInterval(interval)
@@ -48,9 +46,7 @@ function displayPage(text: string) : void
 		gameOverDiv.classList.add("hidden");
 		gameOverDiv.classList.remove("flex");
 		instruction.classList.add("hidden");
-  		instruction.classList.remove("block");
-		runButton.classList.add("hidden");
-  		runButton.classList.remove("block");
+  		instruction.classList.remove("flex");
 		if (gameisOn)
 		{
 			clearInterval(interval)

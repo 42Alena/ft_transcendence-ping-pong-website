@@ -5,12 +5,12 @@ let pageIndex = 1;
 let displayNamePlayerOne : string;
 let displayNamePlayerTwo : string;
 
-const instruction : any = document.getElementById("setInstructions");
 const gameScreenDiv : any = document.getElementById("gameScreen");
 const resultDiv : any = document.getElementById("result");
 const inputFieldPlayerOne : any = document.getElementById("displayNamePlayerOne")
 const inputPlayerTwo : any = document.getElementById("displayNamePlayerTwo");
 const winnerTextDiv : any = document.getElementById("winner-text");
+const startGameButtonDiv : any = document.getElementById("startButton");
 let enableAI : boolean = false;
 let gameisOn : boolean = false;
 
@@ -19,22 +19,22 @@ function initGame()
   
   if (players.length == 2 && !isTournament)
   {
-    setTimeout(showStartButton, 1000);
-    instruction.classList.add("block");
-    instruction.classList.remove("hidden");
+    setGame.classList.add("hidden");
+    setGame.classList.remove("flex");
+    showStartButton();
   }
   else if (players.length == 4 && isTournament)
   {
-    setTimeout(showStartButton, 1000);
-    instruction.classList.add("block");
-    instruction.classList.remove("hidden");
+    setGame.classList.add("hidden");
+    setGame.classList.remove("flex");
+    showStartButton();
     //show match to play
   }
 }
 
 function showStartButton() {
-  runButton.classList.add("block");
-  runButton.classList.remove("hidden");
+  instruction.classList.add("flex");
+  instruction.classList.remove("hidden");
 }
 
 document.addEventListener("keydown", keyDownHandler);
@@ -330,15 +330,13 @@ runButton.addEventListener("click", () => {
   // playersNum.classList.add("hidden");
   // playersNum.classList.remove("flex");
   instruction.classList.add("hidden");
-  instruction.classList.remove("block");
+  instruction.classList.remove("flex");
   setGame.classList.add("hidden");
   setGame.classList.remove("block");
   gameP.classList.add("flex");
   gameP.classList.remove("hidden");
   canvas.classList.add("blockk");
   canvas.classList.remove("hidden");
-  runButton.classList.add("hidden");
-  runButton.classList.remove("block");
   gameOverDiv.classList.add("hidden");
   gameOverDiv.classList.remove("flex");
   gameScreenDiv.classList.add("flex");
