@@ -10,6 +10,7 @@ import { userFromDbRow, userToDbRow } from '../mappers/user_db';
 import { generateId } from '../utils/randomId';
 import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
+import { unixTimeNow } from '../utils/time';
 
 export class UserManager {
 
@@ -394,18 +395,20 @@ export class UserManager {
 			return { ok: false, reason: "not_me" };
 
 		// change displayname everywhere to "Deleted user" (friends, blocks, chat, games), Online/offline
-		await this.dbTableUser()
-			.update({ 
-				displayName: Domain.DELETED_USER_DISPLAY_NAME, 
-				username: Domain.DELETED_USERNAME + meId,
-				passwordHash: 
-			})
-			.where({ id: meId });
-
-		//delete account
 		// await this.dbTableUser()
 		// .update( {displaName: avatarUrlNew})
 		// 	.where({ id: meId });
+		
+		//delete/anonymize  account
+		await this.dbTableUser()
+			.update({ 
+				displayName: Domain.DELETED_USER_DISPLAY_NAME + meId, 
+				username: Domain.DELETED_USERNAME + meId,
+				avatarUrl: Domain.DELETED_AVATARURL,
+				deletedAt: unixTimeNow(),
+			})
+			.where({ id: meId });
+		
 
 		return { ok: true };
 

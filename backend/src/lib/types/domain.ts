@@ -13,6 +13,7 @@ import { UserId, UserStatus, MatchResult } from './types/types';
 
 export const DELETED_USER_DISPLAY_NAME = "Deleted user";
 export const DELETED_USERNAME = "Deleted_";
+export const DELETED_AVATARURL = null;
 
 //_______________Primitives, single source of truth_____________
 export type Username = string;
