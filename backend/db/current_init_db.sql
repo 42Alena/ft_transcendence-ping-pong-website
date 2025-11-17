@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users (
     displayName TEXT UNIQUE NOT NULL, -- unique public name
     avatarUrl TEXT, -- nullable, default NULL by registration
     lastSeenAt INTEGER  NULL DEFAULT(unixepoch ()),
-    deletedAt INTEGER NOT NULL DEFAULT 0 -- GDPR soft-delete flag
+    deletedAt INTEGER NOT NULL DEFAULT 0 -- 0 = active, >0 = Unix timestamp of GDPR delete
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_users_username_nocase ON users (username COLLATE NOCASE);

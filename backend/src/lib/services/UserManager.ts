@@ -395,7 +395,11 @@ export class UserManager {
 
 		// change displayname everywhere to "Deleted user" (friends, blocks, chat, games), Online/offline
 		await this.dbTableUser()
-			.update({ id: "" })
+			.update({ 
+				displayName: Domain.DELETED_USER_DISPLAY_NAME, 
+				username: Domain.DELETED_USERNAME + meId,
+				passwordHash: 
+			})
 			.where({ id: meId });
 
 		//delete account

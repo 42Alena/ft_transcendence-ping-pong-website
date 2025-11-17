@@ -11,6 +11,8 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
+export const DELETED_USER_DISPLAY_NAME = "Deleted user";
+export const DELETED_USERNAME = "Deleted_";
 
 //_______________Primitives, single source of truth_____________
 export type Username = string;
@@ -26,6 +28,8 @@ export type LoginSessionId = string;
 
 export type UserStatus = 'online' | 'offline';
 export type GameResult = 'won' | 'lost';
+
+export type Time = number;
 
 
 //___________USER_____FOR DOMAIN(BACKEND) only__________________________
