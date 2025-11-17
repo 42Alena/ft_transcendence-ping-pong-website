@@ -382,13 +382,13 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 	*/
 	fastify.delete(
-		"/users/me/",
+		"/users/me",
 		authRequiredOptions,
 		async (req, reply) => {
 
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-
+			console.log('Delete user, GDPR', req.body)
 
 			const result = await userManager.deleteAccountGDPR(meId);
 

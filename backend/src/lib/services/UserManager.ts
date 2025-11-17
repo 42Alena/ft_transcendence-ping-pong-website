@@ -387,13 +387,16 @@ export class UserManager {
 
 	async deleteAccountGDPR(
 		meId: Domain.UserId,
-	): Promise<Domain.ChangeAvatarResult> {
+	): Promise<Domain.DeleteAccountResult> {
 
 		const me = await this.getUserById(meId);
 		if (!me)
 			return { ok: false, reason: "not_me" };
 
 		// change displayname everywhere to "Deleted user" (friends, blocks, chat, games), Online/offline
+		await this.dbTableUser()
+			.update({ id: "" })
+			.where({ id: meId });
 
 		//delete account
 		// await this.dbTableUser()

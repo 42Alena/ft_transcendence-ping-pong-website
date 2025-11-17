@@ -80,6 +80,12 @@ export type ChangeAvatarResult =
 		ok: false;
 		reason: "not_me";};
 
+export type DeleteAccountResult =
+	| { ok: true }
+	| {
+		ok: false;
+		reason: "not_me" |  "db_error";};
+
 //_____________FRIENDS__________________
 
 
