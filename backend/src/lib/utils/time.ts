@@ -1,7 +1,7 @@
-import { Time } from "../types/domain";
+import { TimeSec } from "../types/domain";
 
 
-export function unixTimeNow(): Time {
+export function unixTimeNow(): TimeSec {
 	return Math.floor(Date.now() / 1000);  //in seconds
 }
  

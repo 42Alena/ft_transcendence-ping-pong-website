@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS users (
     passwordHash TEXT NOT NULL, -- hashed password
     displayName TEXT UNIQUE NOT NULL, -- unique public name
     avatarUrl TEXT, -- nullable, default NULL by registration
-    lastSeenAt INTEGER  NULL DEFAULT(unixepoch ()),
-    deletedAt INTEGER NOT NULL DEFAULT 0 -- 0 = active, >0 = Unix timestamp of GDPR delete
+    lastSeenAt INTEGER NOT NULL DEFAULT 0, -- 0 = never seen, >0 = last activity time
+    deletedAt INTEGER NOT NULL DEFAULT 0 -- 0 = active, >0 = GDPR deletion time
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_users_username_nocase ON users (username COLLATE NOCASE);
@@ -35,31 +35,28 @@ CREATE TABLE IF NOT EXISTS login_sessions (
 
 CREATE INDEX IF NOT EXISTS i_login_sessions_user ON login_sessions (userId);
 
-
 -- =========================
--- FRIENDS  (User friend list: directed) 
+-- FRIENDS  (User friend list: directed)
 -- =========================
 CREATE TABLE IF NOT EXISTS friends (
-    userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    friendId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    friendId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     CHECK (userId <> friendId),
     PRIMARY KEY (userId, friendId)
 );
 
-
 -- =========================
--- BLOCKS  (User block list directed) 
+-- BLOCKS  (User block list directed)
 -- =========================
 CREATE TABLE IF NOT EXISTS blocks (
-    userId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    blockedId TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    blockedId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     CHECK (userId <> blockedId),
-    PRIMARY KEY (userId, blockedId)  -- WHERE userId = ? => uses the PK index = who I blocked
+    PRIMARY KEY (userId, blockedId) -- WHERE userId = ? => uses the PK index = who I blocked
 );
 
 --  who blocks me? / am I blocked by X?
-CREATE INDEX IF NOT EXISTS idx_blocks_blockedId ON blocks(blockedId);
-
+CREATE INDEX IF NOT EXISTS idx_blocks_blockedId ON blocks (blockedId);
 
 -- =========================
 -- CHAT  (public + DMs + invites)
@@ -133,17 +130,20 @@ CREATE TABLE IF NOT EXISTS userStatistics (
     pointsConceded INTEGER NOT NULL DEFAULT 0 -- total points conceded
 );
 
--- ============================================
--- GDPR REQUESTS TABLE
--- ============================================
-CREATE TABLE IF NOT EXISTS gdprRequests (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, -- request record ID
-    userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE, -- affected user (linked to Users table)
-    is_anonymous BOOLEAN NOT NULL DEFAULT 0, -- whether the user requested anonymity or not
-    gdpr_consent BOOLEAN NOT NULL DEFAULT 0, -- whether the user gave GDPR consent or not
-    delete_requested BOOLEAN NOT NULL DEFAULT 0, -- whether the user requested account deletion or not
-    action TEXT NOT NULL CHECK (
-        action IN ('anonymize', 'delete')
-    ), -- type of GDPR operation
-    requestedAt INTEGER NOT NULL DEFAULT(unixepoch ()) -- when the request was made
-);
+
+-- (Alena) not need this table, already done  with deletedAt in table users and UserManager
+
+-- -- ============================================
+-- -- GDPR REQUESTS TABLE
+-- -- ============================================
+-- CREATE TABLE IF NOT EXISTS gdprRequests (
+--     id INTEGER PRIMARY KEY AUTOINCREMENT, -- request record ID
+--     userId TEXT NOT NULL REFERENCES users (id) ON DELETE CASCADE, -- affected user (linked to Users table)
+--     is_anonymous BOOLEAN NOT NULL DEFAULT 0, -- whether the user requested anonymity or not
+--     gdpr_consent BOOLEAN NOT NULL DEFAULT 0, -- whether the user gave GDPR consent or not
+--     delete_requested BOOLEAN NOT NULL DEFAULT 0, -- whether the user requested account deletion or not
+--     action TEXT NOT NULL CHECK (
+--         action IN ('anonymize', 'delete')
+--     ), -- type of GDPR operation
+--     requestedAt INTEGER NOT NULL DEFAULT(unixepoch ()) -- when the request was made
+-- );

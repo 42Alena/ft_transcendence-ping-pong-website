@@ -66,12 +66,30 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
 ## DB
+	+ updated lastseenAt, 0 = never seen, >0 = last activity time
+	+ updated deletedAt, -- 0 = active, >0 = GDPR deletion time
+	- commented out for Luis GDPR table, while do not needed(already have  deletedAt in table users)
 
 ## BACKEND
-### UserManager
+	+ utils/time.ts
+	+ unixTimeNow()
+### User Class
+	+ deletedAt  for gdpr
+
+### UserManager Class	
+	+updatedregisterUser with deletedAt
+
 ### User_routes
 ### domain types
+	+ for GDPR:
+	+ DeleteAccountResult
+	+ DELETED_USER_DISPLAY_NAME
+	+ DELETED_USERNAME
+	+ DELETED_AVATARURL 
+	+ added to type user "deletedAt" 
+
 ### api types
+
 ## FRONTEND
 
 ### TESTS

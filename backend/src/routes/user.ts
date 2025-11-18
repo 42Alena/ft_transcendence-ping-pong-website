@@ -169,6 +169,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 			// map domain reasons to HTTP
 			if (result.reason === "self") return sendError(reply, "Cannot block yourself", "id", 400);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
 
 		});
 
