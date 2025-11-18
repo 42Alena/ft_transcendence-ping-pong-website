@@ -8,6 +8,7 @@ const config: Knex.Config = {
 	connection: {
 		filename: DB_PATH,
 	},
+	useNullAsDefault: true, // for SQLite: treat missing fields as NULL, hide warning
 };
 
 

@@ -15,6 +15,7 @@ export function userFromDbRow(row: UserDbRow): Domain.User {
 		passwordHash: row.passwordHash,
 		avatarUrl: row.avatarUrl,
 		lastSeenAt: row.lastSeenAt,
+		deletedAt: row.deletedAt,
 	}
 }
 
@@ -28,6 +29,7 @@ export function userToDbRow(user: Domain.User): UserDbRow {
 		passwordHash: user.passwordHash,
 		avatarUrl: user.avatarUrl,
 		lastSeenAt: user.lastSeenAt,
+		deletedAt: user.deletedAt,
 	}
 }
 
