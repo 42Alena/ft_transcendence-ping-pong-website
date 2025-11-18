@@ -93,6 +93,7 @@ Not required for evaluation — used for organization and pull request preparati
 ## FRONTEND
 
 ### TESTS
+	+ tests for delete account, gdpr
 
 ## 📘 DOCUMENTATION
 

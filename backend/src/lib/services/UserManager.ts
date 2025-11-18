@@ -75,8 +75,8 @@ export class UserManager {
 	async getAllUsers(): Promise<Domain.User[]> {
 
 		const dbUsers = await this.dbTableUser()
-		.where({ deletedAt: 0 })
-		.select('*');
+			.where({ deletedAt: 0 })
+			.select('*');
 
 		return (dbUsers || []).map(userFromDbRow);
 	}
@@ -104,7 +104,7 @@ export class UserManager {
 		const dbRow = userToDbRow(user);
 
 		console.debug("Saving user", dbRow)   //TODO: comment out, for tests now
-		
+
 		await this.dbTableUser().insert(dbRow);
 	}
 
@@ -445,8 +445,8 @@ export class UserManager {
 
 		//deletete from friends for both users
 		await this.dbTableFriends()
-			.orWhere({ friendId: meId })
 			.where({ userId: meId })
+			.orWhere({ friendId: meId })
 			.delete();
 
 		//delete from blocks for both

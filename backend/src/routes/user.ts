@@ -400,7 +400,6 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 				return sendError(reply, "User not found", "id", 404);
 
 
-
 		});
 
 	//_________________ONLINE/OFFLINE____________
