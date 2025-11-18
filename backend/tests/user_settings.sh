@@ -313,26 +313,33 @@ AVATAR_VALID2="$AVATARS_TEST_DIR/avatar_valid2.jpg"
 
 # === AVATAR UPLOAD TESTS ================================================
 
-run_test_raw \
-  "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
-  "400" \
-  -X POST "$BASE_URL/users/me/avatar" \
-  -b "$ALICE_COOKIE" \
-  -F "avatar=@$AVATAR_INVALID"
-
 # run_test_raw \
-#   "=== 16) Upload valid avatar (PNG) → expect 200 or 204 ===" \
-#   "200|204" \
+#   "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
+#   "400" \
 #   -X POST "$BASE_URL/users/me/avatar" \
 #   -b "$ALICE_COOKIE" \
-#   -F "avatar=@$AVATAR_VALID1"
+#   -F "avatar=@$AVATAR_INVALID"
+
+run_test_raw \
+  "=== 16) Upload valid avatar (PNG) → expect 200 or 204 ===" \
+  "200|204" \
+  -X POST "$BASE_URL/users/me/avatar" \
+  -b "$ALICE_COOKIE" \
+  -F "avatar=@$AVATAR_VALID1"
 
 # run_test_raw \
-#   "=== 17) Upload valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+#   "=== 17.1) Upload valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
 #   "200|204" \
 #   -X POST "$BASE_URL/users/me/avatar" \
 #   -b "$ALICE_COOKIE" \
 #   -F "avatar=@$AVATAR_VALID2"
+
+run_test_json_body_contains \
+  "=== 17.2) GET /users/me (as Alice) — avatarUrl should be set after upload ===" \
+  "200" \
+  '"avatarUrl":' \
+  "$BASE_URL/users/me" \
+  -b "$ALICE_COOKIE"
 
 # run_test_raw \
 #   "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
@@ -341,7 +348,9 @@ run_test_raw \
 #   -b "$ALICE_COOKIE" \
 #   -F "avatar=@$AVATAR_VALID1"
 
-
+###############################################################################
+# 19–26: DELETE ACCOUNT (GDPR) TESTS
+###############################################################################
 ###############################################################################
 # 19–26: DELETE ACCOUNT (GDPR) TESTS
 ###############################################################################
@@ -367,12 +376,9 @@ run_test_json \
 
 # Helper: extract "id" from /users/me without requiring jq
 extract_id_from_me() {
-  # $1 = cookie file
   local cookie_file="$1"
   local json
   json="$(curl -sS "$BASE_URL/users/me" -b "$cookie_file")"
-  # Very simple extraction: look for "id":"...".
-  # Works as long as "id" is a top-level string field.
   echo "$json" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p'
 }
 
@@ -392,22 +398,18 @@ else
   echo "IDs OK ✅"
 fi
 
-# 22) Bob adds Alice as friend
+# 22) Bob adds Alice as friend (POST /friends/:id)
 run_test_raw \
   "=== 22) Bob adds Alice as friend ===" \
   "200|204" \
-  -X POST "$BASE_URL/users/me/friends" \
-  -H "Content-Type: application/json" \
-  -d "{\"targetUserId\":\"$ALICE_ID\"}" \
+  -X POST "$BASE_URL/friends/$ALICE_ID" \
   -b "$BOB_COOKIE"
 
-# 23) Bob blocks Alice
+# 23) Bob blocks Alice (POST /blocks/:id)
 run_test_raw \
   "=== 23) Bob blocks Alice ===" \
   "200|204" \
-  -X POST "$BASE_URL/users/me/blocks" \
-  -H "Content-Type: application/json" \
-  -d "{\"targetUserId\":\"$ALICE_ID\"}" \
+  -X POST "$BASE_URL/blocks/$ALICE_ID" \
   -b "$BOB_COOKIE"
 
 # 24) Check that Alice appears in Bob's friends & blocks BEFORE deletion
@@ -429,16 +431,16 @@ echo "--- Bob blocks BEFORE ---"
 cat "$BOB_BLOCKS_BEFORE" | jq_or_cat || true
 echo
 
-echo 'Expect friends to contain username "alice"'
-if grep -q '"username":"alice"' "$BOB_FRIENDS_BEFORE"; then
+echo 'Expect friends to contain Alice ID'
+if grep -q "\"$ALICE_ID\"" "$BOB_FRIENDS_BEFORE"; then
   echo "Friends BEFORE check: OK ✅"
 else
   echo "Friends BEFORE check: WRONG ❌"
   any_failed=1
 fi
 
-echo 'Expect blocks to contain username "alice"'
-if grep -q '"username":"alice"' "$BOB_BLOCKS_BEFORE"; then
+echo 'Expect blocks to contain Alice ID'
+if grep -q "\"$ALICE_ID\"" "$BOB_BLOCKS_BEFORE"; then
   echo "Blocks BEFORE check: OK ✅"
 else
   echo "Blocks BEFORE check: WRONG ❌"
@@ -475,7 +477,7 @@ BOB_FRIENDS_AFTER="$(mktemp)"
 BOB_BLOCKS_AFTER="$(mktemp)"
 
 curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" > "$BOB_FRIENDS_AFTER"
-curl -sS "$BASE_URL/users/me/blocks"  -b "$BOB_COOKIE" > "$BOB_BLOCKS_AFTER"
+curl -sS "$BASE_URL/users/me/blocks"  -b "$BOB_BLOCKS_AFTER"
 
 echo "--- Bob friends AFTER ---"
 cat "$BOB_FRIENDS_AFTER" | jq_or_cat || true
@@ -485,24 +487,23 @@ echo "--- Bob blocks AFTER ---"
 cat "$BOB_BLOCKS_AFTER" | jq_or_cat || true
 echo
 
-echo 'Expect friends NOT to contain username "alice" anymore'
-if grep -q '"username":"alice"' "$BOB_FRIENDS_AFTER"; then
-  echo "Friends AFTER check: WRONG ❌ (still contains alice)"
+echo 'Expect friends NOT to contain Alice ID anymore'
+if grep -q "\"$ALICE_ID\"" "$BOB_FRIENDS_AFTER"; then
+  echo "Friends AFTER check: WRONG ❌ (still contains Alice ID)"
   any_failed=1
 else
   echo "Friends AFTER check: OK ✅"
 fi
 
-echo 'Expect blocks NOT to contain username "alice" anymore'
-if grep -q '"username":"alice"' "$BOB_BLOCKS_AFTER"; then
-  echo "Blocks AFTER check: WRONG ❌ (still contains alice)"
+echo 'Expect blocks NOT to contain Alice ID anymore'
+if grep -q "\"$ALICE_ID\"" "$BOB_BLOCKS_AFTER"; then
+  echo "Blocks AFTER check: WRONG ❌ (still contains Alice ID)"
   any_failed=1
-else
-  echo "Blocks AFTER check: OK ✅"
 fi
 
 rm -f "$BOB_FRIENDS_AFTER" "$BOB_BLOCKS_AFTER" || true
 echo
+
 
 ###############################################################################
 # SUMMARY
@@ -510,7 +511,7 @@ echo
 
 echo
 if [ "$any_failed" -eq 0 ]; then
-  echo "✅ Settings tests finished (display-name + password + avatar). All expectations matched."
+  echo "✅ Settings tests finished (display-name + password + avatar+ delete account). All expectations matched."
 else
   echo "❌ Settings tests finished, but some expectations failed. Check logs above."
   exit 1

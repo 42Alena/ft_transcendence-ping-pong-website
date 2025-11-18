@@ -379,8 +379,6 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 	/* 
 	delete user account
 	rename his displayname to "Deleted user":
-
-
 	*/
 	fastify.delete(
 		"/users/me",
