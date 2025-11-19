@@ -873,6 +873,15 @@
                 height="600"
               ></canvas>
             </div>
+            <div id="nextGameTournament" class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300">
+              <div id="winner-text"></div>
+              <button
+                  type="button" id="nextMatch"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Next Game
+                </button>
+            </div>
             <div
               id="gameOverScreen"
               class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
@@ -882,7 +891,7 @@
                 class="flex; flex-col items-center justify-center text-center"
               >
                 GAME OVER
-                <div id="winner-text"></div>
+                <!-- <div id="winner-text"></div> -->
               </div>
               <div id="nextGame" class="flex flex-row gap-2.5">
                 <button
@@ -916,6 +925,7 @@
     <script src="dist/chatDisplay.js"></script>
     <script src="dist/gameLogic.js"></script>
     <script src="dist/setUpPlayers.js"></script>
+    <script src="dist/createRules.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>

@@ -25,7 +25,7 @@ function displayPage(text: string) : void
   		instruction.classList.remove("flex");
 		if (gameisOn)
 		{
-			clearInterval(interval)
+			clearInterval(interval);
 			canvas.classList.add("hidden");
 			canvas.classList.remove("block");
 			gameisOn = false;
@@ -49,7 +49,7 @@ function displayPage(text: string) : void
   		instruction.classList.remove("flex");
 		if (gameisOn)
 		{
-			clearInterval(interval)
+			clearInterval(interval);
 			canvas.classList.add("hidden");
 			canvas.classList.remove("block");
 			gameisOn = false;
@@ -57,7 +57,7 @@ function displayPage(text: string) : void
 	}
 	else if (text == 'game' || text == 'tournament')
 	{
-		console.log(`${text}`);
+		console.log(`selected game options - game flag is ${gameisOn}`);
 		gameP.classList.add("flex");
 		gameP.classList.remove("hidden");
 		setGameType(text);

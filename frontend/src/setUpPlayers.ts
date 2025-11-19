@@ -1,14 +1,12 @@
 class Player {
     name: string;
-    score: number;
     isAI : boolean;
     playerNum : number;
 
-    constructor(name : string, score : number, AI : boolean, num : number)
+    constructor(name : string, AI : boolean, num : number)
     {
       this.name = name;
-      this.score = score;
-      this.isAI = false;
+      this.isAI = AI;
       this.playerNum = num;
     }
 }
@@ -55,7 +53,10 @@ function setGameType(text : string)
 {
   if (gameisOn)
 		{
+      console.log(`${gameisOn} - clean up screen`);
 			clearInterval(interval)
+      gameScreenDiv.classList.add("hidden");
+			gameScreenDiv.classList.remove("flex");
 			canvas.classList.add("hidden");
 			canvas.classList.remove("block");
 			gameisOn = false;
@@ -142,10 +143,14 @@ function AIisOff(onButton : any, offButton : any, input : any) : boolean{
 }
 
 AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
+  console.log("is on AI");
+  console.log(`flag before ${AIPlayerTwo}`);
   AIPlayerTwo = AIisOn(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+  console.log(`flag after ${AIPlayerTwo}`);
 });
 
 AIoffButtonPlayerTwo.addEventListener("click", (event : any) => {
+  console.log("is off AI");
    AIPlayerTwo = AIisOff(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
 });
 
@@ -175,7 +180,7 @@ function checkAlias(name : string, AIFlag : boolean) : string
   else if (name == '')
     return "";
   else if (name == "AI")
-    return "AI";
+    return "Ai";
   for (let i = 0; i < players.length; i++)
   {
     if (players[i].name == name) {
@@ -185,20 +190,22 @@ function checkAlias(name : string, AIFlag : boolean) : string
   return name;
 }
 
-function addPlayer(name : string, numberPlayer : number, score : number, AI : boolean)
+function addPlayer(name : string, AI : boolean, index : number)
 {
-  const player = new Player(name, score, AI, numberPlayer);
+  const player = new Player(name, AI, index);
   players.push(player);
 }
 
-function processInput(input : any, AIbuttonsDiv : any, AIFlag : boolean) : boolean
+function processInput(input : any, index : number, AIbuttonsDiv : any, AIFlag : boolean) : boolean
 {
   console.log("process input");
   const name = checkAlias(input.value, AIFlag);
   if (name)
   {
+    console.log(`check alias AI before adding to player: ${AIFlag}`)
+    addPlayer(name, AIFlag, index);
+    console.log(`check alias AI after adding to player: ${AIFlag}`)
     
-    addPlayer(name, 1, 0, AIFlag);
     input.readOnly = true;
     AIbuttonsDiv.classList.add("invisible");
     //add green text + check
@@ -210,28 +217,28 @@ function processInput(input : any, AIbuttonsDiv : any, AIFlag : boolean) : boole
 
 aliasPlayerOneButton.addEventListener("click", () =>
 {
-  const startGame = processInput(aliasPlayerOneInput, AIPlayerOneButtonsDiv, false);
+  const startGame = processInput(aliasPlayerOneInput, 1, AIPlayerOneButtonsDiv, false);
   if (startGame == true)
       initGame();
 });
 
 aliasPlayerTwoButton.addEventListener("click", () =>
 {
-  const startGame = processInput(aliasPlayerTwoInput, AIPlayerTwoButtonsDiv, AIPlayerTwo);
+  const startGame = processInput(aliasPlayerTwoInput, 2, AIPlayerTwoButtonsDiv, AIPlayerTwo);
   if (startGame == true)
       initGame();
 });
 
 aliasPlayerThreeButton.addEventListener("click", () =>
 {
-  const startGame = processInput(aliasPlayerThreeInput, AIPlayerThreeButtonsDiv, AIPlayerThree);
+  const startGame = processInput(aliasPlayerThreeInput, 3, AIPlayerThreeButtonsDiv, AIPlayerThree);
   if (startGame == true)
       initGame();
 });
 
 aliasPlayerFourButton.addEventListener("click", () =>
 {
-  const startGame = processInput(aliasPlayerFourInput, AIPlayerFourButtonsDiv, AIPlayerFour);
+  const startGame = processInput(aliasPlayerFourInput, 4, AIPlayerFourButtonsDiv, AIPlayerFour);
   if (startGame == true)
       initGame();
 });
