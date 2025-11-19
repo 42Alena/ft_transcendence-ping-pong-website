@@ -511,14 +511,15 @@ echo
 
 CAROL_COOKIE="$TMP_DIR/cookies_carol_status.txt"
 DAVE_COOKIE="$TMP_DIR/cookies_dave_status.txt"
-
-# 27) Register Carol (idempotent)
+ 
+ # 27) Register Carol (idempotent)
 run_test_json \
   "=== 27) Register Carol (idempotent) ===" \
   "SKIP" \
   -X POST "$BASE_URL/auth/register" \
   -H "Content-Type: application/json" \
-  -d '{"username":"carol_status","displayName":"Carol","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+  -d '{"username":"carol1","displayName":"Carol","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+
 
 # 28) Login Carol and save cookie
 run_test_json \
@@ -526,8 +527,11 @@ run_test_json \
   "200" \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"username":"carol_status","passwordPlain":"Str0ngPass!"}' \
+  -d '{"username":"carol1","passwordPlain":"Str0ngPass!"}' \
   -c "$CAROL_COOKIE"
+
+
+
 
 # 29) Register Dave (idempotent)
 run_test_json \
@@ -535,15 +539,17 @@ run_test_json \
   "SKIP" \
   -X POST "$BASE_URL/auth/register" \
   -H "Content-Type: application/json" \
-  -d '{"username":"dave_status","displayName":"Dave","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+  -d '{"username":"dave1","displayName":"Dave","passwordPlain":"Str0ngPass!","avatarUrl":null}'
 
+ 
+ 
 # 30) Login Dave and save cookie
 run_test_json \
   "=== 30) Login Dave and save cookie ===" \
   "200" \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"username":"dave_status","passwordPlain":"Str0ngPass!"}' \
+  -d '{"username":"dave1","passwordPlain":"Str0ngPass!"}' \
   -c "$DAVE_COOKIE"
 
 echo
@@ -578,8 +584,8 @@ run_test_json_body_contains \
   -b "$CAROL_COOKIE"
 
 echo
-echo "Waiting 20 seconds so Dave becomes OFFLINE (online timeout = 15s)..."
-sleep 20
+echo "Waiting 7 seconds so Dave becomes OFFLINE (online timeout = 5s)..."
+sleep 7
 
 # 34) FRIEND CASE: Carol checks Dave's status after 20s inactivity → expect OFFLINE
 run_test_json_body_contains \

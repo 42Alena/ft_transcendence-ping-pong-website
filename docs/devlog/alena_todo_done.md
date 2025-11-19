@@ -66,7 +66,10 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
-## DB
+This PR adds online/offline status for logged-in users.
+Only authenticated users can check status, and only for themselves or their friends.
+Non-friends cannot see your status.
+After some time of no activity, the user is shown as offline.
 
 ## BACKEND
 	+ config.ts: ONLINE_TIMEOUT_SEC for online time duration
@@ -78,18 +81,16 @@ Not required for evaluation — used for organization and pull request preparati
 ### User_routes
 	+ UserStatus
 	+ UserStatusResult
+
 ### domain types
 	+ UserStatus
 	+ UserStatusResult
-### api types
-## FRONTEND
+
 
 ### TESTS
 	+ tests for online/offline in user-settings.ts
 
-## 📘 DOCUMENTATION
 
-## 🔗 LINKS / HELP
 
 # HOW TO TEST: 
 ```bash

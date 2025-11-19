@@ -488,13 +488,13 @@ export class UserManager {
 	): Promise<Domain.UserStatusResult> {
 
 		//me
-		const viewer = await this.getUserById(targetId);
+		const viewer = await this.getUserById(viewerId);
 
 		if (!viewer || this.isDeletedAccount(viewer))
 			return { ok: false, reason: "not_me" };
 
 		//me/friend
-		const target = await this.getUserById(viewerId);
+		const target = await this.getUserById(targetId);
 
 		if (!target || this.isDeletedAccount(target))
 			return { ok: false, reason: "not_found" };

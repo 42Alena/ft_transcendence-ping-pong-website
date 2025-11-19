@@ -22,10 +22,9 @@ export const authRequiredOptions = {
 
 		}
 
+		// access userManager  via decoration
 		const userManager = (req.server as any).userManager;
 
-		// access userManager  via decoration
-		// const userId = await (req.server as any).userManager.getUserIdByLoginSession(loginSessionId); //old
 		const userId = await userManager.getUserIdByLoginSession(loginSessionId);
 
 		if (!userId) {
