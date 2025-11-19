@@ -832,21 +832,23 @@
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div class="flex w-full flex-1 items-center justify-center">
-                  First to score to 5 wins
+                  First to score to 3 wins
                 </div>
                 <div class="flex w-full flex-1 flex-row items-center border">
                   <div
                     class="flex flex-1 flex-col items-center justify-center border"
                   >
-                    <div>player</div>
-                    <div>movements</div>
+                    <div id="playerLeftName"></div>
+                    <div>w - up</div>
+                    <div>s - down</div>
                   </div>
                   <div class="flex items-center">vs</div>
                   <div
                     class="flex flex-1 flex-col items-center justify-center border"
                   >
-                    <div>player1</div>
-                    <div>movements</div>
+                    <div id="playerRightName"></div>
+                    <div>arrow up - up</div>
+                    <div>arrow down - down</div>
                   </div>
                 </div>
                 <div
@@ -873,7 +875,7 @@
                 height="600"
               ></canvas>
             </div>
-            <div id="nextGameTournament" class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300">
+            <!-- <div id="nextGameTournament" class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300">
               <div id="winner-text"></div>
               <button
                   type="button" id="nextMatch"
@@ -881,7 +883,7 @@
                 >
                   Next Game
                 </button>
-            </div>
+            </div> -->
             <div
               id="gameOverScreen"
               class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
@@ -891,7 +893,7 @@
                 class="flex; flex-col items-center justify-center text-center"
               >
                 GAME OVER
-                <!-- <div id="winner-text"></div> -->
+                <div id="winner-text"></div>
               </div>
               <div id="nextGame" class="flex flex-row gap-2.5">
                 <button

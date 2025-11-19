@@ -18,36 +18,40 @@ let enableAI : boolean = false;
 let gameisOn : boolean = false;
 let currentMatchisOn : boolean = false;
 
-function initGame()
+function showPageBeforeGame()
 {
   
   if (players.length == 2 && !isTournament)
   {
     setGame.classList.add("hidden");
     setGame.classList.remove("flex");
-    console.log(`player 1 ${players[0].name} - ${players[0].isAI}`);
-    console.log(`player 2 ${players[1].name} - ${players[1].isAI}`);
-    //showGameInfo();
-    showStartButton();
+    showGamePreview();
   }
   else if (players.length == 4 && isTournament)
   {
     setGame.classList.add("hidden");
     setGame.classList.remove("flex");
-    console.log(`player 1 ${players[0].name} - ${players[0].isAI}`);
-    console.log(`player 2 ${players[1].name} - ${players[1].isAI}`);
-    //showGameInfo();
-    console.log(`player 3 ${players[2].name} - ${players[2].isAI}`);
-    console.log(`player 4 ${players[3].name} - ${players[3].isAI}`);
-    //showGameInfo();
-    //showGameInfo();
-    showStartButton();
+    showGamePreview();
   }
 }
 
-function showStartButton() {
+function showGamePreview() {
   instruction.classList.add("flex");
   instruction.classList.remove("hidden");
+  if (matchPlayed == 0) {
+    playerNameLeft.textContent = players[0].name;
+    playerNameRight.textContent = players[1].name;
+  }
+  else if (matchPlayed == 1)
+  {
+    playerNameLeft.textContent = players[2].name;
+    playerNameRight.textContent = players[3].name;
+  }
+  else if (matchPlayed == 2)
+  {
+    playerNameLeft.textContent = lastGameTournament[0].name;
+    playerNameRight.textContent = lastGameTournament[1].name;
+  }
 }
 
 class Paddle {
@@ -320,6 +324,7 @@ draw() {
   if (this.score.playerLeft == 3 || this.score.playerRight == 3)
   {
     gameisOn = false;
+    this.score.drawScore();
     clearInterval(interval);
     matchPlayed += 1;
     console.log(`match played ${matchPlayed}`);
@@ -385,8 +390,7 @@ draw() {
         matchPlayed = 0;
       }
       else {
-        gameNextGameDiv.classList.add("flex");
-        gameNextGameDiv.classList.remove("hidden");
+        showGamePreview();
         gameScreenDiv.classList.add("hidden");
         gameScreenDiv.classList.remove("flex");
       }
@@ -462,10 +466,10 @@ const nextMatchButton : any = document.getElementById("nextMatch");
 const gameOverDiv : any = document.getElementById("gameOverScreen");
 const runButton : any = document.getElementById("runButton");
 
-nextMatchButton.addEventListener("click", () => {
-  setUpCanva();
-  startGame();
-});
+// nextMatchButton.addEventListener("click", () => {
+//   setUpCanva();
+//   startGame();
+// });
 
 let game : Game;
 let tournament : Tournament;
@@ -486,8 +490,8 @@ function setUpCanva() {
   gameOverDiv.classList.remove("flex");
   gameScreenDiv.classList.add("flex");
   gameScreenDiv.classList.remove("hidden");
-  gameNextGameDiv.classList.add("hidden");
-  gameNextGameDiv.classList.remove("flex");
+  // gameNextGameDiv.classList.add("hidden");
+  // gameNextGameDiv.classList.remove("flex");
 }
 
 function startGame () {
@@ -521,6 +525,7 @@ function startGame () {
     {
       console.log("last tournament");
       gameQueue = tournament.getGamesList();
+      console.log(`${lastGameTournament[0].name} - ${lastGameTournament[1].name}`);
       let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
       tournament.playGame(newGame);
     }

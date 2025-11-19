@@ -219,26 +219,26 @@ aliasPlayerOneButton.addEventListener("click", () =>
 {
   const startGame = processInput(aliasPlayerOneInput, 1, AIPlayerOneButtonsDiv, false);
   if (startGame == true)
-      initGame();
+      showPageBeforeGame();
 });
 
 aliasPlayerTwoButton.addEventListener("click", () =>
 {
   const startGame = processInput(aliasPlayerTwoInput, 2, AIPlayerTwoButtonsDiv, AIPlayerTwo);
   if (startGame == true)
-      initGame();
+      showPageBeforeGame();
 });
 
 aliasPlayerThreeButton.addEventListener("click", () =>
 {
   const startGame = processInput(aliasPlayerThreeInput, 3, AIPlayerThreeButtonsDiv, AIPlayerThree);
   if (startGame == true)
-      initGame();
+      showPageBeforeGame();
 });
 
 aliasPlayerFourButton.addEventListener("click", () =>
 {
   const startGame = processInput(aliasPlayerFourInput, 4, AIPlayerFourButtonsDiv, AIPlayerFour);
   if (startGame == true)
-      initGame();
+      showPageBeforeGame();
 });
