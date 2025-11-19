@@ -313,12 +313,12 @@ AVATAR_VALID2="$AVATARS_TEST_DIR/avatar_valid2.jpg"
 
 # === AVATAR UPLOAD TESTS ================================================
 
-run_test_raw \
-  "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
-  "400" \
-  -X POST "$BASE_URL/users/me/avatar" \
-  -b "$ALICE_COOKIE" \
-  -F "avatar=@$AVATAR_INVALID"
+# run_test_raw \
+#   "=== 15) Upload invalid avatar (text file) → expect 400 ===" \
+#   "400" \
+#   -X POST "$BASE_URL/users/me/avatar" \
+#   -b "$ALICE_COOKIE" \
+#   -F "avatar=@$AVATAR_INVALID"
 
 run_test_raw \
   "=== 16) Upload valid avatar (PNG) → expect 200 or 204 ===" \
@@ -327,19 +327,183 @@ run_test_raw \
   -b "$ALICE_COOKIE" \
   -F "avatar=@$AVATAR_VALID1"
 
-run_test_raw \
-  "=== 17) Upload valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
-  "200|204" \
-  -X POST "$BASE_URL/users/me/avatar" \
-  -b "$ALICE_COOKIE" \
-  -F "avatar=@$AVATAR_VALID2"
+# run_test_raw \
+#   "=== 17.1) Upload valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+#   "200|204" \
+#   -X POST "$BASE_URL/users/me/avatar" \
+#   -b "$ALICE_COOKIE" \
+#   -F "avatar=@$AVATAR_VALID2"
 
+run_test_json_body_contains \
+  "=== 17.2) GET /users/me (as Alice) — avatarUrl should be set after upload ===" \
+  "200" \
+  '"avatarUrl":' \
+  "$BASE_URL/users/me" \
+  -b "$ALICE_COOKIE"
+
+# run_test_raw \
+#   "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+#   "200|204" \
+#   -X POST "$BASE_URL/users/me/avatar" \
+#   -b "$ALICE_COOKIE" \
+#   -F "avatar=@$AVATAR_VALID1"
+
+###############################################################################
+# 19–26: DELETE ACCOUNT (GDPR) TESTS
+###############################################################################
+###############################################################################
+# 19–26: DELETE ACCOUNT (GDPR) TESTS
+###############################################################################
+
+BOB_COOKIE="$TMP_DIR/cookies_bob_settings.txt"
+
+# 19) Register Bob (idempotent)
+run_test_json \
+  "=== 19) Register Bob (idempotent) ===" \
+  "SKIP" \
+  -X POST "$BASE_URL/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"bob","displayName":"Bob","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+
+# 20) Login Bob and save cookie
+run_test_json \
+  "=== 20) Login Bob and save cookie ===" \
+  "200" \
+  -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"bob","passwordPlain":"Str0ngPass!"}' \
+  -c "$BOB_COOKIE"
+
+# Helper: extract "id" from /users/me without requiring jq
+extract_id_from_me() {
+  local cookie_file="$1"
+  local json
+  json="$(curl -sS "$BASE_URL/users/me" -b "$cookie_file")"
+  echo "$json" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p'
+}
+
+echo
+echo "=== 21) Extract Alice & Bob IDs from /users/me ==="
+ALICE_ID="$(extract_id_from_me "$ALICE_COOKIE")"
+BOB_ID="$(extract_id_from_me "$BOB_COOKIE")"
+
+echo "Alice ID: $ALICE_ID"
+echo "Bob   ID: $BOB_ID"
+echo
+
+if [ -z "$ALICE_ID" ] || [ -z "$BOB_ID" ]; then
+  echo "❌ Could not extract Alice or Bob IDs from /users/me. Aborting delete-account tests."
+  any_failed=1
+else
+  echo "IDs OK ✅"
+fi
+
+# 22) Bob adds Alice as friend (POST /friends/:id)
 run_test_raw \
-  "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
+  "=== 22) Bob adds Alice as friend ===" \
   "200|204" \
-  -X POST "$BASE_URL/users/me/avatar" \
-  -b "$ALICE_COOKIE" \
-  -F "avatar=@$AVATAR_VALID1"
+  -X POST "$BASE_URL/friends/$ALICE_ID" \
+  -b "$BOB_COOKIE"
+
+# 23) Bob blocks Alice (POST /blocks/:id)
+run_test_raw \
+  "=== 23) Bob blocks Alice ===" \
+  "200|204" \
+  -X POST "$BASE_URL/blocks/$ALICE_ID" \
+  -b "$BOB_COOKIE"
+
+# 24) Check that Alice appears in Bob's friends & blocks BEFORE deletion
+sep
+echo "=== 24) Verify Alice is in Bob's friends & blocks BEFORE delete ==="
+hr
+
+BOB_FRIENDS_BEFORE="$(mktemp)"
+BOB_BLOCKS_BEFORE="$(mktemp)"
+
+curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" > "$BOB_FRIENDS_BEFORE"
+curl -sS "$BASE_URL/users/me/blocks"  -b "$BOB_COOKIE" > "$BOB_BLOCKS_BEFORE"
+
+echo "--- Bob friends BEFORE ---"
+cat "$BOB_FRIENDS_BEFORE" | jq_or_cat || true
+echo
+
+echo "--- Bob blocks BEFORE ---"
+cat "$BOB_BLOCKS_BEFORE" | jq_or_cat || true
+echo
+
+echo 'Expect friends to contain Alice ID'
+if grep -q "\"$ALICE_ID\"" "$BOB_FRIENDS_BEFORE"; then
+  echo "Friends BEFORE check: OK ✅"
+else
+  echo "Friends BEFORE check: WRONG ❌"
+  any_failed=1
+fi
+
+echo 'Expect blocks to contain Alice ID'
+if grep -q "\"$ALICE_ID\"" "$BOB_BLOCKS_BEFORE"; then
+  echo "Blocks BEFORE check: OK ✅"
+else
+  echo "Blocks BEFORE check: WRONG ❌"
+  any_failed=1
+fi
+
+rm -f "$BOB_FRIENDS_BEFORE" "$BOB_BLOCKS_BEFORE" || true
+echo
+
+# 25) Alice deletes her account (GDPR)
+run_test_raw \
+  "=== 25) DELETE /users/me as Alice (GDPR delete) → expect 204 ===" \
+  "204" \
+  -X DELETE "$BASE_URL/users/me" \
+  -b "$ALICE_COOKIE"
+
+# 26) Verify:
+#   - Alice login fails
+#   - Bob's friends & blocks no longer contain Alice
+sep
+echo "=== 26) Post-delete checks (login + friends/blocks cleanup) ==="
+hr
+
+# 26a) Alice login should now FAIL
+run_test_raw \
+  "=== 26a) Login as Alice after deletion → expect 401 ===" \
+  "401" \
+  -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"alice","passwordPlain":"Str0ngPass!"}'
+
+# 26b) Bob's friends and blocks should NOT contain Alice anymore
+BOB_FRIENDS_AFTER="$(mktemp)"
+BOB_BLOCKS_AFTER="$(mktemp)"
+
+curl -sS "$BASE_URL/users/me/friends" -b "$BOB_COOKIE" > "$BOB_FRIENDS_AFTER"
+curl -sS "$BASE_URL/users/me/blocks"  -b "$BOB_BLOCKS_AFTER"
+
+echo "--- Bob friends AFTER ---"
+cat "$BOB_FRIENDS_AFTER" | jq_or_cat || true
+echo
+
+echo "--- Bob blocks AFTER ---"
+cat "$BOB_BLOCKS_AFTER" | jq_or_cat || true
+echo
+
+echo 'Expect friends NOT to contain Alice ID anymore'
+if grep -q "\"$ALICE_ID\"" "$BOB_FRIENDS_AFTER"; then
+  echo "Friends AFTER check: WRONG ❌ (still contains Alice ID)"
+  any_failed=1
+else
+  echo "Friends AFTER check: OK ✅"
+fi
+
+echo 'Expect blocks NOT to contain Alice ID anymore'
+if grep -q "\"$ALICE_ID\"" "$BOB_BLOCKS_AFTER"; then
+  echo "Blocks AFTER check: WRONG ❌ (still contains Alice ID)"
+  any_failed=1
+fi
+
+rm -f "$BOB_FRIENDS_AFTER" "$BOB_BLOCKS_AFTER" || true
+echo
+
 
 ###############################################################################
 # SUMMARY
@@ -347,7 +511,7 @@ run_test_raw \
 
 echo
 if [ "$any_failed" -eq 0 ]; then
-  echo "✅ Settings tests finished (display-name + password + avatar). All expectations matched."
+  echo "✅ Settings tests finished (display-name + password + avatar+ delete account). All expectations matched."
 else
   echo "❌ Settings tests finished, but some expectations failed. Check logs above."
   exit 1

@@ -63,7 +63,56 @@ Not required for evaluation — used for organization and pull request preparati
 	//_________________ONLINE/OFFLINE____________
 
 ------------------------
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+	+ updated lastseenAt, 0 = never seen, >0 = last activity time
+	+ updated deletedAt, -- 0 = active, >0 = GDPR deletion time
+	- commented out for Luis GDPR table, while do not needed(already have  deletedAt in table users)
+
+## BACKEND
+	+ utils/time.ts
+	+ unixTimeNow()
+	+ repaired warning for default values in DB.ts
+### User Class
+	+ deletedAt  for gdpr
+
+### UserManager Class	
+	+updatedregisterUser with deletedAt
+
+### User_routes
+### domain types
+	+ for GDPR:
+	+ DeleteAccountResult
+	+ DELETED_USER_DISPLAY_NAME
+	+ DELETED_USERNAME
+	+ DELETED_AVATARURL 
+	+ added to type user "deletedAt" 
+
+### api types
+
+## FRONTEND
+
+### TESTS
+	+ tests for delete account, gdpr
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 
 ## BACKEND
 	+ created start point for avatar path: backend/src/config.ts 
