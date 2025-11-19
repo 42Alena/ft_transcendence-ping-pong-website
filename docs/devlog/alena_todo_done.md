@@ -70,16 +70,22 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## BACKEND
 	+ config.ts: ONLINE_TIMEOUT_SEC for online time duration
+
 ### UserManager
 	+ touchLastSeenAt()
+	+ getUserOnlineStatus
+
 ### User_routes
 	+ UserStatus
 	+ UserStatusResult
 ### domain types
+	+ UserStatus
+	+ UserStatusResult
 ### api types
 ## FRONTEND
 
 ### TESTS
+	+ tests for online/offline in user-settings.ts
 
 ## 📘 DOCUMENTATION
 

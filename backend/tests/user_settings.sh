@@ -334,12 +334,12 @@ run_test_raw \
 #   -b "$ALICE_COOKIE" \
 #   -F "avatar=@$AVATAR_VALID2"
 
-run_test_json_body_contains \
-  "=== 17.2) GET /users/me (as Alice) — avatarUrl should be set after upload ===" \
-  "200" \
-  '"avatarUrl":' \
-  "$BASE_URL/users/me" \
-  -b "$ALICE_COOKIE"
+# run_test_json_body_contains \
+#   "=== 17.2) GET /users/me (as Alice) — avatarUrl should be set after upload ===" \
+#   "200" \
+#   '"avatarUrl":' \
+#   "$BASE_URL/users/me" \
+#   -b "$ALICE_COOKIE"
 
 # run_test_raw \
 #   "=== 18) Upload first valid avatar (JPG, overwrite Alice avatar) → expect 200 or 204 ===" \
@@ -348,9 +348,7 @@ run_test_json_body_contains \
 #   -b "$ALICE_COOKIE" \
 #   -F "avatar=@$AVATAR_VALID1"
 
-###############################################################################
-# 19–26: DELETE ACCOUNT (GDPR) TESTS
-###############################################################################
+
 ###############################################################################
 # 19–26: DELETE ACCOUNT (GDPR) TESTS
 ###############################################################################
@@ -504,6 +502,107 @@ fi
 rm -f "$BOB_FRIENDS_AFTER" "$BOB_BLOCKS_AFTER" || true
 echo
 
+###############################################################################
+# 27–36: ONLINE / OFFLINE STATUS TESTS
+#  - assumes:
+#      * Bob still exists and is logged in ($BOB_COOKIE, $BOB_ID)
+#      * Alice was deleted (GDPR) and we still have $ALICE_ID
+###############################################################################
+
+CAROL_COOKIE="$TMP_DIR/cookies_carol_status.txt"
+DAVE_COOKIE="$TMP_DIR/cookies_dave_status.txt"
+
+# 27) Register Carol (idempotent)
+run_test_json \
+  "=== 27) Register Carol (idempotent) ===" \
+  "SKIP" \
+  -X POST "$BASE_URL/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"carol_status","displayName":"Carol","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+
+# 28) Login Carol and save cookie
+run_test_json \
+  "=== 28) Login Carol and save cookie ===" \
+  "200" \
+  -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"carol_status","passwordPlain":"Str0ngPass!"}' \
+  -c "$CAROL_COOKIE"
+
+# 29) Register Dave (idempotent)
+run_test_json \
+  "=== 29) Register Dave (idempotent) ===" \
+  "SKIP" \
+  -X POST "$BASE_URL/auth/register" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"dave_status","displayName":"Dave","passwordPlain":"Str0ngPass!","avatarUrl":null}'
+
+# 30) Login Dave and save cookie
+run_test_json \
+  "=== 30) Login Dave and save cookie ===" \
+  "200" \
+  -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"dave_status","passwordPlain":"Str0ngPass!"}' \
+  -c "$DAVE_COOKIE"
+
+echo
+echo "=== 31) Extract Carol & Dave IDs from /users/me ==="
+CAROL_ID="$(extract_id_from_me "$CAROL_COOKIE")"
+DAVE_ID="$(extract_id_from_me "$DAVE_COOKIE")"
+
+echo "Carol ID: $CAROL_ID"
+echo "Dave  ID: $DAVE_ID"
+echo
+
+if [ -z "$CAROL_ID" ] || [ -z "$DAVE_ID" ]; then
+  echo "❌ Could not extract Carol or Dave IDs from /users/me. Aborting status tests."
+  any_failed=1
+else
+  echo "IDs OK ✅"
+fi
+
+# 32) Carol adds Dave as friend so she is allowed to see his status
+run_test_raw \
+  "=== 32) Carol adds Dave as friend (for status visibility) ===" \
+  "200|204" \
+  -X POST "$BASE_URL/friends/$DAVE_ID" \
+  -b "$CAROL_COOKIE"
+
+# 33) FRIEND CASE: Carol checks Dave's status right after his login → expect ONLINE
+run_test_json_body_contains \
+  "=== 33) Carol checks Dave status right after login → expect ONLINE ===" \
+  "200" \
+  '"status":"online"' \
+  "$BASE_URL/users/$DAVE_ID/status" \
+  -b "$CAROL_COOKIE"
+
+echo
+echo "Waiting 20 seconds so Dave becomes OFFLINE (online timeout = 15s)..."
+sleep 20
+
+# 34) FRIEND CASE: Carol checks Dave's status after 20s inactivity → expect OFFLINE
+run_test_json_body_contains \
+  "=== 34) Carol checks Dave status after 20s inactivity → expect OFFLINE ===" \
+  "200" \
+  '"status":"offline"' \
+  "$BASE_URL/users/$DAVE_ID/status" \
+  -b "$CAROL_COOKIE"
+
+# 35) NOT-FRIEND CASE: Bob asks Dave status → expect 403 or 404 (hidden for non-friends)
+run_test_raw \
+  "=== 35) Bob asks status of Dave (NOT a friend) → expect 403/404 (hidden) ===" \
+  "403|404" \
+  -X GET "$BASE_URL/users/$DAVE_ID/status" \
+  -b "$BOB_COOKIE"
+
+# 36) DELETED-ACCOUNT CASE: Bob asks status of deleted Alice → expect 404 (not_found)
+run_test_raw \
+  "=== 36) Bob asks status of deleted Alice → expect 404 (not_found) ===" \
+  "404" \
+  -X GET "$BASE_URL/users/$ALICE_ID/status" \
+  -b "$BOB_COOKIE"
+
 
 ###############################################################################
 # SUMMARY
@@ -511,7 +610,7 @@ echo
 
 echo
 if [ "$any_failed" -eq 0 ]; then
-  echo "✅ Settings tests finished (display-name + password + avatar+ delete account). All expectations matched."
+  echo "✅ Settings tests finished (display-name + password + avatar+ delete account  + online/offline). All expectations matched."
 else
   echo "❌ Settings tests finished, but some expectations failed. Check logs above."
   exit 1

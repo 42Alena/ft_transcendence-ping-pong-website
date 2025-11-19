@@ -402,9 +402,26 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 	//_________________ONLINE/OFFLINE____________
 
-// For viewer missing/deleted I’d return "not_me" (⇒ 401/403).
 
-// For target missing/deleted "not_found" (⇒ 404).
 
+
+	/* to get online status for me or friends only. TODO: change Online time in config.ts. now for tests 15 sec */
+	fastify.get("/users/me/status", authRequiredOptions, async (req, reply) => {
+
+		const meId = (req as API.UserAwareRequest).userId;
+
+		const result = await userManager.getUserOnlineStatus(meId, meId);
+
+		// map to HTTP
+		if (!result.ok) {
+			if (result.reason === "not_me") return sendError(reply, "Not logged in", "auth", 401);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "userId", 404);
+			if (result.reason === "not_friend") return sendError(reply, "User not my friend", "userId", 403);
+			return;
+		}
+
+		// here result.ok === true
+		return sendOK(reply, { status: result.status });  // online | offline
+	});
 
 }

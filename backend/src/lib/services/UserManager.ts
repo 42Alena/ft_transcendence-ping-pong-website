@@ -513,7 +513,7 @@ export class UserManager {
 		if ((timeNow - target.lastSeenAt) < ONLINE_TIMEOUT_SEC)
 			return { ok: true, status: 'online' };
 
-		return { ok: true, status: "offline" };
+		return { ok: true, status: 'offline' };
 	}
 
 
