@@ -47,10 +47,11 @@ const AIoffButtonPlayerFour : any = document.getElementById("AIoffPlayerFour");
 let AIPlayerTwo : boolean = false;
 let AIPlayerThree : boolean = false;
 let AIPlayerFour : boolean = false;
-let isTournament : boolean;
+let isTournament : boolean = false;
 
 function setGameType(text : string)
 {
+  isTournament = false;
   if (gameisOn)
 		{
       console.log(`${gameisOn} - clean up screen`);
@@ -61,15 +62,16 @@ function setGameType(text : string)
 			canvas.classList.remove("block");
 			gameisOn = false;
 		}
-  if (text == "game")
-    isTournament = false;
-  else
+  if (text == "tournament")
     isTournament = true;
   setGame.classList.add("flex");
   setGame.classList.remove("hidden");
   //reset html - make sure cleaned from previous session, maybe I can do it rigth after filling my game session structure
   players = [];
-
+  matchPlayed = 0;
+  lastGameTournament = [];
+  gameisOn = false;
+  gameQueue = [];
   aliasPlayerOneInput.value = '';
   aliasPlayerTwoInput.value = '';
   aliasPlayerThreeInput.value = '';

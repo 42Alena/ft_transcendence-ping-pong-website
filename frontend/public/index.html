@@ -875,15 +875,6 @@
                 height="600"
               ></canvas>
             </div>
-            <!-- <div id="nextGameTournament" class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300">
-              <div id="winner-text"></div>
-              <button
-                  type="button" id="nextMatch"
-                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                >
-                  Next Game
-                </button>
-            </div> -->
             <div
               id="gameOverScreen"
               class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
@@ -895,20 +886,30 @@
                 GAME OVER
                 <div id="winner-text"></div>
               </div>
-              <div id="nextGame" class="flex flex-row gap-2.5">
-                <button
+              <div id="gameOptions" class="flex flex-row gap-2.5">
+                <!-- <button
+                  id="playAgainButton"
                   type="button"
                   class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                 >
                   Play Again
-                </button>
+                </button> -->
                 <button
+                  id="newGameButton"
                   type="button"
                   class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                 >
                   New Game
                 </button>
               </div>
+              <div id="nextGameButton" class="hidden">
+                  <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Next Game
+                </button>
+                </div>
             </div>
           </div>
         </div>
