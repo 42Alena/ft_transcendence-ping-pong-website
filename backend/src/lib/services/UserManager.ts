@@ -11,6 +11,7 @@ import { generateId } from '../utils/randomId';
 import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
 import { unixTimeNow } from '../utils/time';
+import { ONLINE_TIMEOUT_SEC } from '../../config';
 
 
 export class UserManager {
@@ -329,6 +330,10 @@ export class UserManager {
 
 
 		const me = await this.getUserById(meId);
+
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
 		if (this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
@@ -349,7 +354,7 @@ export class UserManager {
 			.where({ id: meId });
 
 		return { ok: true };
-	};
+	}
 
 
 	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
@@ -362,9 +367,12 @@ export class UserManager {
 
 
 		const me = await this.getUserById(meId);
+
 		if (!me)
 			return { ok: false, reason: "not_me" };
 
+		if (this.isDeletedAccount(me))
+			return { ok: false, reason: "not_me" };
 
 		const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
 
@@ -400,6 +408,10 @@ export class UserManager {
 	): Promise<Domain.ChangeAvatarResult> {
 
 		const me = await this.getUserById(meId);
+
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
 		if (this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
@@ -410,7 +422,7 @@ export class UserManager {
 
 		return { ok: true };
 
-	};
+	}
 
 
 	//_________________/ME/SETTINGS: DELETE USER____________
@@ -423,6 +435,10 @@ export class UserManager {
 	): Promise<Domain.DeleteAccountResult> {
 
 		const me = await this.getUserById(meId);
+
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
 		if (this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
@@ -457,7 +473,7 @@ export class UserManager {
 
 		return { ok: true };
 
-	};
+	}
 
 
 	//_________________ONLINE/OFFLINE____________
@@ -471,6 +487,38 @@ export class UserManager {
 	// 	this.userStatus = status;
 	// }
 
+	/* set online in DB */
+	async touchLastSeenAt(
+		meId: Domain.UserId,
+	): Promise<void> {
+		await this.dbTableUser()
+			.update({ lastSeenAt: unixTimeNow() })
+			.where({ id: meId });
+	}
+
+
+	async isOnline(
+		meId: Domain.UserId,
+	): Promise<Domain.UserStatusResult> {
+
+		const me = await this.getUserById(meId);
+
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
+		if (this.isDeletedAccount(me))
+			return { ok: false, reason: "not_me" };
+
+		if (me.lastSeenAt === 0)
+			return { ok: true, status: 'offline' };
+
+		const timeNow = unixTimeNow();
+
+		if ((timeNow - me.lastSeenAt) < ONLINE_TIMEOUT_SEC)
+			return { ok: true, status: 'online' };
+
+		return { ok: true, status: "offline" };
+	}
 
 
 }

@@ -28,6 +28,8 @@ export const authRequiredOptions = {
 		if (!userId) {
 			return sendError(reply, "prehandler: invalid session", "auth", 401);}
 
+		await userManager.touchLastSeen(userId);  //for online status
+
 		//  attach to request for downstream handlers  (/users/me, etc.)
 		(req as API.UserAwareRequest).userId = userId; //  now handlers can read req.userId
 

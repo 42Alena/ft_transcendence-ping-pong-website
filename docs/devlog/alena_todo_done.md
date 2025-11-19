@@ -13,6 +13,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### UserManager
 ### User_routes
 ### domain types
+
 ### api types
 ## FRONTEND
 
@@ -66,6 +67,38 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
 ## DB
+
+## BACKEND
+	+ config.ts: ONLINE_TIMEOUT_SEC for online time duration
+### UserManager
+	+ touchLastSeenAt()
+### User_routes
+	+ UserStatus
+	+ UserStatusResult
+### domain types
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+## DB
 	+ updated lastseenAt, 0 = never seen, >0 = last activity time
 	+ updated deletedAt, -- 0 = active, >0 = GDPR deletion time
 	- commented out for Luis GDPR table, while do not needed(already have  deletedAt in table users)
@@ -89,16 +122,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ DELETED_AVATARURL 
 	+ added to type user "deletedAt" 
 
-### api types
-
-## FRONTEND
-
 ### TESTS
 	+ tests for delete account, gdpr
-
-## 📘 DOCUMENTATION
-
-## 🔗 LINKS / HELP
 
 # HOW TO TEST: 
 ```bash
@@ -108,7 +133,6 @@ Not required for evaluation — used for organization and pull request preparati
 	# 2. in 2.terminal: 
 	make tests_user_settings
 ```
-
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
