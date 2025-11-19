@@ -72,6 +72,7 @@ export type UserStatus = 'online' | 'offline';
 export type UserStatusResult =
   | { ok: true; status: UserStatus }
   | { ok: false; reason: 'not_me' | 'not_friend' | 'not_found' };
+  
 
 //_____________SETTINGS__________________
 

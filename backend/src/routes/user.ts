@@ -402,4 +402,9 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 	//_________________ONLINE/OFFLINE____________
 
+// For viewer missing/deleted I’d return "not_me" (⇒ 401/403).
+
+// For target missing/deleted "not_found" (⇒ 404).
+
+
 }

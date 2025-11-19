@@ -331,10 +331,7 @@ export class UserManager {
 
 		const me = await this.getUserById(meId);
 
-		if (!me)
-			return { ok: false, reason: "not_me" };
-
-		if (this.isDeletedAccount(me))
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
 		const nameNormalized = normalizeName(newDisplayName);
@@ -368,10 +365,7 @@ export class UserManager {
 
 		const me = await this.getUserById(meId);
 
-		if (!me)
-			return { ok: false, reason: "not_me" };
-
-		if (this.isDeletedAccount(me))
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
 		const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
@@ -409,10 +403,7 @@ export class UserManager {
 
 		const me = await this.getUserById(meId);
 
-		if (!me)
-			return { ok: false, reason: "not_me" };
-
-		if (this.isDeletedAccount(me))
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
 		//update
@@ -436,13 +427,8 @@ export class UserManager {
 
 		const me = await this.getUserById(meId);
 
-		if (!me)
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
-
-		if (this.isDeletedAccount(me))
-			return { ok: false, reason: "not_me" };
-
-
 
 		//delete/anonymize  account
 		await this.dbTableUser()
@@ -480,7 +466,6 @@ export class UserManager {
 
 
 
-
 	// //____Status: online | ofline
 
 	// setStatus(status: Domain.UserStatus) {
@@ -497,24 +482,35 @@ export class UserManager {
 	}
 
 
-	async isOnline(
-		meId: Domain.UserId,
+	async getUserOnlineStatus(
+		viewerId: Domain.UserId,   // who is asking (I?)
+		targetId: Domain.UserId,   // whose status I want (me or friend)
 	): Promise<Domain.UserStatusResult> {
 
-		const me = await this.getUserById(meId);
+		//me
+		const viewer = await this.getUserById(targetId);
 
-		if (!me)
+		if (!viewer || this.isDeletedAccount(viewer))
 			return { ok: false, reason: "not_me" };
 
-		if (this.isDeletedAccount(me))
-			return { ok: false, reason: "not_me" };
+		//me/friend
+		const target = await this.getUserById(viewerId);
 
-		if (me.lastSeenAt === 0)
+		if (!target || this.isDeletedAccount(target))
+			return { ok: false, reason: "not_found" };
+
+		const isSelf = viewerId === targetId;
+		const isFriend = await this.isFriend(viewerId, targetId);
+
+		if (!isSelf && !isFriend)
+			return { ok: false, reason: "not_friend" };
+
+		if (target.lastSeenAt === 0)
 			return { ok: true, status: 'offline' };
 
 		const timeNow = unixTimeNow();
 
-		if ((timeNow - me.lastSeenAt) < ONLINE_TIMEOUT_SEC)
+		if ((timeNow - target.lastSeenAt) < ONLINE_TIMEOUT_SEC)
 			return { ok: true, status: 'online' };
 
 		return { ok: true, status: "offline" };
