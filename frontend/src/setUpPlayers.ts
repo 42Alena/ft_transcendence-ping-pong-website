@@ -1,3 +1,35 @@
+const setGame : any = document.getElementById("setUpGame");
+const aliasPage : any = document.getElementById("setUpPlayers");
+const aliasPlayerThreeDiv : any = document.getElementById("aliasPlayerThree");
+const aliasPlayerFourDiv : any = document.getElementById("aliasPlayerFour");
+const aliasPlayerOneInput : any = document.getElementById("namePlayerOne");
+const aliasPlayerTwoInput : any = document.getElementById("namePlayerTwo");
+const aliasPlayerThreeInput : any = document.getElementById("namePlayerThree");
+const aliasPlayerFourInput : any = document.getElementById("namePlayerFour");
+const AIPlayerOneButtonsDiv : any = document.getElementById("AIPlayerOne");
+const AIPlayerTwoButtonsDiv : any = document.getElementById("AIPlayerTwo");
+const AIPlayerThreeButtonsDiv : any = document.getElementById("AIPlayerThree");
+const AIPlayerFourButtonsDiv : any = document.getElementById("AIPlayerFour");
+const aliasPlayerOneButton : any = document.getElementById("okPlayerOne");
+const aliasPlayerTwoButton : any = document.getElementById("okPlayerTwo");
+const aliasPlayerThreeButton : any = document.getElementById("okPlayerThree");
+const aliasPlayerFourButton : any = document.getElementById("okPlayerFour");
+const AIonButtonPlayerOne : any = document.getElementById("AIonPlayerOne");
+const AIonButtonPlayerTwo : any = document.getElementById("AIonPlayerTwo");
+const AIonButtonPlayerThree : any = document.getElementById("AIonPlayerThree");
+const AIonButtonPlayerFour : any = document.getElementById("AIonPlayerFour");
+const AIoffButtonPlayerOne : any = document.getElementById("AIoffPlayerOne");
+const AIoffButtonPlayerTwo : any = document.getElementById("AIoffPlayerTwo");
+const AIoffButtonPlayerThree : any = document.getElementById("AIoffPlayerThree");
+const AIoffButtonPlayerFour : any = document.getElementById("AIoffPlayerFour");
+
+let AIPlayerTwo : boolean = false;
+let AIPlayerThree : boolean = false;
+let AIPlayerFour : boolean = false;
+let isTournament : boolean = false;
+
+let players: Player[] = [];
+
 class Player {
     name: string;
     isAI : boolean;
@@ -11,44 +43,7 @@ class Player {
     }
 }
 
-let players: Player[] = [];
-
-const setGame : any = document.getElementById("setUpGame");
-const aliasPage : any = document.getElementById("setUpPlayers");
-
-const aliasPlayerThreeDiv : any = document.getElementById("aliasPlayerThree");
-const aliasPlayerFourDiv : any = document.getElementById("aliasPlayerFour");
-
-const aliasPlayerOneInput : any = document.getElementById("namePlayerOne");
-const aliasPlayerTwoInput : any = document.getElementById("namePlayerTwo");
-const aliasPlayerThreeInput : any = document.getElementById("namePlayerThree");
-const aliasPlayerFourInput : any = document.getElementById("namePlayerFour");
-
-const AIPlayerOneButtonsDiv : any = document.getElementById("AIPlayerOne");
-const AIPlayerTwoButtonsDiv : any = document.getElementById("AIPlayerTwo");
-const AIPlayerThreeButtonsDiv : any = document.getElementById("AIPlayerThree");
-const AIPlayerFourButtonsDiv : any = document.getElementById("AIPlayerFour");
-
-const aliasPlayerOneButton : any = document.getElementById("okPlayerOne");
-const aliasPlayerTwoButton : any = document.getElementById("okPlayerTwo");
-const aliasPlayerThreeButton : any = document.getElementById("okPlayerThree");
-const aliasPlayerFourButton : any = document.getElementById("okPlayerFour");
-
-const AIonButtonPlayerOne : any = document.getElementById("AIonPlayerOne");
-const AIonButtonPlayerTwo : any = document.getElementById("AIonPlayerTwo");
-const AIonButtonPlayerThree : any = document.getElementById("AIonPlayerThree");
-const AIonButtonPlayerFour : any = document.getElementById("AIonPlayerFour");
-
-const AIoffButtonPlayerOne : any = document.getElementById("AIoffPlayerOne");
-const AIoffButtonPlayerTwo : any = document.getElementById("AIoffPlayerTwo");
-const AIoffButtonPlayerThree : any = document.getElementById("AIoffPlayerThree");
-const AIoffButtonPlayerFour : any = document.getElementById("AIoffPlayerFour");
-
-let AIPlayerTwo : boolean = false;
-let AIPlayerThree : boolean = false;
-let AIPlayerFour : boolean = false;
-let isTournament : boolean = false;
-
+//clean up page for choosing alias - making sure nothing left from previous session
 function setGameType(text : string)
 {
   isTournament = false;
@@ -66,7 +61,6 @@ function setGameType(text : string)
     isTournament = true;
   setGame.classList.add("flex");
   setGame.classList.remove("hidden");
-  //reset html - make sure cleaned from previous session, maybe I can do it rigth after filling my game session structure
   players = [];
   matchPlayed = 0;
   lastGameTournament = [];
@@ -94,7 +88,6 @@ function setGameType(text : string)
   AIPlayerThreeButtonsDiv.classList.remove("invisible");
   AIPlayerFourButtonsDiv.classList.remove("invisible");
 
-  //
   aliasPage.classList.add("flex");
   aliasPage.classList.remove("hidden");
   aliasSelection();
@@ -102,15 +95,9 @@ function setGameType(text : string)
   gameOverDiv.classList.remove("flex");
   instruction.classList.add("hidden");
   instruction.classList.remove("flex");
-  if (gameisOn)
-  {
-    clearInterval(interval);
-    canvas.classList.add("hidden");
-    canvas.classList.remove("block");
-    gameisOn = false;
-  }
 }
 
+//set page for 2 players or 4 players (tournament)
 function aliasSelection()
 {
   if (isTournament == false)
@@ -128,49 +115,6 @@ function aliasSelection()
     aliasPlayerFourDiv.classList.remove("hidden");
   }
 }
-
-//Switch on/off AI button
-function AIisOn(onButton : any, offButton : any, input : any) : boolean{
-  onButton.classList.add("active");
-  offButton.classList.remove("active");
-  input.value = "AI";
-  return true;
-}
-
-function AIisOff(onButton : any, offButton : any, input : any) : boolean{
-  onButton.classList.remove("active");
-  offButton.classList.add("active");
-  input.value = "";
-  return false;
-}
-
-AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
-  console.log("is on AI");
-  console.log(`flag before ${AIPlayerTwo}`);
-  AIPlayerTwo = AIisOn(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
-  console.log(`flag after ${AIPlayerTwo}`);
-});
-
-AIoffButtonPlayerTwo.addEventListener("click", (event : any) => {
-  console.log("is off AI");
-   AIPlayerTwo = AIisOff(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
-});
-
-AIonButtonPlayerThree.addEventListener("click", (even: any) => {
-   AIPlayerThree = AIisOn(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
-});
-
-AIoffButtonPlayerThree.addEventListener("click", (event : any) => {
-  AIPlayerThree = AIisOff(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
-});
-
-AIonButtonPlayerFour.addEventListener("click", (even: any) => {
-  AIPlayerFour = AIisOn(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
-});
-
-AIoffButtonPlayerFour.addEventListener("click", (event : any) => {
-  AIPlayerFour = AIisOff(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
-});
 
 //check/add player to the list
 function checkAlias(name : string, AIFlag : boolean) : string
@@ -217,6 +161,49 @@ function processInput(input : any, index : number, AIbuttonsDiv : any, AIFlag : 
   return false;
 }
 
+//Switch on/off AI button
+function AIisOn(onButton : any, offButton : any, input : any) : boolean{
+  onButton.classList.add("active");
+  offButton.classList.remove("active");
+  input.value = "AI";
+  return true;
+}
+
+function AIisOff(onButton : any, offButton : any, input : any) : boolean{
+  onButton.classList.remove("active");
+  offButton.classList.add("active");
+  input.value = "";
+  return false;
+}
+
+//buttons on/off
+AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
+  AIPlayerTwo = AIisOn(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+});
+
+AIoffButtonPlayerTwo.addEventListener("click", (event : any) => {
+  console.log("is off AI");
+   AIPlayerTwo = AIisOff(AIonButtonPlayerTwo, AIoffButtonPlayerTwo, aliasPlayerTwoInput);
+});
+
+AIonButtonPlayerThree.addEventListener("click", (even: any) => {
+   AIPlayerThree = AIisOn(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
+});
+
+AIoffButtonPlayerThree.addEventListener("click", (event : any) => {
+  AIPlayerThree = AIisOff(AIonButtonPlayerThree, AIoffButtonPlayerThree, aliasPlayerThreeInput);
+});
+
+AIonButtonPlayerFour.addEventListener("click", (even: any) => {
+  AIPlayerFour = AIisOn(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
+});
+
+AIoffButtonPlayerFour.addEventListener("click", (event : any) => {
+  AIPlayerFour = AIisOff(AIonButtonPlayerFour, AIoffButtonPlayerFour, aliasPlayerFourInput);
+});
+
+//buttons
+//process input and check if we can start the game
 aliasPlayerOneButton.addEventListener("click", () =>
 {
   const startGame = processInput(aliasPlayerOneInput, 1, AIPlayerOneButtonsDiv, false);
