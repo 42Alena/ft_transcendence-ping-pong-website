@@ -10,7 +10,10 @@ Not required for evaluation — used for organization and pull request preparati
 ## DB
 
 ## BACKEND
-
+### UserManager
+### User_routes
+### domain types
+### api types
 ## FRONTEND
 
 ### TESTS
@@ -18,6 +21,17 @@ Not required for evaluation — used for organization and pull request preparati
 ## 📘 DOCUMENTATION
 
 ## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
 ---------------------------------
@@ -42,20 +56,141 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-TODO ROUTES: 
 
-	// ______________FRIENDS:    DELETE /friends/:id_____________
-	// ______________BLOCKS: ADD :POST  /blocks/:id_____________
-	// ______________BLOCKS:    DELETE /blocks/:id_____________
-
 	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD NAME____________
+	//_________________SETTINGS: CHANGE PASSWORD ____________
 	//_________________SETTINGS: DELETE USER____________
-	
 	
 	//_________________ONLINE/OFFLINE____________
 
 ------------------------
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+	+ updated lastseenAt, 0 = never seen, >0 = last activity time
+	+ updated deletedAt, -- 0 = active, >0 = GDPR deletion time
+	- commented out for Luis GDPR table, while do not needed(already have  deletedAt in table users)
+
+## BACKEND
+	+ utils/time.ts
+	+ unixTimeNow()
+	+ repaired warning for default values in DB.ts
+### User Class
+	+ deletedAt  for gdpr
+
+### UserManager Class	
+	+updatedregisterUser with deletedAt
+
+### User_routes
+### domain types
+	+ for GDPR:
+	+ DeleteAccountResult
+	+ DELETED_USER_DISPLAY_NAME
+	+ DELETED_USERNAME
+	+ DELETED_AVATARURL 
+	+ added to type user "deletedAt" 
+
+### api types
+
+## FRONTEND
+
+### TESTS
+	+ tests for delete account, gdpr
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+## BACKEND
+	+ created start point for avatar path: backend/src/config.ts 
+	+ UPLOAD_DIR 
+
+### UserManager
+	+ changeAvatar()
+
+### User_routes
+	+ to change avatar: "/users/me/avatar"
+
+### domain types
+	+ ChangeAvatarResult
+
+### TESTS
+	- commented out other tests
+	+ add test to check avatar
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+## BACKEND
+	npm i @fastify/multipart --save
+	https://github.com/fastify/fastify-multipart
+### UserManager
+	+ changeDisplayName()
+	+ changePassword()
+
+### User_routes
+	+ To change Display Name: /users/me/display-name
+	+ To change Password: /users/me/change-password"
+
+### domain types
+	+ ChangeDomainNameResult
+	+ ChangePasswordResult
+
+### api types
+	+ ChangePasswordBody
+
+## FRONTEND
+
+### TESTS
+	+ backend/tests/user-settings.sh (to test changing: displayname, avatar. to test delete account)
+
+### Makefile
+	+ tests_user_settings
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH 
+
+# HOW TO TEST:
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================================================================================
 ## DB
 
 ## BACKEND
@@ -92,8 +227,9 @@ Not required for evaluation — used for organization and pull request preparati
 	```
 
 
-### TESTS
-```
+
+# HOW TO TEST:
+```bash
 	#  1. in 1.terminal 
 	make backend
 

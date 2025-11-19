@@ -4,6 +4,16 @@ import { authRequiredOptions } from './utils';
 import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { toUserPublic, toUserSelf } from '../lib/mappers/user';
 import type * as API from '../lib/types/api';
+//for file upload
+import { createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import { rename, unlink } from 'node:fs/promises';
+import { extname, join } from 'node:path';
+import { UPLOAD_DIR } from '../config';
+
+
+
+
 
 // import { User } from '../lib/Class/User';
 // import { generateId } from '../lib/utils/generateId';
@@ -159,6 +169,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 			// map domain reasons to HTTP
 			if (result.reason === "self") return sendError(reply, "Cannot block yourself", "id", 400);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
 
 		});
 
@@ -185,11 +196,209 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 
 		});
 
-	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE DISPLAY NAME____________
-	//_________________SETTINGS: CHANGE PASSWORD ____________
-	//_________________SETTINGS: DELETE USER____________
+	//_________________/ME/SETTINGS: CHANGE DISPLAY NAME____________
 
+	/* Change displayname 
+	Route: PATCH /users/me/display-name
+	Auth: required (needs session cookie → userId)
+	Body: { "displayName": "NewPublicName" }
+	Checks:
+	validate format (length, allowed chars)
+	check if displayName is unique
+	Uses in UserManager: changeDisplayName(userId, newDisplayName)
+	// reason: "not_me" |  "taken_displayname" | "weak_displayname"};
+	// https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/PATCH */
+	fastify.patch("/users/me/display-name", authRequiredOptions, async (req, reply) => {
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+
+		const { displayName: newDisplayName } = req.body as { displayName: API.DisplayName };
+		console.log('Change display name', req.body)
+
+
+		if (!newDisplayName) { return sendError(reply, "No display name", "displayName") }
+
+
+		const result = await userManager.changeDisplayName(meId, newDisplayName);
+
+		if (result.ok)
+			return sendNoContent(reply);                  // 204
+
+		// map domain reasons to HTTP
+		if (result.reason === "not_me") return sendError(reply, "User not found", "id", 404);
+
+		if (result.reason === "taken_displayname") return sendError(reply, "Displayname is taken", "displayname", 409);
+
+		if (result.reason === "weak_displayname") {
+			return sendError(reply,
+				result.message ?? "Displayname is weak", // from validateName()
+				"displayname",
+				400);
+		}
+
+	});
+
+	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
+	/* 
+	Change password
+Route: PATCH /users/me/password
+Auth: required
+Body: { "currentPassword": "...", "newPassword": "..." }
+Checks:
+verify currentPassword against stored hash
+validate newPassword (min length, etc.)
+hash new password, save
+optionally invalidate all other login sessions
+Uses in UserManager: changePassword(userId, currentPassword, newPassword)
+	  reason: "not_me" |  "weak_password";
+	*/
+	fastify.patch("/users/me/change-password", authRequiredOptions, async (req, reply) => {
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+
+		const { currentPassword, newPassword } = req.body as API.ChangePasswordBody;
+
+		if (!currentPassword || !newPassword) {
+			return sendError(reply, "Missing password fields", "password", 400);
+		}
+
+		console.log('Change password', req.body)
+
+
+		const result = await userManager.changePassword(meId, currentPassword, newPassword);
+
+		if (result.ok)
+			return sendNoContent(reply);                  // 204
+
+		// map domain reasons to HTTP
+		if (result.reason === "not_me")
+			return sendError(reply, "User not found", "id", 404);
+
+
+		if (result.reason === "wrong_current_password") {
+			return sendError(
+				reply,
+				"Current password is wrong",
+				"currentPassword",
+				401,
+			);
+		}
+		if (result.reason === "weak_password") {
+			return sendError(reply,
+				result.message ?? "password is weak", // from validatePassword()
+				"password",
+				400);
+		}
+
+	});
+
+	//_________________/ME/SETTINGS: CHANGE AVATAR____________
+
+	/* 
+	Change / upload avatar
+Route: POST /users/me/avatar
+or PATCH /users/me/avatar (your choice; I’d use POST because of file upload)
+Auth: required
+Input: multipart form with file field, e.g. avatar
+Checks:
+validate file type (PNG/JPEG only, size limit)
+store file on disk (or in static folder) → get avatarUrl
+Uses in UserManager: updateAvatar(userId, avatarUrl
+store for users: backend/avatars/users
+default: backend/avatars/default/default.png
+
+curl localhost:3000/users/me/avatar -X POST -F "file=@avatars/default/default.png;filename=me.png" 
+
+https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="avatar">
+</form>
+	*/
+	fastify.post("/users/me/avatar", authRequiredOptions, async (req, reply) => {
+
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+		const me = await userManager.getUserById(meId);
+		if (!me) return sendError(reply, "User not found", "userId", 404);
+
+		const oldAvatarUrl = me.avatarUrl;
+
+
+		// stores files to tmp dir and return files
+		const files = await req.saveRequestFiles()
+		console.log('Incoming files', files)
+
+		if (files.length !== 1)
+			return sendError(reply, "Avatar: one file only", "avatar", 400);
+
+		if (!(files[0].mimetype.startsWith("image/")))
+			return sendError(reply, "Avatar: png or jpeg only", "avatar", 400);
+
+		if (files[0].file.bytesRead < 100)
+			return sendError(reply, "Avatar: size", "avatar", 400);
+
+		//get userId for path
+
+		const extention = extname(files[0].filename)
+		const dst = join(
+			UPLOAD_DIR,
+			'/',
+			`${meId}${extention}`
+		);
+
+		console.log("avatar saving to ", dst)
+		await rename(
+			files[0].filepath, // src
+			dst // dst
+		);
+
+		console.log('Change avatar', req.body)
+
+		const result = await userManager.changeAvatar(meId, dst);
+
+		if (result.ok) {
+			if (oldAvatarUrl && (oldAvatarUrl !== dst))
+				await unlink(oldAvatarUrl);
+
+			return sendOK(reply, { avatarUrl: dst });  //   url where saved
+		}
+
+
+		// map domain reasons to HTTP
+		if (result.reason === "not_me")
+			return sendError(reply, "User not found", "id", 404);
+
+
+	});
+
+	//_________________/ME/SETTINGS: DELETE USER____________
+
+	/* 
+	delete user account
+	rename his displayname to "Deleted user":
+	*/
+	fastify.delete(
+		"/users/me",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			console.log('Delete user, GDPR', req.body)
+
+			const result = await userManager.deleteAccountGDPR(meId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			if (result.reason === "not_me")
+				return sendError(reply, "User not found", "id", 404);
+
+
+		});
 
 	//_________________ONLINE/OFFLINE____________
 

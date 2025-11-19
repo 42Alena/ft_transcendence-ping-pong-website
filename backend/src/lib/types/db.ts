@@ -9,4 +9,5 @@ export type UserDbRow = {
 	passwordHash: PasswordHash;
 	avatarUrl: AvatarUrl;
 	lastSeenAt: TimeSec;
+	deletedAt: TimeSec;
 };
