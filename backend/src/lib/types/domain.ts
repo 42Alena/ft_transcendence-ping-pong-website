@@ -204,7 +204,7 @@ export interface MessageTournament extends MessageBase {
 	receiverId: ReceiverId;  //who will play in tournament
 }
 
-export type MessageChat =
+export type MessageTypeChat =
   | MessagePrivate
   | MessagePrivateGameInvite
   | MessageTournament;

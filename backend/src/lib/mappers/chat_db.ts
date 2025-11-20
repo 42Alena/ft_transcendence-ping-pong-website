@@ -1,10 +1,10 @@
-import { MessageDbRow } from '../types/db';
+import { MessageDbInsertRow, MessageDbRow } from '../types/db';
 import type *  as Domain from '../types/domain';
  
 
 
 // Conversion: DB row =>  message  
-export function chatFromDbRow(row: ChatDbRow): Domain.Message {
+export function messageFromDbRow(row: MessageDbRow): Domain.Message {
 	return {
 		id: row.id,
 		type: row.type,
@@ -17,4 +17,13 @@ export function chatFromDbRow(row: ChatDbRow): Domain.Message {
 }
 
 
-
+// Domain message (for saving) -> DB insert row
+export function messageToDbRow(message: Domain.MessageChat): MessageDbInsertRow {
+	return {
+		type: message.type,
+		senderId: message.senderId,
+		receiverId: message.receiverId,
+		content: message.content,
+		meta: null,  // or message.meta if  need later
+	};
+}
