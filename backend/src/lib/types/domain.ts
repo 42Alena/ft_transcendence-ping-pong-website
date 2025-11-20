@@ -133,23 +133,28 @@ export type UnblockUserResult =
 		 reason: "self" };
 
 
-//_____________MATCH______________________
-export type MatchResult = {
-	opponentId: UserId;
-	// date: Date;                //TODO: change from DAte to number as in DB
-	result: GameResult;
-};
+
 
 
 //_____________CHAT___________
+
 export const SYSTEM_ID = "ThisIsSystemID" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 export type Message = string;
+export type MessageId = number;
+export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello", ... } or null
+
+
+
+export type MessageType =
+	| 'PrivateMsg'
+	| 'PrivateGameInviteMsg'
+	| 'TournamentMsg';
 
 
 export type SenderId = UserId | SystemId;
-export type Receiver = UserId ;
+export type ReceiverId = UserId ;
 
 export interface HasPrivateReceiver {
 	receiverId: UserId;
@@ -175,20 +180,20 @@ export interface MessageBase {
 };
 
 export interface MessagePrivate extends MessageBase {
-	type: 'Message';
+	type: 'PrivateMsg';
 	senderId: UserId; 	 //override MessageBase: must be a real user
-	receiverId: UserId;
+	receiverId: ReceiverId;
 }
 
 export interface MessagePrivateGameInvite extends MessageBase {
-	type: 'Message';
+	type: 'PrivateGameInviteMsg';
 	senderId: UserId;
-	receiverId: UserId;
+	receiverId: ReceiverId;
 }
 export interface MessageTournament extends MessageBase {
-	type: 'Message';
+	type: 'TournamentMsg';
 	senderId: SystemId;
-	receiverId: UserId;  //who will play in tournament
+	receiverId: ReceiverId;  //who will play in tournament
 }
 
 export type MessageChat =
@@ -198,8 +203,16 @@ export type MessageChat =
 
 //__________________GAME______________
 
+
 export const MESSAGE_GAME_INVITE = "Let`s play Ping Pong together! :)" as const;
 export type MessageGameInvite = typeof MESSAGE_GAME_INVITE;
 
 export const MESSAGE_TOURNAMENT_INVITE = "Your tournament starts now! :)" as const;
 export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
+
+//_____________MATCH______________________
+export type MatchResult = {
+	opponentId: UserId;
+	// date: Date;                //TODO: change from DAte to number as in DB
+	result: GameResult;
+};

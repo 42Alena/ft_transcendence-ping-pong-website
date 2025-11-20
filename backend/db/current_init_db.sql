@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS messages (
     senderId TEXT NOT NULL, -- users.id or a fixed SystemId string
     receiverId TEXT NOT NULL, -- 'all' for public, or users.id for DM/invite
     content TEXT NOT NULL, -- message text OR short invite note
-    meta TEXT, -- JSON: { "mode":"classic", "speed":1.2, ... }
+    meta TEXT, -- JSON: { "sender":"abc", "message": "hello", ... } or null
     createdAt INTEGER NOT NULL DEFAULT(unixepoch ())
 );
 

@@ -73,6 +73,9 @@ Not required for evaluation — used for organization and pull request preparati
 	+ TournamentMessage
 
 ## BACKEND
+	+ backend/src/lib/mappers/chat_db.ts
+	+ backend/src/lib/types/db.ts
+	+ added ChatDBRow in backend/src/lib/types/db.ts
 ### CHat
 	- removed old in-memory chatMessages array
 	+ add Chat constructor with UserManager + messages table factory

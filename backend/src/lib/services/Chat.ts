@@ -25,7 +25,11 @@ export class Chat {
   }
 
 
-  // private async saveMessageToDB(message: Types.MessageChat )
+  private async saveMessageToDB(message: Types.MessageChat ){
+   
+    // const dbRow = messageToDbRow(message);
+
+  }
 
 
   /* 
