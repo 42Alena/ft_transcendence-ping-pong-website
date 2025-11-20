@@ -321,26 +321,60 @@ class Game {
     this.paddleRight.drawPaddle();
     this.paddleLeft.drawPaddle();
 
-    if (this.paddleRight.down) {
-      this.paddleRight.y += 7;
-      if (this.paddleRight.y + this.paddleRight.lenght > canvas.height) {
-        this.paddleRight.y = canvas.height - this.paddleRight.lenght;
+    if (this.player1.isAI)
+    {
+      if (this.ball.y > this.paddleLeft.y + this.paddleLeft.lenght / 2) {
+        this.paddleLeft.y += 3;
+      if (this.paddleLeft.y + this.paddleLeft.lenght > canvas.height) {
+        this.paddleLeft.y = canvas.height - this.paddleLeft.lenght;
       }
-    } else if (this.paddleRight.up) {
-      this.paddleRight.y -= 7;
-      if (this.paddleRight.y < 0) {
-        this.paddleRight.y = 0;
+      } else if (this.ball.y < this.paddleLeft.y + this.paddleLeft.lenght / 2) {
+        this.paddleLeft.y -= 3;
+        if (this.paddleLeft.y < 0) {
+          this.paddleLeft.y = 0;
+        }
       }
     }
-    if (this.paddleLeft.down) {
+    else
+    {
+      if (this.paddleLeft.down) {
       this.paddleLeft.y += 7;
       if (this.paddleLeft.y + this.paddleLeft.lenght > canvas.height) {
         this.paddleLeft.y = canvas.height - this.paddleLeft.lenght;
       }
-    } else if (this.paddleLeft.up) {
-      this.paddleLeft.y -= 7;
-      if (this.paddleLeft.y < 0) {
-        this.paddleLeft.y = 0;
+      } else if (this.paddleLeft.up) {
+        this.paddleLeft.y -= 7;
+        if (this.paddleLeft.y < 0) {
+          this.paddleLeft.y = 0;
+        }
+      }
+    }
+    if (this.player2.isAI)
+    {
+      if (this.ball.y > this.paddleRight.y + this.paddleRight.lenght / 2) {
+        this.paddleRight.y += 3;
+      if (this.paddleRight.y + this.paddleRight.lenght > canvas.height) {
+        this.paddleRight.y = canvas.height - this.paddleRight.lenght;
+      }
+      } else if (this.ball.y < this.paddleRight.y + this.paddleRight.lenght / 2) {
+        this.paddleRight.y -= 3;
+        if (this.paddleRight.y < 0) {
+          this.paddleRight.y = 0;
+        }
+      }
+    }
+    else
+    {
+      if (this.paddleRight.down) {
+        this.paddleRight.y += 7;
+        if (this.paddleRight.y + this.paddleRight.lenght > canvas.height) {
+          this.paddleRight.y = canvas.height - this.paddleRight.lenght;
+        }
+      } else if (this.paddleRight.up) {
+        this.paddleRight.y -= 7;
+        if (this.paddleRight.y < 0) {
+          this.paddleRight.y = 0;
+        }
       }
     }
     if (
