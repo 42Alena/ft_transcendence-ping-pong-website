@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL CHECK (
         type IN (
-            'PublicMsg',
             'PrivateMsg',
-            'PrivateGameInviteMsg'
+            'PrivateGameInviteMsg',
+            'TournamentMsg'
         )
     ),
     senderId TEXT NOT NULL, -- users.id or a fixed SystemId string

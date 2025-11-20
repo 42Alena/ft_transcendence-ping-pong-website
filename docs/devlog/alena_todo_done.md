@@ -66,6 +66,40 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+
+
+## DB for chat:
+	- PublicMessage
+	+ TournamentMessage
+
+## BACKEND
+### UserManager
+### User_routes
+### domain types
+	- corrected types for messages, excuded public msg. will be no public chat 
+
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 This PR adds online/offline status for logged-in users.
 Only authenticated users can check status, and only for themselves or their friends.
 Non-friends cannot see your status.
