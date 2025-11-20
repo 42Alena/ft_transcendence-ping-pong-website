@@ -16,11 +16,16 @@ export class Chat {
   dbTableMessages: any;
 
   constructor(userManager: UserManager) {
+
     // this.chatMessages = [];
     this.userManager = userManager;
+
     // Typed table factories (//= () => anonym fkt =factory fkt). returns a fresh query builder for `messages`
     this.dbTableMessages = () => db('messages');
   }
+
+
+  // private async saveMessageToDB(message: Types.MessageChat )
 
 
   /* 

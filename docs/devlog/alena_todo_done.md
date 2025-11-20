@@ -74,6 +74,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## BACKEND
 ### CHat
+	- removed old in-memory chatMessages array
 	+ add Chat constructor with UserManager + messages table factory
 
 ### UserManager

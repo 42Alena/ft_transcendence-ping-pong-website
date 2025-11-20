@@ -148,13 +148,6 @@ export type SystemId = typeof SYSTEM_ID;
 export type Message = string;
 
 
-
-export type MessageType =
-	| 'PrivateMsg'
-	| 'PrivateGameInviteMsg'
-	| 'TournamentMsg';
-
-
 export type SenderId = UserId | SystemId;
 export type Receiver = UserId ;
 
@@ -182,21 +175,26 @@ export interface MessageBase {
 };
 
 export interface MessagePrivate extends MessageBase {
-	type: 'PrivateMsg';
+	type: 'Message';
 	senderId: UserId; 	 //override MessageBase: must be a real user
 	receiverId: UserId;
 }
 
 export interface MessagePrivateGameInvite extends MessageBase {
-	type: 'PrivateGameInviteMsg';
+	type: 'Message';
 	senderId: UserId;
 	receiverId: UserId;
 }
 export interface MessageTournament extends MessageBase {
-	type: 'TournamentMsg';
+	type: 'Message';
 	senderId: SystemId;
 	receiverId: UserId;  //who will play in tournament
 }
+
+export type MessageChat =
+  | MessagePrivate
+  | MessagePrivateGameInvite
+  | MessageTournament;
 
 //__________________GAME______________
 
