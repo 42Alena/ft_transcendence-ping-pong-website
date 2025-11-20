@@ -253,9 +253,6 @@ class Game {
   }
 
   initGame() {
-    console.log(
-      `in game player 1: ${this.player1.name} - player 2: ${this.player2.name}`,
-    );
     this.paddleRight.startPositionPaddleRight();
     this.paddleLeft.startPositionPaddleLeft();
     this.ball.startPositionBall();
@@ -379,7 +376,6 @@ class Game {
       this.score.drawScore();
       clearInterval(interval);
       matchPlayed += 1;
-      console.log(`match played ${matchPlayed}`);
       this.endGame();
       this.resetGame();
     }
@@ -496,24 +492,16 @@ function startGame() {
       console.log("start tournament");
       tournament = new Tournament(players);
       gameQueue = tournament.getGamesList();
-
-      console.log("Player 1:", gameQueue[0].player1.name);
-      console.log("Player 2:", gameQueue[0].player2.name);
       tournament.playGame(gameQueue[0]);
     }
     if (matchPlayed == 1) {
       console.log("next tournament");
-      console.log("Player 1:", gameQueue[1].player1.name);
-      console.log("Player 2:", gameQueue[1].player2.name);
       gameQueue = tournament.getGamesList();
       tournament.playGame(gameQueue[1]);
     }
     if (matchPlayed == 2) {
       console.log("last tournament");
       gameQueue = tournament.getGamesList();
-      console.log(
-        `${lastGameTournament[0].name} - ${lastGameTournament[1].name}`,
-      );
       let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
       tournament.playGame(newGame);
     }
