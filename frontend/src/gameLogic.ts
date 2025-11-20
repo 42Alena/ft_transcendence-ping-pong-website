@@ -167,7 +167,7 @@ class Ball {
 
   startPositionBall() {
     this.x = canvas.width / 2 - this.lenght / 2;
-    this.y = canvas.height / 2 - this.lenght / 2;
+    this.y = Math.floor(Math.random() * (canvas.height - this.lenght) + (this.lenght / 2));
   }
 }
 
@@ -351,13 +351,13 @@ class Game {
     }
     if (this.player2.isAI)
     {
-      if (this.ball.y > this.paddleRight.y + this.paddleRight.lenght / 2) {
-        this.paddleRight.y += 3;
+      if (this.ball.y > this.paddleRight.y + this.paddleRight.lenght / 2 && Math.floor(Math.random() * 2) == 1) {
+        this.paddleRight.y += 7;
       if (this.paddleRight.y + this.paddleRight.lenght > canvas.height) {
         this.paddleRight.y = canvas.height - this.paddleRight.lenght;
       }
-      } else if (this.ball.y < this.paddleRight.y + this.paddleRight.lenght / 2) {
-        this.paddleRight.y -= 3;
+      } else if (this.ball.y < this.paddleRight.y + this.paddleRight.lenght / 2 && Math.floor(Math.random() * 2) == 1) {
+        this.paddleRight.y -= 7;
         if (this.paddleRight.y < 0) {
           this.paddleRight.y = 0;
         }
@@ -401,9 +401,14 @@ class Game {
         )
           this.score.playerRight++;
         else this.score.playerLeft++;
-        this.ball.x = canvas.width / 2 - this.ball.lenght / 2;
-        this.ball.y = canvas.height / 2 - this.ball.lenght / 2;
-      }
+       this.ball.startPositionBall();
+       if (Math.floor(Math.random() * 2) == 1) {  // 50% of the time, this is true
+          this.ball.dy *= 1;
+        } 
+        else {  // Other 50% of the time
+          this.ball.dy *= -1;
+        }
+            }
     }
     if (this.score.playerLeft == 3 || this.score.playerRight == 3) {
       gameisOn = false;
