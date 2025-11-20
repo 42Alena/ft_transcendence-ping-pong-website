@@ -23,10 +23,14 @@ export const authRequiredOptions = {
 		}
 
 		// access userManager  via decoration
-		const userId = await (req.server as any).userManager.getUserIdByLoginSession(loginSessionId);
+		const userManager = (req.server as any).userManager;
+
+		const userId = await userManager.getUserIdByLoginSession(loginSessionId);
 
 		if (!userId) {
 			return sendError(reply, "prehandler: invalid session", "auth", 401);}
+
+		await userManager.touchLastSeenAt(userId);  //for online status
 
 		//  attach to request for downstream handlers  (/users/me, etc.)
 		(req as API.UserAwareRequest).userId = userId; //  now handlers can read req.userId

@@ -30,7 +30,8 @@ export type PasswordPlain = string;    //user input, not stored/sended
 export type PasswordHash = string;
 export type LoginSessionId = string;
 
-export type UserStatus = 'online' | 'offline';
+
+
 export type GameResult = 'won' | 'lost';
 
 
@@ -63,6 +64,15 @@ export type RegisterUserParams = {
 };
 
 
+
+//_____________ONLINE/OFFLINE__________________
+
+export type UserStatus = 'online' | 'offline';
+
+export type UserStatusResult =
+  | { ok: true; status: UserStatus }
+  | { ok: false; reason: 'not_me' | 'not_friend' | 'not_found' };
+  
 
 //_____________SETTINGS__________________
 

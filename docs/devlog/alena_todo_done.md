@@ -13,6 +13,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### UserManager
 ### User_routes
 ### domain types
+
 ### api types
 ## FRONTEND
 
@@ -65,6 +66,45 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+This PR adds online/offline status for logged-in users.
+Only authenticated users can check status, and only for themselves or their friends.
+Non-friends cannot see your status.
+After some time of no activity, the user is shown as offline.
+
+## BACKEND
+	+ config.ts: ONLINE_TIMEOUT_SEC for online time duration
+
+### UserManager
+	+ touchLastSeenAt()
+	+ getUserOnlineStatus
+
+### User_routes
+	+ UserStatus
+	+ UserStatusResult
+
+### domain types
+	+ UserStatus
+	+ UserStatusResult
+
+
+### TESTS
+	+ tests for online/offline in user-settings.ts
+
+
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 ## DB
 	+ updated lastseenAt, 0 = never seen, >0 = last activity time
 	+ updated deletedAt, -- 0 = active, >0 = GDPR deletion time
@@ -89,16 +129,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ DELETED_AVATARURL 
 	+ added to type user "deletedAt" 
 
-### api types
-
-## FRONTEND
-
 ### TESTS
 	+ tests for delete account, gdpr
-
-## 📘 DOCUMENTATION
-
-## 🔗 LINKS / HELP
 
 # HOW TO TEST: 
 ```bash
@@ -108,7 +140,6 @@ Not required for evaluation — used for organization and pull request preparati
 	# 2. in 2.terminal: 
 	make tests_user_settings
 ```
-
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================

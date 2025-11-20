@@ -145,8 +145,9 @@ backend/db/*.db-shm
 backend/db/*-journal
 
 
-# --- Project local tests outputs (keep out of repo) ---
-backend/avatars/users/
+# --- Project local.  ---
+backend/avatars/users/*        # ignore all avatar files
+!backend/avatars/users/.gitkeep  # BUT keep this one file tracked
 
 # Cookies / sessions created by tests
 .tmp_cookies/
