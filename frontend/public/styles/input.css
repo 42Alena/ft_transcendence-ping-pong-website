@@ -1,91 +1,72 @@
 @import "tailwindcss";
 
 .dropdown {
-        position: relative;
-      }
-
-      .dropdown-menu {
-        display: none;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        position: absolute;
-        z-index: 10;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .dropdown:hover .dropdown-menu {
-        display: block;
-      }
-
-      .dropdown-menu li {
-        padding: 10px;
-      }
-
-      .dropdown-menu li a {
-        text-decoration: none;
-        color: #333;
-      }
-
-      .dropdown-menu li a:hover {
-        background-color: #f0f0f0;
-      }
-
-      .chat-left__list-dms-item {
-        display: block;
-        background-color: white;
-        max-width: 100%;
-        padding: 10px;
-      }
-
-      .chat-right__bubble {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        overflow: auto;
-        padding: 1em;
-        gap: 10px;
-        background-color: white;
-        max-width: 100%;
-      }
-
-      .chat-right__bubble-sent {
-        display: block;
-        position: relative;
-        height: auto;
-        background-color: lightskyblue;
-        max-width: 75%;
-      }
-
-      .chat-right__bubble-received {
-        display: block;
-        margin-left: auto;
-        position: relative;
-        max-width: 75%;
-        height: auto;
-        justify-content: flex-end;
-        background-color: mediumaquamarine;
-      }
-/* 
-	  .chat-tab button {
-  flex: 1;
-  background-color: inherit;
-  float: left;
-  border: 1px solid black;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-} */
-
-.chat-tab button:hover {
-  background-color: grey;
+  position: relative;
 }
 
-.chat-tab button.active {
-  background-color: #ccc;
+.dropdown-menu {
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-left__list-dms-item {
+  display: block;
+  background-color: white;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.chat-right__bubble {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* overflow: auto; */
+  padding: 1em;
+  gap: 10px;
+  background-color: white;
+  max-width: 100%;
+}
+
+.chat-right__bubble-sent {
+  display: block;
+  position: relative;
+  height: auto;
+  background-color: lightskyblue;
+  max-width: 75%;
+}
+
+.chat-right__bubble-received {
+  display: block;
+  margin-left: auto;
+  position: relative;
+  max-width: 75%;
+  height: auto;
+  justify-content: flex-end;
+  background-color: mediumaquamarine;
 }
 
 .chat-tab button:hover {
@@ -94,4 +75,20 @@
 
 .chat-tab button.active {
   background-color: #ccc;
+}
+
+.ai-button-on:hover {
+  background-color: darkgreen;
+}
+
+.ai-button-on.active {
+  background-color: green;
+}
+
+.ai-button-off:hover {
+  background-color: darkgray;
+}
+
+.ai-button-off.active {
+  background-color: grey;
 }

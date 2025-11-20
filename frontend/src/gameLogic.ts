@@ -1,235 +1,179 @@
-const canvas : any = document.getElementById("myCanvas");
+const canvas: any = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
+const gameScreenDiv: any = document.getElementById("gameScreen");
+const resultDiv: any = document.getElementById("result");
+const inputFieldPlayerOne: any = document.getElementById(
+  "displayNamePlayerOne",
+);
+const inputPlayerTwo: any = document.getElementById("displayNamePlayerTwo");
+const winnerTextDiv: any = document.getElementById("winner-text");
+const startGameButtonDiv: any = document.getElementById("startButton");
+const gameOverOptionsButtons: any = document.getElementById("gameOptions");
+const nextGameButton: any = document.getElementById("nextGameButton");
+const playAgainButton: any = document.getElementById("playAgainButton");
+const newGameButton: any = document.getElementById("newGameButton");
+const nextMatchButton: any = document.getElementById("nextMatch");
+const gameOverDiv: any = document.getElementById("gameOverScreen");
+const runButton: any = document.getElementById("runButton");
+
+//variables used for single game and tournament game: flags, lists. To be cleaned before each game session
+let gameisOn: boolean = false;
+let game: Game;
+let tournament: Tournament;
+let gameQueue: Game[];
 let interval = 0;
-let pageIndex = 1;
-let displayNamePlayerOne : string;
-let displayNamePlayerTwo : string;
+let matchPlayed: number = 0;
+let lastGameTournament: Player[];
+lastGameTournament = [];
 
-
-//setup game
-const playersNum : any = document.getElementById("setupNumberPlayers");
-const alias : any = document.getElementById("setUpPlayers");
-const instruction : any = document.getElementById("Setinstructions");
-const setGame : any = document.getElementById("setupGame");
-const inputPlayerOne : any = document.getElementById("namePlayerOne");
-const inputNamePlayerTwo : any = document.getElementById("namePlayerTwo");
-const gameScreenDiv : any = document.getElementById("gameScreen");
-const resultDiv : any = document.getElementById("result");
-const inputFieldPlayerOne : any = document.getElementById("displayNamePlayerOne")
-const inputPlayerTwo : any = document.getElementById("displayNamePlayerTwo");
-const winnerTextDiv : any = document.getElementById("winner-text");
-let enableAI : boolean = true;
-let gameisOn : boolean = false;
-
-function setOnePlayer(value : boolean)
-{
-  //reset
-  inputPlayerOne.value = "";
-  inputNamePlayerTwo.value = "";
-  inputPlayerOne.disabled = false;
-  inputNamePlayerTwo.disabled = false;
-  if (value == true)
-  {
-    inputPlayerTwo.classList.add("hidden");
-    inputPlayerTwo.classList.remove("block");
-    enableAI = true;
-  }
-  else 
-  {
-    enableAI = false;
-    inputPlayerTwo.classList.add("block");
-    inputPlayerTwo.classList.remove("hidden");
-  }
-  playersNum.classList.add("hidden");
-  playersNum.classList.remove("flex");
-  alias.classList.add("flex");
-  alias.classList.remove("hidden");
-  setAlias();
-}
-
-function setAlias() {
-  if (enableAI)
-  {
-    displayNamePlayerTwo = "AI";
-  }
-}
-
-function showStartButton() {
-  runButton.classList.add("block");
-  runButton.classList.remove("hidden");
-}
-
-function saveDisplayName(player : number) {
-  if (player == 1)
-  {
-    displayNamePlayerOne = inputPlayerOne.value;
-    inputPlayerOne.disabled = true;
-  }
-  else
-  {
-    displayNamePlayerTwo = inputNamePlayerTwo.value;
-    inputNamePlayerTwo.disabled = true;
-  }
-
-  if (inputPlayerOne.disabled && (inputNamePlayerTwo.disabled || enableAI))
-  {
-    setTimeout(showStartButton, 1000);
-    instruction.classList.add("block");
-    instruction.classList.remove("hidden");
-  }
-}
-
-inputPlayerOne.addEventListener("keydown", (event : KeyboardEvent) => {
-	if (event.key == "Enter")
-	{
-		displayNamePlayerOne = inputPlayerOne.value;
-    saveDisplayName(1);
-	}
+//buttons
+//new game from game over screen
+newGameButton.addEventListener("click", () => {
+  let singleMatch: boolean = false;
+  if (!isTournament) singleMatch = true;
+  gameP.classList.add("flex");
+  gameP.classList.remove("hidden");
+  if (singleMatch) setGameType("game");
+  else setGameType("tournament");
 });
 
-inputNamePlayerTwo.addEventListener("keydown", (event : KeyboardEvent) => {
-	if (event.key == "Enter")
-	{
-		displayNamePlayerTwo = inputNamePlayerTwo.value;
-    saveDisplayName(2);
-	}
+//next game in tournament mode
+nextGameButton.addEventListener("click", () => {
+  showGamePreview();
 });
 
-document.addEventListener("keydown", keyDownHandler);
-document.addEventListener("keyup", keyUpHandler);
-let pauseFlag : boolean = false;
+//start game button
+runButton.addEventListener("click", () => {
+  setUpCanva();
+  startGame();
+});
 
-function keyDownHandler(e: any) {
-  if (gameisOn)
-  {
-    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
-    {
-      e.preventDefault();
-    }
-    if (e.key == "p")
-    {
-      if (pauseFlag == false)
-      {
-        clearInterval(interval);
-        pauseFlag = true;
-      }
-      else
-      {
-        startGame();
-        pauseFlag = false;
-      }
-    }
-  }
-  if (!enableAI)
-  {
-    if (e.key === "Up" || e.key === "ArrowUp") {
-      paddleRight.up = true;
-    } else if (e.key === "Down" || e.key === "ArrowDown") {
-      paddleRight.down = true;
-    }
-  }
-
-  if (e.key === "w") {
-    paddleLeft.up = true;
-  } else if (e.key === "s") {
-    paddleLeft.down = true;
+//show page of whom is playing, commands and score
+function showPageBeforeGame() {
+  if (players.length == 2 && !isTournament) {
+    setGame.classList.add("hidden");
+    setGame.classList.remove("flex");
+    showGamePreview();
+  } else if (players.length == 4 && isTournament) {
+    setGame.classList.add("hidden");
+    setGame.classList.remove("flex");
+    showGamePreview();
   }
 }
 
-function keyUpHandler(e: any) {
-   if (gameisOn)
-  {
-    if (e.key === "Up" || e.key === "ArrowUp" || e.key === "Down" || e.key === "ArrowDown")
-    {
-      e.preventDefault();
-    }
-  }
-  if (!enableAI)
-  {
-    if (e.key === "Up" || e.key === "ArrowUp") {
-      paddleRight.up = false;
-    } else if (e.key === "Down" || e.key === "ArrowDown") {
-      paddleRight.down = false;
-    }
-  }
-
-   if (e.key === "w") {
-    paddleLeft.up = false;
-  } else if (e.key === "s") {
-    paddleLeft.down = false;
+function showGamePreview() {
+  gameOverDiv.classList.add("hidden");
+  gameOverDiv.classList.remove("flex");
+  nextGameButton.classList.add("hidden");
+  nextGameButton.classList.remove("flex");
+  instruction.classList.add("flex");
+  instruction.classList.remove("hidden");
+  if (matchPlayed == 0) {
+    playerNameLeft.textContent = players[0].name;
+    playerNameRight.textContent = players[1].name;
+  } else if (matchPlayed == 1) {
+    playerNameLeft.textContent = players[2].name;
+    playerNameRight.textContent = players[3].name;
+  } else if (matchPlayed == 2) {
+    playerNameLeft.textContent = lastGameTournament[0].name;
+    playerNameRight.textContent = lastGameTournament[1].name;
   }
 }
-//game over
 
+//setup canva page and hide the other pages
+function setUpCanva() {
+  aliasPage.classList.add("hidden");
+  aliasPage.classList.remove("flex");
+  instruction.classList.add("hidden");
+  instruction.classList.remove("flex");
+  setGame.classList.add("hidden");
+  setGame.classList.remove("block");
+  gameP.classList.add("flex");
+  gameP.classList.remove("hidden");
+  canvas.classList.add("blockk");
+  canvas.classList.remove("hidden");
+  gameOverDiv.classList.add("hidden");
+  gameOverDiv.classList.remove("flex");
+  gameScreenDiv.classList.add("flex");
+  gameScreenDiv.classList.remove("hidden");
+}
+//classes
 class Paddle {
-	width: number;
-	lenght: number;
-	color: string;
-	v: number;
-	x : number;
-	y : number;
-  up : boolean;
-  down : boolean;
+  width: number;
+  lenght: number;
+  color: string;
+  v: number;
+  x: number;
+  y: number;
+  up: boolean;
+  down: boolean;
 
-	constructor() {
-	this.lenght = 70;
-	this.width = 10;
-	this.color = "white";
-	this.v = 7;
-	this.x = 0;
-	this.y = 0;
-  this.up = false;
-  this.down = false;
-	};
+  constructor() {
+    this.lenght = 70;
+    this.width = 10;
+    this.color = "white";
+    this.v = 7;
+    this.x = 0;
+    this.y = 0;
+    this.up = false;
+    this.down = false;
+  }
 
-	positionPaddle(x : number, y : number) {
-		this.x = x;
-		this.y = y;
-	}
+  startPositionPaddleRight() {
+    this.x = canvas.width - this.width;
+    this.y = canvas.height / 2 - this.lenght / 2;
+  }
 
-	drawPaddle () {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.width, this.lenght);
-		ctx.fillStyle = this.color;
-		ctx.fill();
-		ctx.closePath();
-	}
+  startPositionPaddleLeft() {
+    this.x = 0;
+    this.y = canvas.height / 2 - this.lenght / 2;
+  }
+
+  drawPaddle() {
+    ctx.beginPath();
+    ctx.rect(this.x, this.y, this.width, this.lenght);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  moveUP() {}
 }
 
 class Ball {
-	lenght: number;
-	dx : number;
-	dy : number;
-	color : string;
-	x : number;
-	y : number;
+  lenght: number;
+  dx: number;
+  dy: number;
+  color: string;
+  x: number;
+  y: number;
 
-	constructor () {
-		this.lenght = 12;
-		this.dx = 3;
-		this.dy = -3;
-		this.color = "red";
-		this.x = canvas.width / 2 - this.lenght / 2;
-		this.y = canvas.height / 2 - this.lenght / 2;
-	}
+  constructor() {
+    this.lenght = 12;
+    this.dx = 3;
+    this.dy = -3;
+    this.color = "red";
+    this.x = 0;
+    this.y = 0;
+  }
 
-	drawBall() {
-		ctx.beginPath();
-		ctx.rect(this.x, this.y, this.lenght, this.lenght);
-		ctx.fillStyle = this.color;
-		ctx.fill();
-		ctx.closePath();
-	}
+  drawBall() {
+    ctx.beginPath();
+    ctx.rect(this.x, this.y, this.lenght, this.lenght);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.closePath();
+  }
 
-	positionBall(x : number, y : number) {
-		this.x = x;
-		this.y = y;
-	}
+  startPositionBall() {
+    this.x = canvas.width / 2 - this.lenght / 2;
+    this.y = canvas.height / 2 - this.lenght / 2;
+  }
 }
 
 class Score {
-  playerLeft : number;
-  playerRight : number;
+  playerLeft: number;
+  playerRight: number;
 
   constructor() {
     this.playerLeft = 0;
@@ -237,22 +181,21 @@ class Score {
   }
 
   drawScore() {
-  ctx.font = "16px Arial";
-  ctx.fillStyle = "#0095DD";
-  ctx.fillText(`Score: ${this.playerLeft} - ${this.playerRight}`, 8, 20);
-}
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText(`Score: ${this.playerLeft} - ${this.playerRight}`, 8, 20);
+  }
 }
 
 class Board {
-
-  constructor(){}
-   drawBoardElements() {
+  constructor() {}
+  drawBoardElements() {
     this.drawMiddleLine();
     this.drawTopLine();
     this.drawBottomLine();
-   }
+  }
 
-   drawMiddleLine() {
+  drawMiddleLine() {
     ctx.beginPath();
     ctx.moveTo(canvas.width / 2, 0);
     ctx.lineTo(canvas.width / 2, canvas.height);
@@ -268,7 +211,7 @@ class Board {
     ctx.lineWidth = 5;
     ctx.strokeStyle = "blue";
     ctx.stroke();
-   }
+  }
   drawBottomLine() {
     ctx.beginPath();
     ctx.moveTo(0, canvas.height);
@@ -276,131 +219,291 @@ class Board {
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 5;
     ctx.stroke();
-   }
-
-}
-let paddleRight = new Paddle();
-let paddleLeft = new Paddle();
-let ball = new Ball();
-let score = new Score();
-let board = new Board();
-
-paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
-paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  score.drawScore();
-  board.drawBoardElements();
-  ball.drawBall();
-  paddleRight.drawPaddle();
-  paddleLeft.drawPaddle();
-
-  if (paddleRight.down) {
-    paddleRight.y += 7;
-    if (paddleRight.y + paddleRight.lenght > canvas.height) {
-      paddleRight.y = canvas.height - paddleRight.lenght;
-    }
-  } else if (paddleRight.up) {
-    paddleRight.y -= 7;
-    if (paddleRight.y < 0) {
-      paddleRight.y = 0;
-    }
   }
-
-  if (paddleLeft.down) {
-    paddleLeft.y += 7;
-    if (paddleLeft.y + paddleLeft.lenght > canvas.height) {
-      paddleLeft.y = canvas.height - paddleLeft.lenght;
-    }
-  } else if (paddleLeft.up) {
-    paddleLeft.y -= 7;
-    if (paddleLeft.y < 0) {
-      paddleLeft.y = 0;
-    }
-  }
-  
-  if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width) || ball.x + ball.dx > canvas.width - ball.lenght - paddleRight.width) {
-    if (ball.y > paddleLeft.y && ball.y < paddleLeft.y + paddleLeft.lenght && ball.x < canvas.width / 2)
-    {
-      ball.dx = -ball.dx;
-    }
-    else if (ball.y > paddleRight.y && ball.y < paddleRight.y + paddleRight.lenght && ball.x > canvas.width / 2)
-    {
-      ball.dx = -ball.dx;
-    }
-    else
-    {
-      if (ball.x + ball.dx < (paddleLeft.x + paddleLeft.width))
-        score.playerRight++;
-      else
-        score.playerLeft++;
-      ball.x = canvas.width / 2 - ball.lenght / 2;
-      ball.y = canvas.height / 2 - ball.lenght / 2;
-    }
-  }
-  
-  if (score.playerLeft == 3 || score.playerRight == 3)
-  {
-    if (score.playerLeft == 3)
-    {
-      winnerTextDiv.textContent = displayNamePlayerOne + " won";
-      score.playerLeft++;
-    }
-    else
-    {
-      winnerTextDiv.textContent = displayNamePlayerTwo + " won";
-      score.playerRight++;
-    }
-    gameOverDiv.classList.add("flex");
-    gameOverDiv.classList.remove("hidden");
-    gameScreenDiv.classList.add("hidden");
-    gameScreenDiv.classList.remove("flex");
-    
-    clearInterval(interval);
-  }
-
-  if (ball.y + ball.dy < 0 || ball.y + ball.dy > canvas.height - (ball.lenght) ) {
-    ball.dy = -ball.dy;
-  }
-
-  ball.x += ball.dx;
-  ball.y += ball.dy;
 }
 
-const gameOverDiv : any = document.getElementById("gameOverScreen");
+class Game {
+  player1: Player;
+  player2: Player;
+  winner: Player;
+  default: Player;
+  loser: Player;
+  paddleLeft: Paddle;
+  paddleRight: Paddle;
+  score: Score;
+  ball: Ball;
+  board: Board;
+
+  constructor(player1: Player, player2: Player) {
+    this.player1 = player1;
+    this.player2 = player2;
+    this.default = new Player("default", false, -1);
+    this.winner = this.default;
+    this.loser = this.default;
+    this.score = new Score();
+    this.ball = new Ball();
+    this.board = new Board();
+    this.paddleLeft = new Paddle();
+    this.paddleRight = new Paddle();
+    this.keyDownHandler = this.keyDownHandler.bind(this);
+    this.keyUpHandler = this.keyUpHandler.bind(this);
+    document.addEventListener("keydown", this.keyDownHandler);
+    document.addEventListener("keyup", this.keyUpHandler);
+    this.initGame();
+  }
+
+  initGame() {
+    this.paddleRight.startPositionPaddleRight();
+    this.paddleLeft.startPositionPaddleLeft();
+    this.ball.startPositionBall();
+  }
+
+  keyDownHandler(e: any) {
+    if (gameisOn) {
+      if (
+        e.key === "Up" ||
+        e.key === "ArrowUp" ||
+        e.key === "Down" ||
+        e.key === "ArrowDown"
+      ) {
+        e.preventDefault();
+      }
+    }
+    if (!this.player2.isAI) {
+      if (e.key === "Up" || e.key === "ArrowUp") {
+        this.paddleRight.up = true;
+      } else if (e.key === "Down" || e.key === "ArrowDown") {
+        this.paddleRight.down = true;
+      }
+    }
+
+    if (!this.player1.isAI) {
+      if (e.key === "w") {
+        this.paddleLeft.up = true;
+      } else if (e.key === "s") {
+        this.paddleLeft.down = true;
+      }
+    }
+  }
+
+  keyUpHandler(e: any) {
+    if (gameisOn) {
+      if (
+        e.key === "Up" ||
+        e.key === "ArrowUp" ||
+        e.key === "Down" ||
+        e.key === "ArrowDown"
+      ) {
+        e.preventDefault();
+      }
+      if (!this.player2.isAI) {
+        if (e.key === "Up" || e.key === "ArrowUp") {
+          this.paddleRight.up = false;
+        } else if (e.key === "Down" || e.key === "ArrowDown") {
+          this.paddleRight.down = false;
+        }
+      }
+    }
+    if (!this.player1.isAI) {
+      if (e.key === "w") {
+        this.paddleLeft.up = false;
+      } else if (e.key === "s") {
+        this.paddleLeft.down = false;
+      }
+    }
+  }
+
+  draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.score.drawScore();
+    this.board.drawBoardElements();
+    this.ball.drawBall();
+    this.paddleRight.drawPaddle();
+    this.paddleLeft.drawPaddle();
+
+    if (this.paddleRight.down) {
+      this.paddleRight.y += 7;
+      if (this.paddleRight.y + this.paddleRight.lenght > canvas.height) {
+        this.paddleRight.y = canvas.height - this.paddleRight.lenght;
+      }
+    } else if (this.paddleRight.up) {
+      this.paddleRight.y -= 7;
+      if (this.paddleRight.y < 0) {
+        this.paddleRight.y = 0;
+      }
+    }
+    if (this.paddleLeft.down) {
+      this.paddleLeft.y += 7;
+      if (this.paddleLeft.y + this.paddleLeft.lenght > canvas.height) {
+        this.paddleLeft.y = canvas.height - this.paddleLeft.lenght;
+      }
+    } else if (this.paddleLeft.up) {
+      this.paddleLeft.y -= 7;
+      if (this.paddleLeft.y < 0) {
+        this.paddleLeft.y = 0;
+      }
+    }
+    if (
+      this.ball.x + this.ball.dx < this.paddleLeft.x + this.paddleLeft.width ||
+      this.ball.x + this.ball.dx >
+        canvas.width - this.ball.lenght - this.paddleRight.width
+    ) {
+      if (
+        this.ball.y > this.paddleLeft.y &&
+        this.ball.y < this.paddleLeft.y + this.paddleLeft.lenght &&
+        this.ball.x < canvas.width / 2
+      ) {
+        this.ball.dx = -this.ball.dx;
+      } else if (
+        this.ball.y > this.paddleRight.y &&
+        this.ball.y < this.paddleRight.y + this.paddleRight.lenght &&
+        this.ball.x > canvas.width / 2
+      ) {
+        this.ball.dx = -this.ball.dx;
+      } else {
+        if (
+          this.ball.x + this.ball.dx <
+          this.paddleLeft.x + this.paddleLeft.width
+        )
+          this.score.playerRight++;
+        else this.score.playerLeft++;
+        this.ball.x = canvas.width / 2 - this.ball.lenght / 2;
+        this.ball.y = canvas.height / 2 - this.ball.lenght / 2;
+      }
+    }
+    if (this.score.playerLeft == 3 || this.score.playerRight == 3) {
+      gameisOn = false;
+      this.score.drawScore();
+      clearInterval(interval);
+      matchPlayed += 1;
+      this.endGame();
+      this.resetGame();
+    }
+    if (
+      this.ball.y + this.ball.dy < 0 ||
+      this.ball.y + this.ball.dy > canvas.height - this.ball.lenght
+    ) {
+      this.ball.dy = -this.ball.dy;
+    }
+    this.ball.x += this.ball.dx;
+    this.ball.y += this.ball.dy;
+  }
+
+  resetGame() {
+    this.score.playerRight = 0;
+    this.score.playerLeft = 0;
+    this.paddleRight.startPositionPaddleRight();
+    this.paddleLeft.startPositionPaddleLeft();
+  }
+  getWinner(): Player {
+    return this.winner;
+  }
+
+  getLoser(): Player {
+    return this.loser;
+  }
+
+  endGame() {
+    if (this.score.playerLeft == 3) {
+      lastGameTournament.push(this.player1);
+      this.winner = this.player1;
+      this.loser = this.player2;
+      winnerTextDiv.textContent = this.winner.name + " won";
+      this.score.playerLeft++;
+    } else {
+      lastGameTournament.push(this.player2);
+      this.winner = this.player2;
+      this.loser = this.player1;
+      winnerTextDiv.textContent = this.winner.name + " won";
+      this.score.playerRight++;
+    }
+    if (!isTournament) {
+      //return game over screen
+      gameOverDiv.classList.add("flex");
+      gameOverDiv.classList.remove("hidden");
+      gameOverOptionsButtons.classList.add("flex");
+      gameOverOptionsButtons.classList.remove("hidden");
+      gameScreenDiv.classList.add("hidden");
+      gameScreenDiv.classList.remove("flex");
+      matchPlayed = 0;
+      players = [];
+      gameisOn = false;
+    } else {
+      //return next game screen
+      if (matchPlayed == 3) {
+        gameOverDiv.classList.add("flex");
+        gameOverDiv.classList.remove("hidden");
+        gameOverOptionsButtons.classList.add("flex");
+        gameOverOptionsButtons.classList.remove("hidden");
+        gameScreenDiv.classList.add("hidden");
+        gameScreenDiv.classList.remove("flex");
+        matchPlayed = 0;
+      } else {
+        gameOverDiv.classList.add("flex");
+        gameOverDiv.classList.remove("hidden");
+        gameOverOptionsButtons.classList.add("hidden");
+        gameOverOptionsButtons.classList.remove("flex");
+        nextGameButton.classList.add("flex");
+        nextGameButton.classList.remove("hidden");
+        gameScreenDiv.classList.add("hidden");
+        gameScreenDiv.classList.remove("flex");
+      }
+    }
+  }
+}
+
+class Tournament {
+  players: Player[];
+  games: Game[];
+  matches_count: number;
+  winners: Player[];
+  losers: Player[];
+
+  constructor(players: Player[]) {
+    this.players = players;
+    this.games = [];
+    this.matches_count = 0;
+    this.winners = [];
+    this.losers = [];
+
+    game = new Game(players[0], players[1]);
+    this.games.push(game);
+    game = new Game(players[2], players[3]);
+    this.games.push(game);
+  }
+
+  getGamesList() {
+    return this.games;
+  }
+
+  playGame(game: Game) {
+    interval = setInterval(() => game.draw(), 20);
+  }
+}
+
+//setup single match or tournament match before starting the game
 function startGame() {
   gameisOn = true;
-  interval = setInterval(draw, 20);
+  if (players.length == 2) {
+    game = new Game(players[0], players[1]);
+    interval = setInterval(() => game.draw(), 20);
+  } else {
+    if (matchPlayed == 0) {
+      console.log("start tournament");
+      tournament = new Tournament(players);
+      gameQueue = tournament.getGamesList();
+      tournament.playGame(gameQueue[0]);
+    }
+    if (matchPlayed == 1) {
+      console.log("next tournament");
+      gameQueue = tournament.getGamesList();
+      tournament.playGame(gameQueue[1]);
+    }
+    if (matchPlayed == 2) {
+      console.log("last tournament");
+      gameQueue = tournament.getGamesList();
+      let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
+      tournament.playGame(newGame);
+    }
+  }
 }
-
-function resetGame() {
-  score.playerRight = 0;
-  score.playerLeft = 0;
-  paddleRight.positionPaddle(canvas.width - paddleLeft.width, canvas.height / 2 - paddleRight.lenght / 2);
-  paddleLeft.positionPaddle(0, canvas.height / 2 - paddleRight.lenght / 2);
-}
-const runButton : any = document.getElementById("runButton");
-runButton.addEventListener("click", () => {
-
-  alias.classList.add("hidden");
-  alias.classList.remove("flex");
-  playersNum.classList.add("hidden");
-  playersNum.classList.remove("flex");
-  instruction.classList.add("hidden");
-  instruction.classList.remove("block");
-  setGame.classList.add("hidden");
-  setGame.classList.remove("block");
-  gameP.classList.add("flex");
-  gameP.classList.remove("hidden");
-  canvas.classList.add("blockk");
-  canvas.classList.remove("hidden");
-  runButton.classList.add("hidden");
-  runButton.classList.remove("block");
-  gameOverDiv.classList.add("hidden");
-  gameOverDiv.classList.remove("flex");
-  gameScreenDiv.classList.add("flex");
-  gameScreenDiv.classList.remove("hidden");
-  resetGame();
-  startGame();
-});

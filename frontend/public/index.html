@@ -77,12 +77,12 @@
               /></a>
             </li>
             <li class="p-1 text-center leading-none">
-              <a href="#chat" onclick="displayPage('game')">
+              <a href="#" onclick="displayPage('game')">
                 <img src="images/icons/play.png" alt="chat page"
               /></a>
             </li>
             <li class="p-1 text-center leading-none">
-              <a href="#chat" onclick="displayPage('tournament')">
+              <a href="#" onclick="displayPage('tournament')">
                 <img src="images/icons/tournament.png" alt="chat page"
               /></a>
             </li>
@@ -644,91 +644,220 @@
             class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
           >
             <div
-              id="setupGame"
-              class="relative block h-[480px] w-[640px] border-2 border-blue-900 bg-sky-200"
+              id="setUpGame"
+              class="flex h-[480px] w-[640px] justify-center border-2 border-blue-900 bg-sky-200 p-2.5"
             >
               <div
-                id="setupNumberPlayers"
-                class="flex h-full w-full flex-row items-center justify-center gap-2.5"
-              >
-                <button
-                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                  type="button"
-                  name="setOnePlayerButton"
-                  onclick="setOnePlayer(true)"
-                >
-                  One Player
-                </button>
-                <button
-                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                  type="button"
-                  name="setTwoPlayerButton"
-                  onclick="setOnePlayer(false)"
-                >
-                  Two Players
-                </button>
-              </div>
-              <div
                 id="setUpPlayers"
-                class="hidden h-full flex-col items-center justify-center gap-2.5"
+                class="flex h-full flex-wrap items-center justify-center gap-5"
               >
+                <div id="aliasPlayerOne">
+                  <label for="namePlayerOne" class="text-black"
+                    >Player one</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerOne"
+                      type="text"
+                      name="playerOne"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerOne"
+                    >
+                      OK
+                    </button>
+                  </div>
+                  <div id="AIPlayerOne" class="invisible mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIOnPlayerOne"
+                        onclick="turnOn(this, 'AIoffPlayerOne', 'playerOne')"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerOne"
+                        onclick="turnOff(this, 'AIOnPlayerOne', 'playerOne')"
+                        class="ai-button-off flex h-6 w-6 items-center justify-center border bg-gray-500"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="aliasPlayerTwo">
+                  <label for="namePlayerTwo" class="text-black"
+                    >Player two</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerTwo"
+                      type="text"
+                      name="playerTwo"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerTwo"
+                    >
+                      OK
+                    </button>
+                  </div>
+                  <div id="AIPlayerTwo" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerTwo"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerTwo"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="aliasPlayerThree" class="-mt-50">
+                  <label for="namePlayerThree" class="text-black"
+                    >Player three</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerThree"
+                      type="text"
+                      name="playerThree"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerThree"
+                    >
+                      OK
+                    </button>
+                  </div>
+                  <div id="AIPlayerThree" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerThree"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerThree"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="aliasPlayerFour" class="-mt-50">
+                  <label for="namePlayerFour" class="text-black"
+                    >Player four</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerFour"
+                      type="text"
+                      name="playerFour"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerFour"
+                    >
+                      OK
+                    </button>
+                  </div>
+                  <div id="AIPlayerFour" class="mt-0.5 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerFour"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerFour"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              id="setInstructions"
+              class="hidden h-[480px] w-[640px] flex-col items-center justify-center border-2 border-blue-900 bg-sky-200"
+            >
+              <div
+                id="rules"
+                class="flex h-full w-full flex-col items-center gap-4.5"
+              >
+                <div class="flex w-full flex-1 items-center justify-center">
+                  First to score to 3 wins
+                </div>
+                <div class="flex w-full flex-1 flex-row items-center border">
+                  <div
+                    class="flex flex-1 flex-col items-center justify-center border"
+                  >
+                    <div id="playerLeftName"></div>
+                    <div>w - up</div>
+                    <div>s - down</div>
+                  </div>
+                  <div class="flex items-center">vs</div>
+                  <div
+                    class="flex flex-1 flex-col items-center justify-center border"
+                  >
+                    <div id="playerRightName"></div>
+                    <div>arrow up - up</div>
+                    <div>arrow down - down</div>
+                  </div>
+                </div>
                 <div
-                  id="setupDisplayName"
-                  class="flex flex-row items-center justify-center gap-2.5"
+                  id="startButton"
+                  class="flex w-full flex-1 items-center justify-center"
                 >
-                  <div id="displayNamePlayerOne" class="block">
-                    <label for="namePlayerOne" class="text-black"
-                      >Player one</label
-                    >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerOne"
-                        type="text"
-                        name="game-player-name-1"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        onclick="saveDisplayName(1)"
-                      >
-                        <div>OK</div>
-                      </button>
-                    </div>
-                  </div>
-                  <div id="displayNamePlayerTwo" class="block">
-                    <label for="namePlayerTwo" class="text-black"
-                      >Player two</label
-                    >
-                    <div class="flex flex-row">
-                      <input
-                        class="flex-2 bg-white"
-                        id="namePlayerTwo"
-                        type="text"
-                        name="game-player-name-2"
-                        placeholder="Enter your display name"
-                      />
-                      <button
-                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        onclick="saveDisplayName(2)"
-                      >
-                        <div>OK</div>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div id="Setinstructions" class="hidden">
-                  PLAYER 1 - W and S <br />
-                  PLAYER 2 - ARROW KEYS <br />
-                  P - PAUSE <br />
-                  ESC - QUIT <br />
-                </div>
-                <div id="startButton">
                   <button
                     id="runButton"
-                    class="hidden h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                   >
                     Start game
                   </button>
@@ -757,18 +886,28 @@
                 GAME OVER
                 <div id="winner-text"></div>
               </div>
-              <div id="nextGame" class="flex flex-row gap-2.5">
-                <button
+              <div id="gameOptions" class="flex flex-row gap-2.5">
+                <!-- <button
+                  id="playAgainButton"
                   type="button"
                   class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                 >
                   Play Again
-                </button>
+                </button> -->
                 <button
+                  id="newGameButton"
                   type="button"
                   class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                 >
                   New Game
+                </button>
+              </div>
+              <div id="nextGameButton" class="hidden">
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Next Game
                 </button>
               </div>
             </div>
@@ -788,6 +927,8 @@
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>
     <script src="dist/gameLogic.js"></script>
+    <script src="dist/setUpPlayers.js"></script>
+    <script src="dist/createRules.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>
