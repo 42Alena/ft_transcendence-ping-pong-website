@@ -141,11 +141,19 @@ export type UnblockUserResult =
 export const SYSTEM_ID = "ThisIsSystemID" as const;
 export type SystemId = typeof SYSTEM_ID;
 
-export type Message = string;
+export type MessageContent = string;
 export type MessageId = number;
 export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello", ... } or null
 
-
+export type Message = {
+	id: MessageId;
+	type: MessageChat;
+	senderId: SenderId;
+	receiverId: ReceiverId;
+	content: MessageContent;
+	meta: Meta;
+	createdAt: TimeSec;
+};
 
 export type MessageType =
 	| 'PrivateMsg'
@@ -176,7 +184,7 @@ interface= object
 export interface MessageBase {
 
 	senderId: SenderId;
-	content: Message;
+	content: MessageContent;
 };
 
 export interface MessagePrivate extends MessageBase {
