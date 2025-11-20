@@ -1,6 +1,6 @@
 import { MessageDbRow } from '../types/db';
 import type *  as Domain from '../types/domain';
-
+ 
 
 
 // Conversion: DB row =>  message  
