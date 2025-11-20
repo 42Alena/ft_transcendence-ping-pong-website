@@ -402,4 +402,36 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 	//_________________ONLINE/OFFLINE____________
 
+
+
+
+	/* to get online status for me or friends only. TODO: change Online time in config.ts. now for tests 15 sec */
+	fastify.get<{ Params: API.TargetIdParams }>(
+		"/users/:id/status", authRequiredOptions, async (req, reply) => {
+
+		const viewerId = (req as API.UserAwareRequest).userId;
+
+		const { id: targetId } = req.params;   
+
+		const result = await userManager.getUserOnlineStatus(viewerId, targetId);
+
+		// map domain result to HTTP
+		if (!result.ok) {
+			if (result.reason === "not_me")
+				return sendError(reply, "Not logged in", "auth", 401);
+
+			if (result.reason === "not_found")
+				return sendError(reply, "User not found", "userId", 404);
+
+			if (result.reason === "not_friend")
+				return sendError(reply, "User not my friend", "userId", 403);
+
+			return;
+		}
+
+		// here result.ok === true
+		return sendOK(reply, { status: result.status });  // online | offline
+	});
+
 }
+
