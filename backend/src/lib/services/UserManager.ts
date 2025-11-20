@@ -11,14 +11,15 @@ import { generateId } from '../utils/randomId';
 import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
 import { unixTimeNow } from '../utils/time';
+import { ONLINE_TIMEOUT_SEC } from '../../config';
 
 
 export class UserManager {
 
-	dbTableUser: any;
-	dbTableFriends: any;
-	dbTableBlocks: any;
-	dbTableLoginSessions: any;
+	dbTableUser: any
+	dbTableFriends: any
+	dbTableBlocks: any
+	dbTableLoginSessions: any
 
 	constructor() {
 		// Typed table factories (//= () => anonym fkt =factory fkt)
@@ -329,7 +330,8 @@ export class UserManager {
 
 
 		const me = await this.getUserById(meId);
-		if (this.isDeletedAccount(me))
+
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
 		const nameNormalized = normalizeName(newDisplayName);
@@ -349,7 +351,7 @@ export class UserManager {
 			.where({ id: meId });
 
 		return { ok: true };
-	};
+	}
 
 
 	//_________________/ME/SETTINGS: CHANGE PASSWORD ____________
@@ -362,9 +364,9 @@ export class UserManager {
 
 
 		const me = await this.getUserById(meId);
-		if (!me)
-			return { ok: false, reason: "not_me" };
 
+		if (!me || this.isDeletedAccount(me))
+			return { ok: false, reason: "not_me" };
 
 		const checkCurrentVsStoredHashedPass = await verifyPassword(currentPassword, me.passwordHash);
 
@@ -400,7 +402,8 @@ export class UserManager {
 	): Promise<Domain.ChangeAvatarResult> {
 
 		const me = await this.getUserById(meId);
-		if (this.isDeletedAccount(me))
+
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
 
 		//update
@@ -410,7 +413,7 @@ export class UserManager {
 
 		return { ok: true };
 
-	};
+	}
 
 
 	//_________________/ME/SETTINGS: DELETE USER____________
@@ -423,10 +426,9 @@ export class UserManager {
 	): Promise<Domain.DeleteAccountResult> {
 
 		const me = await this.getUserById(meId);
-		if (this.isDeletedAccount(me))
+
+		if (!me || this.isDeletedAccount(me))
 			return { ok: false, reason: "not_me" };
-
-
 
 		//delete/anonymize  account
 		await this.dbTableUser()
@@ -457,11 +459,10 @@ export class UserManager {
 
 		return { ok: true };
 
-	};
+	}
 
 
 	//_________________ONLINE/OFFLINE____________
-
 
 
 
@@ -471,6 +472,49 @@ export class UserManager {
 	// 	this.userStatus = status;
 	// }
 
+	/* set online in DB */
+	async touchLastSeenAt(
+		meId: Domain.UserId,
+	): Promise<void> {
+		await this.dbTableUser()
+			.update({ lastSeenAt: unixTimeNow() })
+			.where({ id: meId });
+	}
+
+
+	async getUserOnlineStatus(
+		viewerId: Domain.UserId,   // who is asking (I?)
+		targetId: Domain.UserId,   // whose status I want (me or friend)
+	): Promise<Domain.UserStatusResult> {
+
+		//me
+		const viewer = await this.getUserById(viewerId);
+
+		if (!viewer || this.isDeletedAccount(viewer))
+			return { ok: false, reason: "not_me" };
+
+		//me/friend
+		const target = await this.getUserById(targetId);
+
+		if (!target || this.isDeletedAccount(target))
+			return { ok: false, reason: "not_found" };
+
+		const isSelf = viewerId === targetId;
+		const isFriend = await this.isFriend(viewerId, targetId);
+
+		if (!isSelf && !isFriend)
+			return { ok: false, reason: "not_friend" };
+
+		if (target.lastSeenAt === 0)
+			return { ok: true, status: 'offline' };
+
+		const timeNow = unixTimeNow();
+
+		if ((timeNow - target.lastSeenAt) < ONLINE_TIMEOUT_SEC)
+			return { ok: true, status: 'online' };
+
+		return { ok: true, status: 'offline' };
+	}
 
 
 }
