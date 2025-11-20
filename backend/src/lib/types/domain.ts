@@ -150,21 +150,18 @@ export type Message = string;
 
 
 export type MessageType =
-	| 'PublicMsg'
 	| 'PrivateMsg'
 	| 'PrivateGameInviteMsg'
 	| 'TournamentMsg';
 
 
 export type SenderId = UserId | SystemId;
-export type Receiver = UserId | 'all';
+export type Receiver = UserId ;
 
 export interface HasPrivateReceiver {
 	receiverId: UserId;
 }
-export interface HasPublicReceiver {
-	receiverId: 'all';
-}
+
 
 export interface HasPrivateSender {
 	senderId: UserId;
@@ -172,15 +169,6 @@ export interface HasPrivateSender {
 export interface HasServerSender {
 	senderId: SystemId;
 }
-
-
-// export type Message = {
-
-// 	senderId: UserId | SystemId;       
-// 	receiverId: Receiver;    
-// 	content: string;
-// 	type: MessageType;
-// };
 
 /* 
 used info for interface:
@@ -198,11 +186,7 @@ export interface MessagePrivate extends MessageBase {
 	senderId: UserId; 	 //override MessageBase: must be a real user
 	receiverId: UserId;
 }
-export interface MessagePublic extends MessageBase {
-	type: 'PublicMsg';
-	senderId: UserId;
-	receiverId: 'all';
-}
+
 export interface MessagePrivateGameInvite extends MessageBase {
 	type: 'PrivateGameInviteMsg';
 	senderId: UserId;
