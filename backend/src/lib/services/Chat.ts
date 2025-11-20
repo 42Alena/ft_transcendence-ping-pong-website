@@ -3,20 +3,23 @@
 
 import *  as Types from '../types/domain';
 import * as Validate from '../utils/validators';
+import { db } from './DB';
 import { User } from './User';
 import { UserManager } from './UserManager';
 
 export class Chat {
 
 
-
   userManager: UserManager;
-  chatMessages: Types.MessageBase[];
-
+  // chatMessages: Types.MessageBase[];
+ 
+  dbTableMessages: any;
 
   constructor(userManager: UserManager) {
+    // this.chatMessages = [];
     this.userManager = userManager;
-    this.chatMessages = [];
+    // Typed table factories (//= () => anonym fkt =factory fkt). returns a fresh query builder for `messages`
+    this.dbTableMessages = () => db('messages');
   }
 
 

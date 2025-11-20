@@ -73,6 +73,9 @@ Not required for evaluation — used for organization and pull request preparati
 	+ TournamentMessage
 
 ## BACKEND
+### CHat
+	+ add Chat constructor with UserManager + messages table factory
+
 ### UserManager
 ### User_routes
 ### domain types
