@@ -46,7 +46,6 @@ class Player {
 function setGameType(text: string) {
   isTournament = false;
   if (gameisOn) {
-    console.log(`${gameisOn} - clean up screen`);
     clearInterval(interval);
     gameScreenDiv.classList.add("hidden");
     gameScreenDiv.classList.remove("flex");
@@ -122,8 +121,6 @@ function aliasSelection() {
 
 //check/add player to the list
 function checkAlias(name: string, AIFlag: boolean): string {
-  console.log(`check alias name: ${name}`);
-  console.log(`check alias AI: ${AIFlag}`);
   if (name == "AI" && !AIFlag) return "";
   else if (name == "") return "";
   else if (name == "AI") return "Ai";
@@ -146,13 +143,9 @@ function processInput(
   AIbuttonsDiv: any,
   AIFlag: boolean,
 ): boolean {
-  console.log("process input");
   const name = checkAlias(input.value, AIFlag);
   if (name) {
-    console.log(`check alias AI before adding to player: ${AIFlag}`);
     addPlayer(name, AIFlag, index);
-    console.log(`check alias AI after adding to player: ${AIFlag}`);
-
     input.readOnly = true;
     AIbuttonsDiv.classList.add("invisible");
     //add green text + check
@@ -187,7 +180,6 @@ AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
 });
 
 AIoffButtonPlayerTwo.addEventListener("click", (event: any) => {
-  console.log("is off AI");
   AIPlayerTwo = AIisOff(
     AIonButtonPlayerTwo,
     AIoffButtonPlayerTwo,
