@@ -1,4 +1,4 @@
-import { AvatarUrl, DisplayName, MessageChat, MessageContent, MessageId, Meta, PasswordHash, ReceiverId, SenderId, TimeSec,  UserId, Username } from "../types/domain";
+import { AvatarUrl, DisplayName, MessageTypeChat, MessageContent, MessageId, Meta, PasswordHash, ReceiverId, SenderId, TimeSec,  UserId, Username } from "../types/domain";
 
 
 //types in db row users
@@ -17,7 +17,7 @@ export type UserDbRow = {
 //types in db row chat
 export type MessageDbRow = {
 	id: MessageId;
-	type: MessageChat;
+	type: MessageTypeChat;
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;

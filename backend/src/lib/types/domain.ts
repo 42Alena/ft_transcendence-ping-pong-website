@@ -192,20 +192,17 @@ export interface MessageTournament extends MessageBase {
 	receiverId: ReceiverId;  //who will play in tournament
 }
 
-// for saveMessageInDB 
-export type MessageTypeChat =
-	| MessagePrivate
-	| MessagePrivateGameInvite
-	| MessageTournament;
+
+export type MessageTypeChat = 'DirectMsg' | 'PrivateGameInvite' | 'TournamentMsg';
 	
 
-export type Message = {
+export type MessageChat = {
 	id: MessageId;
 	type: MessageTypeChat;
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
-	meta: Meta;
+	meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
 };
 

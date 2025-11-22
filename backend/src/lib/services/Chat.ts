@@ -2,7 +2,7 @@
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
 import { messageToDbRow } from '../mappers/chat_db';
-import *  as Types from '../types/domain';
+import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
 import { User } from './User';
@@ -26,7 +26,7 @@ export class Chat {
   }
 
 
-  private async saveMessageInDB(message: Types.MessageChat ): Promise<void>{
+  private async saveMessageInDB(message: Domain.Message ): Promise<void>{
    
     const dbMessageRow = messageToDbRow(message);
     console.debug("Saving message", dbMessageRow)   //TODO: comment out, for tests now
@@ -39,29 +39,30 @@ export class Chat {
   For private messages (user to user)
   sender must exist, not system
    */
-  private async checkPrivateSender(object: Types.HasPrivateSender): Promise<User> {
+  private async checkPrivateSender(object: Domain.HasPrivateSender): Promise<User> {
 
 
     Validate.ensureNonEmptyString(object.senderId, "sender");
 
     const sender = await this.userManager.getUserByIdOrThrow(object.senderId);
 
-    Validate.ensureNotSystemId(sender.id, Types.SYSTEM_ID);
+    Validate.ensureNotSystemId(sender.id, Domain.SYSTEM_ID);
 
     return sender;
   }
 
+  
   /* 
   For private messages (user to user)
    receiver must exist, not system, not blocking sender
    */
-  private async checkPrivateReceiver(message: Types.HasPrivateReceiver, sender: User): Promise<User> {
+  private async checkPrivateReceiver(message: Domain.HasPrivateReceiver, sender: User): Promise<User> {
 
     Validate.ensureNonEmptyString(message.receiverId, "receiver");
 
     const receiver = await this.userManager.getUserByIdOrThrow(message.receiverId);
 
-    Validate.ensureNotSystemId(receiver.id, Types.SYSTEM_ID);
+    Validate.ensureNotSystemId(receiver.id, Domain.SYSTEM_ID);
     receiver.ensureNotBlockedByOrThrow(sender.id);
 
     return receiver;
