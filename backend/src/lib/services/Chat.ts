@@ -5,7 +5,6 @@ import { messageToDbRow } from '../mappers/chat_db';
 import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
-import { User } from './User';
 import { UserManager } from './UserManager';
 
 export class Chat {
@@ -49,11 +48,12 @@ export class Chat {
       return { ok: false, reason: "invalid_content" };
 
 
-    if (!Validate.isSystemId(senderId))
-      return { ok: false, reason: "system" };
+    //TODO: uncomment checks if need later. For now OK
+    // if (Validate.isSystemId(senderId))   
+    //   return { ok: false, reason: "system" };
 
-    if (!Validate.isSystemId(receiverId))
-      return { ok: false, reason: "system" };
+    // if (Validate.isSystemId(receiverId))
+    //   return { ok: false, reason: "system" };
 
 
     const sender = await this.userManager.getUserById(senderId);
@@ -104,7 +104,7 @@ export class Chat {
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
     content: Domain.MessageContent,
-
+     meta: Domain.Meta,
   ): Promise<Domain.SendMessageResult> {
 
     return this.sendUserToUserMessage(
@@ -113,7 +113,7 @@ export class Chat {
       receiverId,
       "PrivateMessage",                    // one of MessageTypeChat
       content,
-      null,         //meta: null,
+      meta,         //meta: null,
       // createdAt: unixTimeNow(),                 // or with it for MessageChat
     );
   }
@@ -131,8 +131,7 @@ export class Chat {
   async sendPrivateGameInviteMessage(
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
-    content: Domain.MessageContent,
-
+     meta: Domain.Meta,
   ): Promise<Domain.SendMessageResult> {
 
     return this.sendUserToUserMessage(
@@ -141,7 +140,7 @@ export class Chat {
       receiverId,
       "PrivateGameInviteMessage",                    // one of MessageTypeChat
       Domain.MESSAGE_GAME_INVITE,                   //content,
-      null,         //meta: null,
+      meta,         //meta: null,
       // createdAt: unixTimeNow(),                 // or with it for MessageChat
     );
   }
@@ -149,25 +148,52 @@ export class Chat {
  
 
   /* 
-   User sends  private msg to private chat, if not blocked by another user
+    Systems sends to user
     senderId: SystemId    //from interface     
     receiverId: UserId    //from interface(who are scheduled to play next)   
     content: string;        //not empty
     type: 'Tournamentmsg'; //from interface
   */
-  sendTournamentMessage(message: Types.MessageTournament) {
+  async sendTournamentMessage( 
+    senderId: Domain.SystemId,
+    receiverId: Domain.PrivateSenderId,
+    meta: Domain.Meta,
 
-    Validate.ensureIsSystemId(message.senderId, Types.SYSTEM_ID);
+  ): Promise<Domain.SendMessageResult> {
 
-    Validate.ensureNotSystemId(message.receiverId, Types.SYSTEM_ID);
 
-    const error = Validate.validateMessageContent(message.content);
-    if (error) {
-      return { ok: false, reason: "invalid_content" as const };
-    }
+    if (!Validate.isSystemId(senderId))
+      return { ok: false, reason: "system" };  //must be system
 
-    message.content = Types.MESSAGE_TOURNAMENT_INVITE;
 
-    this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
+    if (Validate.isSystemId(receiverId))
+      return { ok: false, reason: "system" };
+
+
+    const receiver = await this.userManager.getUserById(receiverId);
+
+    if (!receiver)
+      return { ok: false, reason: "not_me" };
+
+
+
+    const message: Domain.NewMessageChat = {
+
+      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+      type: "TournamentMessage",                    // one of MessageTypeChat
+      senderId,
+      receiverId,
+      content: Domain.MESSAGE_TOURNAMENT_INVITE,
+      meta,
+      // createdAt: unixTimeNow(),                 // or with it for MessageChat
+    };
+
+    await this.saveMessageInDB(message);
+
+    return { ok: true };
+
+
   }
+
+
 }

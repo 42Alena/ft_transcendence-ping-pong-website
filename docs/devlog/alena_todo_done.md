@@ -88,6 +88,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendPrivateMessage()
 	+ sendUserToUserMessage()
 	+ sendPrivateGameInviteMessage()
+	+ sendTournamentMessage()
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
