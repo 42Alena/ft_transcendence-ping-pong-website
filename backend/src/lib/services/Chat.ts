@@ -74,7 +74,7 @@ export class Chat {
     }
 
 
-    const message: Domain.NewMessageChat= {
+    const message: Domain.NewMessageChat = {
 
       // id: generateId() as Domain.MessageId,     // or with it for MessageChat
       type,                    // one of MessageTypeChat
@@ -107,50 +107,15 @@ export class Chat {
 
   ): Promise<Domain.SendMessageResult> {
 
-    const contentError = Validate.validateMessageContent(content);
-    if (contentError)
-      return { ok: false, reason: "invalid_content" };
-
-
-    if (!Validate.isSystemId(senderId))
-      return { ok: false, reason: "system" };
-
-    if (!Validate.isSystemId(receiverId))
-      return { ok: false, reason: "system" };
-
-
-    const sender = await this.userManager.getUserById(senderId);
-
-    if (!sender)
-      return { ok: false, reason: "not_me" };
-
-
-    const receiver = await this.userManager.getUserById(receiverId);
-
-    if (!receiver)
-      return { ok: false, reason: "not_me" };
-
-
-
-    if (await this.userManager.isBlocked(receiver.id, sender.id)) {
-      return { ok: false, reason: "blocked" };
-    }
-
-
-    const message: Domain.NewMessageChat= {
-
+    return this.sendUserToUserMessage(
       // id: generateId() as Domain.MessageId,     // or with it for MessageChat
-      type: "PrivateMessage",                    // one of MessageTypeChat
       senderId,
       receiverId,
+      "PrivateMessage",                    // one of MessageTypeChat
       content,
-      meta: null,
+      null,         //meta: null,
       // createdAt: unixTimeNow(),                 // or with it for MessageChat
-    };
-
-    await this.saveMessageInDB(message);
-
-    return { ok: true };
+    );
   }
 
 
@@ -163,24 +128,25 @@ export class Chat {
     content: string;      //not empty
     type: 'PrivateGameInviteMsg';
   */
-  async sendPrivateGameInviteMessage(message: Types.MessagePrivateGameInvite) {
+  async sendPrivateGameInviteMessage(
+    senderId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateSenderId,
+    content: Domain.MessageContent,
 
+  ): Promise<Domain.SendMessageResult> {
 
-    const sender = await this.checkPrivateSender(message);
-    const receiver = await this.checkPrivateReceiver(message, sender);
-
-    const error = Validate.validateMessageContent(message.content);
-    if (error) {
-      return { ok: false, reason: "invalid_content" as const };
-    }
-
-    message.content = Types.MESSAGE_GAME_INVITE;
-
-    this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
-
+    return this.sendUserToUserMessage(
+      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+      senderId,
+      receiverId,
+      "PrivateGameInviteMessage",                    // one of MessageTypeChat
+      Domain.MESSAGE_GAME_INVITE,                   //content,
+      null,         //meta: null,
+      // createdAt: unixTimeNow(),                 // or with it for MessageChat
+    );
   }
 
-
+ 
 
   /* 
    User sends  private msg to private chat, if not blocked by another user
