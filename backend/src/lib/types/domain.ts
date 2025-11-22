@@ -147,7 +147,7 @@ export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello"
 
 export type Message = {
 	id: MessageId;
-	type: MessageChat;
+	type: MessageTypeChat;
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
