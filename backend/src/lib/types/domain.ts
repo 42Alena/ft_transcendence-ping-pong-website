@@ -70,9 +70,9 @@ export type RegisterUserParams = {
 export type UserStatus = 'online' | 'offline';
 
 export type UserStatusResult =
-  | { ok: true; status: UserStatus }
-  | { ok: false; reason: 'not_me' | 'not_friend' | 'not_found' };
-  
+	| { ok: true; status: UserStatus }
+	| { ok: false; reason: 'not_me' | 'not_friend' | 'not_found' };
+
 
 //_____________SETTINGS__________________
 
@@ -96,13 +96,15 @@ export type ChangeAvatarResult =
 	| { ok: true }
 	| {
 		ok: false;
-		reason: "not_me";};
+		reason: "not_me";
+	};
 
 export type DeleteAccountResult =
 	| { ok: true }
 	| {
 		ok: false;
-		reason: "not_me" |  "db_error";};
+		reason: "not_me" | "db_error";
+	};
 
 //_____________FRIENDS__________________
 
@@ -115,22 +117,28 @@ export type AddFriendResult =
 // export type RemoveFriendResult = { ok: true };
 export type RemoveFriendResult =
 	| { ok: true }
-	| { ok: false;
-		reason: "self" };
+	| {
+		ok: false;
+		reason: "self"
+	};
 
 
 //__________________BLOCKS____________________________
 
 export type BlockUserResult =
 	| { ok: true }
-	| { ok: false; 
-		reason: "self"  | "not_found"};
+	| {
+		ok: false;
+		reason: "self" | "not_found"
+	};
 
 
-export type UnblockUserResult = 
- 	|{ ok: true }
-	| { ok: false;
-		 reason: "self" };
+export type UnblockUserResult =
+	| { ok: true }
+	| {
+		ok: false;
+		reason: "self"
+	};
 
 
 
@@ -150,7 +158,7 @@ export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello"
 
 
 export type SenderId = UserId | SystemId;
-export type ReceiverId = UserId ;
+export type ReceiverId = UserId;
 
 export interface HasPrivateReceiver {
 	receiverId: UserId;
@@ -194,7 +202,7 @@ export interface MessageTournament extends MessageBase {
 
 
 export type MessageTypeChat = 'DirectMsg' | 'PrivateGameInvite' | 'TournamentMsg';
-	
+
 
 export type MessageChat = {
 	id: MessageId;
@@ -205,6 +213,17 @@ export type MessageChat = {
 	meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
 };
+
+
+export type sendMessageResult =
+	| { ok: true }
+	| {
+		ok: false; reason:
+			| "not_me"    // sender id != current user / invalid session
+			| "system"    // tried to use SYSTEM_ID where only users are allowed
+			| "not_found" // receiver (or sender) doesn’t exist / deleted
+			| "blocked";  // receiver has blocked sender
+	};
 
 //__________________GAME______________
 
@@ -221,3 +240,4 @@ export type MatchResult = {
 	// date: Date;                //TODO: change from DAte to number as in DB
 	result: GameResult;
 };
+

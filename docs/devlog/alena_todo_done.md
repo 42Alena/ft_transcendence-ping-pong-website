@@ -88,6 +88,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### User_routes
 ### domain types
 	- corrected types for messages, excuded public msg. will be no public chat 
+	+ sendMessageResult
 
 ### api types
 ## FRONTEND

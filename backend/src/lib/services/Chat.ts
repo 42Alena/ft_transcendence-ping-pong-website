@@ -13,7 +13,7 @@ export class Chat {
 
   userManager: UserManager;
   // chatMessages: Types.MessageBase[];
- 
+
   dbTableMessages: any;
 
   constructor(userManager: UserManager) {
@@ -26,11 +26,11 @@ export class Chat {
   }
 
 
-  private async saveMessageInDB(message: Domain.MessageChat ): Promise<void>{
-   
+  private async saveMessageInDB(message: Domain.MessageChat): Promise<void> {
+
     const dbMessageRow = messageToDbRow(message);
     console.debug("Saving message", dbMessageRow)   //TODO: comment out, for tests now
-    
+
     await this.dbTableMessages().insert(dbMessageRow);
   }
 
@@ -44,7 +44,10 @@ export class Chat {
 
     Validate.ensureNonEmptyString(sender.senderId, "sender");
 
-    const sender = await this.userManager.getUserByIdOrThrow(sender.senderId);
+    const sender = await this.userManager.getUserById(sender.senderId);
+
+    if (!sender)
+      return { ok: false, reason: "not_me" };
 
     Validate.ensureNotSystemId(sender.id, Domain.SYSTEM_ID);
 
