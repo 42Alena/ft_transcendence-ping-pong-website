@@ -26,7 +26,7 @@ export class Chat {
   }
 
 
-  private async saveMessageInDB(message: Domain.Message ): Promise<void>{
+  private async saveMessageInDB(message: Domain.MessageChat ): Promise<void>{
    
     const dbMessageRow = messageToDbRow(message);
     console.debug("Saving message", dbMessageRow)   //TODO: comment out, for tests now
@@ -51,7 +51,7 @@ export class Chat {
     return sender;
   }
 
-  
+
   /* 
   For private messages (user to user)
    receiver must exist, not system, not blocking sender
@@ -90,25 +90,6 @@ export class Chat {
   }
 
 
-  /* 
- User sends public msg to public chat
-    senderId: UserId //(not SystemId);       
-    receiverId: 'all';    
-    content: string; //not empty
-    type: PyblicMsg;
-  
-  */
-  async sendPublicMessage(message: Types.MessagePublic) {
-
-    Validate.ensureNonEmptyString(message.content, "[sendPublicMsg] public message");
-
-    Validate.ensureReceiverIsAll(message.receiverId);
-
-    const sender = await this.checkPrivateSender(message);
-
-    this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
-
-  }
 
 
   /* 
