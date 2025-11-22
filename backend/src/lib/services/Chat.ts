@@ -1,6 +1,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
+import { messageToDbRow } from '../mappers/chat_db';
 import *  as Types from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
@@ -25,10 +26,12 @@ export class Chat {
   }
 
 
-  private async saveMessageInDB(message: Types.Message ): Promise<void>{
+  private async saveMessageInDB(message: Types.MessageChat ): Promise<void>{
    
     const dbMessageRow = messageToDbRow(message);
-
+    console.debug("Saving message", dbMessageRow)   //TODO: comment out, for tests now
+    
+    await this.dbTableMessages().insert(dbMessageRow);
   }
 
 

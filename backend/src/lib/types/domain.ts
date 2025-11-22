@@ -145,20 +145,8 @@ export type MessageContent = string;
 export type MessageId = number;
 export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello", ... } or null
 
-export type Message = {
-	id: MessageId;
-	type: MessageTypeChat;
-	senderId: SenderId;
-	receiverId: ReceiverId;
-	content: MessageContent;
-	meta: Meta;
-	createdAt: TimeSec;
-};
 
-export type MessageType =
-	| 'PrivateMsg'
-	| 'PrivateGameInviteMsg'
-	| 'TournamentMsg';
+
 
 
 export type SenderId = UserId | SystemId;
@@ -204,10 +192,22 @@ export interface MessageTournament extends MessageBase {
 	receiverId: ReceiverId;  //who will play in tournament
 }
 
+// for saveMessageInDB 
 export type MessageTypeChat =
-  | MessagePrivate
-  | MessagePrivateGameInvite
-  | MessageTournament;
+	| MessagePrivate
+	| MessagePrivateGameInvite
+	| MessageTournament;
+	
+
+export type Message = {
+	id: MessageId;
+	type: MessageTypeChat;
+	senderId: SenderId;
+	receiverId: ReceiverId;
+	content: MessageContent;
+	meta: Meta;
+	createdAt: TimeSec;
+};
 
 //__________________GAME______________
 
