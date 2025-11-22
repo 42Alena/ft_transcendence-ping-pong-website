@@ -1,7 +1,11 @@
-import type *  as Types from '../types/api';
+import type *  as Domain from '../types/api';
+import { SYSTEM_ID } from '../types/domain';
 
 
-const RESERVED = new Set(['admin', 'root', 'null', 'system', 'api', 'me']);
+const RESERVED = new Set(['admin', 'root', 'null', 'system', 'api', 'me',
+	'ai',
+	SYSTEM_ID,
+]);
 
 //________STRING____________________
 export function isEmptyString(value: string): boolean {
@@ -26,7 +30,7 @@ export function normalizeName(name: string): string {
 
 export function validateName(name: string): string | null {
 
-	if (name.length < 3 || name.length > 10) return "Length: 3–10 chars";
+	if (name.length < 3 || name.length > 15) return "Length: 3–15 chars";
 
 	if (RESERVED.has(name.toLowerCase())) return 'Reserved word';
 

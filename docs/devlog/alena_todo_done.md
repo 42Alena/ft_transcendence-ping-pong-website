@@ -76,6 +76,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ backend/src/lib/mappers/chat_db.ts
 	+ backend/src/lib/types/db.ts
 	+ added ChatDBRow in backend/src/lib/types/db.ts
+	+aded to reserved names 'SYSTEM_ID', 'ai'
 
 ### CHat
 	- removed old in-memory chatMessages array
