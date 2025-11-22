@@ -99,8 +99,13 @@ export function ensureIsSystemId(userId: string, systemId: string): void {
 	}
 }
 
-export function ensureReceiverIsAll(receiverId: string): void {
-	if (receiverId !== 'all') {
-		throw new Error("receiverId must be 'all'");
-	}
+
+// domain.ts or chat-specific validator
+export function validateMessageContent(content: string): string | null {
+  const trimmed = content.trim();
+
+  if (trimmed.length === 0) return "empty";
+  if (trimmed.length > 500) return "too_long";  
+
+  return null;
 }

@@ -82,6 +82,7 @@ Not required for evaluation — used for organization and pull request preparati
 	- removed old in-memory chatMessages array
 	+ add Chat constructor with UserManager + messages table factory
 	+ saveMessageInDB()
+	+ added message validation with validateMessageContent
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
@@ -91,7 +92,9 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendMessageResult
 
 ### api types
-## FRONTEND
+
+#### validators 
+	+ validateMessageContent
 
 ### TESTS
 

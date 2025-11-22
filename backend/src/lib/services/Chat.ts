@@ -88,6 +88,11 @@ export class Chat {
 
     this.checkPrivateReceiver(message, sender);
 
+    const error = Validate.validateMessageContent(message.content);
+    if (error) {
+      return { ok: false, reason: "invalid_content" as const };
+    }
+
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
 
   }
@@ -108,8 +113,12 @@ export class Chat {
     const sender = await this.checkPrivateSender(message);
     const receiver = await this.checkPrivateReceiver(message, sender);
 
-    if (Validate.isEmptyString(message.content))
-      message.content = Types.MESSAGE_GAME_INVITE;
+    const error = Validate.validateMessageContent(message.content);
+    if (error) {
+      return { ok: false, reason: "invalid_content" as const };
+    }
+
+    message.content = Types.MESSAGE_GAME_INVITE;
 
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
 
@@ -130,8 +139,12 @@ export class Chat {
 
     Validate.ensureNotSystemId(message.receiverId, Types.SYSTEM_ID);
 
-    if (Validate.isEmptyString(message.content))
-      message.content = Types.MESSAGE_TOURNAMENT_INVITE;
+    const error = Validate.validateMessageContent(message.content);
+    if (error) {
+      return { ok: false, reason: "invalid_content" as const };
+    }
+
+    message.content = Types.MESSAGE_TOURNAMENT_INVITE;
 
     this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
   }

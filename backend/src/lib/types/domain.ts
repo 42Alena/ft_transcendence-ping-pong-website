@@ -222,7 +222,8 @@ export type sendMessageResult =
 			| "not_me"    // sender id != current user / invalid session
 			| "system"    // tried to use SYSTEM_ID where only users are allowed
 			| "not_found" // receiver (or sender) doesn’t exist / deleted
-			| "blocked";  // receiver has blocked sender
+			| "blocked"  // receiver has blocked sender
+			| "invalid_content";
 	};
 
 //__________________GAME______________
