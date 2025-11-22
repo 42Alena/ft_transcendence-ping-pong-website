@@ -82,7 +82,9 @@ Not required for evaluation — used for organization and pull request preparati
 	- removed old in-memory chatMessages array
 	+ add Chat constructor with UserManager + messages table factory
 	+ saveMessageInDB()
-	+ added message validation with validateMessageContent
+	+ added message validation with validateMessageContent 
+	- checkPrivateSender 
+	- checkPrivateReceiver
 
 ### UserManager
 	+ added additional check for get users/id if not deleted

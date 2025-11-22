@@ -1,5 +1,5 @@
 import type *  as Domain from '../types/api';
-import { SYSTEM_ID } from '../types/domain';
+import { SYSTEM_ID, SystemId } from '../types/domain';
 
 
 const RESERVED = new Set(['admin', 'root', 'null', 'system', 'api', 'me',
@@ -21,11 +21,11 @@ export function normalizeString(input?: string | null): string | null {
 export function normalizeName(name: string): string {
 	// Defensive: handle unexpected values gracefully
 	if (typeof name !== "string") return "";
-  
+
 	return name
-	  .normalize("NFKC")  // unify Unicode forms and compatibility chars
-	  .trim()             
-  }
+		.normalize("NFKC")  // unify Unicode forms and compatibility chars
+		.trim()
+}
 
 
 export function validateName(name: string): string | null {
@@ -70,9 +70,6 @@ export function validatePassword(pw: string, username: string, displayName: stri
 
 
 
-
-
-
 /* 
 // OLD: from first version with Classes. Leave here in case I need later
 
@@ -86,26 +83,22 @@ export function ensureNonEmptyString(value: string, fieldName: string): void {
 	}
 }
 
-export function ensureNotSystemId(userId: string, systemId: string): void {
-	if (userId === systemId) {
-		throw new Error("SystemId cannot be used here");
-	}
-}
 
 
-export function ensureIsSystemId(userId: string, systemId: string): void {
-	if (userId !== systemId) {
-		throw new Error("Only SystemId can be used here");
-	}
+export function isSystemId(id: string): id is SystemId {
+
+	return id === SYSTEM_ID;
+
 }
+
 
 
 // domain.ts or chat-specific validator
 export function validateMessageContent(content: string): string | null {
-  const trimmed = content.trim();
+	const trimmed = content.trim();
 
-  if (trimmed.length === 0) return "empty";
-  if (trimmed.length > 500) return "too_long";  
+	if (trimmed.length === 0) return "empty";
+	if (trimmed.length > 500) return "too_long";
 
-  return null;
+	return null;
 }

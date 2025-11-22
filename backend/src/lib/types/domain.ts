@@ -155,67 +155,30 @@ export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello"
 
 
 
+export type PrivateSenderId = UserId;
+
+export type SenderId = PrivateSenderId | SystemId;
+export type ReceiverId = PrivateSenderId;
 
 
-export type SenderId = UserId | SystemId;
-export type ReceiverId = UserId;
-
-export interface HasPrivateReceiver {
-	receiverId: UserId;
-}
-
-
-export interface HasPrivateSender {
-	senderId: UserId;
-}
-export interface HasServerSender {
-	senderId: SystemId;
-}
-
-/* 
-used info for interface:
-https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
-interface= object
-*/
-export interface MessageBase {
-
-	senderId: SenderId;
-	content: MessageContent;
-};
-
-export interface MessagePrivate extends MessageBase {
-	type: 'PrivateMsg';
-	senderId: UserId; 	 //override MessageBase: must be a real user
-	receiverId: ReceiverId;
-}
-
-export interface MessagePrivateGameInvite extends MessageBase {
-	type: 'PrivateGameInviteMsg';
-	senderId: UserId;
-	receiverId: ReceiverId;
-}
-export interface MessageTournament extends MessageBase {
-	type: 'TournamentMsg';
-	senderId: SystemId;
-	receiverId: ReceiverId;  //who will play in tournament
-}
-
-
-export type MessageTypeChat = 'DirectMsg' | 'PrivateGameInvite' | 'TournamentMsg';
+export type MessageTypeChat =
+  | 'DirectMessage'
+  | 'PrivateGameInviteMessage'
+  | 'TournamentMessage';
 
 
 export type MessageChat = {
 	id: MessageId;
 	type: MessageTypeChat;
-	senderId: SenderId;
-	receiverId: ReceiverId;
+	senderId: SenderId;		// UserId | SystemId
+	receiverId: ReceiverId;   // UserId
 	content: MessageContent;
 	meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
 };
 
 
-export type sendMessageResult =
+export type SendMessageResult =
 	| { ok: true }
 	| {
 		ok: false; reason:
@@ -242,3 +205,34 @@ export type MatchResult = {
 	result: GameResult;
 };
 
+
+
+
+//old 1. version for[]:
+// /* 
+// used info for interface:
+// https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
+// interface= object
+// */
+// export interface MessageBase {
+
+// 	senderId: SenderId;
+// 	content: MessageContent;
+// };
+
+// export interface MessagePrivate extends MessageBase {
+// 	type: 'PrivateMsg';
+// 	senderId: UserId; 	 //override MessageBase: must be a real user
+// 	receiverId: ReceiverId;
+// }
+
+// export interface MessagePrivateGameInvite extends MessageBase {
+// 	type: 'PrivateGameInviteMsg';
+// 	senderId: UserId;
+// 	receiverId: ReceiverId;
+// }
+// export interface MessageTournament extends MessageBase {
+// 	type: 'TournamentMsg';
+// 	senderId: SystemId;
+// 	receiverId: ReceiverId;  //who will play in tournament
+// }

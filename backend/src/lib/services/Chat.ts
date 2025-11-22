@@ -35,41 +35,45 @@ export class Chat {
   }
 
 
-  /* 
-  For private messages (user to user)
-  sender must exist, not system
-   */
-  private async checkPrivateSender(sender: Domain.HasPrivateSender): Promise<User> {
+  // /* 
+  // For private messages (user to user)
+  // sender must exist, not system
+  //  */
+  // private async checkPrivateSender(senderId: Domain.SenderId): Promise<Domain.SendMessageResult> {
+
+  //  if (Validate.isSystemId(senderId))
+  //       return { ok: false, reason: "system" };
 
 
-    Validate.ensureNonEmptyString(sender.senderId, "sender");
+  //   const sender = await this.userManager.getUserById(senderId);
 
-    const sender = await this.userManager.getUserById(sender.senderId);
-
-    if (!sender)
-      return { ok: false, reason: "not_me" };
-
-    Validate.ensureNotSystemId(sender.id, Domain.SYSTEM_ID);
-
-    return sender;
-  }
+  //   if (!sender)
+  //     return { ok: false, reason: "not_me" };
 
 
-  /* 
-  For private messages (user to user)
-   receiver must exist, not system, not blocking sender
-   */
-  private async checkPrivateReceiver(message: Domain.HasPrivateReceiver, sender: User): Promise<User> {
 
-    Validate.ensureNonEmptyString(message.receiverId, "receiver");
+  //   return { ok: true };
+  // }
 
-    const receiver = await this.userManager.getUserByIdOrThrow(message.receiverId);
 
-    Validate.ensureNotSystemId(receiver.id, Domain.SYSTEM_ID);
-    receiver.ensureNotBlockedByOrThrow(sender.id);
+  // /* 
+  // For private messages (user to user)
+  //  receiver must exist, not system, not blocking sender
+  //  */
+  // private async checkPrivateReceiver(message: Domain.HasPrivateReceiver, sender: User): Promise<User> {
 
-    return receiver;
-  }
+  //   Validate.ensureNonEmptyString(message.receiverId, "receiver");
+
+  //   const receiver = await this.userManager.getUserById(message.receiverId);
+
+
+  //   if (Validate.isSystemId(sender))
+  //       return { ok: false, reason: "system" };
+
+  //   receiver.ensureNotBlockedByOrThrow(sender.id);
+
+  //   return receiver;
+  // }
 
 
 
@@ -80,20 +84,47 @@ export class Chat {
     content: string; //not empty
     type: PrivateMsg;
   */
-  async sendPrivateMessage(message: Types.MessagePrivate) {
+  async sendPrivateMessage(
+    senderId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateSenderId,
+    content: Domain.MessageContent,
 
-    Validate.ensureNonEmptyString(message.content, "[sendPrivateMsg] message content");
+  ): Promise<Domain.SendMessageResult> {
 
-    const sender = await this.checkPrivateSender(message);
+    const contentError = Validate.validateMessageContent(content);
+    if (contentError) 
+      return { ok: false, reason: "invalid_content" };
 
-    this.checkPrivateReceiver(message, sender);
 
-    const error = Validate.validateMessageContent(message.content);
-    if (error) {
-      return { ok: false, reason: "invalid_content" as const };
-    }
+    if (Validate.isSystemId(senderId))
+      return { ok: false, reason: "system" };
 
-    this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
+    if (Validate.isSystemId(receiverId))
+      return { ok: false, reason: "system" };
+
+
+    const sender = await this.userManager.getUserById(senderId);
+
+    if (!sender)
+      return { ok: false, reason: "not_me" };
+
+
+
+    return { ok: true };
+
+
+    // Validate.ensureNonEmptyString(message.content, "[sendPrivateMsg] message content");
+
+    // const sender = await this.checkPrivateSender(message);
+
+    // this.checkPrivateReceiver(message, sender);
+
+    // const error = Validate.validateMessageContent(message.content);
+    // if (error) {
+    //   return { ok: false, reason: "invalid_content" as const };
+    // }
+
+    // this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
 
   }
 
