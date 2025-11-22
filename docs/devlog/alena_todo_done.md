@@ -103,6 +103,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ validateMessageContent
 
 ### TESTS
+	+ backend/tests/chat.sh  - tests for chat
 
 ## 📘 DOCUMENTATION
 
