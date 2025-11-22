@@ -162,7 +162,7 @@ export type ReceiverId = PrivateSenderId;
 
 
 export type MessageTypeChat =
-  | 'DirectMessage'
+  | 'PrivateMessage'
   | 'PrivateGameInviteMessage'
   | 'TournamentMessage';
 
@@ -176,6 +176,8 @@ export type MessageChat = {
 	meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
 };
+
+export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
 
 
 export type SendMessageResult =

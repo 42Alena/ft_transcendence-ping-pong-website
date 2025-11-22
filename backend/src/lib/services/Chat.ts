@@ -26,7 +26,7 @@ export class Chat {
   }
 
 
-  private async saveMessageInDB(message: Domain.MessageChat): Promise<void> {
+  private async saveMessageInDB(message: Domain.NewMessageChat): Promise<void> {
 
     const dbMessageRow = messageToDbRow(message);
     console.debug("Saving message", dbMessageRow)   //TODO: comment out, for tests now
@@ -35,49 +35,65 @@ export class Chat {
   }
 
 
-  // /* 
-  // For private messages (user to user)
-  // sender must exist, not system
-  //  */
-  // private async checkPrivateSender(senderId: Domain.SenderId): Promise<Domain.SendMessageResult> {
+  private async sendUserToUserMessage(
+    senderId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateSenderId,
+    type: Domain.MessageTypeChat,
+    content: Domain.MessageContent,
+    meta: Domain.Meta,
 
-  //  if (Validate.isSystemId(senderId))
-  //       return { ok: false, reason: "system" };
+  ): Promise<Domain.SendMessageResult> {
 
-
-  //   const sender = await this.userManager.getUserById(senderId);
-
-  //   if (!sender)
-  //     return { ok: false, reason: "not_me" };
+    const contentError = Validate.validateMessageContent(content);
+    if (contentError)
+      return { ok: false, reason: "invalid_content" };
 
 
+    if (!Validate.isSystemId(senderId))
+      return { ok: false, reason: "system" };
 
-  //   return { ok: true };
-  // }
-
-
-  // /* 
-  // For private messages (user to user)
-  //  receiver must exist, not system, not blocking sender
-  //  */
-  // private async checkPrivateReceiver(message: Domain.HasPrivateReceiver, sender: User): Promise<User> {
-
-  //   Validate.ensureNonEmptyString(message.receiverId, "receiver");
-
-  //   const receiver = await this.userManager.getUserById(message.receiverId);
+    if (!Validate.isSystemId(receiverId))
+      return { ok: false, reason: "system" };
 
 
-  //   if (Validate.isSystemId(sender))
-  //       return { ok: false, reason: "system" };
+    const sender = await this.userManager.getUserById(senderId);
 
-  //   receiver.ensureNotBlockedByOrThrow(sender.id);
+    if (!sender)
+      return { ok: false, reason: "not_me" };
 
-  //   return receiver;
-  // }
+
+    const receiver = await this.userManager.getUserById(receiverId);
+
+    if (!receiver)
+      return { ok: false, reason: "not_me" };
 
 
 
-  /* chan
+    if (await this.userManager.isBlocked(receiver.id, sender.id)) {
+      return { ok: false, reason: "blocked" };
+    }
+
+
+    const message: Domain.NewMessageChat= {
+
+      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+      type,                    // one of MessageTypeChat
+      senderId,
+      receiverId,
+      content,
+      meta,
+      // createdAt: unixTimeNow(),                 // or with it for MessageChat
+    };
+
+    await this.saveMessageInDB(message);
+
+    return { ok: true };
+  }
+
+
+
+
+  /* chat
    Send  private msg to private chat, if not blocked by another user
     senderId: UserId //(not SystemId);       
     receiverId: UserId(if not blocked senderId);    
@@ -92,14 +108,14 @@ export class Chat {
   ): Promise<Domain.SendMessageResult> {
 
     const contentError = Validate.validateMessageContent(content);
-    if (contentError) 
+    if (contentError)
       return { ok: false, reason: "invalid_content" };
 
 
-    if (Validate.isSystemId(senderId))
+    if (!Validate.isSystemId(senderId))
       return { ok: false, reason: "system" };
 
-    if (Validate.isSystemId(receiverId))
+    if (!Validate.isSystemId(receiverId))
       return { ok: false, reason: "system" };
 
 
@@ -109,23 +125,32 @@ export class Chat {
       return { ok: false, reason: "not_me" };
 
 
+    const receiver = await this.userManager.getUserById(receiverId);
+
+    if (!receiver)
+      return { ok: false, reason: "not_me" };
+
+
+
+    if (await this.userManager.isBlocked(receiver.id, sender.id)) {
+      return { ok: false, reason: "blocked" };
+    }
+
+
+    const message: Domain.NewMessageChat= {
+
+      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+      type: "PrivateMessage",                    // one of MessageTypeChat
+      senderId,
+      receiverId,
+      content,
+      meta: null,
+      // createdAt: unixTimeNow(),                 // or with it for MessageChat
+    };
+
+    await this.saveMessageInDB(message);
 
     return { ok: true };
-
-
-    // Validate.ensureNonEmptyString(message.content, "[sendPrivateMsg] message content");
-
-    // const sender = await this.checkPrivateSender(message);
-
-    // this.checkPrivateReceiver(message, sender);
-
-    // const error = Validate.validateMessageContent(message.content);
-    // if (error) {
-    //   return { ok: false, reason: "invalid_content" as const };
-    // }
-
-    // this.chatMessages.push(message); // TODO(later): send message through WebSocket instead of only saving it
-
   }
 
 

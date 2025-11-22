@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL CHECK (
         type IN (
-            'PrivateMsg',
-            'PrivateGameInviteMsg',
-            'TournamentMsg'
+            'PrivateMessage',
+            'PrivateGameInviteMessage',
+            'TournamentMessage'
         )
     ),
     senderId TEXT NOT NULL, -- users.id or a fixed SystemId string
@@ -129,7 +129,6 @@ CREATE TABLE IF NOT EXISTS userStatistics (
     pointsScored INTEGER NOT NULL DEFAULT 0, -- total points scored
     pointsConceded INTEGER NOT NULL DEFAULT 0 -- total points conceded
 );
-
 
 -- (Alena) not need this table, already done  with deletedAt in table users and UserManager
 

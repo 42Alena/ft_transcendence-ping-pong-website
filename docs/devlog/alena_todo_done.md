@@ -85,6 +85,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ added message validation with validateMessageContent 
 	- checkPrivateSender 
 	- checkPrivateReceiver
+	+ sendPrivateMessage()
+	+ sendUserToUserMessage()
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
