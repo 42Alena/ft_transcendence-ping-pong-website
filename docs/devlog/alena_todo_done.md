@@ -84,6 +84,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ saveMessageInDB()
 
 ### UserManager
+	+ added additional check for get users/id if not deleted
 ### User_routes
 ### domain types
 	- corrected types for messages, excuded public msg. will be no public chat 

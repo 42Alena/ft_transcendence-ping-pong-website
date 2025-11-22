@@ -39,12 +39,12 @@ export class Chat {
   For private messages (user to user)
   sender must exist, not system
    */
-  private async checkPrivateSender(object: Domain.HasPrivateSender): Promise<User> {
+  private async checkPrivateSender(sender: Domain.HasPrivateSender): Promise<User> {
 
 
-    Validate.ensureNonEmptyString(object.senderId, "sender");
+    Validate.ensureNonEmptyString(sender.senderId, "sender");
 
-    const sender = await this.userManager.getUserByIdOrThrow(object.senderId);
+    const sender = await this.userManager.getUserByIdOrThrow(sender.senderId);
 
     Validate.ensureNotSystemId(sender.id, Domain.SYSTEM_ID);
 
