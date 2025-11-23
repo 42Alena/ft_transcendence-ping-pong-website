@@ -89,6 +89,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendUserToUserMessage()
 	+ sendPrivateGameInviteMessage()
 	+ sendTournamentMessage()
+	+ adapted send new messages with different types of NewMessageChat
 
 ### UserManager
 	+ added additional check for get users/id if not deleted

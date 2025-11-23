@@ -188,7 +188,7 @@ export type MessageChat = {
 	createdAt: TimeSec;
 };
 
-// export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
+export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
 
 //normal private DM: no meta
 export type NewPrivateMessage = {

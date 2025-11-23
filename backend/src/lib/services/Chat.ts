@@ -35,14 +35,11 @@ export class Chat {
 
 
   private async sendUserToUserMessage(
-    senderId: Domain.PrivateSenderId,
-    receiverId: Domain.PrivateSenderId,
-    type: Domain.MessageTypeChat,
-    content: Domain.MessageContent,
-    meta: Domain.Meta,
+    message: Domain.NewMessageChat
 
   ): Promise<Domain.SendMessageResult> {
 
+    const { senderId, receiverId, content } = message;
     const contentError = Validate.validateMessageContent(content);
     if (contentError)
       return { ok: false, reason: "invalid_content" };
@@ -73,18 +70,6 @@ export class Chat {
       return { ok: false, reason: "blocked" };
     }
 
-
-    const message: Domain.NewMessageChat = {
-
-      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
-      type,                    // one of MessageTypeChat
-      senderId,
-      receiverId,
-      content,
-      meta,
-      // createdAt: unixTimeNow(),                 // or with it for MessageChat
-    };
-
     await this.saveMessageInDB(message);
 
     return { ok: true };
@@ -104,18 +89,18 @@ export class Chat {
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
     content: Domain.MessageContent,
-  
+
   ): Promise<Domain.SendMessageResult> {
 
-    return this.sendUserToUserMessage(
-      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+    const msg: Domain.NewPrivateMessage = {
+      type: "PrivateMessage",
       senderId,
       receiverId,
-      "PrivateMessage",                    // one of MessageTypeChat
       content,
-      null,         //meta: null,
-      // createdAt: unixTimeNow(),                 // or with it for MessageChat
-    );
+      meta: null,
+    };
+
+    return this.sendUserToUserMessage(msg);
   }
 
 
@@ -131,18 +116,18 @@ export class Chat {
   async sendPrivateGameInviteMessage(
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
-    meta: Domain.Meta,
   ): Promise<Domain.SendMessageResult> {
 
-    return this.sendUserToUserMessage(
-      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
+
+    const msg: Domain.NewGameInviteMessage = {
+      type: "PrivateGameInviteMessage",
       senderId,
       receiverId,
-      "PrivateGameInviteMessage",                    // one of MessageTypeChat
-      Domain.MESSAGE_GAME_INVITE,                   //content,
-      meta,         //meta: null,
-      // createdAt: unixTimeNow(),                 // or with it for MessageChat
-    );
+      content: Domain.MESSAGE_GAME_INVITE,
+      meta: null,   
+    };
+
+    return this.sendUserToUserMessage(msg);
   }
 
 
@@ -189,21 +174,17 @@ Example meta JSON of the message:
 
 
 
-    const message: Domain.NewMessageChat = {
-
-      // id: generateId() as Domain.MessageId,     // or with it for MessageChat
-      type: "TournamentMessage",                    // one of MessageTypeChat
+    const msg: Domain.NewTournamentMessage = {
+      type: "TournamentMessage",
       senderId,
       receiverId,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
       meta,
-      // createdAt: unixTimeNow(),                 // or with it for MessageChat
     };
 
-    await this.saveMessageInDB(message);
+    await this.saveMessageInDB(msg);
 
     return { ok: true };
-
 
   }
 
