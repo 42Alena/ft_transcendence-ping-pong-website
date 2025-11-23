@@ -152,19 +152,10 @@ Example meta JSON of the message:
 
   */
   async sendTournamentMessage(
-    senderId: Domain.SystemId,
     receiverId: Domain.PrivateSenderId,
     meta: Domain.MetaTournamentNextMatch,
 
   ): Promise<Domain.SendMessageResult> {
-
-
-    if (!Validate.isSystemId(senderId))
-      return { ok: false, reason: "system" };  //must be system
-
-
-    if (Validate.isSystemId(receiverId))
-      return { ok: false, reason: "system" };
 
 
     const receiver = await this.userManager.getUserById(receiverId);
@@ -176,7 +167,7 @@ Example meta JSON of the message:
 
     const msg: Domain.NewTournamentMessage = {
       type: "TournamentMessage",
-      senderId,
+        senderId: Domain.SYSTEM_ID,
       receiverId,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
       meta,

@@ -211,13 +211,13 @@ export type NewGameInviteMessage = {
 // tournament message: meta REQUIRED
 export type NewTournamentMessage = {
 	type: "TournamentMessage";
-	senderId: SenderId;
+	senderId: SystemId;
 	receiverId: ReceiverId;
 	content: MessageContent;
 	meta: MetaTournamentNextMatch;
 };
 
-export type NewMessageChat =
+export type NewMessageTypeChat =
 	| NewPrivateMessage
 	| NewGameInviteMessage
 	| NewTournamentMessage;

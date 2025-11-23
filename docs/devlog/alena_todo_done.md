@@ -90,6 +90,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendPrivateGameInviteMessage()
 	+ sendTournamentMessage()
 	+ adapted send new messages with different types of NewMessageChat
+	+ corrected sendTournamentMessage to work withoit ender(system_id)
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
