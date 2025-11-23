@@ -107,7 +107,7 @@ Not required for evaluation — used for organization and pull request preparati
 			'AI_SVEVA',
 			'AI_LUIS',
 			'AI_42BERLIN',
-	+ add check if name starts with "AI_'
+	+ add check if name starts with AI_'
 ### TESTS
 	+ backend/tests/chat.sh  - tests for chat
 

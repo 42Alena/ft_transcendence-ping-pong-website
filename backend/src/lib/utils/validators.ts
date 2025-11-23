@@ -2,7 +2,13 @@ import type *  as Domain from '../types/api';
 import { SYSTEM_ID, SystemId } from '../types/domain';
 
 
-const RESERVED = new Set(['admin', 'root', 'null', 'system', 'api', 'me',
+const RESERVED = new Set([
+	'admin',
+	'root',
+	'null',
+	'system',
+	'api',
+	'me',
 	'AI',
 	'AI_',
 	'AI_AlENA',
