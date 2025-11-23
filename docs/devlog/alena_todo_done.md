@@ -96,18 +96,29 @@ Not required for evaluation — used for organization and pull request preparati
 ### domain types
 	- corrected types for messages, excuded public msg. will be no public chat 
 	+ sendMessageResult
+	+ TOURNAMENT_AI_ALIASES:
+		 - 5  reserved names for AI:
+		- 'AI',
+		- 'AI_AlENA',
+		- 'AI_SVEVA',
+		- 'AI_LUIS',
+		-'AI_42BERLIN',
+	+ added different type of meta for messages in Chat tournament/invite
+	+ added different types to messages with/without meta:
+	```
+		NewMessageChat =
+	| NewPrivateMessage
+	| NewGameInviteMessage
+	| NewTournamentMessage;
+	```
 
 ### api types
 
 #### validators 
 	+ validateMessageContent
-	+ added 5  reserved names for AI:
-			'AI',
-			'AI_AlENA',
-			'AI_SVEVA',
-			'AI_LUIS',
-			'AI_42BERLIN',
-	+ add check if name starts with AI_'
+	+ added
+	+ add check if name starts with AI_ or is 5  reserved names for AI'
+
 ### TESTS
 	+ backend/tests/chat.sh  - tests for chat
 

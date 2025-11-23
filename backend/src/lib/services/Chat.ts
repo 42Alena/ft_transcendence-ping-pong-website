@@ -104,7 +104,7 @@ export class Chat {
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
     content: Domain.MessageContent,
-     meta: Domain.Meta,
+  
   ): Promise<Domain.SendMessageResult> {
 
     return this.sendUserToUserMessage(
@@ -113,7 +113,7 @@ export class Chat {
       receiverId,
       "PrivateMessage",                    // one of MessageTypeChat
       content,
-      meta,         //meta: null,
+      null,         //meta: null,
       // createdAt: unixTimeNow(),                 // or with it for MessageChat
     );
   }
@@ -131,7 +131,7 @@ export class Chat {
   async sendPrivateGameInviteMessage(
     senderId: Domain.PrivateSenderId,
     receiverId: Domain.PrivateSenderId,
-     meta: Domain.Meta,
+    meta: Domain.Meta,
   ): Promise<Domain.SendMessageResult> {
 
     return this.sendUserToUserMessage(
@@ -145,7 +145,7 @@ export class Chat {
     );
   }
 
- 
+
 
   /* 
     Systems sends to user
@@ -153,11 +153,23 @@ export class Chat {
     receiverId: UserId    //from interface(who are scheduled to play next)   
     content: string;        //not empty
     type: 'Tournamentmsg'; //from interface
+
+     
+
+Example meta JSON of the message:
+    {
+  "kind": "next_match",
+  "tournamentId": "t123",
+  "matchId": "m5",
+  "player1": { "id": "realUserId123", "alias": "Alena42" },
+  "player2": { "id": null, "alias": "AI_1" }
+}
+
   */
-  async sendTournamentMessage( 
+  async sendTournamentMessage(
     senderId: Domain.SystemId,
     receiverId: Domain.PrivateSenderId,
-    meta: Domain.Meta,
+    meta: Domain.MetaTournamentNextMatch,
 
   ): Promise<Domain.SendMessageResult> {
 

@@ -11,9 +11,13 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
+
+
+
+
 //_____________GDPR: delete/anonymize user account
-export const DELETED_USER_DISPLAY_NAME = "Deleted user";
-export const DELETED_USERNAME = "Deleted_";
+export const DELETED_USER_DISPLAY_NAME = "Deleted user" as const;
+export const DELETED_USERNAME = "Deleted_" as const;
 export const DELETED_AVATARURL = null;
 // export type DeletedUser = null;
 // export type UserOrDeleted = User | DeletedUser;
@@ -151,7 +155,13 @@ export type SystemId = typeof SYSTEM_ID;
 
 export type MessageContent = string;
 export type MessageId = number;
-export type Meta = string | null;  // JSON: { "sender":"abc", "message": "hello", ... } or null
+
+
+
+// JSON: { "sender":"abc", "message": "hello", ... } or null
+export type Meta =
+	| null  //for game invite and priate message
+	| MetaTournamentNextMatch;
 
 
 
@@ -162,11 +172,12 @@ export type ReceiverId = PrivateSenderId;
 
 
 export type MessageTypeChat =
-  | 'PrivateMessage'
-  | 'PrivateGameInviteMessage'
-  | 'TournamentMessage';
+	| 'PrivateMessage'
+	| 'PrivateGameInviteMessage'
+	| 'TournamentMessage';
 
 
+//to frontent (move to API?)
 export type MessageChat = {
 	id: MessageId;
 	type: MessageTypeChat;
@@ -177,22 +188,56 @@ export type MessageChat = {
 	createdAt: TimeSec;
 };
 
-export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
+// export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
+
+//normal private DM: no meta
+export type NewPrivateMessage = {
+	type: "PrivateMessage";
+	senderId: SenderId;
+	receiverId: ReceiverId;
+	content: MessageContent;
+	meta: null;
+};
+
+// game invite: meta REQUIRED (only if you decide to use it)
+export type NewGameInviteMessage = {
+	type: "PrivateGameInviteMessage";
+	senderId: SenderId;
+	receiverId: ReceiverId;
+	content: MessageContent;
+	meta: null;
+};
+
+// tournament message: meta REQUIRED
+export type NewTournamentMessage = {
+	type: "TournamentMessage";
+	senderId: SenderId;
+	receiverId: ReceiverId;
+	content: MessageContent;
+	meta: MetaTournamentNextMatch;
+};
+
+export type NewMessageChat =
+	| NewPrivateMessage
+	| NewGameInviteMessage
+	| NewTournamentMessage;
 
 
 export type SendMessageResult =
 	| { ok: true }
 	| {
 		ok: false; reason:
-			| "not_me"    // sender id != current user / invalid session
-			| "system"    // tried to use SYSTEM_ID where only users are allowed
-			| "not_system"    // not SYSTEM_ID for tournament
-			| "not_found" // receiver (or sender) doesn’t exist / deleted
-			| "blocked"  // receiver has blocked sender
-			| "invalid_content";
+		| "not_me"    // sender id != current user / invalid session
+		| "system"    // tried to use SYSTEM_ID where only users are allowed
+		| "not_system"    // not SYSTEM_ID for tournament
+		| "not_found" // receiver (or sender) doesn’t exist / deleted
+		| "blocked"  // receiver has blocked sender
+		| "invalid_content";
 	};
 
-//__________________GAME______________
+
+
+//__________________CHAT + GAME______________
 
 
 export const MESSAGE_GAME_INVITE = "Let`s play Ping Pong together! :)" as const;
@@ -200,6 +245,36 @@ export type MessageGameInvite = typeof MESSAGE_GAME_INVITE;
 
 export const MESSAGE_TOURNAMENT_INVITE = "Your tournament starts now! :)" as const;
 export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
+
+
+
+
+
+
+// // Meta for a direct private game invite (user touser)
+// export type MetaGameInvite = {
+
+// 	kind: "game_invite";
+
+// 	// who is inviting whom (both real users)
+// 	from: { id: UserId; alias: string };
+// 	to: { id: UserId; alias: string };
+
+
+// 	// invitedAt?: TimeSec;
+// 	//message?: string;
+// };
+
+
+export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
+
+export type MetaTournamentNextMatch = {
+	kind: "next_match";
+	tournamentId: string;
+	matchId: string;
+	player1: { id: UserId | null; alias: string };
+	player2: { id: UserId | null; alias: string };
+};
 
 //_____________MATCH______________________
 export type MatchResult = {
@@ -209,33 +284,30 @@ export type MatchResult = {
 };
 
 
+//_____________ CONSTANTS__________________
 
+export const TOURNAMENT_AI_ALIASES = [
+	'AI_ALENA',
+	'AI_SVEVA',
+	'AI_LUIS',
+	'AI_42BERLIN',
+] as const;
 
-//old 1. version for[]:
-// /* 
-// used info for interface:
-// https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
-// interface= object
-// */
-// export interface MessageBase {
+export const AI_NAME_PREFIX = "AI_";
+export const AI_NAME_SUFFIX = "_AI";
 
-// 	senderId: SenderId;
-// 	content: MessageContent;
-// };
+const RESERVED_NAMES : string[] =[
+	'admin',
+	'root',
+	'null',
+	'system',
+	'SYSTEM_ID',
+	'api',
+	'delete',
+	DELETED_USER_DISPLAY_NAME,  // Deleted_
+	DELETED_USERNAME,
+	SYSTEM_ID,
+	...TOURNAMENT_AI_ALIASES,
+];
+export const RESERVED = RESERVED_NAMES;
 
-// export interface MessagePrivate extends MessageBase {
-// 	type: 'PrivateMsg';
-// 	senderId: UserId; 	 //override MessageBase: must be a real user
-// 	receiverId: ReceiverId;
-// }
-
-// export interface MessagePrivateGameInvite extends MessageBase {
-// 	type: 'PrivateGameInviteMsg';
-// 	senderId: UserId;
-// 	receiverId: ReceiverId;
-// }
-// export interface MessageTournament extends MessageBase {
-// 	type: 'TournamentMsg';
-// 	senderId: SystemId;
-// 	receiverId: ReceiverId;  //who will play in tournament
-// }

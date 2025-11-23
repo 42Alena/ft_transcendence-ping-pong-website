@@ -1,22 +1,9 @@
-import type *  as Domain from '../types/api';
-import { SYSTEM_ID, SystemId } from '../types/domain';
+
+import *  as Domain from '../types/domain';
+import { DELETED_USERNAME, SYSTEM_ID, SystemId } from '../types/domain';
 
 
-const RESERVED = new Set([
-	'admin',
-	'root',
-	'null',
-	'system',
-	'api',
-	'me',
-	'AI',
-	'AI_',
-	'AI_AlENA',
-	'AI_SVEVA',
-	'AI_LUIS',
-	'AI_42BERLIN',
-	SYSTEM_ID,
-]);
+const RESERVED = new Set(Domain.RESERVED.map(n => n.toLowerCase()));
 
 //________STRING____________________
 export function isEmptyString(value: string): boolean {
@@ -39,20 +26,45 @@ export function normalizeName(name: string): string {
 }
 
 
+/*
+Regex version (case-insensitive) 
+/_AI$/i
+_AI – the literal text
+$ – end of string
+i – case-insensitive (_AI, _ai, _Ai, …)
+*/
 export function validateName(name: string): string | null {
 
-	if (name.length < 3 || name.length > 15) return "Length: 3–15 chars";
+	if (name.length < 3 || name.length > 15)
+		return "Length: 3–15 chars";
 
-	if (RESERVED.has(name.toLowerCase())) return 'Reserved word';
+	if (RESERVED.has(name.toLowerCase()))
+		return 'Reserved word';
 
-	// reserved: AI_ prefix (reserved for bots)
-	if (/^AI_/i.test(name)) return "Names starting with 'AI_' are reserved";
+	const lower = name.toLowerCase();
+
+	// reserved: DELETED_ prefix (deleted users)
+	if (lower.startsWith(DELETED_USERNAME.toLowerCase())) {
+		return `Names starting with '${DELETED_USERNAME}' are reserved`;
+	}
+
+	// reserved: AI_ prefix (bots)
+	if (lower.startsWith(Domain.AI_NAME_PREFIX.toLowerCase())) {
+		return `Names starting with '${Domain.AI_NAME_PREFIX}' are reserved`;
+	}
+
+	// reserved: _AI suffix (bots)
+	if (lower.endsWith(Domain.AI_NAME_SUFFIX.toLowerCase())) {
+		return `Names ending with '${Domain.AI_NAME_SUFFIX}' are reserved`;
+	}
 
 	// ^ = start of string; [A-Za-z] = first char must be a letter (A–Z or a–z)
-	if (!/^[A-Za-z]/.test(name)) return "Must start with a letter";
+	if (!/^[A-Za-z]/.test(name))
+		return "Must start with a letter";
 
 	// ^ = start; \w = [A-Za-z0-9_]; + = one or more; $ = end. Whole string is only letters/digits/underscore
-	if (!/^\w+$/.test(name)) return "Only letters, digits, _";
+	if (!/^\w+$/.test(name))
+		return "Only letters, digits, _";
 
 	return null;
 }
@@ -83,9 +95,6 @@ export function validatePassword(pw: string, username: string, displayName: stri
 }
 
 
-
-/* 
-// OLD: from first version with Classes. Leave here in case I need later
 
 /* 
 not empty string

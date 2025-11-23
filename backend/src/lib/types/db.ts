@@ -1,6 +1,9 @@
 import { AvatarUrl, DisplayName, MessageTypeChat, MessageContent, MessageId, Meta, PasswordHash, ReceiverId, SenderId, TimeSec,  UserId, Username } from "../types/domain";
 
 
+export type JsonText = string;       // plain JSON string
+export type MetaDb = JsonText | null;
+
 //types in db row users
 export type UserDbRow = {
 	id: UserId;
@@ -21,7 +24,7 @@ export type MessageDbRow = {
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
-	meta: Meta;
+	meta: MetaDb;
 	createdAt: TimeSec;
 };
 
