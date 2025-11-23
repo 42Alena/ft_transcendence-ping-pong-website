@@ -101,7 +101,13 @@ Not required for evaluation — used for organization and pull request preparati
 
 #### validators 
 	+ validateMessageContent
-
+	+ added 5  reserved names for AI:
+			'AI',
+			'AI_AlENA',
+			'AI_SVEVA',
+			'AI_LUIS',
+			'AI_42BERLIN',
+	+ add check if name starts with "AI_'
 ### TESTS
 	+ backend/tests/chat.sh  - tests for chat
 

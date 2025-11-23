@@ -3,7 +3,12 @@ import { SYSTEM_ID, SystemId } from '../types/domain';
 
 
 const RESERVED = new Set(['admin', 'root', 'null', 'system', 'api', 'me',
-	'ai',
+	'AI',
+	'AI_',
+	'AI_AlENA',
+	'AI_SVEVA',
+	'AI_LUIS',
+	'AI_42BERLIN',
 	SYSTEM_ID,
 ]);
 
@@ -33,6 +38,9 @@ export function validateName(name: string): string | null {
 	if (name.length < 3 || name.length > 15) return "Length: 3–15 chars";
 
 	if (RESERVED.has(name.toLowerCase())) return 'Reserved word';
+
+	// reserved: AI_ prefix (reserved for bots)
+	if (/^AI_/i.test(name)) return "Names starting with 'AI_' are reserved";
 
 	// ^ = start of string; [A-Za-z] = first char must be a letter (A–Z or a–z)
 	if (!/^[A-Za-z]/.test(name)) return "Must start with a letter";
