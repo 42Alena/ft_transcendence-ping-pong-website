@@ -67,13 +67,9 @@ function setGameType(text: string) {
   aliasPlayerFourInput.value = "";
 
   aliasPlayerOneInput.readOnly = false;
-  aliasPlayerOneButton.disabled = false;
   aliasPlayerTwoInput.readOnly = false;
-  aliasPlayerTwoButton.disabled = false;
   aliasPlayerThreeInput.readOnly = false;
-  aliasPlayerThreeButton.disabled = false;
   aliasPlayerFourInput.readOnly = false;
-  aliasPlayerFourButton.disabled = false;
 
   AIPlayerTwo = AIisOff(
     AIonButtonPlayerTwo,
@@ -120,8 +116,16 @@ function aliasSelection() {
 }
 
 //check/add player to the list
+function checkAIinName(name : string) : boolean
+{
+  const lowerName = name.toLowerCase();
+  if (name.includes('ai'))
+    return true;
+  return false;
+}
+
 function checkAlias(name: string, AIFlag: boolean): string {
-  if (name == "AI" && !AIFlag) return "";
+  if (checkAIinName(name) && !AIFlag) return "";
   else if (name == "") return "";
   else if (name == "AI") return "Ai";
   for (let i = 0; i < players.length; i++) {
@@ -160,6 +164,7 @@ function AIisOn(onButton: any, offButton: any, input: any): boolean {
   onButton.classList.add("active");
   offButton.classList.remove("active");
   input.value = "AI";
+  input.readOnly = true;
   return true;
 }
 
@@ -167,6 +172,7 @@ function AIisOff(onButton: any, offButton: any, input: any): boolean {
   onButton.classList.remove("active");
   offButton.classList.add("active");
   input.value = "";
+  input.readOnly = false;
   return false;
 }
 
