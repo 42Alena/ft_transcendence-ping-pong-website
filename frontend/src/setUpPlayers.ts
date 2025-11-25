@@ -130,17 +130,9 @@ function aliasSelection() {
 }
 
 //check/add player to the list
-function checkAIinName(name : string) : boolean
-{
-  const lowerName = name.toLowerCase();
-  if (lowerName.includes('ai'))
-    return true;
-  return false;
-}
 
 function checkAlias(name: string, AIFlag: boolean): string {
-  if (checkAIinName(name) && !AIFlag) return "";
-  else if (name == "") return "";
+  if (name == "") return "";
   for (let i = 0; i < players.length; i++) {
     if (players[i].name == name) {
       return "";
@@ -202,7 +194,7 @@ AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
     AIonButtonPlayerTwo,
     AIoffButtonPlayerTwo,
     aliasPlayerTwoInput,
-    "AlENA",
+    "ALENA",
   );
 });
 
