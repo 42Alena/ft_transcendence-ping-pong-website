@@ -311,3 +311,5 @@ const RESERVED_NAMES : string[] =[
 ];
 export const RESERVED = RESERVED_NAMES;
 
+// const newObj = Object.assign({}, baseObject, { new: prop })
+// const newObj = { ...baseObject, ...{new: prop}}
