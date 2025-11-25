@@ -202,7 +202,7 @@ AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
     AIonButtonPlayerTwo,
     AIoffButtonPlayerTwo,
     aliasPlayerTwoInput,
-    "2",
+    "AlENA",
   );
 });
 
@@ -219,7 +219,7 @@ AIonButtonPlayerThree.addEventListener("click", (even: any) => {
     AIonButtonPlayerThree,
     AIoffButtonPlayerThree,
     aliasPlayerThreeInput,
-    "3",
+    "SVEVA",
   );
 });
 
@@ -236,7 +236,7 @@ AIonButtonPlayerFour.addEventListener("click", (even: any) => {
     AIonButtonPlayerFour,
     AIoffButtonPlayerFour,
     aliasPlayerFourInput,
-    "4",
+    "LUIS",
   );
 });
 
