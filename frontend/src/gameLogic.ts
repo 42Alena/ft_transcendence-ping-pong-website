@@ -150,8 +150,8 @@ class Ball {
 
   constructor() {
     this.length = 12;
-    this.dx = 5;
-    this.dy = -5;
+    this.dx = 6;
+    this.dy = -6;
     this.color = "red";
     this.x = 0;
     this.y = 0;
@@ -323,27 +323,30 @@ class Game {
 
     if (this.player1.isAI)
     {
-      if (this.ball.y > this.paddleLeft.y + this.paddleLeft.length / 2) {
-        this.paddleLeft.y += 3;
-      if (this.paddleLeft.y + this.paddleLeft.length > canvas.height) {
-        this.paddleLeft.y = canvas.height - this.paddleLeft.length;
-      }
-      } else if (this.ball.y < this.paddleLeft.y + this.paddleLeft.length / 2) {
-        this.paddleLeft.y -= 3;
-        if (this.paddleLeft.y < 0) {
-          this.paddleLeft.y = 0;
+      if (this.ball.x < canvas.width / 2 && this.ball.dx < 0)
+      {
+        if (this.ball.y > this.paddleLeft.y + this.paddleLeft.length / 2 && Math.random() < 0.6) {
+          this.paddleLeft.y += this.paddleLeft.v;
+        if (this.paddleLeft.y + this.paddleLeft.length > canvas.height) {
+          this.paddleLeft.y = canvas.height - this.paddleLeft.length;
+        }
+        } else if (this.ball.y < this.paddleLeft.y + this.paddleLeft.length / 2 && Math.random() < 0.6) {
+          this.paddleLeft.y -= this.paddleLeft.v;
+          if (this.paddleLeft.y < 0) {
+            this.paddleLeft.y = 0;
+          }
         }
       }
     }
     else
     {
       if (this.paddleLeft.down) {
-      this.paddleLeft.y += 7;
+      this.paddleLeft.y += this.paddleLeft.v;
       if (this.paddleLeft.y + this.paddleLeft.length > canvas.height) {
         this.paddleLeft.y = canvas.height - this.paddleLeft.length;
       }
       } else if (this.paddleLeft.up) {
-        this.paddleLeft.y -= 7;
+        this.paddleLeft.y -= this.paddleLeft.v;
         if (this.paddleLeft.y < 0) {
           this.paddleLeft.y = 0;
         }
@@ -354,12 +357,12 @@ class Game {
       if (this.ball.x > canvas.width / 2 && this.ball.dx > 0)
       {
           if (this.ball.y > this.paddleRight.y + this.paddleRight.length / 2 && Math.random() < 0.6) {
-              this.paddleRight.y += 7;
+              this.paddleRight.y += this.paddleRight.v;
           if (this.paddleRight.y + this.paddleRight.length > canvas.height) {
             this.paddleRight.y = canvas.height - this.paddleRight.length;
           }
           } else if (this.ball.y < this.paddleRight.y + this.paddleRight.length / 2 && Math.random() < 0.6) {
-            this.paddleRight.y -= 7;
+            this.paddleRight.y -= this.paddleRight.v;
             if (this.paddleRight.y < 0) {
               this.paddleRight.y = 0;
             }
@@ -369,12 +372,12 @@ class Game {
     else
     {
       if (this.paddleRight.down) {
-        this.paddleRight.y += 7;
+        this.paddleRight.y += this.paddleRight.v;
         if (this.paddleRight.y + this.paddleRight.length > canvas.height) {
           this.paddleRight.y = canvas.height - this.paddleRight.length;
         }
       } else if (this.paddleRight.up) {
-        this.paddleRight.y -= 7;
+        this.paddleRight.y -= this.paddleRight.v;
         if (this.paddleRight.y < 0) {
           this.paddleRight.y = 0;
         }
