@@ -67,12 +67,22 @@ function setGameType(text: string) {
   aliasPlayerFourInput.value = "";
 
   aliasPlayerOneInput.readOnly = false;
-  aliasPlayerOneButton.disabled = false;
   aliasPlayerTwoInput.readOnly = false;
-  aliasPlayerTwoButton.disabled = false;
   aliasPlayerThreeInput.readOnly = false;
-  aliasPlayerThreeButton.disabled = false;
   aliasPlayerFourInput.readOnly = false;
+
+  aliasPlayerOneInput.classList.remove("placeholder-green-300", "border", "border-green-400");
+  aliasPlayerTwoInput.classList.remove("placeholder-green-300", "border", "border-green-400");
+  aliasPlayerThreeInput.classList.remove("placeholder-green-300", "border", "border-green-400");
+  aliasPlayerFourInput.classList.remove("placeholder-green-300", "border", "border-green-400");
+  aliasPlayerOneInput.classList.remove("placeholder-red-300", "border", "border-red-400");
+  aliasPlayerTwoInput.classList.remove("placeholder-red-300", "border", "border-red-400");
+  aliasPlayerThreeInput.classList.remove("placeholder-red-300", "border", "border-red-400");
+  aliasPlayerFourInput.classList.remove("placeholder-red-300", "border", "border-red-400");
+
+  aliasPlayerOneButton.disabled = false;
+  aliasPlayerTwoButton.disabled = false;
+  aliasPlayerThreeButton.disabled = false;
   aliasPlayerFourButton.disabled = false;
 
   AIPlayerTwo = AIisOff(
@@ -120,10 +130,9 @@ function aliasSelection() {
 }
 
 //check/add player to the list
+
 function checkAlias(name: string, AIFlag: boolean): string {
-  if (name == "AI" && !AIFlag) return "";
-  else if (name == "") return "";
-  else if (name == "AI") return "Ai";
+  if (name == "") return "";
   for (let i = 0; i < players.length; i++) {
     if (players[i].name == name) {
       return "";
@@ -136,7 +145,7 @@ function addPlayer(name: string, AI: boolean, index: number) {
   const player = new Player(name, AI, index);
   players.push(player);
 }
-
+const errorMessage : any = document.getElementById("validationMsg");
 function processInput(
   input: any,
   index: number,
@@ -148,18 +157,26 @@ function processInput(
     addPlayer(name, AIFlag, index);
     input.readOnly = true;
     AIbuttonsDiv.classList.add("invisible");
+    input.classList.remove("placeholder-red-300", "border", "border-red-400");
+    input.classList.add("placeholder-green-300", "border", "border-green-400");
+    // errorMessage.classList.remove("flex");
+    // errorMessage.classList.add("hidden");
     //add green text + check
     return true;
   }
+  // errorMessage.classList.add("flex");
+  // errorMessage.classList.remove("hidden");
   input.value = "";
+  input.classList.add("placeholder-red-300", "border", "border-red-400");
   return false;
 }
 
 //Switch on/off AI button
-function AIisOn(onButton: any, offButton: any, input: any): boolean {
+function AIisOn(onButton: any, offButton: any, input: any, numb : string): boolean {
   onButton.classList.add("active");
   offButton.classList.remove("active");
-  input.value = "AI";
+  input.value = "AI_" + numb;
+  input.readOnly = true;
   return true;
 }
 
@@ -167,6 +184,7 @@ function AIisOff(onButton: any, offButton: any, input: any): boolean {
   onButton.classList.remove("active");
   offButton.classList.add("active");
   input.value = "";
+  input.readOnly = false;
   return false;
 }
 
@@ -176,6 +194,7 @@ AIonButtonPlayerTwo.addEventListener("click", (even: any) => {
     AIonButtonPlayerTwo,
     AIoffButtonPlayerTwo,
     aliasPlayerTwoInput,
+    "ALENA",
   );
 });
 
@@ -192,6 +211,7 @@ AIonButtonPlayerThree.addEventListener("click", (even: any) => {
     AIonButtonPlayerThree,
     AIoffButtonPlayerThree,
     aliasPlayerThreeInput,
+    "SVEVA",
   );
 });
 
@@ -208,6 +228,7 @@ AIonButtonPlayerFour.addEventListener("click", (even: any) => {
     AIonButtonPlayerFour,
     AIoffButtonPlayerFour,
     aliasPlayerFourInput,
+    "LUIS",
   );
 });
 
@@ -222,13 +243,18 @@ AIoffButtonPlayerFour.addEventListener("click", (event: any) => {
 //buttons
 //process input and check if we can start the game
 aliasPlayerOneButton.addEventListener("click", () => {
+  console.log("button ok pressed");
   const startGame = processInput(
     aliasPlayerOneInput,
     1,
     AIPlayerOneButtonsDiv,
     false,
   );
-  if (startGame == true) showPageBeforeGame();
+  if (startGame == true)
+  {
+      aliasPlayerOneButton.disabled = true;
+      showPageBeforeGame();
+  }
 });
 
 aliasPlayerTwoButton.addEventListener("click", () => {
@@ -238,7 +264,10 @@ aliasPlayerTwoButton.addEventListener("click", () => {
     AIPlayerTwoButtonsDiv,
     AIPlayerTwo,
   );
-  if (startGame == true) showPageBeforeGame();
+  if (startGame == true){
+    aliasPlayerTwoButton.disabled = true;
+    showPageBeforeGame();
+  }
 });
 
 aliasPlayerThreeButton.addEventListener("click", () => {
@@ -248,7 +277,10 @@ aliasPlayerThreeButton.addEventListener("click", () => {
     AIPlayerThreeButtonsDiv,
     AIPlayerThree,
   );
-  if (startGame == true) showPageBeforeGame();
+  if (startGame == true) {
+    aliasPlayerThreeButton.disabled = true;
+    showPageBeforeGame();
+  }
 });
 
 aliasPlayerFourButton.addEventListener("click", () => {
@@ -258,5 +290,8 @@ aliasPlayerFourButton.addEventListener("click", () => {
     AIPlayerFourButtonsDiv,
     AIPlayerFour,
   );
-  if (startGame == true) showPageBeforeGame();
+  if (startGame == true) {
+     aliasPlayerFourButton.disabled = true;
+     showPageBeforeGame();
+  }
 });
