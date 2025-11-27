@@ -43,7 +43,11 @@ backend:
 	cd "$(BACKEND_DIR)" && npm run start
 
 frontend:
-	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
+	cd "$(FRONTEND_DIR)" && \
+	npm run compile && \
+	npm run bundle && \
+	npm run compile-css && \
+	npm run serve
 
 # old
 # db: check-tools

@@ -57,14 +57,6 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-TODO ROUTES: 
 
-	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE PASSWORD ____________
-	//_________________SETTINGS: DELETE USER____________
-	
-	//_________________ONLINE/OFFLINE____________
-
-------------------------
-------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
 
 
@@ -135,6 +127,55 @@ Not required for evaluation — used for organization and pull request preparati
 
 	# 2. in 2.terminal: 
 	make tests_user_settings
+
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+## FRONTEND
+ - added chart.js package (small library to draw graphs (used for Stats Dashboard))
+ - fixed tsconfig.json module resolution (so TypeScript can find Chart.js correctly)
+ - installed esbuild bundler to bundle modules (inline libraries). Bundles TS + Chart.js into one browser-ready file
+ - added script to  compile tailwind
+ - changed makefile `make frontend` that now is doing all this steps.  now runs all steps (TS → JS, bundling, Tailwind)
+ - added charts.ts
+
+
+ - you  can see charts on the main page on the bottom, if you put test example from TEST in index.html
+
+
+### TESTS
+
+!must be canvas element
+
+copy to index.html:
+```bash
+# index.html
+    # <script src="dist/createRules.js"></script> line before
+
+    <!-- ALENA -->
+    <canvas id="myChart"></canvas>
+    <script src="dist/charts.js"></script>
+    <!-- ALENA -->
+
+    # <script src="dist/api/user.js" type="module"></script> line after
+```
+
+
+## 🔗 LINKS / HELP
+
+example from
+
+ https://www.chartjs.org/docs/latest/getting-started/usage.html
+
+# HOW TO TEST: 
+1. copy example from TEST to index.html
+```bash
+	#  1. in 1.terminal 
+	make frontend
+
 ```
 
 
