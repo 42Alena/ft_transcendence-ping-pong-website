@@ -159,9 +159,9 @@ export type MessageId = number;
 
 
 // JSON: { "sender":"abc", "message": "hello", ... } or null
-export type Meta =
-	| null  //for game invite and priate message
-	| MetaTournamentNextMatch;
+// export type Meta =
+// 	| null  //for game invite and priate message
+// 	| MetaTournamentNextMatch;
 
 
 
@@ -184,7 +184,7 @@ export type MessageChat = {
 	senderId: SenderId;		// UserId | SystemId
 	receiverId: ReceiverId;   // UserId
 	content: MessageContent;
-	meta: Meta;				// maybe Meta | null
+	// meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
 };
 
@@ -196,16 +196,17 @@ export type NewPrivateMessage = {
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
-	meta: null;
+	// meta: null;
 };
 
-// game invite: meta REQUIRED (only if you decide to use it)
+
 export type NewGameInviteMessage = {
 	type: "PrivateGameInviteMessage";
 	senderId: SenderId;
 	receiverId: ReceiverId;
-	content: MessageContent;
-	meta: null;
+	// content: MessageContent;
+	content: typeof MESSAGE_GAME_INVITE;  // always this constant
+	// meta: null; // no meta for now
 };
 
 // tournament message: meta REQUIRED
@@ -213,8 +214,9 @@ export type NewTournamentMessage = {
 	type: "TournamentMessage";
 	senderId: SystemId;
 	receiverId: ReceiverId;
-	content: MessageContent;
-	meta: MetaTournamentNextMatch;
+	content:  typeof MESSAGE_TOURNAMENT_INVITE;
+	// content: MessageContent;
+	// meta: MetaTournamentNextMatch;
 };
 
 export type NewMessageTypeChat =

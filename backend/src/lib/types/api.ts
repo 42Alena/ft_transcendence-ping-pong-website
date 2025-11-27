@@ -79,3 +79,38 @@ export type UserAwareRequest = FastifyRequest & {
 	userId: string;
 	loginSessionId: string;
 }
+
+
+//____________________CHAT_____________________
+
+export type PrivateSenderId = UserId;
+
+export type SenderId = PrivateSenderId;
+export type ReceiverId = PrivateSenderId;
+
+export type MessageContent = string;
+
+export type ChatMessageType =
+  | "PrivateMessage"
+  | "PrivateGameInviteMessage"
+  | "TournamentMessage";
+  
+// Body that client sends for send message
+
+type SendGameInviteBody = {
+  receiverId: Domain.ReceiverId;
+  // no content, backend will use MESSAGE_GAME_INVITE
+};
+
+
+type SendPrivateMessageBody = {
+  receiverId: ReceiverId;
+  content: MessageContent;
+  // no type, no senderId
+};
+
+type SendTournamentMessageBody = {
+  receiverId: ReceiverId;
+  meta:
+  // no content, backend will use MESSAGE_GAME_INVITE
+};

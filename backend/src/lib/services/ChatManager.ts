@@ -7,7 +7,8 @@ import * as Validate from '../utils/validators';
 import { db } from './DB';
 import { UserManager } from './UserManager';
 
-export class Chat {
+
+export class ChatManager {
 
 
   userManager: UserManager;
@@ -97,7 +98,7 @@ export class Chat {
       senderId,
       receiverId,
       content,
-      meta: null,
+      // meta: null,
     };
 
     return this.sendUserToUserMessage(msg);
@@ -110,7 +111,7 @@ export class Chat {
    User sends  private msg to private chat, if not blocked by another user
     senderId: UserId      //from interface(not SystemId);       
     receiverId: UserId;   //from interface  (if not blocked senderId)  
-    content: string;      //not empty
+    content: fixed text on backend (MESSAGE_GAME_INVITE)
     type: 'PrivateGameInviteMsg';
   */
   async sendPrivateGameInviteMessage(
@@ -124,7 +125,7 @@ export class Chat {
       senderId,
       receiverId,
       content: Domain.MESSAGE_GAME_INVITE,
-      meta: null,   
+      // meta: null,   
     };
 
     return this.sendUserToUserMessage(msg);
@@ -170,7 +171,7 @@ Example meta JSON of the message:
         senderId: Domain.SYSTEM_ID,
       receiverId,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
-      meta,
+      // meta,
     };
 
     await this.saveMessageInDB(msg);
