@@ -102,7 +102,7 @@ class Paddle {
   width: number;
   length: number;
   color: string;
-  v: number;
+  dy: number;
   x: number;
   y: number;
   up: boolean;
@@ -112,7 +112,7 @@ class Paddle {
     this.length = 70;
     this.width = 10;
     this.color = "white";
-    this.v = 7;
+    this.dy = 7;
     this.x = 0;
     this.y = 0;
     this.up = false;
@@ -137,7 +137,19 @@ class Paddle {
     ctx.closePath();
   }
 
-  moveUP() {}
+  moveUp() {
+    this.y -= this.dy;
+    if (this.y < 0) {
+      this.y = 0;
+    }
+  }
+
+  moveDown() {
+    this.y += this.dy;
+    if (this.y + this.length > canvas.height) {
+      this.y = canvas.height - this.length;
+    }
+  }
 }
 
 class Ball {
@@ -321,103 +333,108 @@ class Game {
     this.paddleRight.drawPaddle();
     this.paddleLeft.drawPaddle();
 
+    //move player 1
     if (this.player1.isAI)
     {
       if (this.ball.x < canvas.width / 2 && this.ball.dx < 0)
       {
         if (this.ball.y > this.paddleLeft.y + this.paddleLeft.length / 2 && Math.random() < 0.6) {
-          this.paddleLeft.y += this.paddleLeft.v;
-        if (this.paddleLeft.y + this.paddleLeft.length > canvas.height) {
-          this.paddleLeft.y = canvas.height - this.paddleLeft.length;
-        }
+          this.paddleLeft.moveDown();
         } else if (this.ball.y < this.paddleLeft.y + this.paddleLeft.length / 2 && Math.random() < 0.6) {
-          this.paddleLeft.y -= this.paddleLeft.v;
-          if (this.paddleLeft.y < 0) {
-            this.paddleLeft.y = 0;
-          }
+          this.paddleLeft.moveUp();
         }
       }
-    }
-    else
-    {
+    } else {
       if (this.paddleLeft.down) {
-      this.paddleLeft.y += this.paddleLeft.v;
-      if (this.paddleLeft.y + this.paddleLeft.length > canvas.height) {
-        this.paddleLeft.y = canvas.height - this.paddleLeft.length;
-      }
+        this.paddleLeft.moveDown();
       } else if (this.paddleLeft.up) {
-        this.paddleLeft.y -= this.paddleLeft.v;
-        if (this.paddleLeft.y < 0) {
-          this.paddleLeft.y = 0;
+        this.paddleLeft.moveUp();
+      }
+    }
+    //move player 2
+    if (this.player2.isAI) {
+      const deadZone = this.paddleRight.length / 2 - 2; // Half the height of the paddle
+      if (
+        Math.abs(
+          this.ball.y - (this.paddleRight.y + this.paddleRight.length / 2),
+        ) > deadZone
+      ) {
+        if (
+          this.ball.y > this.paddleRight.y + this.paddleRight.length / 2 &&
+          Math.random() < 0.9
+        ) {
+          this.paddleRight.y = Math.min(
+            this.paddleRight.y + this.paddleRight.dy,
+            canvas.height - this.paddleRight.length,
+          );
+        } else if (
+          this.ball.y < this.paddleRight.y + this.paddleRight.length / 2 &&
+          Math.random() < 0.9
+        ) {
+          this.paddleRight.y = Math.max(
+            this.paddleRight.y - this.paddleRight.dy,
+            0,
+          );
         }
       }
-    }
-    if (this.player2.isAI)
-    {
-      if (this.ball.x > canvas.width / 2 && this.ball.dx > 0)
-      {
-          if (this.ball.y > this.paddleRight.y + this.paddleRight.length / 2 && Math.random() < 0.6) {
-              this.paddleRight.y += this.paddleRight.v;
-          if (this.paddleRight.y + this.paddleRight.length > canvas.height) {
-            this.paddleRight.y = canvas.height - this.paddleRight.length;
-          }
-          } else if (this.ball.y < this.paddleRight.y + this.paddleRight.length / 2 && Math.random() < 0.6) {
-            this.paddleRight.y -= this.paddleRight.v;
-            if (this.paddleRight.y < 0) {
-              this.paddleRight.y = 0;
-            }
-          }
-      }
-    }
-    else
-    {
+    } else {
       if (this.paddleRight.down) {
-        this.paddleRight.y += this.paddleRight.v;
-        if (this.paddleRight.y + this.paddleRight.length > canvas.height) {
-          this.paddleRight.y = canvas.height - this.paddleRight.length;
-        }
+        this.paddleRight.moveDown();
       } else if (this.paddleRight.up) {
-        this.paddleRight.y -= this.paddleRight.v;
-        if (this.paddleRight.y < 0) {
-          this.paddleRight.y = 0;
-        }
+        this.paddleRight.moveDown();
       }
     }
-    if (
-      this.ball.x + this.ball.dx < this.paddleLeft.x + this.paddleLeft.width ||
+    //ball collision
+    this.ball.x += this.ball.dx;
+    this.ball.y += this.ball.dy;
+
+    if (this.ball.y < 0 || this.ball.y > canvas.height - this.ball.length) {
+      this.ball.dy = -this.ball.dy;
+    }
+    //check vert walls
+      if (this.ball.x + this.ball.dx < this.paddleLeft.x + this.paddleLeft.width ||
       this.ball.x + this.ball.dx >
         canvas.width - this.ball.length - this.paddleRight.width
+    ) {    if (
+      this.ball.x + this.ball.length >= this.paddleLeft.x &&
+      this.ball.y + this.ball.length > this.paddleLeft.y &&
+      this.ball.x < canvas.width / 2 &&
+      this.ball.y - this.ball.length <
+        this.paddleLeft.y + this.paddleLeft.length
     ) {
-     if (
-        this.ball.x + this.ball.length >= this.paddleLeft.x &&
-        this.ball.y + this.ball.length > this.paddleLeft.y &&
-        this.ball.x < canvas.width / 2 &&
-        this.ball.y - this.ball.length < this.paddleLeft.y + this.paddleLeft.length
-      ){
-        this.ball.dx = -this.ball.dx;
-      } else if (
-        this.ball.x - this.ball.length <= this.paddleRight.x + this.paddleRight.width &&
-        this.ball.y + this.ball.length > this.paddleRight.y &&
-        this.ball.x > canvas.width / 2 &&
-        this.ball.y - this.ball.length < this.paddleRight.y + this.paddleRight.length
-      ) {
-        this.ball.dx = -this.ball.dx;
+      this.ball.dx = -this.ball.dx;
+      // const hitPosition = this.ball.y - this.paddleLeft.y;
+      // const offSet = this.paddleLeft.length / 2;
+      // const k = 0.1;
+      // this.ball.dy += (hitPosition - offSet) * k;
+    } else if (
+      this.ball.x - this.ball.length <=
+        this.paddleRight.x + this.paddleRight.width &&
+      this.ball.y + this.ball.length > this.paddleRight.y &&
+      this.ball.x > canvas.width / 2 &&
+      this.ball.y - this.ball.length <
+        this.paddleRight.y + this.paddleRight.length
+    ) {
+      this.ball.dx = -this.ball.dx;
+      // const hitPosition = this.ball.y - this.paddleRight.y;
+      // const offSet = this.paddleRight.length / 2;
+      // const k = 0.1;
+      // this.ball.dy += (hitPosition - offSet) * k;
+    } else {
+      if (
+        this.ball.x + this.ball.dx <
+        this.paddleLeft.x + this.paddleLeft.width
+      )
+        this.score.playerRight++;
+      else this.score.playerLeft++;
+      this.ball.startPositionBall();
+      if (Math.floor(Math.random() * 2) == 1) {
+        this.ball.dy *= 1;
       } else {
-        if (
-          this.ball.x + this.ball.dx <
-          this.paddleLeft.x + this.paddleLeft.width
-        )
-          this.score.playerRight++;
-        else this.score.playerLeft++;
-       this.ball.startPositionBall();
-       if (Math.floor(Math.random() * 2) == 1) {
-          this.ball.dy *= 1;
-        } 
-        else {  // Other 50% of the time
-          this.ball.dy *= -1;
-        }
+        this.ball.dy *= -1;
       }
     }
+  }
     if (this.score.playerLeft == 3 || this.score.playerRight == 3) {
       gameisOn = false;
       this.score.drawScore();
@@ -426,14 +443,6 @@ class Game {
       this.endGame();
       this.resetGame();
     }
-    if (
-      this.ball.y + this.ball.dy < 0 ||
-      this.ball.y + this.ball.dy > canvas.height - this.ball.length
-    ) {
-      this.ball.dy = -this.ball.dy;
-    }
-    this.ball.x += this.ball.dx;
-    this.ball.y += this.ball.dy;
   }
 
   resetGame() {
