@@ -197,6 +197,9 @@
   .invisible {
     visibility: hidden;
   }
+  .absolute {
+    position: absolute;
+  }
   .relative {
     position: relative;
   }
@@ -284,9 +287,6 @@
   .h-full {
     height: 100%;
   }
-  .min-h-\[100px\] {
-    min-height: 100px;
-  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -337,9 +337,6 @@
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -510,15 +507,6 @@
   }
   .bg-white {
     background-color: var(--color-white);
-  }
-  .bg-\[url\(\'\/images\/sides_page_girls\/pong_a\.png\'\)\] {
-    background-image: url('/images/sides_page_girls/pong_a.png');
-  }
-  .bg-size-\[50px_50px\] {
-    background-size: 50px 50px;
-  }
-  .bg-repeat {
-    background-repeat: repeat;
   }
   .object-cover {
     object-fit: cover;
