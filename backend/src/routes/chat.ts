@@ -13,27 +13,28 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 
 	/* send private message */
-	// fastify.post<{ Params: API.TargetIdParams }>(
-	// 	"/chat/messages",
-	// 	authRequiredOptions,
-	// 	async (req, reply) => {
+	fastify.post<{ Params: API.TargetIdParams }>(
+		"/chat/messages",
+		authRequiredOptions,
+		async (req, reply) => {
 
-	// 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-	// 		const { id: targetId } = req.params;  // targetId : string (UserId)
+			const { id: targetId } = req.params;  // targetId : string (UserId)
 
-	// 		const result = await userManager.addFriend(meId, targetId);
+			const result = await chatManager.endUserToUserMessage(meId, targetId);
 
-	// 		if (result.ok)
-	// 			return sendNoContent(reply);                  // 204
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
 
-	// 		// map domain reasons to HTTP
-	// 		if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
-	// 		if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
-	// 		if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
+			// map domain reasons to HTTP
+			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
+			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
+			if (result.reason === "blocked") return sendError(reply, "Blocked by user", "blocked", 403);
+			if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
 
 
-	// 	});
+		});
 
 
 }
