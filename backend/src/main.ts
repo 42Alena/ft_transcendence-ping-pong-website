@@ -4,13 +4,15 @@ import { registerRoutes as registerMainRoutes } from './routes/routes';
 import { registerChatRoutes } from './routes/chat';
 import { registerUserRoutes } from './routes/user';
 import { registerAuthRoutes } from './routes/auth';
-import { User } from './lib/services/User';
 import { UserManager } from './lib/services/UserManager';
 import { initDecorators } from './decorators';
+import { ChatManager } from './lib/services/ChatManager';
 
 const fastify = Fastify();
 
 const userManager = new UserManager()
+const chatManager = new ChatManager(userManager)
+
 fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
 
 //for file upload
@@ -34,7 +36,7 @@ fastify.decorate('userManager', userManager);
 //_____________________ROUTES REGISTRATION___________________
 //fastify register routes
 registerMainRoutes(fastify)
-registerChatRoutes(fastify)
+registerChatRoutes(fastify, chatManager)
 registerUserRoutes(fastify, userManager)
 registerHealthzRoutes(fastify);
 registerAuthRoutes(fastify, userManager);

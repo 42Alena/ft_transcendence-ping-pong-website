@@ -67,15 +67,15 @@ CREATE TABLE IF NOT EXISTS messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL CHECK (
         type IN (
-            'PublicMsg',
-            'PrivateMsg',
-            'PrivateGameInviteMsg'
+            'PrivateMessage',
+            'PrivateGameInviteMessage',
+            'TournamentMessage'
         )
     ),
     senderId TEXT NOT NULL, -- users.id or a fixed SystemId string
     receiverId TEXT NOT NULL, -- 'all' for public, or users.id for DM/invite
     content TEXT NOT NULL, -- message text OR short invite note
-    meta TEXT, -- JSON: { "mode":"classic", "speed":1.2, ... }
+    meta TEXT, -- JSON: { "sender":"abc", "message": "hello", ... } or null
     createdAt INTEGER NOT NULL DEFAULT(unixepoch ())
 );
 
@@ -129,7 +129,6 @@ CREATE TABLE IF NOT EXISTS userStatistics (
     pointsScored INTEGER NOT NULL DEFAULT 0, -- total points scored
     pointsConceded INTEGER NOT NULL DEFAULT 0 -- total points conceded
 );
-
 
 -- (Alena) not need this table, already done  with deletedAt in table users and UserManager
 

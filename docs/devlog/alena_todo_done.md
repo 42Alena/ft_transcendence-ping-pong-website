@@ -59,6 +59,81 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### ======    NEW PULLREQUESTS   ================================================================
 
+
+## DB for chat:
+	- PublicMessage
+	+ TournamentMessage
+
+## BACKEND
+	+ backend/src/lib/mappers/chat_db.ts
+	+ backend/src/lib/types/db.ts
+	+ added ChatDBRow in backend/src/lib/types/db.ts
+	+aded to reserved names 'SYSTEM_ID', 'ai'
+
+### CHat
+	- removed old in-memory chatMessages array
+	+ add Chat constructor with UserManager + messages table factory
+	+ saveMessageInDB()
+	+ added message validation with validateMessageContent 
+	- checkPrivateSender 
+	- checkPrivateReceiver
+	+ sendPrivateMessage()
+	+ sendUserToUserMessage()
+	+ sendPrivateGameInviteMessage()
+	+ sendTournamentMessage()
+	+ adapted send new messages with different types of NewMessageChat
+	+ corrected sendTournamentMessage to work withoit ender(system_id)
+
+### UserManager
+	+ added additional check for get users/id if not deleted
+### User_routes
+### domain types
+	- corrected types for messages, excuded public msg. will be no public chat 
+	+ sendMessageResult
+	+ TOURNAMENT_AI_ALIASES:
+		 - 5  reserved names for AI:
+		- 'AI',
+		- 'AI_AlENA',
+		- 'AI_SVEVA',
+		- 'AI_LUIS',
+		-'AI_42BERLIN',
+	+ added different type of meta for messages in Chat tournament/invite
+	+ added different types to messages with/without meta:
+	```
+		NewMessageChat =
+	| NewPrivateMessage
+	| NewGameInviteMessage
+	| NewTournamentMessage;
+	```
+
+### api types
+
+#### validators 
+	+ validateMessageContent
+	+ added
+	+ add check if name starts with AI_ or is 5  reserved names for AI'
+
+### TESTS
+	+ backend/tests/chat.sh  - tests for chat
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
 ## FRONTEND
  - added chart.js package (small library to draw graphs (used for Stats Dashboard))
  - fixed tsconfig.json module resolution (so TypeScript can find Chart.js correctly)
