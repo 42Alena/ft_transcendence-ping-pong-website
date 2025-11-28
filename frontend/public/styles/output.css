@@ -215,9 +215,6 @@
   .mt-2\.5 {
     margin-top: calc(var(--spacing) * 2.5);
   }
-  .mt-\[5px\] {
-    margin-top: 5px;
-  }
   .mr-2\.5 {
     margin-right: calc(var(--spacing) * 2.5);
   }

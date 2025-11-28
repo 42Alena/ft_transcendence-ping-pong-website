@@ -608,23 +608,18 @@
                     >
                       <strong>Quick Stats</strong>
                     </div>
-                    <div class="grid grid-cols-4 border">
-                      <div class="border p-2.5 text-center">
-                        3
-                        <span class="mt-[5px] block">Current Ranking</span>
+                    <div id="dashboards" class="grid grid-cols-3">
+                      <div id="winPercentage" class="border flex justify-center items-center">
+                        <canvas id="pieChart"></canvas>
                       </div>
-                      <div class="border p-2.5 text-center">
-                        12-10
-                        <span class="mt-[5px] block">W-L</span>
+                      <div id="weeklyProgress" class="border flex justify-center items-center">
+                        <canvas id="lineChart"></canvas>
                       </div>
-                      <div class="border p-2.5 text-center">
-                        22
-                        <span class="mt-[5px] block">Tot games</span>
+                      <div id="wAndLMonthly" class="border flex justify-center items-center">
+                        <canvas id="barChart"></canvas>
                       </div>
-                      <div class="border p-2.5 text-center">
-                        54%
-                        <span class="mt-[5px] block">Average wins</span>
-                      </div>
+                      <div></div>
+                      <div></div>
                     </div>
                   </div>
                   <div
@@ -954,6 +949,7 @@
     <script src="dist/gameLogic.js"></script>
     <script src="dist/setUpPlayers.js"></script>
     <script src="dist/createRules.js"></script>
+    <script src="dist/charts.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>
