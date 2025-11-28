@@ -106,7 +106,7 @@ export type ChatMessage = {
 // Body that client sends for send message
 
 type SendGameInviteBody = {
-	receiverId: Domain.ReceiverId;
+	receiverId: ReceiverId;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
