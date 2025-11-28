@@ -39,7 +39,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const validateUsernameError = Validate.validateName(username);
 		if (validateUsernameError) { return sendError(reply, validateUsernameError, "username") }
 		
-		if (await userManager.existsByUsername(username)) { return sendError(reply, "Username  is taken", "username") }
+		if (await userManager.existsByUsername(username)) { return sendError(reply, "Username is taken", "username") }
 		
 
 		//display name
