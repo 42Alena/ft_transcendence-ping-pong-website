@@ -206,30 +206,6 @@
   .relative {
     position: relative;
   }
-  .bottom-0 {
-    bottom: calc(var(--spacing) * 0);
-  }
-  .bottom-1 {
-    bottom: calc(var(--spacing) * 1);
-  }
-  .bottom-2 {
-    bottom: calc(var(--spacing) * 2);
-  }
-  .bottom-6 {
-    bottom: calc(var(--spacing) * 6);
-  }
-  .bottom-10 {
-    bottom: calc(var(--spacing) * 10);
-  }
-  .bottom-16 {
-    bottom: calc(var(--spacing) * 16);
-  }
-  .bottom-18 {
-    bottom: calc(var(--spacing) * 18);
-  }
-  .bottom-20 {
-    bottom: calc(var(--spacing) * 20);
-  }
   .bottom-22 {
     bottom: calc(var(--spacing) * 22);
   }
@@ -239,23 +215,14 @@
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
-  .my-2 {
-    margin-block: calc(var(--spacing) * 2);
-  }
   .my-2\.5 {
     margin-block: calc(var(--spacing) * 2.5);
   }
   .-mt-50 {
     margin-top: calc(var(--spacing) * -50);
   }
-  .mt-0 {
-    margin-top: calc(var(--spacing) * 0);
-  }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
-  }
-  .mt-2 {
-    margin-top: calc(var(--spacing) * 2);
   }
   .mt-2\.5 {
     margin-top: calc(var(--spacing) * 2.5);
@@ -263,14 +230,8 @@
   .mt-\[5px\] {
     margin-top: 5px;
   }
-  .mr-2 {
-    margin-right: calc(var(--spacing) * 2);
-  }
   .mr-2\.5 {
     margin-right: calc(var(--spacing) * 2.5);
-  }
-  .ml-2 {
-    margin-left: calc(var(--spacing) * 2);
   }
   .ml-2\.5 {
     margin-left: calc(var(--spacing) * 2.5);
@@ -338,18 +299,6 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-2xl {
-    width: var(--container-2xl);
-  }
-  .w-3xs {
-    width: var(--container-3xs);
-  }
-  .w-4 {
-    width: calc(var(--spacing) * 4);
-  }
-  .w-4xl {
-    width: var(--container-4xl);
-  }
   .w-6 {
     width: calc(var(--spacing) * 6);
   }
@@ -389,23 +338,14 @@
   .flex-2 {
     flex: 2;
   }
-  .flex-grow {
-    flex-grow: 1;
-  }
   .grow {
     flex-grow: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -415,9 +355,6 @@
   }
   .grid-cols-\[1fr_1fr\] {
     grid-template-columns: 1fr 1fr;
-  }
-  .grid-cols-\[70px_1fr\] {
-    grid-template-columns: 70px 1fr;
   }
   .grid-cols-\[100px_1fr\] {
     grid-template-columns: 100px 1fr;
@@ -466,9 +403,6 @@
   }
   .gap-2\.5 {
     gap: calc(var(--spacing) * 2.5);
-  }
-  .gap-4 {
-    gap: calc(var(--spacing) * 4);
   }
   .gap-4\.5 {
     gap: calc(var(--spacing) * 4.5);
@@ -592,9 +526,6 @@
   .p-1\.25 {
     padding: calc(var(--spacing) * 1.25);
   }
-  .p-2 {
-    padding: calc(var(--spacing) * 2);
-  }
   .p-2\.5 {
     padding: calc(var(--spacing) * 2.5);
   }
@@ -609,9 +540,6 @@
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
-  }
-  .py-3 {
-    padding-block: calc(var(--spacing) * 3);
   }
   .py-3\.5 {
     padding-block: calc(var(--spacing) * 3.5);
@@ -655,9 +583,6 @@
   .no-underline {
     text-decoration-line: none;
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .placeholder-green-300 {
     &::placeholder {
       color: var(--color-green-300);
@@ -667,10 +592,6 @@
     &::placeholder {
       color: var(--color-red-300);
     }
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -802,11 +723,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-duration {
   syntax: "*";
   inherits: false;
@@ -822,7 +738,6 @@
       --tw-border-style: solid;
       --tw-leading: initial;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
       --tw-duration: initial;
     }
   }
