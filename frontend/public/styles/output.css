@@ -206,8 +206,38 @@
   .relative {
     position: relative;
   }
+  .top-10 {
+    top: calc(var(--spacing) * 10);
+  }
+  .top-22 {
+    top: calc(var(--spacing) * 22);
+  }
+  .top-42 {
+    top: calc(var(--spacing) * 42);
+  }
+  .top-62 {
+    top: calc(var(--spacing) * 62);
+  }
+  .top-82 {
+    top: calc(var(--spacing) * 82);
+  }
+  .top-86 {
+    top: calc(var(--spacing) * 86);
+  }
+  .top-\[30\%\] {
+    top: 30%;
+  }
   .bottom-22 {
     bottom: calc(var(--spacing) * 22);
+  }
+  .bottom-\[10\%\] {
+    bottom: 10%;
+  }
+  .bottom-\[22\%\] {
+    bottom: 22%;
+  }
+  .left-1\/2 {
+    left: calc(1/2 * 100%);
   }
   .z-0 {
     z-index: 0;
@@ -238,6 +268,9 @@
   }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
+  }
+  .mb-20 {
+    margin-bottom: calc(var(--spacing) * 20);
   }
   .ml-2\.5 {
     margin-left: calc(var(--spacing) * 2.5);
@@ -314,6 +347,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-64 {
+    width: calc(var(--spacing) * 64);
+  }
   .w-\[15px\] {
     width: 15px;
   }
@@ -349,6 +385,14 @@
   }
   .grow {
     flex-grow: 1;
+  }
+  .-translate-x-1\/2 {
+    --tw-translate-x: calc(calc(1/2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .-translate-y-1\/2 {
+    --tw-translate-y: calc(calc(1/2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -401,6 +445,9 @@
   .justify-center {
     justify-content: center;
   }
+  .justify-end {
+    justify-content: flex-end;
+  }
   .justify-start {
     justify-content: flex-start;
   }
@@ -427,6 +474,9 @@
   }
   .gap-\[15px\] {
     gap: 15px;
+  }
+  .self-end {
+    align-self: flex-end;
   }
   .overflow-auto {
     overflow: auto;
@@ -699,6 +749,21 @@
 .ai-button-off.active {
   background-color: grey;
 }
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -739,6 +804,9 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
       --tw-rotate-x: initial;
       --tw-rotate-y: initial;
       --tw-rotate-z: initial;
