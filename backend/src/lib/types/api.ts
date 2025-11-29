@@ -105,19 +105,19 @@ export type ChatMessage = {
 
 // Body that client sends for send message
 
-type SendGameInviteBody = {
+export type SendGameInviteBody = {
 	receiverId: ReceiverId;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
 
-type SendPrivateMessageBody = {
+export type SendPrivateMessageBody = {
 	receiverId: ReceiverId;
 	content: MessageContent;
 	// no type, no senderId
 };
 
-type SendTournamentMessageBody = {
+export type SendTournamentMessageBody = {
 	receiverId: ReceiverId;
   // no content, backend will use MESSAGE_GAME_INVITE
 };

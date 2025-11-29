@@ -6,32 +6,34 @@ https://fastify.dev/docs/latest/Reference/TypeScript/
 import type { FastifyInstance } from 'fastify';
 import { ChatManager } from '../lib/services/ChatManager';
 import { authRequiredOptions } from './utils';
-
+import type * as API from '../lib/types/api';
 
 
 export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatManager) {
 
 
+
+
 	/* send private message */
-	fastify.post<{ Params: API.TargetIdParams }>(
+	fastify.post<{ Body: API.SendPrivateMessageBody }>(
 		"/chat/messages",
 		authRequiredOptions,
 		async (req, reply) => {
 
-			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+			const senderId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-			const { id: targetId } = req.params;  // targetId : string (UserId)
+			const { receiverId, content } = req.body;  // targetId : string (UserId)
 
-			const result = await chatManager.endUserToUserMessage(meId, targetId);
+			const result = await chatManager.sendPrivateMessage(senderId, receiverId, content);
 
-			if (result.ok)
-				return sendNoContent(reply);                  // 204
+			// if (result.ok)
+			// 	return sendNoContent(reply);                  // 204
 
-			// map domain reasons to HTTP
-			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
-			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
-			if (result.reason === "blocked") return sendError(reply, "Blocked by user", "blocked", 403);
-			if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
+			// // map domain reasons to HTTP
+			// if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
+			// if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
+			// if (result.reason === "blocked") return sendError(reply, "Blocked by user", "blocked", 403);
+			// if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
 
 
 		});
