@@ -8,6 +8,7 @@ import { ChatManager } from '../lib/services/ChatManager';
 import { authRequiredOptions } from './utils';
 import type * as API from '../lib/types/api';
 import { sendError, sendNoContent } from '../lib/utils/http';
+import { SYSTEM_ID } from '../lib/types/domain';
 
 
 export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatManager) {
@@ -31,16 +32,16 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "not_me") 
+			if (result.reason === "not_me")
 				return sendError(reply, "Sender not found or not authenticated", "id", 401);
-			
+
 			if (result.reason === "no_receiver")
-				 return sendError(reply, "Receiver not found", "id", 404);
-			
+				return sendError(reply, "Receiver not found", "id", 404);
+
 			if (result.reason === "blocked")
-				 return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
-			
-			if (result.reason === "invalid_content") 
+				return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
+
+			if (result.reason === "invalid_content")
 				return sendError(reply, "Not valid message content", "invalid_content", 400);
 
 		});
@@ -49,7 +50,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 	/* send game invite message */
 	fastify.post<{ Body: API.SendGameInviteBody }>(
-		"/chat/messages",
+		"/chat/messages/game-invite",
 		authRequiredOptions,
 		async (req, reply) => {
 
@@ -63,15 +64,34 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "not_me") 
+			if (result.reason === "not_me")
 				return sendError(reply, "Sender not found or not authenticated", "id", 401);
-			
+
 			if (result.reason === "no_receiver")
-				 return sendError(reply, "Receiver not found", "id", 404);
-			
+				return sendError(reply, "Receiver not found", "id", 404);
+
 			if (result.reason === "blocked")
-				 return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
-			
+				return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
+
+		});
+
+
+	/* send tournament message  fromn System */
+	fastify.post<{ Body: API.SendTournamentMessageBody }>(
+		"/chat/messages/tournament",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const { receiverId } = req.body;  // targetId : string (UserId)
+
+			const result = await chatManager.sendTournamentMessage(receiverId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+
+			if (result.reason === "no_receiver")
+				return sendError(reply, "Receiver not found", "id", 404);
 
 		});
 
