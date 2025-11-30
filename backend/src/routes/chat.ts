@@ -7,6 +7,7 @@ import type { FastifyInstance } from 'fastify';
 import { ChatManager } from '../lib/services/ChatManager';
 import { authRequiredOptions } from './utils';
 import type * as API from '../lib/types/api';
+import { sendError, sendNoContent } from '../lib/utils/http';
 
 
 export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatManager) {
@@ -26,14 +27,14 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 			const result = await chatManager.sendPrivateMessage(senderId, receiverId, content);
 
-			// if (result.ok)
-			// 	return sendNoContent(reply);                  // 204
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
 
-			// // map domain reasons to HTTP
-			// if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
-			// if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
-			// if (result.reason === "blocked") return sendError(reply, "Blocked by user", "blocked", 403);
-			// if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
+			// map domain reasons to HTTP
+			if (result.reason === "not_me") return sendError(reply, "Cannot add yourself", "id", 400);
+			if (result.reason === "no_receiver") return sendError(reply, "Receiver not found", "id", 404);
+			if (result.reason === "blocked") return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
+			if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
 
 
 		});

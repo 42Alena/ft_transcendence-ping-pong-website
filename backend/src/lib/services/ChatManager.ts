@@ -63,7 +63,7 @@ export class ChatManager {
     const receiver = await this.userManager.getUserById(receiverId);
 
     if (!receiver)
-      return { ok: false, reason: "not_me" };
+      return { ok: false, reason: "no_receiver" };
 
 
 

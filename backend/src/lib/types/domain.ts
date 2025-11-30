@@ -230,6 +230,7 @@ export type SendMessageResult =
 	| {
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
+		| "no_receiver"   
 		| "system"    // tried to use SYSTEM_ID where only users are allowed
 		| "not_system"    // not SYSTEM_ID for tournament
 		| "not_found" // receiver (or sender) doesn’t exist / deleted
