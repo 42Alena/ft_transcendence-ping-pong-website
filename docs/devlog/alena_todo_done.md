@@ -31,7 +31,7 @@ Not required for evaluation — used for organization and pull request preparati
 	# 2. in 2.terminal: 
 	make tests_user_settings
 ```
-
+ 
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
@@ -56,6 +56,12 @@ Not required for evaluation — used for organization and pull request preparati
 	- loginSession id: set expire date?
 
 	-TODO ROUTES: 
+
+
+
+
+
+
 
 ### ======    NEW PULLREQUESTS   ================================================================
 
@@ -139,12 +145,53 @@ Not required for evaluation — used for organization and pull request preparati
 
 	# 2. in 2.terminal: 
 	make tests_user_settings
+```
+
+
+
+	
+### ======    NEW PULLREQUESTS   ================================================================
+
+## DB
+
+1. deleted old tables, that not rensponse current state:
+	- tournaments ( ... );
+
+	- tournamentPlayers ( ... );
+
+	- tournamentMatches ( ... );
+
+	- userStatistics 
+
+	- gdpr
+
+2. created single table "games" for all games and tournaments together
+```bash
+# -- One row = one finished game.
+# -- mode:
+# --   'game'       -> normal 1v1 game
+# --   'tournament' -> tournament semi / final
+# -- 
+# --   winner:
+# --       1 -> player1 won
+# --       2 -> player2 won
+
+# --   round:
+# --       NULL          -> normal game
+# --       'semi'        -> tournament semi-final
+# --       'final'       -> tournament final
+
+# --    users are "deleted" by soft delete (deletedAt + anonymized name),
+# --     so we normally never DELETE from users. Old games remain valid for stats.
+```
+
 
 
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
 ---------------------------------
+
 
 ## FRONTEND
  - added chart.js package (small library to draw graphs (used for Stats Dashboard))
