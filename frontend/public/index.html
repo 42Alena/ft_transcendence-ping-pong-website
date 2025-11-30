@@ -200,8 +200,7 @@
                 id="register"
                 class="flex flex-col justify-center items-center rounded-xl p-1"
               >
-                <div class="mb-3">
-                <p>
+                <div class="mb-3" id="usernameInput">
                   <label class="text-xl font-medium text-heading" for="reg-username"
                     >Username (login)</label
                   >
@@ -210,12 +209,12 @@
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
+                    autocomplete="off"
                     required
                   />
-                </p>
+                  <div id="reg-usernama_error" class="text-red-600 hidden text-sm"></div>
                 </div>
                  <div class="mb-3">
-                <p>
                   <label class="text-xl font-medium text-heading" for="reg-displayName"
                     >Display Name (public)</label
                   >
@@ -224,12 +223,12 @@
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
+                    autocomplete="off"
                     required
                   />
-                </p>
+                  <div id="reg-displayName_error" class="text-red-600 hidden text-sm"></div>
                 </div>
                 <div class="mb-3">
-                <p>
                   <label class="text-xl font-medium text-heading" for="reg-password"
                     >Password</label
                   >
@@ -238,15 +237,15 @@
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
+                    autocomplete="off"
                     required
                   />
-                </p>
+                <div id="reg-password_error" class="text-red-600 hidden text-sm"></div>
                 </div>
                 <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
               </form>
-              <div class="hidden border" id="reg-errors"></div>
-              <div class="hidden border" id="success-page">
-                <div class="flex flex-col justify-center items-center m-1.5 text-green-700">
+              <div class="hidden flex-col justify-center items-center " id="success-display">
+                <div class="flex m-1.5 text-green-700 text-8xl">
                   Registration was a success!
                 </div>
                 <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Login</button>
