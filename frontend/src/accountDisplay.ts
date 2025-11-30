@@ -52,6 +52,14 @@ function setAccountPage(text: string) {
   chatP.classList.add("hidden");
   welcP.classList.add("hidden");
   welcP.classList.remove("flex");
+  girlImgLeft.classList.add("block");
+  girlImgLeft.classList.remove("hidden");
+  girlImgLeftLoser.classList.remove("block");
+  girlImgLeftLoser.classList.add("hidden");
+  girlImgRight.classList.add("block");
+  girlImgRight.classList.remove("hidden");
+  girlImgRightLoser.classList.remove("block");
+  girlImgRightLoser.classList.add("hidden");
   if (text == "login") {
     logP.classList.add("flex");
     logP.classList.remove("hidden");
