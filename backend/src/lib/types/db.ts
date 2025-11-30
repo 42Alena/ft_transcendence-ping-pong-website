@@ -29,5 +29,6 @@ export type MessageDbRow = {
 };
 
 export type MessageDbInsertRow = Omit<MessageDbRow, 'id' | 'createdAt'>;
+export type MessageDbRowSenderReceiver = Pick<MessageDbRow, "senderId" | "receiverId">;
 
 

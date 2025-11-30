@@ -254,14 +254,10 @@ export type ChatConversationSidebarResult =
 
 
 
-export type MessageSenderReceiverRow = {
-  senderId: SenderId;
-  receiverId: ReceiverId;
-};
 
 
 
-type ChatSidebarItem = {
+export type ChatSidebarItem = {
 	userId: UserId;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl;
