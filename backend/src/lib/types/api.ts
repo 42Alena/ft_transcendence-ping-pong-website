@@ -130,3 +130,10 @@ export type GetChatParams = {
 export type GetChatResponse = {
   messages: ChatMessage[];
 };
+
+
+export type ChatConversationSidebar = {
+  userId: UserId;            
+  displayName: DisplayName;      // to show in UI
+  avatarUrl: AvatarUrl;  		// to show in UI
+};
