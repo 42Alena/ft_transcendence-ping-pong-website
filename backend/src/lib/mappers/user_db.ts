@@ -20,6 +20,10 @@ export function userFromDbRow(row: UserDbRow): Domain.User {
 }
 
 
+// Type:  smaller  view of UserDbRow for sidebar
+// export type UserSidebarDbRow = Pick<UserDbRow, "id" | "displayName" | "avatarUrl">;
+
+
 // Conversion:    User =>  DB row
 export function userToDbRow(user: Domain.User): UserDbRow {
 	return {

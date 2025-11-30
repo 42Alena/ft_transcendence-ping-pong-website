@@ -110,6 +110,9 @@ Not required for evaluation — used for organization and pull request preparati
 
 	+ ChatSidebarItem
 	+ MessageDbRowSenderReceiver 
+
+### user_db.ts
+	- UserSidebarDbRow 
 	
 
 

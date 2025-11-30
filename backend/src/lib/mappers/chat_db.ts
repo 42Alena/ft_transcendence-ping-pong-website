@@ -19,6 +19,7 @@ export function messageFromDbRow(row: MessageDbRow): Domain.MessageChat {
 }
 
 
+
 // Domain message (for saving) -> DB insert row
 export function messageToDbRow(message: Domain.NewMessageChat): MessageDbInsertRow {
 	return {

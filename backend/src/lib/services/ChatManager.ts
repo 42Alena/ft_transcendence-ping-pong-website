@@ -3,10 +3,13 @@
 
 import { messageFromDbRow, messageToDbRow } from '../mappers/chat_db';
 import { ReceiverId, SenderId } from '../types/api';
+import { MessageDbRowSenderReceiver } from '../types/db';
 import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
 import { UserManager } from './UserManager';
+import { User } from './User';           // class used only here
+import { userFromDbRow } from '../mappers/user_db';
 
 
 export class ChatManager {
@@ -14,7 +17,7 @@ export class ChatManager {
 
   userManager: UserManager;
   // chatMessages: Types.MessageBase[];
-
+  dbTableUser: any;
   dbTableMessages: any;
 
   constructor(userManager: UserManager) {
@@ -24,12 +27,13 @@ export class ChatManager {
 
     // Typed table factories (//= () => anonym fkt =factory fkt). returns a fresh query builder for `messages`
     this.dbTableMessages = () => db('messages');
+    this.dbTableUser = () => db<User>('users');
   }
 
 
   private async isCommunicationBlocked(
     senderId: Domain.SenderId,
-    receiverId: Domain.ReceiverId
+    receiverId: Domain.PrivateReceiverId
   ): Promise<boolean> {
 
     if (await this.userManager.isBlocked(receiverId, senderId))
@@ -197,7 +201,6 @@ Example meta JSON of the message:
 
 
   /* 
-
   return:
   [
   { userId: "u_42", displayName: "Alice", avatarUrl: "..." },
@@ -206,14 +209,7 @@ Example meta JSON of the message:
 ]
   newest messages first
   .join //where I am sender 1,2 =3, rename(rename 'users as sender' this table inside this query)
-  {
-  senderId: 'u_me',
-  senderName: 'Alice',
-  senderAvatar: '...',
-  receiverId: 'u_friend',
-  receiverName: 'Bob',
-  receiverAvatar: '...',
-}
+
   */
   async getChatConversationSidebar(
     meId: Domain.UserId,
@@ -228,25 +224,42 @@ Example meta JSON of the message:
       return { ok: false, reason: "not_me" };
 
 
-    
-    const dbConversations = await this.dbTableMessages()
-      // .join('users as sender', 'sender.id', 'messages.senderId')
-      // .join('users as receiver', 'receiver.id', 'messages.receiverId')
-      .where({senderId: meId})
-      .orWhere({receiverId: meId})
+
+    const messageRows = await this.dbTableMessages()
+      .where({ senderId: meId })
+      .orWhere({ receiverId: meId })
       .select(
         'senderId',
         'receiverId'
-      )
-      // .orderBy('messages.createdAt', 'desc'); //newest first
+      ) as MessageDbRowSenderReceiver[];
 
 
+    //collect all unique IDs
+    const uniqueNotMeIds = new Set<Domain.UserId>();
+
+    for (const row of messageRows) {
+      const { senderId, receiverId } = row;
+
+      const otherId = senderId === meId ? receiverId : senderId;
+
+      if (otherId !== meId) {
+        uniqueNotMeIds.add(otherId);
+      }
+    }
+    if (uniqueNotMeIds.size === 0)
+      return { ok: true, conversations: [] };
 
 
+    const idsArray = Array.from(uniqueNotMeIds);
 
-    return (dbConversations || []).map(messageFromDbRow)
+    // 4) Load users for these ids
+    
+    const conversations =  await this.dbTableUser()
+      .whereIn("id", idsArray)
+      .select("id", "displayName", "avatarUrl") as Domain.ChatConversationSidebar[];
 
-    // return { ok: true };
+
+    return { ok: true, conversations };
 
   }
 
