@@ -46,7 +46,34 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 		});
 
 
-		
+
+	/* send game invite message */
+	fastify.post<{ Body: API.SendGameInviteBody }>(
+		"/chat/messages",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const senderId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { receiverId } = req.body;  // targetId : string (UserId)
+
+			const result = await chatManager.sendPrivateGameInviteMessage(senderId, receiverId);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "not_me") 
+				return sendError(reply, "Sender not found or not authenticated", "id", 401);
+			
+			if (result.reason === "no_receiver")
+				 return sendError(reply, "Receiver not found", "id", 404);
+			
+			if (result.reason === "blocked")
+				 return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
+			
+
+		});
 
 
 
