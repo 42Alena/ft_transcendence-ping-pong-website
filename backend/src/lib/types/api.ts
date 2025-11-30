@@ -132,8 +132,11 @@ export type GetChatResponse = {
 };
 
 
-export type ChatConversationSidebar = {
+export type GetChatConversationSidebar = {
   userId: UserId;            
   displayName: DisplayName;      // to show in UI
   avatarUrl: AvatarUrl;  		// to show in UI
 };
+
+
+export type GetChatConversationSidebarResult = GetChatConversationSidebar[];

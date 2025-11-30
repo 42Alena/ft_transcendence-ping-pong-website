@@ -7,7 +7,7 @@ import type { FastifyInstance } from 'fastify';
 import { ChatManager } from '../lib/services/ChatManager';
 import { authRequiredOptions } from './utils';
 import type * as API from '../lib/types/api';
-import { sendError, sendNoContent } from '../lib/utils/http';
+import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { SYSTEM_ID } from '../lib/types/domain';
 
 
@@ -95,6 +95,20 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 		});
 
+
+		/* get sidebar - list all users +theirs Id  for All conversations */
+	fastify.get<{ Reply: API.GetChatConversationSidebar }>(
+		"/chat/conversations",
+		authRequiredOptions,
+		async (req, reply) => {
+		
+
+		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+		const conversationSidebar = await chatManager.getChatConversationSidebar(meId);
+
+			return sendOK(reply, conversationSidebar)
+		});
 
 
 

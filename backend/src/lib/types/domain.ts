@@ -215,7 +215,7 @@ export type NewTournamentMessage = {
 	type: "TournamentMessage";
 	senderId: SystemId;
 	receiverId: PrivateReceiverId;
-	content:  typeof MESSAGE_TOURNAMENT_INVITE;
+	content: typeof MESSAGE_TOURNAMENT_INVITE;
 	// content: MessageContent;
 	// meta: MetaTournamentNextMatch;
 };
@@ -231,13 +231,24 @@ export type SendMessageResult =
 	| {
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
-		| "no_receiver"   
+		| "no_receiver"
 		| "system"    // tried to use SYSTEM_ID where only users are allowed
 		| "not_system"    // not SYSTEM_ID for tournament
 		| "not_found" // receiver (or sender) doesn’t exist / deleted
 		| "blocked"  // receiver has blocked sender
 		| "invalid_content";
 	};
+
+export type ChatConversationSidebar = {
+  userId: UserId;            
+  displayName: DisplayName;      // to show in UI
+  avatarUrl: AvatarUrl;  		// to show in UI
+};
+
+
+export type ChatConversationSidebarResult =
+  | { ok: true; conversations: ChatConversationSidebar[] }
+  | { ok: false; reason: "not_me" };
 
 
 
@@ -300,7 +311,7 @@ export const TOURNAMENT_AI_ALIASES = [
 export const AI_NAME_PREFIX = "AI_";
 export const AI_NAME_SUFFIX = "_AI";
 
-const RESERVED_NAMES : string[] =[
+const RESERVED_NAMES: string[] = [
 	'admin',
 	'root',
 	'null',

@@ -108,6 +108,8 @@ Not required for evaluation — used for organization and pull request preparati
 	```
 
 ### api types
+	+ all types for chat sending messages
+	+ ChatConversationSidebar
 
 #### validators 
 	+ validateMessageContent

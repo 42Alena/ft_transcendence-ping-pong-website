@@ -87,7 +87,7 @@ export class ChatManager {
     }
 
     await this.saveMessageInDB(message);
-  
+
     return { ok: true };
   }
 
@@ -190,6 +190,26 @@ Example meta JSON of the message:
     };
 
     await this.saveMessageInDB(msg);
+
+    return { ok: true };
+
+  }
+
+
+  async getChatConversationSidebar(
+    meId: Domain.UserId,
+
+  ): Promise<Domain.ChatConversationSidebarResult> {
+
+
+    const me = await this.userManager.getUserById(meId);
+
+    //Sender not found or not authenticated
+    if (!me)
+      return { ok: false, reason: "not_me" };
+
+
+
 
     return { ok: true };
 
