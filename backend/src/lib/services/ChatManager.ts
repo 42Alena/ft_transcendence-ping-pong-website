@@ -27,9 +27,9 @@ export class ChatManager {
   }
 
 
-  private async isCommmunicationBlocked(
-    senderId: SenderId,
-    receiverId: ReceiverId
+  private async isCommunicationBlocked(
+    senderId: Domain.SenderId,
+    receiverId: Domain.ReceiverId
   ): Promise<boolean> {
 
     if (await this.userManager.isBlocked(receiverId, senderId))
@@ -71,6 +71,7 @@ export class ChatManager {
 
     const sender = await this.userManager.getUserById(senderId);
 
+    //Sender not found or not authenticated
     if (!sender)
       return { ok: false, reason: "not_me" };
 
@@ -81,14 +82,12 @@ export class ChatManager {
       return { ok: false, reason: "no_receiver" };
 
 
-
-    // if (await this.userManager.isBlocked(receiver.id, sender.id)) {
-    if (await this.isCommmunicationBlocked( sender.id, receiver.id)) {
+    if (await this.isCommunicationBlocked(sender.id, receiver.id)) {
       return { ok: false, reason: "blocked" };
     }
 
     await this.saveMessageInDB(message);
-
+  
     return { ok: true };
   }
 
@@ -104,7 +103,7 @@ export class ChatManager {
   */
   async sendPrivateMessage(
     senderId: Domain.PrivateSenderId,
-    receiverId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateReceiverId,
     content: Domain.MessageContent,
 
   ): Promise<Domain.SendMessageResult> {
@@ -132,7 +131,7 @@ export class ChatManager {
   */
   async sendPrivateGameInviteMessage(
     senderId: Domain.PrivateSenderId,
-    receiverId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateReceiverId,
   ): Promise<Domain.SendMessageResult> {
 
 
@@ -169,8 +168,8 @@ Example meta JSON of the message:
 
   */
   async sendTournamentMessage(
-    receiverId: Domain.PrivateSenderId,
-    meta: Domain.MetaTournamentNextMatch,
+    receiverId: Domain.PrivateReceiverId,
+    // meta: Domain.MetaTournamentNextMatch,
 
   ): Promise<Domain.SendMessageResult> {
 
@@ -178,7 +177,7 @@ Example meta JSON of the message:
     const receiver = await this.userManager.getUserById(receiverId);
 
     if (!receiver)
-      return { ok: false, reason: "not_me" };
+      return { ok: false, reason: "no_receiver" };
 
 
 

@@ -31,13 +31,25 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "not_me") return sendError(reply, "Cannot add yourself", "id", 400);
-			if (result.reason === "no_receiver") return sendError(reply, "Receiver not found", "id", 404);
-			if (result.reason === "blocked") return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
-			if (result.reason === "invalid_content") return sendError(reply, "Not valid message content", "invalid_content", 400);
-
+			if (result.reason === "not_me") 
+				return sendError(reply, "Sender not found or not authenticated", "id", 401);
+			
+			if (result.reason === "no_receiver")
+				 return sendError(reply, "Receiver not found", "id", 404);
+			
+			if (result.reason === "blocked")
+				 return sendError(reply, "Blocked by sender/receiver", "blocked", 403);
+			
+			if (result.reason === "invalid_content") 
+				return sendError(reply, "Not valid message content", "invalid_content", 400);
 
 		});
+
+
+		
+
+
+
 
 
 }
