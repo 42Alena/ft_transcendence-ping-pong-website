@@ -5,7 +5,7 @@ const logP: any = document.getElementById("loginPage");
 const profP: any = document.getElementById("profilePage");
 //register form
 const registerForm: any = document.getElementById("register");
-const regAvatar: any = document.getElementById("reg-avatar");
+// const regAvatar: any = document.getElementById("reg-avatar");
 //profile page
 const profileUsername: any = document.getElementById("acc-username");
 const profileAvatarImg: any = document.getElementById("acc-profile-avatar");
@@ -76,6 +76,8 @@ function setAccountPage(text: string) {
   } else if (text == "register") {
     regP.classList.add("flex");
     regP.classList.remove("hidden");
+    reg.classList.add("flex");
+    reg.classList.remove("hidden");
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     profP.classList.add("hidden");
@@ -125,10 +127,10 @@ function setAccountPage(text: string) {
 }
 
 // It makes the preview of the avatar the user wants to upload
-regAvatar.addEventListener("change", (event: any) => {
-  const img: any = document.getElementById("avatar");
-  img.src = URL.createObjectURL(regAvatar.files[0]);
-});
+// regAvatar.addEventListener("change", (event: any) => {
+//   const img: any = document.getElementById("avatar");
+//   img.src = URL.createObjectURL(regAvatar.files[0]);
+// });
 
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
