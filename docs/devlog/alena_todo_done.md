@@ -83,6 +83,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendTournamentMessage()
 	+ adapted send new messages with different types of NewMessageChat
 	+ corrected sendTournamentMessage to work withoit ender(system_id)
+	+ addeddd isCommmunicationBlocked for  both sides
 
 ### UserManager
 	+ added additional check for get users/id if not deleted

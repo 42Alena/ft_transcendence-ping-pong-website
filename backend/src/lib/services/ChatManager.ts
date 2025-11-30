@@ -2,6 +2,7 @@
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
 import { messageToDbRow } from '../mappers/chat_db';
+import { ReceiverId, SenderId } from '../types/api';
 import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
@@ -25,6 +26,20 @@ export class ChatManager {
     this.dbTableMessages = () => db('messages');
   }
 
+
+  private async isCommmunicationBlocked(
+    senderId: SenderId,
+    receiverId: ReceiverId
+  ): Promise<boolean> {
+
+    if (await this.userManager.isBlocked(receiverId, senderId))
+      return true;
+
+    if (await this.userManager.isBlocked(senderId, receiverId))
+      return true;
+
+    return false;
+  }
 
   private async saveMessageInDB(message: Domain.NewMessageChat): Promise<void> {
 
@@ -67,7 +82,8 @@ export class ChatManager {
 
 
 
-    if (await this.userManager.isBlocked(receiver.id, sender.id)) {
+    // if (await this.userManager.isBlocked(receiver.id, sender.id)) {
+    if (await this.isCommmunicationBlocked( sender.id, receiver.id)) {
       return { ok: false, reason: "blocked" };
     }
 
@@ -168,7 +184,7 @@ Example meta JSON of the message:
 
     const msg: Domain.NewTournamentMessage = {
       type: "TournamentMessage",
-        senderId: Domain.SYSTEM_ID,
+      senderId: Domain.SYSTEM_ID,
       receiverId,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
       // meta,
