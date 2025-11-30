@@ -17,9 +17,9 @@
   </head>
 
   <body
-    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#90ee90]"
+    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]"
   >
-    <header class="flex justify-center bg-[#90ee90]">
+    <header class="flex justify-center bg-[#DFF7FF]">
       <div class="w-full max-w-6xl border">
         <div
           id="header-navbar"
@@ -76,12 +76,13 @@
     <main class="flex flex-row justify-center border">
       <div class="relative flex-1">
         <img src="images/sides_page_girls/background_sky.png" class="absolute h-full w-full z-0"/>
-        <img src="images/sides_page_girls/pong_a.png" class="absolute bottom-22 w-full h-auto"/>
+        <img src="images/sides_page_girls/pong_a.png" class="absolute m-auto z-1 inset-x-0 bottom-0 w-auto h-full" id="happy_a"/>
+        <img src="images/sides_page_girls/pong_a_sad.png" class="absolute m-auto z-1 hidden inset-x-0 bottom-0 w-full h-full" id="sad_a"/>
       </div>
       <section
         class="grid w-full max-w-6xl grid-cols-[100px_1fr] grid-rows-[1fr] border bg-white"
       >
-        <nav class="grid grid-rows-[1fr] border bg-[#90ee90]">
+        <nav class="grid grid-rows-[1fr] border bg-[#FFF3CC]">
           <ul class="flex flex-col items-center justify-start p-2.5">
             <li class="p-1 text-center leading-none">
               <a href="#chat" onclick="displayPage('chat')">
@@ -932,10 +933,11 @@
       </section>
       <div class="relative flex-1">
         <img src="images/sides_page_girls/background_sky.png" class="absolute h-full w-full z-0"/>
-        <img src="images/sides_page_girls/pong_s.png" class="absolute bottom-22 w-full h-auto"/>
+        <img src="images/sides_page_girls/pong_s.png" class="absolute m-auto z-1 inset-x-0 bottom-0 w-auto h-full" id="happy_s"/>
+        <img src="images/sides_page_girls/pong_s_sad.png" class="absolute z-1 hidden m-auto inset-x-0 bottom-0 w-auto h-full" id="sad_s"/>
       </div>
     </main>
-    <footer class="flex justify-center border bg-[#90ee90]">
+    <footer class="flex justify-center border bg-[#D9F7C7]">
       <div
         class="grid w-full max-w-6xl grid-cols-[1fr_1fr] gap-[2em] border p-[1em]"
       >
