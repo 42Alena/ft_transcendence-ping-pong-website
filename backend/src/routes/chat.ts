@@ -96,18 +96,25 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 		});
 
 
-		/* get sidebar - list all users +theirs Id  for All conversations */
-	fastify.get<{ Reply: API.GetChatConversationSidebar }>(
+	/* get sidebar - list all users + their displaynames  for All conversations */
+	fastify.get<{ Reply: API.GetChatConversationSidebarResult}>(
 		"/chat/conversations",
 		authRequiredOptions,
 		async (req, reply) => {
-		
 
-		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-		const conversationSidebar = await chatManager.getChatConversationSidebar(meId);
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-			return sendOK(reply, conversationSidebar)
+			
+			const result = await chatManager.getChatConversationSidebar(meId);
+			
+			if (result.ok)
+				return sendOK(reply, result.conversations)
+
+			// map domain reasons to HTTP
+			if (result.reason === "not_me")
+				return sendError(reply, "User not found or not authenticated", "id", 401);
+
 		});
 
 

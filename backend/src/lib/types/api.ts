@@ -5,6 +5,7 @@ import *  from '../types/UserTypes';
 or 
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
+import *  as Domain from '../types/domain';
 
 import { FastifyRequest } from "fastify";
 
@@ -132,11 +133,5 @@ export type GetChatResponse = {
 };
 
 
-export type GetChatConversationSidebar = {
-  userId: UserId;            
-  displayName: DisplayName;      // to show in UI
-  avatarUrl: AvatarUrl;  		// to show in UI
-};
-
-
-export type GetChatConversationSidebarResult = GetChatConversationSidebar[];
+export type ChatConversationSidebar = Domain.ChatConversationSidebar;
+export type GetChatConversationSidebarResult = ChatConversationSidebar[];
