@@ -1,7 +1,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
-import { messageToDbRow } from '../mappers/chat_db';
+import { messageFromDbRow, messageToDbRow } from '../mappers/chat_db';
 import { ReceiverId, SenderId } from '../types/api';
 import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
@@ -196,6 +196,25 @@ Example meta JSON of the message:
   }
 
 
+  /* 
+
+  return:
+  [
+  { userId: "u_42", displayName: "Sveva", avatarUrl: "..." },
+  { userId: "u_17", displayName: "Luis",  avatarUrl: "..." },
+  ...
+]
+  newest messages first
+  .join //where I am sender 1,2 =3, rename(rename 'users as sender' this table inside this query)
+  {
+  senderId: 'u_me',
+  senderName: 'Alice',
+  senderAvatar: '...',
+  receiverId: 'u_friend',
+  receiverName: 'Bob',
+  receiverAvatar: '...',
+}
+  */
   async getChatConversationSidebar(
     meId: Domain.UserId,
 
@@ -208,8 +227,23 @@ Example meta JSON of the message:
     if (!me)
       return { ok: false, reason: "not_me" };
 
+    const dbConversations = await this.dbTableMessages()
+      .join('users as sender', 'sender.id', 'messages.senderId')
+      .join('users as receiver', 'receiver.id', 'messages.receiverId')
+      .where('messages.senderId', meId)
+      .orWhere('messages.receiverId', meId)
+      .select(
+        'sender.id as senderId',
+        'sender.displayName as senderName',
+        'sender.avatarUrl as senderAvatar',
+        'receiver.id as receiverId',
+        'receiver.displayName as receiverName',
+        'receiver.avatarUrl as receiverAvatar',
+      )
+      .orderBy('messages.createdAt', 'desc'); //newest first
 
 
+    return (dbConversations || []).map(messageFromDbRow)
 
     // return { ok: true };
 

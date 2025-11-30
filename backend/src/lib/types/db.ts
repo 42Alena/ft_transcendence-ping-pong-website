@@ -24,7 +24,7 @@ export type MessageDbRow = {
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
-	meta: MetaDb;
+	// meta: MetaDb;
 	createdAt: TimeSec;
 };
 
