@@ -11,6 +11,8 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
+import { ReceiverId } from "./api";
+
 
 
 
@@ -240,18 +242,31 @@ export type SendMessageResult =
 	};
 
 export type ChatConversationSidebar = {
-  userId: UserId;            
-  displayName: DisplayName;      // to show in UI
-  avatarUrl: AvatarUrl;  		// to show in UI
+	userId: UserId;
+	displayName: DisplayName;      // to show in UI
+	avatarUrl: AvatarUrl;  		// to show in UI
 };
 
 
 export type ChatConversationSidebarResult =
-  | { ok: true; conversations: ChatConversationSidebar[] }
-  | { ok: false; reason: "not_me" };
+	| { ok: true; conversations: ChatConversationSidebar[] }
+	| { ok: false; reason: "not_me" };
 
 
-  
+
+export type MessageSenderReceiverRow = {
+  senderId: SenderId;
+  receiverId: ReceiverId;
+};
+
+
+
+type ChatSidebarItem = {
+	userId: UserId;
+	displayName: DisplayName;
+	avatarUrl: AvatarUrl;
+	lastMessageAt: TimeSec;
+};
 
 //__________________CHAT + GAME______________
 

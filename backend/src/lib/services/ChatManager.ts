@@ -200,8 +200,8 @@ Example meta JSON of the message:
 
   return:
   [
-  { userId: "u_42", displayName: "Sveva", avatarUrl: "..." },
-  { userId: "u_17", displayName: "Luis",  avatarUrl: "..." },
+  { userId: "u_42", displayName: "Alice", avatarUrl: "..." },
+  { userId: "u_17", displayName: "Bob",  avatarUrl: "..." },
   ...
 ]
   newest messages first
@@ -227,20 +227,21 @@ Example meta JSON of the message:
     if (!me)
       return { ok: false, reason: "not_me" };
 
+
+    
     const dbConversations = await this.dbTableMessages()
-      .join('users as sender', 'sender.id', 'messages.senderId')
-      .join('users as receiver', 'receiver.id', 'messages.receiverId')
-      .where('messages.senderId', meId)
-      .orWhere('messages.receiverId', meId)
+      // .join('users as sender', 'sender.id', 'messages.senderId')
+      // .join('users as receiver', 'receiver.id', 'messages.receiverId')
+      .where({senderId: meId})
+      .orWhere({receiverId: meId})
       .select(
-        'sender.id as senderId',
-        'sender.displayName as senderName',
-        'sender.avatarUrl as senderAvatar',
-        'receiver.id as receiverId',
-        'receiver.displayName as receiverName',
-        'receiver.avatarUrl as receiverAvatar',
+        'senderId',
+        'receiverId'
       )
-      .orderBy('messages.createdAt', 'desc'); //newest first
+      // .orderBy('messages.createdAt', 'desc'); //newest first
+
+
+
 
 
     return (dbConversations || []).map(messageFromDbRow)

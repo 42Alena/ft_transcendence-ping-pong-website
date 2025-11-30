@@ -84,6 +84,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ adapted send new messages with different types of NewMessageChat
 	+ corrected sendTournamentMessage to work withoit ender(system_id)
 	+ addeddd isCommmunicationBlocked for  both sides
+	+  getChatCoversationSideBar, working with DB
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
@@ -107,6 +108,8 @@ Not required for evaluation — used for organization and pull request preparati
 	| NewTournamentMessage;
 	```
 
+	+ ChatSidebarItem
+	+ MessageSenderReceiverRow
 ### api types
 	+ all types for chat sending messages
 	+ ChatConversationSidebar
