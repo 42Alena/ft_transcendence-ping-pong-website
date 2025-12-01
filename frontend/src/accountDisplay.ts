@@ -250,6 +250,7 @@ function displayUserProfile() {
 const registerForm : any = document.getElementById("register");
 const registerSuccessPage : any = document.getElementById("register-success");
 const loginButton : any = document.getElementById("login-button");
+const loginForm : any = document.getElementById("login");
 
 registerForm.addEventListener("click", (event : any) => {
   event.preventDefault();
@@ -265,3 +266,8 @@ loginButton.addEventListener("click", () => {
   registerSuccessPage.classList.remove("flex");
   setAccountPage('login');
 });
+
+loginForm.addEventListener("submit", (event : any) => {
+  event.preventDefault();
+})
+
