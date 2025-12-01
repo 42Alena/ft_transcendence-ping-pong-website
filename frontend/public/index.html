@@ -93,7 +93,11 @@
             class="relative flex h-full w-full items-center justify-center"
             id="welcomePage"
           >
-            Welcome page
+            <img
+              src="images/registration_success/pong_registrtion_success.png"
+              alt="welcome page"
+              class="absolute h-full w-full"
+            />
           </div>
           <div
             class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
@@ -244,11 +248,13 @@
                 </div>
                 <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
               </form>
-              <div class="hidden flex-col justify-center items-center " id="success-display">
-                <div class="flex m-1.5 text-green-700 text-4xl">
-                  Registration was a success!
-                </div>
-                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
+              <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
+              <img
+              src="images/registration_success/pong_registrtion_success.png"
+              alt="welcome page"
+              class="absolute h-full w-full"
+            />
+              <button type="submit" class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
               </div>
             </div>
             <div class="hidden flex-col bg-inherit" id="loginPage">
