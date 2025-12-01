@@ -214,14 +214,14 @@
               <img
                     src="images/pages_images/pong_registration_new.png"
                     alt="registration page"
-                    class="absolute z-0 w-full h-full"
+                    class="absolute inset-0 z-0 w-full h-full object-cover"
                   />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="absolute z-1 table rounded-xl"
+                class="table rounded-xl absolute z-1"
               >
                 <p>
                   <label class="table-cell text-xl font-bold" for="reg-username"
@@ -264,14 +264,27 @@
                   <button
                       class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                       type="button"
-                      id="add-remove-friend__header"
+                      id="register-button"
                     >
                       Register
                     </button>
                 </p>
               </form>
-              <!-- <div class="flex border" id="reg-errors">Error box</div> -->
             </div>
+            <div id="register-success" class="relative hidden w-full h-full justify-center items-center">
+                <img
+                    src="images/registration_sucess/pong_registrtion_success.png"
+                    alt="registration success page"
+                    class="absolute inset-0 z-0 w-full h-full"
+                  />
+                <button
+                      class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="login-button"
+                    >
+                      Login
+                    </button>
+              </div>
             <div class="hidden flex-col bg-inherit" id="loginPage">
               <form
                 action="http://127.0.0.1:8080"
