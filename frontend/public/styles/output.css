@@ -22,7 +22,6 @@
     --color-blue-700: oklch(48.8% 0.243 264.376);
     --color-blue-900: oklch(37.9% 0.146 265.522);
     --color-blue-950: oklch(28.2% 0.091 267.935);
-    --color-purple-300: oklch(82.7% 0.119 306.383);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
@@ -39,10 +38,6 @@
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
-    --text-6xl: 3.75rem;
-    --text-6xl--line-height: 1;
-    --text-8xl: 6rem;
-    --text-8xl--line-height: 1;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
     --radius-sm: 0.25rem;
@@ -204,9 +199,6 @@
 @layer utilities {
   .invisible {
     visibility: hidden;
-  }
-  .visible {
-    visibility: visible;
   }
   .relative {
     position: relative;
@@ -516,9 +508,6 @@
   .bg-inherit {
     background-color: inherit;
   }
-  .bg-purple-300 {
-    background-color: var(--color-purple-300);
-  }
   .bg-sky-200 {
     background-color: var(--color-sky-200);
   }
@@ -570,14 +559,6 @@
   .text-4xl {
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
-  }
-  .text-6xl {
-    font-size: var(--text-6xl);
-    line-height: var(--tw-leading, var(--text-6xl--line-height));
-  }
-  .text-8xl {
-    font-size: var(--text-8xl);
-    line-height: var(--tw-leading, var(--text-8xl--line-height));
   }
   .text-lg {
     font-size: var(--text-lg);
@@ -666,10 +647,11 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 150px;
 }
 .dropdown:hover .dropdown-menu {
   display: block;

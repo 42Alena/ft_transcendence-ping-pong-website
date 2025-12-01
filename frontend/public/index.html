@@ -9,7 +9,7 @@
   </head>
 
   <body
-    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#CFF7E6] "
+    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#CFF7E6]"
   >
     <header class="flex justify-center bg-[#90ee90]">
       <div class="w-full max-w-5xl border">
@@ -30,7 +30,7 @@
           <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
-                <span id="logged-user" class="mr-2.5"> Hello, you! </span>
+                <span id="logged-user" class="mr-2.5">Hello, you</span>
                 <div id="logged-user-avatar">
                   <img
                     src="images/profile/orange.png"
@@ -53,7 +53,7 @@
                 </li>
                 <li>
                   <a href="#" onclick="setAccountPage('profile')"
-                    ><span></span> View my profile</a
+                    ><span></span> Profile</a
                   >
                 </li>
                 <li>
@@ -193,107 +193,146 @@
             class="relative hidden h-full w-full items-center justify-center bg-sky-200"
             id="accountPage"
           >
-            <div class="hidden h-full w-full flex-col bg-inherit justify-center items-center" id="registerPage">
+            <div
+              class="hidden h-full w-full flex-col items-center justify-center bg-inherit"
+              id="registerPage"
+            >
               <form
                 action="http://127.0.0.1:3000/auth/register"
                 method="post"
                 id="register"
-                class="flex flex-col justify-center items-center rounded-xl p-1"
+                class="flex flex-col items-center justify-center rounded-xl p-1"
               >
-                <div class="mb-3" id="usernameInput">
-                  <label class="text-xl font-medium text-heading" for="reg-username"
+                <div class="mb-3">
+                  <label
+                    class="text-heading text-xl font-medium"
+                    for="reg-username"
                     >Username (login)</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
                     autocomplete="off"
                     required
                   />
-                  <div id="reg-usernama_error" class="text-red-600 hidden text-sm"></div>
+                  <div
+                    id="reg-usernama_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
-                 <div class="mb-3">
-                  <label class="text-xl font-medium text-heading" for="reg-displayName"
+                <div class="mb-3">
+                  <label
+                    class="text-heading text-xl font-medium"
+                    for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
                     autocomplete="off"
                     required
                   />
-                  <div id="reg-displayName_error" class="text-red-600 hidden text-sm"></div>
+                  <div
+                    id="reg-displayName_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
                 <div class="mb-3">
-                  <label class="text-xl font-medium text-heading" for="reg-password"
+                  <label
+                    class="text-heading text-xl font-medium"
+                    for="reg-password"
                     >Password</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
                     autocomplete="off"
                     required
                   />
-                <div id="reg-password_error" class="text-red-600 hidden text-sm"></div>
+                  <div
+                    id="reg-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
-                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
+                <button
+                  type="submit"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Submit
+                </button>
               </form>
-              <div class="hidden flex-col justify-center items-center " id="success-display">
-                <div class="flex m-1.5 text-green-700 text-4xl">
+              <div
+                class="hidden flex-col items-center justify-center"
+                id="success-display"
+              >
+                <div class="m-1.5 flex text-4xl text-green-700">
                   Registration was a success!
                 </div>
-                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
+                <button
+                  type="submit"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  id="login-button"
+                >
+                  Login
+                </button>
               </div>
             </div>
             <div class="hidden flex-col bg-inherit" id="loginPage">
               <form
-                action="http://127.0.0.1:8080"
+                action="http://127.0.0.1:3000/auth/login"
                 method="post"
                 id="login"
-                class="table rounded-xl border bg-purple-300 p-1"
+                class="flex flex-col items-center justify-center rounded-xl p-1"
               >
-                <p>
-                  <label class="table-cell text-xl" for="login-username"
+                <div class="mb-3">
+                  <label
+                    class="text-heading text-xl font-medium"
+                    for="login-username"
                     >Username:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="login-username"
                     name="login-user_username"
                     required
                   />
-                </p>
-                <p>
-                  <label class="table-cell text-xl" for="login-password"
+                  <div
+                    id="log-username_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label
+                    class="text-heading text-xl font-medium"
+                    for="login-password"
                     >Password:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="password"
                     id="login-password"
                     name="login-user_password"
                     required
                   />
-                </p>
-                <span class="block h-[1em]"></span>
-                <p class="flex justify-center">
-                  <button
-                    type="submit"
-                    id="submitLogButton"
-                    class="cursor-pointer border"
-                  >
-                    Login
-                  </button>
-                </p>
+                  <div
+                    id="log-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
+                <button
+                  type="submit"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Login
+                </button>
               </form>
-              <div class="errors border" id="log-errors">Error box</div>
             </div>
             <div
               class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
@@ -637,25 +676,25 @@
                 class="flex h-full flex-wrap items-center justify-center gap-5"
               >
                 <div id="aliasPlayerOne">
-                    <label for="namePlayerOne" class="text-black"
-                      >Player one</label
+                  <label for="namePlayerOne" class="text-black"
+                    >Player one</label
+                  >
+                  <div class="flex flex-row">
+                    <input
+                      id="namePlayerOne"
+                      type="text"
+                      name="playerOne"
+                      placeholder="Enter your display name"
+                      class="flex-2 bg-white"
+                    />
+                    <button
+                      class="border-2 border-white bg-blue-500 hover:bg-blue-700"
+                      type="button"
+                      id="okPlayerOne"
                     >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerOne"
-                        type="text"
-                        name="playerOne"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        id="okPlayerOne"
-                      >
-                        OK
-                      </button>
-                    </div>
+                      OK
+                    </button>
+                  </div>
                   <div id="AIPlayerOne" class="invisible mt-0.5 flex flex-row">
                     <button
                       class="flex h-6 w-6 items-center justify-center bg-inherit"
@@ -915,6 +954,7 @@
     <script src="dist/setUpPlayers.js"></script>
     <script src="dist/createRules.js"></script>
     <script src="dist/registerUser.js"></script>
+    <script src="dist/loginUser.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>
