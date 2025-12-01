@@ -210,32 +210,21 @@
             class="relative hidden h-full w-full items-center justify-center bg-white"
             id="accountPage"
           >
-            <div class="hidden flex-col bg-inherit" id="registerPage">
+            <div class="hidden relative bg-inherit w-full h-full justify-center items-center" id="registerPage">
+              <img
+                    src="images/pages_images/pong_registration_new.png"
+                    alt="registration page"
+                    class="absolute z-0 w-full h-full"
+                  />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="table rounded-xl border bg-blue-300 p-1"
+                class="absolute z-1 table rounded-xl"
               >
-                <p class="flex items-center justify-center">
-                  <label class="table-cell text-xl" for="reg-avatar">
-                    <img
-                      src="images/profile/grey.png"
-                      class="cursor-pointer"
-                      width="50px"
-                      height="50px"
-                    />
-                  </label>
-                  <input
-                    type="file"
-                    id="reg-avatar"
-                    name="reg-user_avatar"
-                    class="hidden"
-                  />
-                </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-username"
+                  <label class="table-cell text-xl font-bold" for="reg-username"
                     >Username (login)</label
                   >
                   <input
@@ -247,7 +236,7 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-displayName"
+                  <label class="table-cell text-xl font-bold" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
@@ -259,7 +248,7 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-password"
+                  <label class="table-cell text-xl font-bold" for="reg-password"
                     >Password</label
                   >
                   <input
@@ -273,15 +262,15 @@
                 <span class="block h-[1em]"></span>
                 <p class="flex justify-center">
                   <button
-                    type="submit"
-                    id="submitRegButton"
-                    class="cursor-pointer border"
-                  >
-                    Register
-                  </button>
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="add-remove-friend__header"
+                    >
+                      Register
+                    </button>
                 </p>
               </form>
-              <div class="flex border" id="reg-errors">Error box</div>
+              <!-- <div class="flex border" id="reg-errors">Error box</div> -->
             </div>
             <div class="hidden flex-col bg-inherit" id="loginPage">
               <form
