@@ -5,10 +5,16 @@ const logUserHeaderDiv : any = document.getElementById("logged-user");
 const logAvatHeaderDiv : any = document.querySelector('#logged-user-avatar img');
 let loggedUser : boolean = false;
 
-if (localStorage.getItem('loggedUser'))
+if (localStorage.getItem('userData'))
 {
-    logUserHeaderDiv.textContent = `Hello, ${localStorage.getItem('loggedUser')}`;
-    logAvatHeaderDiv.src = localStorage.getItem('loggedAvatar');
+    const userDataString : string | null = localStorage.getItem('userData');
+    if (userDataString)
+    {
+      const userData = JSON.parse(userDataString)
+      userData.url = "/images/profile/blue.png" //default img
+      logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
+      logAvatHeaderDiv.src = userData.url;
+    }
 }
 
 log.addEventListener("submit", async (event: any) => {
@@ -23,8 +29,8 @@ log.addEventListener("submit", async (event: any) => {
   const formData = new FormData(log);
 
   const LoginBody = {
-    username: formData.get("login-user_username"), // Use the name attribute
-    passwordPlain: formData.get("login-user_password"), // Use the name attribute
+    username: formData.get("login-user_username"),
+    passwordPlain: formData.get("login-user_password"),
   };
   const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
     method: "POST",
@@ -49,24 +55,23 @@ log.addEventListener("submit", async (event: any) => {
     }
     else
     {
-        loggedUser = true;
         errorUsernameLog.classList.add("hidden");
         errorUsernameLog.classList.remove("block");
         errorPasswordLog.classList.remove("block");
         errorPasswordLog.classList.add("hidden");
         log.reset();
         logUserHeaderDiv.textContent = '';
-        logUserHeaderDiv.textContent = `Hello, ${data.username}`;
-        const user = data.username;
-        let url : string = data.avatarUrl;
         //need to change menu bar, change the name in the header and the avatar
-        if (url == null)
-            localStorage.setItem('loggedAvatar', "images/profile/blue.png");
-        else
-            localStorage.setItem('loggedAvatar', url);
-        localStorage.setItem('loggedUser', user);
-        logUserHeaderDiv.textContent = `Hello, ${localStorage.getItem('loggedUser')}`;
-        logAvatHeaderDiv.src = localStorage.getItem('loggedAvatar');
+        localStorage.setItem('userData', JSON.stringify(data));
+        const userDataString : string | null = localStorage.getItem('userData');
+        if (userDataString)
+        {
+          const userData = JSON.parse(userDataString)
+          userData.url = "/images/profile/blue.png" //default img
+          // localStorage.setItem('loggedUser', user);
+          logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
+          logAvatHeaderDiv.src = userData.url;
+        }
         console.log("login user:", data);
     }
   } catch (error) {
