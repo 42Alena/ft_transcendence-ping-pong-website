@@ -119,7 +119,7 @@ function setGameType(text: string) {
 //set page for 2 players or 4 players (tournament)
 function aliasSelection() {
   if (isTournament == false) {
-    imgElement.src = "images/pages_images/pong_game_2_blobs.png"
+    imgElement.src = "images/pages_images/pong_game_new.png"
     aliasPlayerThreeDiv.classList.add("hidden");
     aliasPlayerThreeDiv.classList.remove("block");
     aliasPlayerFourDiv.classList.add("hidden");
