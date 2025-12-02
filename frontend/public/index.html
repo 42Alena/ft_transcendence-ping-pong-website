@@ -41,7 +41,7 @@
                 <span id="logged-user" class="mr-2.5"> Hello, you! </span>
                 <div id="logged-user-avatar">
                   <img
-                    src="images/avatars/pong_defult.png"
+                    src="images/avatars/pong_default.png"
                     alt="User Avatar"
                     width="50"
                     height="50"
@@ -210,32 +210,21 @@
             class="relative hidden h-full w-full items-center justify-center bg-white"
             id="accountPage"
           >
-            <div class="hidden flex-col bg-inherit" id="registerPage">
+            <div class="hidden relative bg-inherit w-full h-full justify-center items-center" id="registerPage">
+              <img
+                    src="images/pages_images/pong_registration_new.png"
+                    alt="registration page"
+                    class="absolute inset-0 z-0 h-full w-full"
+                  />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="table rounded-xl border bg-blue-300 p-1"
+                class="table rounded-xl absolute z-1"
               >
-                <p class="flex items-center justify-center">
-                  <label class="table-cell text-xl" for="reg-avatar">
-                    <img
-                      src="images/profile/grey.png"
-                      class="cursor-pointer"
-                      width="50px"
-                      height="50px"
-                    />
-                  </label>
-                  <input
-                    type="file"
-                    id="reg-avatar"
-                    name="reg-user_avatar"
-                    class="hidden"
-                  />
-                </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-username"
+                  <label class="table-cell text-xl font-bold" for="reg-username"
                     >Username (login)</label
                   >
                   <input
@@ -247,7 +236,7 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-displayName"
+                  <label class="table-cell text-xl font-bold" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
@@ -259,7 +248,7 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="reg-password"
+                  <label class="table-cell text-xl font-bold" for="reg-password"
                     >Password</label
                   >
                   <input
@@ -273,25 +262,43 @@
                 <span class="block h-[1em]"></span>
                 <p class="flex justify-center">
                   <button
-                    type="submit"
-                    id="submitRegButton"
-                    class="cursor-pointer border"
-                  >
-                    Register
-                  </button>
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="register-button"
+                    >
+                      Register
+                    </button>
                 </p>
               </form>
-              <div class="flex border" id="reg-errors">Error box</div>
             </div>
-            <div class="hidden flex-col bg-inherit" id="loginPage">
+            <div id="register-success" class="relative hidden w-full h-full justify-center items-center">
+                <img
+                    src="images/registration_sucess/pong_registrtion_success.png"
+                    alt="registration success page"
+                    class="absolute inset-0 z-0 w-full h-full"
+                  />
+                <button
+                      class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="button"
+                      id="login-button"
+                    >
+                      Login
+                    </button>
+              </div>
+            <div class="hidden relative w-full h-full justify-center items-center" id="loginPage">
+              <img
+                    src="images/pages_images/pong_login_new.png"
+                    alt="login page"
+                    class="absolute inset-0 z-0 w-full h-full"
+                  />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 id="login"
-                class="table rounded-xl border bg-purple-300 p-1"
+                class="absolute z-1 table rounded-xl p-1"
               >
                 <p>
-                  <label class="table-cell text-xl" for="login-username"
+                  <label class="table-cell text-xl font-bold" for="login-username"
                     >Username:</label
                   >
                   <input
@@ -303,7 +310,7 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="login-password"
+                  <label class="table-cell text-xl font-bold" for="login-password"
                     >Password:</label
                   >
                   <input
@@ -317,15 +324,13 @@
                 <span class="block h-[1em]"></span>
                 <p class="flex justify-center">
                   <button
-                    type="submit"
-                    id="submitLogButton"
-                    class="cursor-pointer border"
-                  >
-                    Login
-                  </button>
+                      class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      type="submit"
+                    >
+                      Login
+                    </button>
                 </p>
               </form>
-              <div class="errors border" id="log-errors">Error box</div>
             </div>
             <div
               class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
@@ -660,16 +665,20 @@
             id="gamePage"
             class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
           >
+            <img
+              src="images/pages_images/pong_game_new.png"
+              alt="welcome page"
+              class="absolute h-full w-full z-0"
+            />
             <div
               id="setUpGame"
-              class="flex h-[480px] w-[640px] justify-center border-2 border-blue-900 bg-sky-200 p-2.5"
-            >
+              class="max-h-full z-2 flex h-[480px] w-[640px] justify-center absolute  bg-white/30 backdrop-invert backdrop-opacity-10 absolute">
               <div
                 id="setUpPlayers"
                 class="flex h-full flex-wrap items-center justify-center gap-5"
               >
                 <div id="aliasPlayerOne">
-                  <label for="namePlayerOne" class="text-black"
+                  <label for="namePlayerOne" class="text-black font-bold text-xl"
                     >Player one</label
                   >
                   <div class="flex flex-row">
@@ -713,7 +722,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerTwo">
-                  <label for="namePlayerTwo" class="text-black"
+                  <label for="namePlayerTwo" class="text-black font-bold text-xl"
                     >Player two</label
                   >
                   <div class="flex flex-row">
@@ -755,7 +764,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerThree" class="-mt-50">
-                  <label for="namePlayerThree" class="text-black"
+                  <label for="namePlayerThree" class="text-black font-bold text-xl"
                     >Player three</label
                   >
                   <div class="flex flex-row">
@@ -797,7 +806,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerFour" class="-mt-50">
-                  <label for="namePlayerFour" class="text-black"
+                  <label for="namePlayerFour" class="text-black font-bold text-xl"
                     >Player four</label
                   >
                   <div class="flex flex-row">
@@ -842,26 +851,26 @@
             </div>
             <div
               id="setInstructions"
-              class="hidden h-[480px] w-[640px] flex-col items-center justify-center border-2 border-blue-900 bg-sky-200"
+              class="z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10 absolute"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
-                <div class="flex w-full flex-1 items-center justify-center">
+                <div class="flex w-full flex-1 items-center justify-center font-bold text-5xl">
                   First to score to 3 wins
                 </div>
-                <div class="flex w-full flex-1 flex-row items-center border">
+                <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex flex-1 flex-col items-center justify-center border"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
                     <div id="playerLeftName"></div>
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center">vs</div>
+                  <div class="flex items-center font-bold text-4xl">vs</div>
                   <div
-                    class="flex flex-1 flex-col items-center justify-center border"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
                     <div id="playerRightName"></div>
                     <div>arrow up - up</div>
@@ -883,7 +892,7 @@
             </div>
             <div
               id="gameScreen"
-              class="hidden h-[600px] w-[800px] items-center justify-center"
+              class="hidden abosolute z-10 h-[600px] w-[800px] items-center justify-center bg-black"
             >
               <canvas
                 id="myCanvas"
@@ -894,14 +903,14 @@
             </div>
             <div
               id="gameOverScreen"
-              class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
+              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center  bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="result"
-                class="flex; flex-col items-center justify-center text-center"
+                class="flex flex-col items-center justify-center text-center font-bold text-5xl"
               >
                 GAME OVER
-                <div id="winner-text"></div>
+                <div id="winner-text" class="font-bold text-5xl bg-white/30 backdrop-invert backdrop-opacity-10"></div>
               </div>
               <div id="gameOptions" class="flex flex-row gap-2.5">
                 <!-- <button

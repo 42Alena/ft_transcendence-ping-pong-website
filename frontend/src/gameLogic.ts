@@ -62,6 +62,7 @@ nextGameButton.addEventListener("click", () => {
 
 //start game button
 runButton.addEventListener("click", () => {
+  imgElement.src = "images/pages_images/black.jpg"
   setUpCanva();
   startGame();
 });
@@ -476,6 +477,7 @@ class Game {
     }
     if (!isTournament) {
       //return game over screen
+      imgElement.src = "images/pages_images/pong_happy_sky.png"
       gameOverDiv.classList.add("flex");
       gameOverDiv.classList.remove("hidden");
       gameOverOptionsButtons.classList.add("flex");
@@ -518,6 +520,7 @@ class Game {
       }
       //return next game screen
       if (matchPlayed == 3) {
+        imgElement.src = "images/pages_images/pong_happy_sky.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
         gameOverOptionsButtons.classList.add("flex");
@@ -528,6 +531,7 @@ class Game {
         players = [];
         gameisOn = false;
       } else {
+        imgElement.src ="images/pages_images/pong_table_game.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
         gameOverOptionsButtons.classList.add("hidden");
