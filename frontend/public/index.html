@@ -672,8 +672,7 @@
             />
             <div
               id="setUpGame"
-              class="max-h-full z-2 flex h-[480px] w-[640px] justify-center p-2.5 bg-white/30 backdrop-invert backdrop-opacity-10 absolute"
-            >
+              class="max-h-full z-2 flex h-[480px] w-[640px] justify-center absolute">
               <div
                 id="setUpPlayers"
                 class="flex h-full flex-wrap items-center justify-center gap-5"
@@ -904,14 +903,14 @@
             </div>
             <div
               id="gameOverScreen"
-              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center"
+              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center  bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="result"
                 class="flex flex-col items-center justify-center text-center font-bold text-5xl"
               >
                 GAME OVER
-                <div id="winner-text" class="font-bold text-5xl"></div>
+                <div id="winner-text" class="font-bold text-5xl bg-white/30 backdrop-invert backdrop-opacity-10"></div>
               </div>
               <div id="gameOptions" class="flex flex-row gap-2.5">
                 <!-- <button
