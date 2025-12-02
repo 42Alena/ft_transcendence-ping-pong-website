@@ -211,7 +211,7 @@ Example meta JSON of the message:
   .join //where I am sender 1,2 =3, rename(rename 'users as sender' this table inside this query)
 
   */
-  async getChatConversationSidebar(
+  async getChatConversationSidebar( //TODO change to all users who i wrote or who me wrote
     meId: Domain.UserId,
 
   ): Promise<Domain.ChatConversationSidebarResult> {
@@ -226,6 +226,7 @@ Example meta JSON of the message:
 
 
     const messageRows = await this.dbTableMessages()
+      .distinct()   // take unique names https://knexjs.org/guide/query-builder.html#clearhaving
       .where({ senderId: meId })
       .orWhere({ receiverId: meId })
       .select(
@@ -253,8 +254,8 @@ Example meta JSON of the message:
     const idsArray = Array.from(uniqueNotMeIds);
 
     // 4) Load users for these ids
-    
-    const conversations =  await this.dbTableUser()
+
+    const conversations = await this.dbTableUser()
       .whereIn("id", idsArray)
       .select("id", "displayName", "avatarUrl") as Domain.ChatConversationSidebar[];
 
