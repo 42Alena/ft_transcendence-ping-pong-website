@@ -125,7 +125,7 @@ function aliasSelection() {
     aliasPlayerFourDiv.classList.add("hidden");
     aliasPlayerFourDiv.classList.remove("block");
   } else {
-    imgElement.src = "images/pages_images/pong_blobs_tournament.png"
+    imgElement.src = "images/pages_images/pong_tournament_new.png"
     aliasPlayerThreeDiv.classList.add("block");
     aliasPlayerThreeDiv.classList.remove("hidden");
     aliasPlayerFourDiv.classList.add("block");
