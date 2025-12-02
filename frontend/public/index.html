@@ -298,11 +298,11 @@
                 class="absolute z-1 table rounded-xl p-1"
               >
                 <p>
-                  <label class="table-cell text-xl" for="login-username"
+                  <label class="table-cell text-xl font-bold" for="login-username"
                     >Username:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl font-bold"
+                    class="table-cell bg-white text-xl"
                     type="text"
                     id="login-username"
                     name="login-user_username"
@@ -310,11 +310,11 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl" for="login-password"
+                  <label class="table-cell text-xl font-bold" for="login-password"
                     >Password:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl font-bold"
+                    class="table-cell bg-white text-xl"
                     type="password"
                     id="login-password"
                     name="login-user_password"
@@ -665,16 +665,21 @@
             id="gamePage"
             class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
           >
+            <img
+              src="images/pages_images/pong_game_2_blobs.png"
+              alt="welcome page"
+              class="absolute h-full w-full z-0"
+            />
             <div
               id="setUpGame"
-              class="flex h-[480px] w-[640px] justify-center border-2 border-blue-900 bg-sky-200 p-2.5"
+              class="max-h-full z-2 flex h-[480px] w-[640px] justify-center p-2.5 bg-white/30 backdrop-invert backdrop-opacity-10 absolute"
             >
               <div
                 id="setUpPlayers"
                 class="flex h-full flex-wrap items-center justify-center gap-5"
               >
                 <div id="aliasPlayerOne">
-                  <label for="namePlayerOne" class="text-black"
+                  <label for="namePlayerOne" class="text-black font-bold text-xl"
                     >Player one</label
                   >
                   <div class="flex flex-row">
@@ -718,7 +723,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerTwo">
-                  <label for="namePlayerTwo" class="text-black"
+                  <label for="namePlayerTwo" class="text-black font-bold text-xl"
                     >Player two</label
                   >
                   <div class="flex flex-row">
@@ -760,7 +765,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerThree" class="-mt-50">
-                  <label for="namePlayerThree" class="text-black"
+                  <label for="namePlayerThree" class="text-black font-bold text-xl"
                     >Player three</label
                   >
                   <div class="flex flex-row">
@@ -802,7 +807,7 @@
                   </div>
                 </div>
                 <div id="aliasPlayerFour" class="-mt-50">
-                  <label for="namePlayerFour" class="text-black"
+                  <label for="namePlayerFour" class="text-black font-bold text-xl"
                     >Player four</label
                   >
                   <div class="flex flex-row">
@@ -847,26 +852,26 @@
             </div>
             <div
               id="setInstructions"
-              class="hidden h-[480px] w-[640px] flex-col items-center justify-center border-2 border-blue-900 bg-sky-200"
+              class="z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10 absolute"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
-                <div class="flex w-full flex-1 items-center justify-center">
+                <div class="flex w-full flex-1 items-center justify-center font-bold text-5xl">
                   First to score to 3 wins
                 </div>
-                <div class="flex w-full flex-1 flex-row items-center border">
+                <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex flex-1 flex-col items-center justify-center border"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
                     <div id="playerLeftName"></div>
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center">vs</div>
+                  <div class="flex items-center font-bold text-4xl">vs</div>
                   <div
-                    class="flex flex-1 flex-col items-center justify-center border"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
                     <div id="playerRightName"></div>
                     <div>arrow up - up</div>
@@ -888,7 +893,7 @@
             </div>
             <div
               id="gameScreen"
-              class="hidden h-[600px] w-[800px] items-center justify-center"
+              class="hidden abosolute z-10 h-[600px] w-[800px] items-center justify-center bg-black"
             >
               <canvas
                 id="myCanvas"
@@ -899,14 +904,14 @@
             </div>
             <div
               id="gameOverScreen"
-              class="hidden h-[480px] w-[640px] flex-col items-center justify-center bg-sky-300"
+              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center"
             >
               <div
                 id="result"
-                class="flex; flex-col items-center justify-center text-center"
+                class="flex flex-col items-center justify-center text-center font-bold text-5xl"
               >
                 GAME OVER
-                <div id="winner-text"></div>
+                <div id="winner-text" class="font-bold text-5xl"></div>
               </div>
               <div id="gameOptions" class="flex flex-row gap-2.5">
                 <!-- <button

@@ -28,6 +28,8 @@ let AIPlayerThree: boolean = false;
 let AIPlayerFour: boolean = false;
 let isTournament: boolean = false;
 
+const imgElement : any = document.querySelector('#gamePage img');
+
 let players: Player[] = [];
 
 class Player {
@@ -117,11 +119,13 @@ function setGameType(text: string) {
 //set page for 2 players or 4 players (tournament)
 function aliasSelection() {
   if (isTournament == false) {
+    imgElement.src = "images/pages_images/pong_game_2_blobs.png"
     aliasPlayerThreeDiv.classList.add("hidden");
     aliasPlayerThreeDiv.classList.remove("block");
     aliasPlayerFourDiv.classList.add("hidden");
     aliasPlayerFourDiv.classList.remove("block");
   } else {
+    imgElement.src = "images/pages_images/pong_blobs_tournament.png"
     aliasPlayerThreeDiv.classList.add("block");
     aliasPlayerThreeDiv.classList.remove("hidden");
     aliasPlayerFourDiv.classList.add("block");
@@ -295,3 +299,4 @@ aliasPlayerFourButton.addEventListener("click", () => {
      showPageBeforeGame();
   }
 });
+
