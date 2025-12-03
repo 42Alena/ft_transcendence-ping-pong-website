@@ -137,4 +137,4 @@ export type ChatConversations = Domain.ChatConversations;
 export type GetChatConversationsResult = ChatConversations[];
 
 //for messages between me and another user
-export type GetChatConversationWithResult = ChatMessage[];
+export type GetChatConversationWithResult = Domain.MessageChat[];

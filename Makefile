@@ -80,6 +80,9 @@ tests_users: db
 	@chmod +x backend/tests/users.sh
 	@BASE_URL=http://localhost:3000 backend/tests/users.sh
 
+tests_chat: db
+	@chmod +x backend/tests/chat.sh
+	@BASE_URL=http://localhost:3000 backend/tests/chat.sh
 
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:
