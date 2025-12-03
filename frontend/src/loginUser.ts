@@ -82,6 +82,7 @@ log.addEventListener("submit", async (event: any) => {
           dropMenuUserDiv.classList.remove("hidden");
           dropMenuGuestDiv.classList.add("hidden");
           dropMenuGuestDiv.classList.remove("block");
+          displayPage('welcome');
         }
         console.log("login user:", data);
     }
