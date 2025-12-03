@@ -106,7 +106,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
 			
-			const result = await chatManager.getChatConversations(meId);
+			const result = await chatManager.getConversations(meId);
 			
 			if (result.ok)
 				return sendOK(reply, result.conversations)

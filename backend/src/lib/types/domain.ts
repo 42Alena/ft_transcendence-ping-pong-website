@@ -252,9 +252,13 @@ export type ChatConversationsResult =
 	| { ok: true; conversations: ChatConversations[] }
 	| { ok: false; reason: "not_me" };
 
-
-
-
+export type ChatConversationWithResult =
+	| { ok: true; conversations: ChatConversations[] }
+	| { 
+		ok: false; reason:
+		| "not_me"    // sender id != current user / invalid session
+		| "no_receiver"
+		| "not_system"    };
 
 
 export type ChatConversationsItem = {

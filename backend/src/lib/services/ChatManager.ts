@@ -264,7 +264,7 @@ Example meta JSON of the message:
 
   }
 
-/* to */
+  /* list Users+Avatars for conversation */
   async getConversations( //TODO change to all users who i wrote or who me wrote
     meId: Domain.UserId,
 
@@ -318,5 +318,35 @@ Example meta JSON of the message:
 
   }
 
+
+  /* list Users+Avatars for conversation */
+  async getConversationWith( //TODO change to all users who i wrote or who me wrote
+    senderId: Domain.PrivateSenderId,
+    receiverId: Domain.PrivateReceiverId,
+
+  ): Promise<Domain.ChatConversationWithResult> {
+
+    if(senderId === Domain.SYSTEM_ID)
+    {
+
+      const receiver = await this.userManager.getUserById(receiverId);
+  
+      //Sender not found or not authenticated
+      if (!receiver)
+        return { ok: false, reason: "no_receiver" };
+    }
+    else
+    {
+
+      const sender = await this.userManager.getUserById(senderId);
+  
+      //Sender not found or not authenticated
+      if (!sender)
+        return { ok: false, reason: "not_me" };
+    }
+
+
+
+  }
 
 }
