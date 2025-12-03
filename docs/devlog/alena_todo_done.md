@@ -134,9 +134,6 @@ Not required for evaluation — used for organization and pull request preparati
 ### TESTS
 	+ backend/tests/chat.sh  - tests for chat
 
-## 📘 DOCUMENTATION
-
-## 🔗 LINKS / HELP
 
 # HOW TO TEST: 
 ```bash
@@ -144,7 +141,7 @@ Not required for evaluation — used for organization and pull request preparati
 	make backend
 
 	# 2. in 2.terminal: 
-	make tests_user_settings
+	make tests_chat
 ```
 
 
