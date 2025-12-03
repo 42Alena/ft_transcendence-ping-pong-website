@@ -5,6 +5,7 @@ import *  from '../types/UserTypes';
 or 
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
+import *  as Domain from '../types/domain';
 
 import { FastifyRequest } from "fastify";
 
@@ -105,19 +106,19 @@ export type ChatMessage = {
 
 // Body that client sends for send message
 
-type SendGameInviteBody = {
+export type SendGameInviteBody = {
 	receiverId: ReceiverId;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
 
-type SendPrivateMessageBody = {
+export type SendPrivateMessageBody = {
 	receiverId: ReceiverId;
 	content: MessageContent;
 	// no type, no senderId
 };
 
-type SendTournamentMessageBody = {
+export type SendTournamentMessageBody = {
 	receiverId: ReceiverId;
   // no content, backend will use MESSAGE_GAME_INVITE
 };
@@ -130,3 +131,10 @@ export type GetChatParams = {
 export type GetChatResponse = {
   messages: ChatMessage[];
 };
+
+//for Sidebar
+export type ChatConversations = Domain.ChatConversations;
+export type GetChatConversationsResult = ChatConversations[];
+
+//for messages between me and another user
+export type GetChatConversationWithResult = Domain.MessageChat[];

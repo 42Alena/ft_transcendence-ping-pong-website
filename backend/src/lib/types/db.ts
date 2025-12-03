@@ -24,10 +24,11 @@ export type MessageDbRow = {
 	senderId: SenderId;
 	receiverId: ReceiverId;
 	content: MessageContent;
-	meta: MetaDb;
+	// meta: MetaDb;
 	createdAt: TimeSec;
 };
 
 export type MessageDbInsertRow = Omit<MessageDbRow, 'id' | 'createdAt'>;
+export type MessageDbRowSenderReceiver = Pick<MessageDbRow, "senderId" | "receiverId">;
 
 

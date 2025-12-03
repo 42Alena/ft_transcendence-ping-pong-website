@@ -89,6 +89,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ sendTournamentMessage()
 	+ adapted send new messages with different types of NewMessageChat
 	+ corrected sendTournamentMessage to work withoit ender(system_id)
+	+ addeddd isCommmunicationBlocked for  both sides
+	+  getChatCoversationSideBar, working with DB
 
 ### UserManager
 	+ added additional check for get users/id if not deleted
@@ -112,7 +114,17 @@ Not required for evaluation — used for organization and pull request preparati
 	| NewTournamentMessage;
 	```
 
+	+ ChatSidebarItem
+	+ MessageDbRowSenderReceiver 
+
+### user_db.ts
+	- UserSidebarDbRow 
+	
+
+
 ### api types
+	+ all types for chat sending messages
+	+ ChatConversationSidebar
 
 #### validators 
 	+ validateMessageContent
@@ -122,9 +134,6 @@ Not required for evaluation — used for organization and pull request preparati
 ### TESTS
 	+ backend/tests/chat.sh  - tests for chat
 
-## 📘 DOCUMENTATION
-
-## 🔗 LINKS / HELP
 
 # HOW TO TEST: 
 ```bash
@@ -132,7 +141,7 @@ Not required for evaluation — used for organization and pull request preparati
 	make backend
 
 	# 2. in 2.terminal: 
-	make tests_user_settings
+	make tests_chat
 ```
 
 

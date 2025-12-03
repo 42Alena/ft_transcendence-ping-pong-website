@@ -42,10 +42,12 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	fastify.get("/users/me", authRequiredOptions, async (req, reply) => {
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
-		if (!meId) return sendError(reply, "need cookies", "auth", 401);
+		if (!meId) 
+			return sendError(reply, "need cookies", "auth", 401);
 
 		const me = await userManager.getUserById(meId);
-		if (!me) return sendError(reply, "User not found", "userId", 404);
+		if (!me) 
+			return sendError(reply, "User not found", "userId", 404);
 
 		return sendOK(reply, toUserSelf(me));
 	});
@@ -226,7 +228,7 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 			return sendNoContent(reply);                  // 204
 
 		// map domain reasons to HTTP
-		if (result.reason === "not_me") return sendError(reply, "User not found", "id", 404);
+		if (result.reason === "not_me") return sendError(reply, "User not found or not authenticated", "id", 404);
 
 		if (result.reason === "taken_displayname") return sendError(reply, "Displayname is taken", "displayname", 409);
 
@@ -274,7 +276,7 @@ Uses in UserManager: changePassword(userId, currentPassword, newPassword)
 
 		// map domain reasons to HTTP
 		if (result.reason === "not_me")
-			return sendError(reply, "User not found", "id", 404);
+			return sendError(reply, "User not found or not authenticated", "id", 404);
 
 
 		if (result.reason === "wrong_current_password") {
@@ -369,7 +371,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 		// map domain reasons to HTTP
 		if (result.reason === "not_me")
-			return sendError(reply, "User not found", "id", 404);
+			return sendError(reply, "User not found or not authenticated", "id", 404);
 
 
 	});
@@ -395,7 +397,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 				return sendNoContent(reply);                  // 204
 
 			if (result.reason === "not_me")
-				return sendError(reply, "User not found", "id", 404);
+				return sendError(reply, "User not found or not authenticated", "id", 404);
 
 
 		});
@@ -418,7 +420,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 		// map domain result to HTTP
 		if (!result.ok) {
 			if (result.reason === "not_me")
-				return sendError(reply, "Not logged in", "auth", 401);
+				return sendError(reply, "User not found or not authenticated", "auth", 401);
 
 			if (result.reason === "not_found")
 				return sendError(reply, "User not found", "userId", 404);

@@ -11,6 +11,8 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
+import { ReceiverId } from "./api";
+
 
 
 
@@ -150,7 +152,7 @@ export type UnblockUserResult =
 
 //_____________CHAT___________
 
-export const SYSTEM_ID = "ThisIsSystemID" as const;
+export const SYSTEM_ID = "TOURNAMENT" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 export type MessageContent = string;
@@ -166,9 +168,10 @@ export type MessageId = number;
 
 
 export type PrivateSenderId = UserId;
+export type PrivateReceiverId = UserId;
 
 export type SenderId = PrivateSenderId | SystemId;
-export type ReceiverId = PrivateSenderId;
+// export type ReceiverId = PrivateSenderId;
 
 
 export type MessageTypeChat =
@@ -182,7 +185,7 @@ export type MessageChat = {
 	id: MessageId;
 	type: MessageTypeChat;
 	senderId: SenderId;		// UserId | SystemId
-	receiverId: ReceiverId;   // UserId
+	receiverId: PrivateReceiverId;   // UserId
 	content: MessageContent;
 	// meta: Meta;				// maybe Meta | null
 	createdAt: TimeSec;
@@ -194,7 +197,7 @@ export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
 export type NewPrivateMessage = {
 	type: "PrivateMessage";
 	senderId: SenderId;
-	receiverId: ReceiverId;
+	receiverId: PrivateReceiverId;
 	content: MessageContent;
 	// meta: null;
 };
@@ -203,7 +206,7 @@ export type NewPrivateMessage = {
 export type NewGameInviteMessage = {
 	type: "PrivateGameInviteMessage";
 	senderId: SenderId;
-	receiverId: ReceiverId;
+	receiverId: PrivateReceiverId;
 	// content: MessageContent;
 	content: typeof MESSAGE_GAME_INVITE;  // always this constant
 	// meta: null; // no meta for now
@@ -213,8 +216,8 @@ export type NewGameInviteMessage = {
 export type NewTournamentMessage = {
 	type: "TournamentMessage";
 	senderId: SystemId;
-	receiverId: ReceiverId;
-	content:  typeof MESSAGE_TOURNAMENT_INVITE;
+	receiverId: PrivateReceiverId;
+	content: typeof MESSAGE_TOURNAMENT_INVITE;
 	// content: MessageContent;
 	// meta: MetaTournamentNextMatch;
 };
@@ -230,6 +233,7 @@ export type SendMessageResult =
 	| {
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
+		| "no_receiver"
 		| "system"    // tried to use SYSTEM_ID where only users are allowed
 		| "not_system"    // not SYSTEM_ID for tournament
 		| "not_found" // receiver (or sender) doesn’t exist / deleted
@@ -237,7 +241,31 @@ export type SendMessageResult =
 		| "invalid_content";
 	};
 
+export type ChatConversations = {
+	userId: UserId;
+	displayName: DisplayName;      // to show in UI
+	avatarUrl: AvatarUrl;  		// to show in UI
+};
 
+
+export type ChatConversationsResult =
+	| { ok: true; conversations: ChatConversations[] }
+	| { ok: false; reason: "not_me" };
+
+export type ChatConversationWithResult =
+	| { ok: true; conversations: ChatConversations[] }
+	| { 
+		ok: false; reason:
+		| "not_me"    // sender id != current user / invalid session
+		| "no_receiver" };
+
+
+export type ChatConversationsItem = {
+	userId: UserId;
+	displayName: DisplayName;
+	avatarUrl: AvatarUrl;
+	lastMessageAt: TimeSec;
+};
 
 //__________________CHAT + GAME______________
 
@@ -298,7 +326,7 @@ export const TOURNAMENT_AI_ALIASES = [
 export const AI_NAME_PREFIX = "AI_";
 export const AI_NAME_SUFFIX = "_AI";
 
-const RESERVED_NAMES : string[] =[
+const RESERVED_NAMES: string[] = [
 	'admin',
 	'root',
 	'null',
@@ -306,6 +334,7 @@ const RESERVED_NAMES : string[] =[
 	'SYSTEM_ID',
 	'api',
 	'delete',
+	'tournament',
 	DELETED_USER_DISPLAY_NAME,  // Deleted_
 	DELETED_USERNAME,
 	SYSTEM_ID,

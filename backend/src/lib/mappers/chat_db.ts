@@ -13,10 +13,11 @@ export function messageFromDbRow(row: MessageDbRow): Domain.MessageChat {
 		senderId: row.senderId,
 		receiverId: row.receiverId,
 		content: row.content,
-		meta: row.meta ? JSON.parse(row.meta) as Domain.Meta : null,
+		// meta: row.meta ? JSON.parse(row.meta) as Domain.Meta : null,
 		createdAt: row.createdAt
 	}
 }
+
 
 
 // Domain message (for saving) -> DB insert row
@@ -26,6 +27,6 @@ export function messageToDbRow(message: Domain.NewMessageChat): MessageDbInsertR
 		senderId: message.senderId,
 		receiverId: message.receiverId,
 		content: message.content,
-		meta: message.meta ? JSON.stringify(message.meta) : null,  
+		// meta: message.meta ? JSON.stringify(message.meta) : null,  
 	};
 }
