@@ -97,7 +97,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 
 	/* get sidebar - list all users + their displaynames  for All conversations */
-	fastify.get<{ Reply: API.GetChatConversationsResult}>(
+	fastify.get<{ Reply: API.GetChatConversationsResult }>(
 		"/chat/conversations",
 		authRequiredOptions,
 		async (req, reply) => {
@@ -105,9 +105,9 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
-			
+
 			const result = await chatManager.getConversations(meId);
-			
+
 			if (result.ok)
 				return sendOK(reply, result.conversations)
 
@@ -118,6 +118,32 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 		});
 
 
+	/* get conversation between  me and other user/system */
+	fastify.get<{ 
+		Params: API.GetUserParams;
+		Reply: API.GetChatConversationWithResult 
+	}>(
+		"/chat/conversations/:userId",
+		authRequiredOptions,
+		async (req, reply) => {
+
+
+			const senderId = (req as API.UserAwareRequest).userId;  // set by preHandler
+			const { userId: receiverId } = req.params;   
+
+			const result = await chatManager.getConversationWith(senderId, receiverId);
+
+			if (result.ok)
+				return sendOK(reply, result.conversations)
+
+			// map domain reasons to HTTP
+			if (result.reason === "not_me")
+				return sendError(reply, "User not found or not authenticated", "id", 401);
+
+			if (result.reason === "no_receiver")
+				return sendError(reply, "Receiver not found", "id", 404);
+
+		});
 
 
 }

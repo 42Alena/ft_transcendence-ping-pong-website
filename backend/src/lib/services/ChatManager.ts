@@ -2,13 +2,14 @@
 //   - 2 == '2'  true // no strcit type checks, but - 2 === '2' false //type check
 
 import { messageFromDbRow, messageToDbRow } from '../mappers/chat_db';
-import { ReceiverId, SenderId } from '../types/api';
+// import { ReceiverId, SenderId } from '../types/api';
 import { MessageDbRowSenderReceiver } from '../types/db';
 import *  as Domain from '../types/domain';
 import * as Validate from '../utils/validators';
 import { db } from './DB';
 import { UserManager } from './UserManager';
 import { User } from './User';           // class used only here
+import { Knex } from 'knex';
 // import { userFromDbRow } from '../mappers/user_db';
 
 
@@ -199,71 +200,6 @@ Example meta JSON of the message:
 
   }
 
-
-  /* 
-  return:
-  [
-  { userId: "u_42", displayName: "Alice", avatarUrl: "..." },
-  { userId: "u_17", displayName: "Bob",  avatarUrl: "..." },
-  ...
-]
-  newest messages first
-  .join //where I am sender 1,2 =3, rename(rename 'users as sender' this table inside this query)
-
-  */
-  async getChatConversations( //TODO change to all users who i wrote or who me wrote
-    meId: Domain.UserId,
-
-  ): Promise<Domain.ChatConversationsResult> {
-
-
-    const me = await this.userManager.getUserById(meId);
-
-    //Sender not found or not authenticated
-    if (!me)
-      return { ok: false, reason: "not_me" };
-
-
-
-    const messageRows = await this.dbTableMessages()
-      .distinct()   // take unique names https://knexjs.org/guide/query-builder.html#clearhaving
-      .where({ senderId: meId })
-      .orWhere({ receiverId: meId })
-      .select(
-        'senderId',
-        'receiverId'
-      ) as MessageDbRowSenderReceiver[];
-
-
-    //collect all unique IDs
-    const uniqueNotMeIds = new Set<Domain.UserId>();
-
-    for (const row of messageRows) {
-      const { senderId, receiverId } = row;
-
-      const otherId = senderId === meId ? receiverId : senderId;
-
-      if (otherId !== meId) {
-        uniqueNotMeIds.add(otherId);
-      }
-    }
-    if (uniqueNotMeIds.size === 0)
-      return { ok: true, conversations: [] };
-
-
-    const idsArray = Array.from(uniqueNotMeIds);
-
-    // 4) Load users for these ids
-
-    const conversations = await this.dbTableUser()
-      .whereIn("id", idsArray)
-      .select("id", "displayName", "avatarUrl") as Domain.ChatConversations[];
-
-
-    return { ok: true, conversations };
-
-  }
-
   /* list Users+Avatars for conversation */
   async getConversations( //TODO change to all users who i wrote or who me wrote
     meId: Domain.UserId,
@@ -315,7 +251,7 @@ Example meta JSON of the message:
         userId: "id",
         displayName: "displayName",
         avatarUrl: "avatarUrl"
-      })  as Domain.ChatConversations[];
+      }) as Domain.ChatConversations[];
 
 
     return { ok: true, conversations };
@@ -361,11 +297,13 @@ Example meta JSON of the message:
       .orWhere((qb: Knex.QueryBuilder) => {
         qb.where({ senderId: receiverId, receiverId: senderId }); // other -> me
       })
-      .orderBy('createdAt', 'asc');
+      .orderBy("createdAt", "asc");
+
 
     const conversations = rows.map(messageFromDbRow);
 
     return { ok: true, conversations };
+
   }
 
 }

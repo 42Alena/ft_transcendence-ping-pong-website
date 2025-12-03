@@ -132,6 +132,9 @@ export type GetChatResponse = {
   messages: ChatMessage[];
 };
 
-
+//for Sidebar
 export type ChatConversations = Domain.ChatConversations;
 export type GetChatConversationsResult = ChatConversations[];
+
+//for messages between me and another user
+export type GetChatConversationWithResult = ChatMessage[];
