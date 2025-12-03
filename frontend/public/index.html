@@ -41,24 +41,29 @@
                 </div>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="#" onclick="setAccountPage('register')"
-                    ><span></span>Register</a
-                  >
-                </li>
-                <li>
-                  <a href="#" onclick="setAccountPage('login')"
-                    ><span></span>Login</a
-                  >
-                </li>
+                <div id="dropdown-menu_guests">
+                  <li>
+                    <a href="#" onclick="setAccountPage('register')"
+                      ><span></span>Register</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" onclick="setAccountPage('login')"
+                      ><span></span>Login</a
+                    >
+                  </li>
+                </div>
+                <div id="dropdown-menu_user" class="hidden">
                 <li>
                   <a href="#" onclick="setAccountPage('profile')"
                     ><span></span> Profile</a
                   >
                 </li>
                 <li>
-                  <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
+                  <!-- <a rel="nofollow" href="#"><span></span><b>Logout</b></a> -->
+                  <button type="submit" class="font-bold" id="logout">Logout</button>
                 </li>
+                </div>
               </ul>
             </span>
           </div>
@@ -955,7 +960,8 @@
     <script src="dist/createRules.js"></script>
     <script src="dist/registerUser.js"></script>
     <script src="dist/loginUser.js"></script>
-    <script src="dist/api/user.js" type="module"></script>
-    <script src="dist/api/chat.js" type="module"></script>
+    <script src="dist/logoutUser.js"></script>
+    <!-- <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/chat.js" type="module"></script> -->
   </body>
 </html>

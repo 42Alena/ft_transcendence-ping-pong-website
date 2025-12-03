@@ -3,10 +3,17 @@ const errorUsernameLog: any = document.getElementById("log-username_error");
 const errorPasswordLog: any = document.getElementById("log-password_error");
 const logUserHeaderDiv : any = document.getElementById("logged-user");
 const logAvatHeaderDiv : any = document.querySelector('#logged-user-avatar img');
+const dropMenuGuestDiv : any = document.getElementById("dropdown-menu_guests");
+const dropMenuUserDiv : any = document.getElementById("dropdown-menu_user");
+
 let loggedUser : boolean = false;
 
 if (localStorage.getItem('userData'))
 {
+    dropMenuUserDiv.classList.add("block");
+    dropMenuUserDiv.classList.remove("hidden");
+    dropMenuGuestDiv.classList.add("hidden");
+    dropMenuGuestDiv.classList.remove("block");
     const userDataString : string | null = localStorage.getItem('userData');
     if (userDataString)
     {
@@ -71,6 +78,10 @@ log.addEventListener("submit", async (event: any) => {
           // localStorage.setItem('loggedUser', user);
           logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
           logAvatHeaderDiv.src = userData.url;
+          dropMenuUserDiv.classList.add("block");
+          dropMenuUserDiv.classList.remove("hidden");
+          dropMenuGuestDiv.classList.add("hidden");
+          dropMenuGuestDiv.classList.remove("block");
         }
         console.log("login user:", data);
     }
