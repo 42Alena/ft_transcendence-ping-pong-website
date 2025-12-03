@@ -257,8 +257,7 @@ export type ChatConversationWithResult =
 	| { 
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
-		| "no_receiver"
-		| "not_system"    };
+		| "no_receiver" };
 
 
 export type ChatConversationsItem = {

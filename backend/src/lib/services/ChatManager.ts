@@ -326,27 +326,42 @@ Example meta JSON of the message:
 
   ): Promise<Domain.ChatConversationWithResult> {
 
-    if(senderId === Domain.SYSTEM_ID)
-    {
+    if (senderId === Domain.SYSTEM_ID) {
 
       const receiver = await this.userManager.getUserById(receiverId);
-  
+
       //Sender not found or not authenticated
       if (!receiver)
         return { ok: false, reason: "no_receiver" };
     }
-    else
-    {
+    else {
 
       const sender = await this.userManager.getUserById(senderId);
-  
+
       //Sender not found or not authenticated
       if (!sender)
         return { ok: false, reason: "not_me" };
+
+      const receiver = await this.userManager.getUserById(receiverId);
+
+      //Sender not found or not authenticated
+      if (!receiver)
+        return { ok: false, reason: "no_receiver" };
     }
 
 
+    const rows = await this.dbTableMessages()
+      .where((qb: Knex.QueryBuilder) => {
+        qb.where({ senderId, receiverId }); // me -> other
+      })
+      .orWhere((qb: Knex.QueryBuilder) => {
+        qb.where({ senderId: receiverId, receiverId: senderId }); // other -> me
+      })
+      .orderBy('createdAt', 'asc');
 
+    const conversations = rows.map(messageFromDbRow);
+
+    return { ok: true, conversations };
   }
 
 }
