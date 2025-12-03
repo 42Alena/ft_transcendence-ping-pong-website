@@ -311,7 +311,11 @@ Example meta JSON of the message:
 
     const conversations = await this.dbTableUser()
       .whereIn("id", idsArray)
-      .select("id", "displayName", "avatarUrl") as Domain.ChatConversations[];
+      .select({
+        userId: "id",
+        displayName: "displayName",
+        avatarUrl: "avatarUrl"
+      })  as Domain.ChatConversations[];
 
 
     return { ok: true, conversations };
