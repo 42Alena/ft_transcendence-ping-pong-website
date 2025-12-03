@@ -92,6 +92,7 @@ log.addEventListener("submit", async (event: any) => {
   }
 });
 
+//need to change fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
 // //test profile for cookies
 // async function handleRequest() {
 //   const myHeaders = new Headers();
