@@ -42,10 +42,12 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	fastify.get("/users/me", authRequiredOptions, async (req, reply) => {
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
-		if (!meId) return sendError(reply, "need cookies", "auth", 401);
+		if (!meId) 
+			return sendError(reply, "need cookies", "auth", 401);
 
 		const me = await userManager.getUserById(meId);
-		if (!me) return sendError(reply, "User not found", "userId", 404);
+		if (!me) 
+			return sendError(reply, "User not found", "userId", 404);
 
 		return sendOK(reply, toUserSelf(me));
 	});

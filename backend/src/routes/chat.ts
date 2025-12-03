@@ -16,7 +16,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 
 
-	/* send private message */
+	/* send private message (user to user) */
 	fastify.post<{ Body: API.SendPrivateMessageBody }>(
 		"/chat/messages",
 		authRequiredOptions,
@@ -118,7 +118,9 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 		});
 
 
-	/* get conversation between  me and other user/system */
+	/* 
+	get conversation between  me and other user or notification from system 
+	*/
 	fastify.get<{ 
 		Params: API.GetUserParams;
 		Reply: API.GetChatConversationWithResult 
@@ -128,10 +130,10 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 		async (req, reply) => {
 
 
-			const senderId = (req as API.UserAwareRequest).userId;  // set by preHandler
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 			const { userId: receiverId } = req.params;   
 
-			const result = await chatManager.getConversationWith(senderId, receiverId);
+			const result = await chatManager.getConversationWith(meId, receiverId);
 
 			if (result.ok)
 				return sendOK(reply, result.conversations)

@@ -202,7 +202,7 @@ Example meta JSON of the message:
 
   /* list Users+Avatars for conversation */
   async getConversations( //TODO change to all users who i wrote or who me wrote
-    meId: Domain.UserId,
+    meId: Domain.PrivateSenderId,
 
   ): Promise<Domain.ChatConversationsResult> {
 
@@ -259,43 +259,46 @@ Example meta JSON of the message:
   }
 
 
-  /* list Users+Avatars for conversation */
-  async getConversationWith( //TODO change to all users who i wrote or who me wrote
-    senderId: Domain.PrivateSenderId,
-    receiverId: Domain.PrivateReceiverId,
+  /* get  my conversation  with another user or system notification */
+  async getConversationWith(
+    senderId: Domain.PrivateSenderId,  //alway me
+    receiverId: Domain.SenderId,// PrivateSenderId | SystemId;
 
   ): Promise<Domain.ChatConversationWithResult> {
 
-    if (senderId === Domain.SYSTEM_ID) {
+    const me = await this.userManager.getUserById(senderId);
 
-      const receiver = await this.userManager.getUserById(receiverId);
+    if (!me)
+      return { ok: false, reason: "not_me" };
 
-      //Sender not found or not authenticated
-      if (!receiver)
-        return { ok: false, reason: "no_receiver" };
+
+    //from tournament notification
+    if (receiverId === Domain.SYSTEM_ID) {
+
+      const rows = await this.dbTableMessages()
+        .where({
+          senderId: Domain.SYSTEM_ID,
+          receiverId: senderId,            // System to me
+        })
+        .orderBy("createdAt", "asc");
+
+      const conversations = rows.map(messageFromDbRow);
+      return { ok: true, conversations };
     }
-    else {
 
-      const sender = await this.userManager.getUserById(senderId);
+    //user to user
+    const receiver = await this.userManager.getUserById(receiverId);
 
-      //Sender not found or not authenticated
-      if (!sender)
-        return { ok: false, reason: "not_me" };
-
-      const receiver = await this.userManager.getUserById(receiverId);
-
-      //Sender not found or not authenticated
-      if (!receiver)
-        return { ok: false, reason: "no_receiver" };
-    }
+    if (!receiver)
+      return { ok: false, reason: "no_receiver" };
 
 
     const rows = await this.dbTableMessages()
       .where((qb: Knex.QueryBuilder) => {
-        qb.where({ senderId, receiverId }); // me -> other
+        qb.where({ senderId, receiverId }); // me to other
       })
       .orWhere((qb: Knex.QueryBuilder) => {
-        qb.where({ senderId: receiverId, receiverId: senderId }); // other -> me
+        qb.where({ senderId: receiverId, receiverId: senderId }); // other to me
       })
       .orderBy("createdAt", "asc");
 

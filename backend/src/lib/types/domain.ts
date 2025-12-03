@@ -152,7 +152,7 @@ export type UnblockUserResult =
 
 //_____________CHAT___________
 
-export const SYSTEM_ID = "ThisIsSystemID" as const;
+export const SYSTEM_ID = "TOURNAMENT" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 export type MessageContent = string;
@@ -334,6 +334,7 @@ const RESERVED_NAMES: string[] = [
 	'SYSTEM_ID',
 	'api',
 	'delete',
+	'tournament',
 	DELETED_USER_DISPLAY_NAME,  // Deleted_
 	DELETED_USERNAME,
 	SYSTEM_ID,
