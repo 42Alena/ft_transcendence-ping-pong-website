@@ -7,7 +7,6 @@ const dropMenuGuestDiv : any = document.getElementById("dropdown-menu_guests");
 const dropMenuUserDiv : any = document.getElementById("dropdown-menu_user");
 
 let loggedUser : boolean = false;
-
 if (localStorage.getItem('userData'))
 {
     dropMenuUserDiv.classList.add("block");
