@@ -42,6 +42,7 @@ log.addEventListener("submit", async (event: any) => {
   const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
     method: "POST",
     body: JSON.stringify(LoginBody),
+    credentials: "include",
     headers: myHeaders,
   });
   try {
@@ -90,3 +91,35 @@ log.addEventListener("submit", async (event: any) => {
     console.error("Error during registration:", error);
   }
 });
+
+// //test profile for cookies
+// async function handleRequest() {
+//   const myHeaders = new Headers();
+//   myHeaders.append("Content-Type", "application/json");
+//   const formData = new FormData(log);
+
+//   const profileBody = {
+//     username: formData.get("login-user_username"),
+//     passwordPlain: formData.get("login-user_password"),
+//   };
+//   const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+//     method: "GET",
+//     headers: myHeaders,
+//     credentials : "include",
+//   });
+//   try {
+//     const response = await fetch(myRequest);
+//     console.log(response);
+//     const data = await response.json();
+//     if (!response.ok) {
+//       throw new Error(`Error ${response.status}`);
+//     }
+//     else
+//     {
+//       displayPersonalProfile();
+//         console.log("login user:", data);
+//     }
+//   } catch (error) {
+//     console.error("Error during registration:", error);
+//   }
+// }
