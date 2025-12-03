@@ -9,7 +9,7 @@ import * as Validate from '../utils/validators';
 import { db } from './DB';
 import { UserManager } from './UserManager';
 import { User } from './User';           // class used only here
-import { userFromDbRow } from '../mappers/user_db';
+// import { userFromDbRow } from '../mappers/user_db';
 
 
 export class ChatManager {
@@ -211,10 +211,10 @@ Example meta JSON of the message:
   .join //where I am sender 1,2 =3, rename(rename 'users as sender' this table inside this query)
 
   */
-  async getChatConversationSidebar( //TODO change to all users who i wrote or who me wrote
+  async getChatConversations( //TODO change to all users who i wrote or who me wrote
     meId: Domain.UserId,
 
-  ): Promise<Domain.ChatConversationSidebarResult> {
+  ): Promise<Domain.ChatConversationsResult> {
 
 
     const me = await this.userManager.getUserById(meId);
@@ -257,7 +257,61 @@ Example meta JSON of the message:
 
     const conversations = await this.dbTableUser()
       .whereIn("id", idsArray)
-      .select("id", "displayName", "avatarUrl") as Domain.ChatConversationSidebar[];
+      .select("id", "displayName", "avatarUrl") as Domain.ChatConversations[];
+
+
+    return { ok: true, conversations };
+
+  }
+
+/* to */
+  async getConversations( //TODO change to all users who i wrote or who me wrote
+    meId: Domain.UserId,
+
+  ): Promise<Domain.ChatConversationsResult> {
+
+
+    const me = await this.userManager.getUserById(meId);
+
+    //Sender not found or not authenticated
+    if (!me)
+      return { ok: false, reason: "not_me" };
+
+
+
+    const messageRows = await this.dbTableMessages()
+      .distinct()   // take unique names https://knexjs.org/guide/query-builder.html#clearhaving
+      .where({ senderId: meId })
+      .orWhere({ receiverId: meId })
+      .select(
+        'senderId',
+        'receiverId'
+      ) as MessageDbRowSenderReceiver[];
+
+
+    //collect all unique IDs
+    const uniqueNotMeIds = new Set<Domain.UserId>();
+
+    for (const row of messageRows) {
+      const { senderId, receiverId } = row;
+
+      const otherId = senderId === meId ? receiverId : senderId;
+
+      if (otherId !== meId) {
+        uniqueNotMeIds.add(otherId);
+      }
+    }
+    if (uniqueNotMeIds.size === 0)
+      return { ok: true, conversations: [] };
+
+
+    const idsArray = Array.from(uniqueNotMeIds);
+
+    // 4) Load users for these ids
+
+    const conversations = await this.dbTableUser()
+      .whereIn("id", idsArray)
+      .select("id", "displayName", "avatarUrl") as Domain.ChatConversations[];
 
 
     return { ok: true, conversations };

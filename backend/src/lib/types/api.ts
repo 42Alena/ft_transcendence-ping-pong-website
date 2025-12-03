@@ -133,5 +133,5 @@ export type GetChatResponse = {
 };
 
 
-export type ChatConversationSidebar = Domain.ChatConversationSidebar;
-export type GetChatConversationSidebarResult = ChatConversationSidebar[];
+export type ChatConversations = Domain.ChatConversations;
+export type GetChatConversationsResult = ChatConversations[];

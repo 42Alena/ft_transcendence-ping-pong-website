@@ -97,7 +97,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 
 	/* get sidebar - list all users + their displaynames  for All conversations */
-	fastify.get<{ Reply: API.GetChatConversationSidebarResult}>(
+	fastify.get<{ Reply: API.GetChatConversationsResult}>(
 		"/chat/conversations",
 		authRequiredOptions,
 		async (req, reply) => {
@@ -106,7 +106,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
 
 			
-			const result = await chatManager.getChatConversationSidebar(meId);
+			const result = await chatManager.getChatConversations(meId);
 			
 			if (result.ok)
 				return sendOK(reply, result.conversations)

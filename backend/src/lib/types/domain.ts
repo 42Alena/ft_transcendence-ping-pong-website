@@ -241,15 +241,15 @@ export type SendMessageResult =
 		| "invalid_content";
 	};
 
-export type ChatConversationSidebar = {
+export type ChatConversations = {
 	userId: UserId;
 	displayName: DisplayName;      // to show in UI
 	avatarUrl: AvatarUrl;  		// to show in UI
 };
 
 
-export type ChatConversationSidebarResult =
-	| { ok: true; conversations: ChatConversationSidebar[] }
+export type ChatConversationsResult =
+	| { ok: true; conversations: ChatConversations[] }
 	| { ok: false; reason: "not_me" };
 
 
@@ -257,7 +257,7 @@ export type ChatConversationSidebarResult =
 
 
 
-export type ChatSidebarItem = {
+export type ChatConversationsItem = {
 	userId: UserId;
 	displayName: DisplayName;
 	avatarUrl: AvatarUrl;
