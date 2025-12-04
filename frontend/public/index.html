@@ -132,8 +132,8 @@
                 class="flex items-center justify-evenly rounded-xl p-1"
               >
 <div class="flex flex-col items-center justify-center flex-1">
-  <div class="mb-3 relative">
-    <label for="edit-avatar" class="w-full h-full items-center flex justify-center">
+  <div class="mb-3 relative group">
+    <label for="edit-avatar" class="w-full h-full items-center flex justify-center rounded-full">
         <img
             src="images/profile/orange.png"
             id="avatarImgEdit"
@@ -146,13 +146,13 @@
             name="edit-user_avatar"
             class="hidden"
         />
-        <div id="svgIcon">
+        <div id="svgIcon" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 z-2 group-hover:bg-blue-600 cursor-pointer rounded-full p-1">
         <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
             focusable="false"
-            class="absolute left-1/2 bottom-0 transform -translate-x-1/2 z-2 fill-current text-white hover:bg-blue-600 cursor-pointer rounded-full"
+            class="fill-current text-white rounded-full"
             aria-hidden="true"
         >
             <path d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 14H4V7h16v12zM12 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"></path>
@@ -162,8 +162,8 @@
 </div>
 </div>
                 <div class="flex flex-1 flex-col items-center justify-center">
-                  <h2 class="text-2xl">Personal information</h2>
-                  <div class="mb-3">
+                  <h2 class="text-2xl -mt-4">Personal information</h2>
+                  <div class="mb-3 mt-4">
                     <label
                       class="text-heading text-xl font-medium"
                       for="reg-username"
@@ -204,8 +204,8 @@
                   </button>
                 </div>
                   <div class="flex flex-1 flex-col items-center justify-center">
-                      <h2 class="text-2xl">Change password</h2>
-                      <div class="mb-3">
+                       <h2 class="text-2xl -mt-4">Change password</h2>
+                  <div class="mb-3 mt-4">
                       <label
                         class="text-heading text-xl font-medium"
                         for="reg-password"

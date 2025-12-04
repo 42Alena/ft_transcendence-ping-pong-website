@@ -272,13 +272,3 @@ loginForm.addEventListener("submit", (event : any) => {
 })
 
 const settingsSoloPage : any = document.getElementById("settingsPage");
-
-const image : any = document.getElementById('avatarImgEdit');
-const svgIcon : any = document.getElementById('svgIcon');
-image.addEventListener("mouseenter", function() {
-  svgIcon.focus();
-});
-
-image.addEventListener('mouseleave', () => {
-        svgIcon.blur();
-    });

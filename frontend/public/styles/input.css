@@ -92,3 +92,8 @@
 .ai-button-off.active {
   background-color: grey;
 }
+
+.custom-input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
