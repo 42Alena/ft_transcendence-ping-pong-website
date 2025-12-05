@@ -69,6 +69,8 @@ function setAccountPage(text: string) {
     profP.classList.remove("grid");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
+     friendsPage.classList.add("hidden");
+    friendsPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -92,6 +94,8 @@ function setAccountPage(text: string) {
     profP.classList.remove("grid");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
+     friendsPage.classList.add("hidden");
+    friendsPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -119,8 +123,8 @@ function setAccountPage(text: string) {
     settingsPage.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    matchesPage.classList.add("hidden");
-    matchesPage.classList.remove("flex");
+    // matchesPage.classList.add("hidden");
+    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -148,8 +152,37 @@ function setAccountPage(text: string) {
     regP.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    matchesPage.classList.add("hidden");
-    matchesPage.classList.remove("flex");
+    // matchesPage.classList.add("hidden");
+    // matchesPage.classList.remove("flex");
+    gameP.classList.add("hidden");
+    gameP.classList.remove("flex");
+    setGame.classList.add("hidden");
+    setGame.classList.remove("block");
+    gameOverDiv.classList.add("hidden");
+    gameOverDiv.classList.remove("flex");
+    instruction.classList.add("hidden");
+    instruction.classList.remove("flex");
+    if (gameisOn) {
+      clearInterval(interval);
+      canvas.classList.add("hidden");
+      canvas.classList.remove("block");
+      gameisOn = false;
+    }
+  } else if (text == "friends") {
+    friendsPage.classList.add("flex");
+    friendsPage.classList.remove("hidden");
+    profP.classList.add("hidden");
+    profP.classList.remove("grid");
+    accP.appendChild(profP);
+    displayPersonalProfile();
+    logP.classList.add("hidden");
+    logP.classList.remove("flex");
+    regP.classList.add("hidden");
+    regP.classList.remove("flex");
+   settingsPage.classList.add("hidden");
+  settingsPage.classList.remove("flex");
+    // matchesPage.classList.add("hidden");
+    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -174,7 +207,6 @@ const friendsDiv: any = document.getElementById("acc-friends");
 const matchesDiv: any = document.getElementById("acc-matches");
 
 //page
-const friendsPage: any = document.getElementById("friends");
 const matchesPage: any = document.getElementById("matches");
 
 /* Releated to friend page*/
@@ -213,19 +245,19 @@ function displayBlockedFriends() {
 //   matchesPage.classList.remove("flex");
 // });
 
-friendsDiv.addEventListener("click", (event: any) => {
-  friendsPage.classList.add("flex");
-  friendsPage.classList.remove("hidden");
-  matchesPage.classList.add("hidden");
-  matchesPage.classList.remove("flex");
-});
+// friendsDiv.addEventListener("click", (event: any) => {
+//   friendsPage.classList.add("flex");
+//   friendsPage.classList.remove("hidden");
+//   matchesPage.classList.add("hidden");
+//   matchesPage.classList.remove("flex");
+// });
 
-matchesDiv.addEventListener("click", (event: any) => {
-  matchesPage.classList.add("flex");
-  matchesPage.classList.remove("hidden");
-  friendsPage.classList.add("hidden");
-  friendsPage.classList.remove("flex");
-});
+// matchesDiv.addEventListener("click", (event: any) => {
+//   matchesPage.classList.add("flex");
+//   matchesPage.classList.remove("hidden");
+//   friendsPage.classList.add("hidden");
+//   friendsPage.classList.remove("flex");
+// });
 
 function displayPersonalProfile() {
   tempdisplayN.innerHTML = "Display name: Pallo";
@@ -257,8 +289,8 @@ function displayUserProfile() {
   tempdisplayN.innerHTML = "Display name: Eos";
   profileActions.classList.add("flex");
   profileActions.classList.remove("hidden");
-  matchesPage.classList.add("hidden");
-  matchesPage.classList.remove("flex");
+  // matchesPage.classList.add("hidden");
+  // matchesPage.classList.remove("flex");
   profileUsername.classList.add("hidden");
   profileUsername.classList.remove("flex");
   // profileMenuSettings.classList.add("hidden");
@@ -302,6 +334,7 @@ loginForm.addEventListener("submit", (event : any) => {
 })
 
 const settingsPage : any = document.getElementById("settingsPage");
+const friendsPage : any = document.getElementById("friendsPage");
 const avatarForm : any = document.getElementById("avatar");
 const imgIcon : any = document.getElementById("svgIcon");
 const avatar : any = document.getElementById("avatarImgEdit")
