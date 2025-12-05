@@ -272,3 +272,29 @@ loginForm.addEventListener("submit", (event : any) => {
 })
 
 const settingsSoloPage : any = document.getElementById("settingsPage");
+const avatarForm : any = document.getElementById("avatar");
+const imgIcon : any = document.getElementById("svgIcon");
+const avatar : any = document.getElementById("avatarImgEdit")
+const popup : any = document.getElementById("avatarOptions");
+let pop : boolean = false;
+avatarForm.addEventListener("submit", (event : any) => {
+	event.preventDefault();
+});
+
+imgIcon.addEventListener("click", (event : any) => {
+  console.log("pressed svg");
+  popup.classList.toggle("hidden");
+});
+
+avatar.addEventListener("click", () => {
+  pop = true;
+  popup.classList.toggle("hidden");
+});
+
+ document.addEventListener("click", (event) => {
+   if (pop == true && (!avatar.contains(event.target)))
+   {
+      pop = false;
+       popup.classList.toggle("hidden");
+   }
+});
