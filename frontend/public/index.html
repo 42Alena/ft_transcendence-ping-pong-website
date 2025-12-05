@@ -616,7 +616,7 @@
                       <ul
                         class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
                       >
-                        <li class="avatar-option w-1/4 cursor-pointer p-1">
+                        <li class="w-1/4 cursor-pointer p-1">
                           <div
                             class="flex h-12 w-12 items-center justify-center rounded-full"
                           >
@@ -632,7 +632,7 @@
                           <span></span>
                         </li>
                         <li
-                          class="avatar-option w-1/4 cursor-pointer p-1"
+                          class="w-1/4 cursor-pointer p-1"
                           data-url="b"
                         >
                           <div
@@ -649,15 +649,13 @@
                           </div>
                           <span></span>
                         </li>
-                      </ul>
-                      <h2>Upload image</h2>
-                      <div
-                        class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
-                      >
-                        <label
+                        <li
+                        class="w-1/4 cursor-pointer p-1"
+                          data-url="upload">
+                          <label
                           for="file-upload"
-                          class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                          >Add image</label
+                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          >&plus;</label
                         >
                         <input
                           type="file"
@@ -666,12 +664,14 @@
                           form="avatar"
                           class="hidden"
                         />
-                      </div>
+                        </li>
+                        <span></span>
+                      </ul>
                       <div
-                        class="mt-2 flex items-center justify-center overflow-auto"
+                        class="mt-6 flex items-center justify-center"
                       >
                         <button
-                          class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                           type="sumbit"
                           id="save-avatar"
                           form="avatar"
