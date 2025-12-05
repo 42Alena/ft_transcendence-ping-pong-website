@@ -7,17 +7,11 @@
     <title>Pong</title>
     <link href="styles/output.css" rel="stylesheet" />
     <style>
-      /* if uncomment the css class image-box class, you can see how they would look like if taking full space */
-      /* .image-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    } */
     </style>
   </head>
 
   <body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
-    <header class="flex justify-center bg-[#DFF7FF]">
+    <header class="flex justify-center bg-[#DFF7FF]" >
       <div class="w-full max-w-6xl border">
         <div
           id="header-navbar"
@@ -443,15 +437,10 @@
                 class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
                 id="acc-profile-menu"
               >
-                <!-- <div id="acc-settings">SETTINGS</div> -->
                 <div id="acc-friends">FRIENDS</div>
                 <div id="acc-matches">MATCHES</div>
               </div>
               <div id="acc-profile-page">
-                <div
-                  class="flex h-full w-full items-center justify-center border text-left text-sm"
-                  id="update-settings1"
-                ></div>
                 <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
                   <div>
                     <button
@@ -578,8 +567,9 @@
             </div>
             <div
                   id="settingsPage"
-                  class="relative hidden h-full w-full fkex-wrap bg-yellow-200"
+                  class="relative hidden h-full w-full flex-col justify-center items-center bg-yellow-200"
                 >
+                  <div id="editInformation" class="relative h-full w-full flex flex-row flex-1">
                   <div
                     id="avatarEdit"
                     class="relative flex h-full w-full flex-1 items-center justify-center"
@@ -617,8 +607,11 @@
                     </form>
                     <div
                       id="avatarOptions"
-                      class="absolute z-10 m-auto hidden h-80 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                      class="absolute top-[85%] z-10 m-auto hidden h-80 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
                     >
+                      <button class="text-gray-400 text-2xl font-bold hover:text-black cursor-pointer" id="closePopUp">
+  &times;
+                      </button>
                       <h2>Select avatar</h2>
                       <ul
                         class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
@@ -793,21 +786,17 @@
                       </button>
                     </form>
                   </div>
-                  <div class="flex-full h-0"></div>
+                  </div>
                   <div id="deleteAccount" class="flex-1 flex items-center justify-center">
-                    <form
-                      action="http://127.0.0.1:3000/users/me"
-                      method="delete"
-                      id="delete"
-                      class="flex flex-col items-center justify-center"
-                    >
+                    <fieldset class="border-2 border-red-500 p-4 rounded">
+                      <legend class="text-red-600">DANGER ZONE</legend>
                       <button
                         type="submit"
                         class="flex h-10 w-[140px] items-center justify-center rounded border-2 border-red-950 bg-red-500 font-bold text-white hover:bg-red-700"
                       >
                         Delete Account
                       </button>
-                    </form>
+                    </fieldset>
                   </div>
             </div>
           </div>

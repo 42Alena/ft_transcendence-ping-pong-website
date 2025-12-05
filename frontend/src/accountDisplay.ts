@@ -306,30 +306,39 @@ const avatarForm : any = document.getElementById("avatar");
 const imgIcon : any = document.getElementById("svgIcon");
 const avatar : any = document.getElementById("avatarImgEdit")
 const popup : any = document.getElementById("avatarOptions");
-const deleteAcc : any = document.getElementById("delete");
+const popUpButton : any = document.getElementById("closePopUp");
+const displayNameForm : any = document.getElementById("displayName");
+const passwordForm : any = document.getElementById("password");
+
+// When the user clicks on <span> (x), close the modal
+popUpButton.addEventListener("click", () =>
+{
+  popup.classList.add("hidden");
+  popup.classList.remove("block");
+});
+
+
 let pop : boolean = false;
 avatarForm.addEventListener("submit", (event : any) => {
 	event.preventDefault();
 });
 
+displayNameForm.addEventListener("submit", (event : any) => {
+	event.preventDefault();
+});
+
+passwordForm.addEventListener("submit", (event : any) => {
+	event.preventDefault();
+});
+
 imgIcon.addEventListener("click", (event : any) => {
   console.log("pressed svg");
-  popup.classList.toggle("hidden");
+  popup.classList.add("block");
+  popup.classList.remove("hidden");
 });
 
 avatar.addEventListener("click", () => {
-  pop = true;
-  popup.classList.toggle("hidden");
+  console.log("here");
+  popup.classList.add("block");
+  popup.classList.remove("hidden");
 });
-
- document.addEventListener("click", (event : any) => {
-   if (pop == true && (!avatar.contains(event.target)))
-   {
-      pop = false;
-       popup.classList.toggle("hidden");
-   }
-});
-
-deleteAcc.addEventListener("submit", (event : any) => {
-  event.preventDefault();
-})
