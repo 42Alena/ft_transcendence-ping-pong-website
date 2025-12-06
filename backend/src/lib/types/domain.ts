@@ -17,7 +17,7 @@ import { UserId, UserStatus, MatchResult } from './types/types';
 //_____________ CONSTANTS__________________
 export const SYSTEM_ID = "TOURNAMENT" as const;
 export const GUEST_ID = "GUEST" as const;
-export const AI_ID = "AI"  as const;
+export const AI_ID = "AI" as const;
 
 //_____________CONSTANTS_ GDPR: delete/anonymize user account
 export const DELETED_USER_DISPLAY_NAME = "Deleted user" as const;
@@ -333,32 +333,35 @@ export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
 
 
 //__________________GAME: MATCH TOURNAMENT______________
+
 // export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
 
 // export type GameMode = 'tournament' | 'normalGame';
-// export type PlayerId = UserId | TOURNAMENT_AI_ALIASES | 'guest';  //guest, AI
 
 
-// export type GameModeTourn = 'semi' | 'final';
+// export type GameTournamentRound =
+// 	| 'tournamentSemi'
+// 	| 'tournamentFinal'
+// 	| null;  //for normallGame
+
+// export type PlayerId = UserId | null;  // null for guest, AI
 // export type GameScore = number;
-// export type PlayerScore = number;
-// export type Winner = 1 | 2; //first or second player
 
 
 
 // export type BaseGame = {
 // 	type: GameMode;
-// 	player1UserId: PlayerId;
-// 	player2UserId: PlayerId;
-// 	player1Score: PlayerScore;
-// 	player2Score: PlayerScore;
-// 	winner: Winner;  //1. or  2. Player
+// 	round: 
+// 	winnerUserId: PlayerId;
+// 	loserUserId: PlayerId;
+// 	winnerScore: PlayerScore;
+// 	loserScore: PlayerScore;
 // 	createdAt: TimeSec;
 
 // }
 
-// export type NormalGame = BaseGame &{
-// 	 type: 'normalGame'
+// export type NormalGame = BaseGame & {
+// 	type: 'normalGame'
 // }
 
 // export type Tournament = {
