@@ -11,18 +11,50 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
-import { ReceiverId } from "./api";
 
 
 
+//_____________ CONSTANTS__________________
+export const SYSTEM_ID = "TOURNAMENT" as const;
 
-
-//_____________GDPR: delete/anonymize user account
+//_____________CONSTANTS_ GDPR: delete/anonymize user account
 export const DELETED_USER_DISPLAY_NAME = "Deleted user" as const;
 export const DELETED_USERNAME = "Deleted_" as const;
 export const DELETED_AVATARURL = null;
 // export type DeletedUser = null;
 // export type UserOrDeleted = User | DeletedUser;
+
+export const TOURNAMENT_AI_ALIASES = [
+	'AI_ALENA',
+	'AI_SVEVA',
+	'AI_LUIS',
+	'AI_42BERLIN',
+] as const;
+
+export const AI_NAME_PREFIX = "AI_";
+export const AI_NAME_SUFFIX = "_AI";
+
+const RESERVED_NAMES: string[] = [
+	'admin',
+	'root',
+	'null',
+	'system',
+	'SYSTEM_ID',
+	'api',
+	'delete',
+	'tournament',
+	DELETED_USER_DISPLAY_NAME,  // Deleted_
+	DELETED_USERNAME,
+	SYSTEM_ID,
+	...TOURNAMENT_AI_ALIASES,
+];
+export const RESERVED = RESERVED_NAMES;
+
+// const newObj = Object.assign({}, baseObject, { new: prop })
+// const newObj = { ...baseObject, ...{new: prop}}
+
+
+
 
 //_______________Primitives, single source of truth_____________
 export type Username = string;
@@ -152,7 +184,6 @@ export type UnblockUserResult =
 
 //_____________CHAT___________
 
-export const SYSTEM_ID = "TOURNAMENT" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 export type MessageContent = string;
@@ -254,10 +285,11 @@ export type ChatConversationsResult =
 
 export type ChatConversationWithResult =
 	| { ok: true; conversations: ChatConversations[] }
-	| { 
+	| {
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
-		| "no_receiver" };
+		| "no_receiver"
+	};
 
 
 export type ChatConversationsItem = {
@@ -296,51 +328,48 @@ export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
 // };
 
 
-export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
+//__________________GAME: MATCH TOURNAMENT______________
+// export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
 
-export type MetaTournamentNextMatch = {
-	kind: "next_match";
-	tournamentId: string;
-	matchId: string;
-	player1: { id: UserId | null; alias: string };
-	player2: { id: UserId | null; alias: string };
-};
-
-//_____________MATCH______________________
-export type MatchResult = {
-	opponentId: UserId;
-	// date: Date;                //TODO: change from DAte to number as in DB
-	result: GameResult;
-};
+// export type GameMode = 'tournament' | 'normalGame';
+// export type PlayerId = UserId | TOURNAMENT_AI_ALIASES | 'guest';  //guest, AI
 
 
-//_____________ CONSTANTS__________________
+// export type GameModeTourn = 'semi' | 'final';
+// export type GameScore = number;
+// export type PlayerScore = number;
+// export type Winner = 1 | 2; //first or second player
 
-export const TOURNAMENT_AI_ALIASES = [
-	'AI_ALENA',
-	'AI_SVEVA',
-	'AI_LUIS',
-	'AI_42BERLIN',
-] as const;
 
-export const AI_NAME_PREFIX = "AI_";
-export const AI_NAME_SUFFIX = "_AI";
 
-const RESERVED_NAMES: string[] = [
-	'admin',
-	'root',
-	'null',
-	'system',
-	'SYSTEM_ID',
-	'api',
-	'delete',
-	'tournament',
-	DELETED_USER_DISPLAY_NAME,  // Deleted_
-	DELETED_USERNAME,
-	SYSTEM_ID,
-	...TOURNAMENT_AI_ALIASES,
-];
-export const RESERVED = RESERVED_NAMES;
+// export type BaseGame = {
+// 	type: GameMode;
+// 	player1UserId: PlayerId;
+// 	player2UserId: PlayerId;
+// 	player1Score: PlayerScore;
+// 	player2Score: PlayerScore;
+// 	winner: Winner;  //1. or  2. Player
+// 	createdAt: TimeSec;
 
-// const newObj = Object.assign({}, baseObject, { new: prop })
-// const newObj = { ...baseObject, ...{new: prop}}
+// }
+
+// export type NormalGame = BaseGame &{
+// 	 type: 'normalGame'
+// }
+
+// export type Tournament = {
+// 	type: 'Tournament';
+// 	round: GameRound;
+
+// 	winner: Winner; //1. or  2. Player
+// 	createdAt: TimeSec;
+
+// }
+
+
+
+
+
+// export type AnyGame =
+// 	| Game
+// 	| Tournament;

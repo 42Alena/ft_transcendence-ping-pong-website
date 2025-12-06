@@ -108,9 +108,6 @@ CREATE TABLE IF NOT EXISTS messages (
 --   'game'       -> normal 1v1 game
 --   'tournament' -> tournament semi / final
 -- 
---   winner:
---       1 -> player1 won
---       2 -> player2 won
 
 --   round:
 --       NULL          -> normal game
@@ -124,24 +121,23 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS games (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    mode TEXT NOT NULL CHECK (mode IN ('game', 'tournament')),
+    mode TEXT NOT NULL CHECK (mode IN ('normalGame', 'tournament')),
 
-    player1UserId TEXT REFERENCES users (id) ON DELETE SET NULL,
-    player2UserId TEXT REFERENCES users (id) ON DELETE SET NULL,
+    winnerUserId TEXT REFERENCES users (id) ON DELETE SET NULL,
+    loserUserId TEXT REFERENCES users (id) ON DELETE SET NULL,
 
-    player1Alias TEXT NOT NULL,
-    player2Alias TEXT NOT NULL,
+    winnerAlias TEXT NOT NULL,
+    loserAlias TEXT NOT NULL,
 
-    player1Score INTEGER NOT NULL,
-    player2Score INTEGER NOT NULL,
+    winnerScore INTEGER NOT NULL,
+    loserScore INTEGER NOT NULL,
 
-    winner INTEGER NOT NULL CHECK (winner IN (1, 2)),
 
     round TEXT CHECK (round IN ('semi', 'final')),
 
     createdAt INTEGER NOT NULL DEFAULT (unixepoch())
 );
 
-CREATE INDEX IF NOT EXISTS i_games_player1UserId ON games (player1UserId);
-CREATE INDEX IF NOT EXISTS i_games_player2UserId ON games (player2UserId);
+CREATE INDEX IF NOT EXISTS i_games_winnerUserId ON games (winnerUserId);
+CREATE INDEX IF NOT EXISTS i_games_loserUserId ON games (loserUserId);
 CREATE INDEX IF NOT EXISTS i_games_createdAt     ON games (createdAt);
