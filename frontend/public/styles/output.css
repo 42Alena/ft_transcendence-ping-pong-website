@@ -14,29 +14,20 @@
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-950: oklch(25.8% 0.092 26.042);
-    --color-orange-500: oklch(70.5% 0.213 47.604);
     --color-amber-100: oklch(96.2% 0.059 95.617);
-    --color-amber-200: oklch(92.4% 0.12 95.746);
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-yellow-200: oklch(94.5% 0.129 101.54);
-    --color-yellow-500: oklch(79.5% 0.184 86.047);
-    --color-green-200: oklch(92.5% 0.084 155.995);
     --color-green-300: oklch(87.1% 0.15 154.449);
     --color-green-400: oklch(79.2% 0.209 151.711);
-    --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-700: oklch(52.7% 0.154 150.069);
-    --color-teal-500: oklch(70.4% 0.14 182.503);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
     --color-blue-950: oklch(28.2% 0.091 267.935);
     --color-purple-200: oklch(90.2% 0.063 306.703);
-    --color-purple-500: oklch(62.7% 0.265 303.9);
-    --color-pink-500: oklch(65.6% 0.241 354.308);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
-    --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -233,50 +224,14 @@
   .inset-x-0 {
     inset-inline: calc(var(--spacing) * 0);
   }
-  .top-1\/2 {
-    top: calc(1/2 * 100%);
-  }
-  .top-\[\%\] {
-    top: %;
-  }
-  .top-\[6\] {
-    top: 6;
-  }
-  .top-\[10\%\] {
-    top: 10%;
-  }
-  .top-\[60\%\] {
-    top: 60%;
-  }
   .top-\[85\%\] {
     top: 85%;
-  }
-  .top-\[90\%\] {
-    top: 90%;
-  }
-  .right-\[85\%\] {
-    right: 85%;
   }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
   }
-  .bottom-1\/2 {
-    bottom: calc(1/2 * 100%);
-  }
-  .bottom-8 {
-    bottom: calc(var(--spacing) * 8);
-  }
-  .bottom-14 {
-    bottom: calc(var(--spacing) * 14);
-  }
-  .bottom-\[10\%\] {
-    bottom: 10%;
-  }
   .left-1\/2 {
     left: calc(1/2 * 100%);
-  }
-  .left-\[85\%\] {
-    left: 85%;
   }
   .z-0 {
     z-index: 0;
@@ -290,17 +245,8 @@
   .z-3 {
     z-index: 3;
   }
-  .z-5 {
-    z-index: 5;
-  }
   .z-10 {
     z-index: 10;
-  }
-  .z-20 {
-    z-index: 20;
-  }
-  .float-right {
-    float: right;
   }
   .m-0 {
     margin: calc(var(--spacing) * 0);
@@ -316,9 +262,6 @@
   }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
-  }
-  .mt-2 {
-    margin-top: calc(var(--spacing) * 2);
   }
   .mt-2\.5 {
     margin-top: calc(var(--spacing) * 2.5);
@@ -374,9 +317,6 @@
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
-  .h-16 {
-    height: calc(var(--spacing) * 16);
-  }
   .h-80 {
     height: calc(var(--spacing) * 80);
   }
@@ -428,26 +368,14 @@
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
-  .w-\[6px\] {
-    width: 6px;
-  }
   .w-\[15px\] {
     width: 15px;
   }
   .w-\[45px\] {
     width: 45px;
   }
-  .w-\[60px\] {
-    width: 60px;
-  }
-  .w-\[65px\] {
-    width: 65px;
-  }
   .w-\[70px\] {
     width: 70px;
-  }
-  .w-\[80px\] {
-    width: 80px;
   }
   .w-\[120px\] {
     width: 120px;
@@ -534,9 +462,6 @@
   .items-center {
     align-items: center;
   }
-  .items-end {
-    align-items: flex-end;
-  }
   .justify-between {
     justify-content: space-between;
   }
@@ -567,9 +492,6 @@
   .gap-\[5px\] {
     gap: 5px;
   }
-  .gap-\[15px\] {
-    gap: 15px;
-  }
   .overflow-auto {
     overflow: auto;
   }
@@ -578,9 +500,6 @@
   }
   .rounded {
     border-radius: 0.25rem;
-  }
-  .rounded-2xl {
-    border-radius: var(--radius-2xl);
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -673,9 +592,6 @@
   }
   .bg-purple-200 {
     background-color: var(--color-purple-200);
-  }
-  .bg-red-100 {
-    background-color: var(--color-red-100);
   }
   .bg-red-500 {
     background-color: var(--color-red-500);
@@ -863,12 +779,6 @@
       @media (hover: hover) {
         color: var(--color-black);
       }
-    }
-  }
-  .focus\:outline-none {
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
     }
   }
 }

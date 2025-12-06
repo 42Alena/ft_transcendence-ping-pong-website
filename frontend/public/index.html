@@ -445,32 +445,17 @@
               </div>
               <div id="acc-profile-page">
                 <div class="flex-col gap-2.5" id="matches">
-                  <div class="grid-rows-auto grid h-full items-center">
-                    <div
-                      class="flex w-full justify-center border"
-                      id="acc-stats"
-                    >
-                      <strong>Quick Stats</strong>
-                    </div>
-                    <div class="grid grid-cols-4 border">
-                      <div class="border p-2.5 text-center">
-                        3
-                        <span class="mt-[5px] block">Current Ranking</span>
+                 <div id="dashboards" class="grid grid-cols-3">
+                      <div id="winPercentage" class="border flex justify-center items-center">
+                        <canvas id="pieChart"></canvas>
                       </div>
-                      <div class="border p-2.5 text-center">
-                        12-10
-                        <span class="mt-[5px] block">W-L</span>
+                      <div id="weeklyProgress" class="border flex justify-center items-center">
+                        <canvas id="lineChart"></canvas>
                       </div>
-                      <div class="border p-2.5 text-center">
-                        22
-                        <span class="mt-[5px] block">Tot games</span>
-                      </div>
-                      <div class="border p-2.5 text-center">
-                        54%
-                        <span class="mt-[5px] block">Average wins</span>
+                      <div id="wAndLMonthly" class="border flex justify-center items-center">
+                        <canvas id="barChart"></canvas>
                       </div>
                     </div>
-                  </div>
                   <div
                     class="grid-rows[50px_1fr] grid border"
                     id="acc-stats-details"
