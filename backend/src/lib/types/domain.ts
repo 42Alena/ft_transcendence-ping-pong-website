@@ -334,49 +334,51 @@ export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
 
 //__________________GAME: MATCH TOURNAMENT______________
 
-// export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
+export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
 
-// export type GameMode = 'tournament' | 'normalGame';
+export type GameMode = 'tournament' | 'normalGame';
 
+export type Alias = string;
 
-// export type GameTournamentRound =
-// 	| 'tournamentSemi'
-// 	| 'tournamentFinal'
-// 	| null;  //for normallGame
+export type TournamentRound =
+	| 'semi'
+	| 'final';
 
-// export type PlayerId = UserId | null;  // null for guest, AI
-// export type GameScore = number;
+export type GameTournamentRound =
+	| TournamentRound
+	| null;  //for normallGame
 
-
-
-// export type BaseGame = {
-// 	type: GameMode;
-// 	round: 
-// 	winnerUserId: PlayerId;
-// 	loserUserId: PlayerId;
-// 	winnerScore: PlayerScore;
-// 	loserScore: PlayerScore;
-// 	createdAt: TimeSec;
-
-// }
-
-// export type NormalGame = BaseGame & {
-// 	type: 'normalGame'
-// }
-
-// export type Tournament = {
-// 	type: 'Tournament';
-// 	round: GameRound;
-
-// 	winner: Winner; //1. or  2. Player
-// 	createdAt: TimeSec;
-
-// }
+export type PlayerId = UserId | null;  // null for guest, AI
+export type GameScore = number;
 
 
 
+export type BaseGame = {
+	mode: GameMode;
+	tournamentRound:  GameTournamentRound;
+	winnerUserId: PlayerId;
+
+	loserUserId: PlayerId;
+	winnerScore: GameScore;
+
+	winnerAlias: Alias;            
+	loserAlias: Alias;  
+
+	loserScore: GameScore;
+	createdAt: TimeSec;
+}
+
+export type NormalGame = BaseGame & {
+	mode: 'normalGame';
+	tournamentRound: null;
+}
+
+export type TournamentGame = BaseGame &{
+	mode: 'tournament';
+	tournamentRound: TournamentRound;
+}
 
 
-// export type AnyGame =
-// 	| Game
-// 	| Tournament;
+export type AnyGame =
+	| NormalGame
+	| TournamentGame;

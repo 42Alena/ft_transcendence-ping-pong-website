@@ -56,6 +56,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### UserManager
 ### User_routes
 ### domain types
+	+ added types for game and tournament
 
 ### api types
 ## FRONTEND
