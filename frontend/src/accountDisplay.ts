@@ -318,7 +318,6 @@ const loginForm: any = document.getElementById("login");
 
 registerForm.addEventListener("click", (event: any) => {
   event.preventDefault();
-  console.log("register pressed");
   regP.classList.add("hidden");
   regP.classList.remove("flex");
   registerSuccessPage.classList.add("flex");
@@ -365,13 +364,11 @@ passwordForm.addEventListener("submit", (event: any) => {
 });
 
 imgIcon.addEventListener("click", (event: any) => {
-  console.log("pressed svg");
   popup.classList.add("block");
   popup.classList.remove("hidden");
 });
 
 avatar.addEventListener("click", () => {
-  console.log("here");
   popup.classList.add("block");
   popup.classList.remove("hidden");
 });
