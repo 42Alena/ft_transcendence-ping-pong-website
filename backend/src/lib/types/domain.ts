@@ -336,6 +336,7 @@ export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
 
 export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
 
+export type GameId = number;
 export type GameMode = 'tournament' | 'normalGame';
 
 export type Alias = string;
@@ -356,15 +357,16 @@ export type GameScore = number;
 export type BaseGame = {
 	mode: GameMode;
 	tournamentRound:  GameTournamentRound;
-	winnerUserId: PlayerId;
 
+	winnerUserId: PlayerId;
 	loserUserId: PlayerId;
+	
 	winnerScore: GameScore;
+	loserScore: GameScore;
 
 	winnerAlias: Alias;            
 	loserAlias: Alias;  
 
-	loserScore: GameScore;
 	createdAt: TimeSec;
 }
 
