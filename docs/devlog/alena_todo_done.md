@@ -65,6 +65,9 @@ Not required for evaluation — used for organization and pull request preparati
 ### db.ts
   - added types for db.ts for  GamesDbRow 
 
+### game_db.ts
+	added types to save to db or get row from db
+
 ## FRONTEND
 
 ### TESTS
