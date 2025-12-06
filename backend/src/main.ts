@@ -42,7 +42,7 @@ registerChatRoutes(fastify, chatManager)
 registerUserRoutes(fastify, userManager)
 registerHealthzRoutes(fastify);
 registerAuthRoutes(fastify, userManager);
-registerGameStatsManagerRoutes(fastify);
+registerGameStatsRoutes(fastify, gameStatsManager);
 
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, (err: Error | null, address: string) => {

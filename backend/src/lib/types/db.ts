@@ -37,8 +37,8 @@ export type MessageDbRowSenderReceiver = Pick<MessageDbRow, "senderId" | "receiv
 
 //________________DB ROW: GAMES __________________
 
-export type GamesDbRow = {
-	
+export type GameDbRow = {
+
 	id: GameId;
 	mode: GameMode;
 	tournamentRound:  GameTournamentRound;
@@ -54,3 +54,5 @@ export type GamesDbRow = {
 
 	createdAt: TimeSec;
 }
+
+export type GameDbInsertRow = Omit<GameDbRow, 'id' | 'createdAt'>;
