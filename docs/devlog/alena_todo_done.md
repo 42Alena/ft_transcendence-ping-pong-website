@@ -59,6 +59,12 @@ Not required for evaluation — used for organization and pull request preparati
 	+ added types for game and tournament
 
 ### api types
+	 + added API types for games
+
+
+### db.ts
+  - added types for db.ts for  GamesDbRow 
+
 ## FRONTEND
 
 ### TESTS

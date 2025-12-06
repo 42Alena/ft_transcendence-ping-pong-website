@@ -138,3 +138,18 @@ export type GetChatConversationsResult = ChatConversations[];
 
 //for messages between me and another user
 export type GetChatConversationWithResult = Domain.MessageChat[];
+
+
+
+//__________________GAME: MATCH TOURNAMENT______________
+
+export type GameMode = Domain.GameMode;
+export type TournamentRound = Domain.TournamentRound;
+export type GameTournamentRound = Domain.GameTournamentRound;
+export type GameScore = Domain.GameScore;
+export type Alias = Domain.Alias;
+
+export type Game = Domain.AnyGame;
+
+// “get all games for this user”
+export type UserGames = Game[];
