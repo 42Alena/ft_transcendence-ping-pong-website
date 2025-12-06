@@ -222,6 +222,10 @@
   .inset-x-0 {
     inset-inline: calc(var(--spacing) * 0);
   }
+
+  .top-\[75\%\] {
+    top: 75%;
+  }
   .top-\[85\%\] {
     top: 85%;
   }
@@ -311,6 +315,9 @@
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
+  }
+  .h-60 {
+    height: calc(var(--spacing) * 60);
   }
   .h-80 {
     height: calc(var(--spacing) * 80);
@@ -417,6 +424,9 @@
   }
   .cursor-pointer {
     cursor: pointer;
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));

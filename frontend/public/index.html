@@ -66,7 +66,7 @@
                     ><span></span>Friends</a
                   >
                 </li>
-                
+
                 <li>
                   <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
                 </li>
@@ -441,18 +441,25 @@
               <div
                 class="flex items-center justify-center border bg-amber-100 text-center"
                 id="acc-profile-menu"
-              >STATS
+              >
+                STATS
               </div>
               <div id="acc-profile-page">
                 <div class="flex-col gap-2.5" id="matches">
-                 <div id="dashboards" class="flex flex-wrap">
-                      <div id="winPercentage" class="border flex flex-1 justify-center items-center">
-                        <canvas id="pieChart"></canvas>
-                      </div>
-                      <div id="wAndLMonthly" class="border flex flex-1 justify-center items-center">
-                        <canvas id="barChart"></canvas>
-                      </div>
+                  <div id="dashboards" class="flex flex-wrap">
+                    <div
+                      id="winPercentage"
+                      class="flex flex-1 items-center justify-center border"
+                    >
+                      <canvas id="pieChart"></canvas>
                     </div>
+                    <div
+                      id="wAndLMonthly"
+                      class="flex flex-1 items-center justify-center border"
+                    >
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
                   <div
                     class="grid-rows[50px_1fr] grid border"
                     id="acc-stats-details"
@@ -529,7 +536,7 @@
                   </form>
                   <div
                     id="avatarOptions"
-                    class="absolute top-[85%] z-10 m-auto hidden h-80 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                    class="absolute top-[75%] z-10 m-auto hidden h-60 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
                   >
                     <button
                       class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
@@ -720,7 +727,10 @@
                 </fieldset>
               </div>
             </div>
-            <div id="friendsPage" class="relative hidden h-full w-full flex-col bg-purple-200">
+            <div
+              id="friendsPage"
+              class="relative hidden h-full w-full flex-col bg-purple-200"
+            >
               <div class="block p-2">
                 <button
                   class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
@@ -745,14 +755,14 @@
                     </div>
                     <div class="friend-action flex justify-start gap-1">
                       <button
-                      class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                         type="button"
                         id="remove-friend__page"
                       >
                         remove
                       </button>
                       <button
-                      class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                         type="button"
                         id="block-friend__page"
                       >
@@ -776,7 +786,7 @@
                     </div>
                     <div class="friend-action flex justify-start gap-1">
                       <button
-                      class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                         type="button"
                       >
                         remove

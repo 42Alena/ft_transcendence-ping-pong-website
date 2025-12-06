@@ -69,7 +69,7 @@ function setAccountPage(text: string) {
     profP.classList.remove("grid");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
-     friendsPage.classList.add("hidden");
+    friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
@@ -94,7 +94,7 @@ function setAccountPage(text: string) {
     profP.classList.remove("grid");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
-     friendsPage.classList.add("hidden");
+    friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
@@ -142,6 +142,8 @@ function setAccountPage(text: string) {
   } else if (text == "settings") {
     settingsPage.classList.add("flex");
     settingsPage.classList.remove("hidden");
+    popup.classList.add("hidden");
+    popup.classList.remove("block");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
     accP.appendChild(profP);
@@ -179,8 +181,8 @@ function setAccountPage(text: string) {
     logP.classList.remove("flex");
     regP.classList.add("hidden");
     regP.classList.remove("flex");
-   settingsPage.classList.add("hidden");
-  settingsPage.classList.remove("flex");
+    settingsPage.classList.add("hidden");
+    settingsPage.classList.remove("flex");
     // matchesPage.classList.add("hidden");
     // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
@@ -197,7 +199,7 @@ function setAccountPage(text: string) {
       canvas.classList.remove("block");
       gameisOn = false;
     }
-  } 
+  }
 }
 
 /*Implementation to display pages triggered by menu selection */
@@ -309,12 +311,12 @@ function displayUserProfile() {
   blockButton.classList.remove("block");
 }
 
-const registerForm : any = document.getElementById("register");
-const registerSuccessPage : any = document.getElementById("register-success");
-const loginButton : any = document.getElementById("login-button");
-const loginForm : any = document.getElementById("login");
+const registerForm: any = document.getElementById("register");
+const registerSuccessPage: any = document.getElementById("register-success");
+const loginButton: any = document.getElementById("login-button");
+const loginForm: any = document.getElementById("login");
 
-registerForm.addEventListener("click", (event : any) => {
+registerForm.addEventListener("click", (event: any) => {
   event.preventDefault();
   console.log("register pressed");
   regP.classList.add("hidden");
@@ -326,45 +328,43 @@ registerForm.addEventListener("click", (event : any) => {
 loginButton.addEventListener("click", () => {
   registerSuccessPage.classList.add("hidden");
   registerSuccessPage.classList.remove("flex");
-  setAccountPage('login');
+  setAccountPage("login");
 });
 
-loginForm.addEventListener("submit", (event : any) => {
+loginForm.addEventListener("submit", (event: any) => {
   event.preventDefault();
-})
+});
 
-const settingsPage : any = document.getElementById("settingsPage");
-const friendsPage : any = document.getElementById("friendsPage");
-const avatarForm : any = document.getElementById("avatar");
-const imgIcon : any = document.getElementById("svgIcon");
-const avatar : any = document.getElementById("avatarImgEdit")
-const popup : any = document.getElementById("avatarOptions");
-const popUpButton : any = document.getElementById("closePopUp");
-const displayNameForm : any = document.getElementById("displayName");
-const passwordForm : any = document.getElementById("password");
+const settingsPage: any = document.getElementById("settingsPage");
+const friendsPage: any = document.getElementById("friendsPage");
+const avatarForm: any = document.getElementById("avatar");
+const imgIcon: any = document.getElementById("svgIcon");
+const avatar: any = document.getElementById("avatarImgEdit");
+const popup: any = document.getElementById("avatarOptions");
+const popUpButton: any = document.getElementById("closePopUp");
+const displayNameForm: any = document.getElementById("displayName");
+const passwordForm: any = document.getElementById("password");
 
 // When the user clicks on <span> (x), close the modal
-popUpButton.addEventListener("click", () =>
-{
+popUpButton.addEventListener("click", () => {
   popup.classList.add("hidden");
   popup.classList.remove("block");
 });
 
-
-let pop : boolean = false;
-avatarForm.addEventListener("submit", (event : any) => {
-	event.preventDefault();
+let pop: boolean = false;
+avatarForm.addEventListener("submit", (event: any) => {
+  event.preventDefault();
 });
 
-displayNameForm.addEventListener("submit", (event : any) => {
-	event.preventDefault();
+displayNameForm.addEventListener("submit", (event: any) => {
+  event.preventDefault();
 });
 
-passwordForm.addEventListener("submit", (event : any) => {
-	event.preventDefault();
+passwordForm.addEventListener("submit", (event: any) => {
+  event.preventDefault();
 });
 
-imgIcon.addEventListener("click", (event : any) => {
+imgIcon.addEventListener("click", (event: any) => {
   console.log("pressed svg");
   popup.classList.add("block");
   popup.classList.remove("hidden");
