@@ -445,14 +445,11 @@
               </div>
               <div id="acc-profile-page">
                 <div class="flex-col gap-2.5" id="matches">
-                 <div id="dashboards" class="grid grid-cols-3">
-                      <div id="winPercentage" class="border flex justify-center items-center">
+                 <div id="dashboards" class="flex flex-wrap">
+                      <div id="winPercentage" class="border flex flex-1 justify-center items-center">
                         <canvas id="pieChart"></canvas>
                       </div>
-                      <div id="weeklyProgress" class="border flex justify-center items-center">
-                        <canvas id="lineChart"></canvas>
-                      </div>
-                      <div id="wAndLMonthly" class="border flex justify-center items-center">
+                      <div id="wAndLMonthly" class="border flex flex-1 justify-center items-center">
                         <canvas id="barChart"></canvas>
                       </div>
                     </div>
@@ -1114,6 +1111,7 @@
     <script src="dist/gameLogic.js"></script>
     <script src="dist/setUpPlayers.js"></script>
     <script src="dist/createRules.js"></script>
+    <script src="dist/charts.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>
