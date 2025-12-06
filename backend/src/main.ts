@@ -4,10 +4,12 @@ import { registerRoutes as registerMainRoutes } from './routes/routes';
 import { registerChatRoutes } from './routes/chat';
 import { registerUserRoutes } from './routes/user';
 import { registerAuthRoutes } from './routes/auth';
+import { registerGameStatsRoutes } from './routes/gameStats';
 import { UserManager } from './lib/services/UserManager';
 import { initDecorators } from './decorators';
 import { ChatManager } from './lib/services/ChatManager';
 import { GameStatsManager } from './lib/services/GameStatsManager';
+
 
 const fastify = Fastify();
 
