@@ -2,7 +2,7 @@ import { GameDbInsertRow, GameDbRow } from "../types/db";
 import type *  as Domain from '../types/domain';
 
 
-export function gameFromDbRow(row: GameDbRow): Domain.BaseGame {
+export function gameFromDbRow(row: GameDbRow): Domain.AnyGame {
 	if (row.mode === "tournament") {
 		return {
 
