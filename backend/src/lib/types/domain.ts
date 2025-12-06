@@ -16,6 +16,8 @@ import { UserId, UserStatus, MatchResult } from './types/types';
 
 //_____________ CONSTANTS__________________
 export const SYSTEM_ID = "TOURNAMENT" as const;
+export const GUEST_ID = "GUEST" as const;
+export const AI_ID = "AI"  as const;
 
 //_____________CONSTANTS_ GDPR: delete/anonymize user account
 export const DELETED_USER_DISPLAY_NAME = "Deleted user" as const;
@@ -24,11 +26,11 @@ export const DELETED_AVATARURL = null;
 // export type DeletedUser = null;
 // export type UserOrDeleted = User | DeletedUser;
 
+
 export const TOURNAMENT_AI_ALIASES = [
 	'AI_ALENA',
 	'AI_SVEVA',
 	'AI_LUIS',
-	'AI_42BERLIN',
 ] as const;
 
 export const AI_NAME_PREFIX = "AI_";
@@ -43,9 +45,11 @@ const RESERVED_NAMES: string[] = [
 	'api',
 	'delete',
 	'tournament',
+	SYSTEM_ID,
+	GUEST_ID,
+	AI_ID,
 	DELETED_USER_DISPLAY_NAME,  // Deleted_
 	DELETED_USERNAME,
-	SYSTEM_ID,
 	...TOURNAMENT_AI_ALIASES,
 ];
 export const RESERVED = RESERVED_NAMES;

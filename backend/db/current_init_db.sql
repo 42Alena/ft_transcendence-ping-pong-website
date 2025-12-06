@@ -104,16 +104,16 @@ CREATE TABLE IF NOT EXISTS messages (
 -- GAMES  (all stored 1v1 matches for stats)
 -- ============================================
 -- One row = one finished game.
--- mode:
---   'game'       -> normal 1v1 game
---   'tournament' -> tournament semi / final
 -- 
-
---   round:
---       NULL          -> normal game
---       'semi'        -> tournament semi-final
---       'final'       -> tournament final
-
+-- UserId:
+-- real user = user id
+-- guest/AI = NULL
+-- 
+-- round:
+--   NULL               -> normal game
+--   'tournamentSemi'   -> tournament semi-final
+--   'tournamentFinal'  -> tournament final
+-- 
 --    users are "deleted" by soft delete (deletedAt + anonymized name),
 --     so we normally never DELETE from users. Old games remain valid for stats.
 -- ============================================
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS games (
     loserScore INTEGER NOT NULL,
 
 
-    round TEXT CHECK (round IN ('semi', 'final')),
+    round TEXT CHECK (round IN ('tournamentSemi', 'tournamentFinal')),
 
     createdAt INTEGER NOT NULL DEFAULT (unixepoch())
 );
