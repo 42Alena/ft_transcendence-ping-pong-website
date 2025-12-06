@@ -40,30 +40,43 @@ Not required for evaluation — used for organization and pull request preparati
 -----------------------
 
 ##_____________  TODO FOR FUTURE:
+- update each time last activity. Not active after 10min
 
-- ROUTES/USer
-	- add data validation (deleted from User constructor)
-
-- Tournament:
-	- unique alias(insttead displayname) for tournament only, not globally
-
-- USER: 
 	-lastSeenAt(change logic for  for online/ offline)
-   [] make in authRequiredOptions and Usermanager(fkt) updating online in lastSeenAt
-	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 	- add conversion for Time from number to Date, if needed
+	-statistic
+	-gamemanager ; save Game and tournament
 
-	- loginSession id: set expire date?
-
-	-TODO ROUTES: 
-
-
-
-
-
-
-
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+
+## BACKEND
+### UserManager
+### User_routes
+### domain types
+
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+ 
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
 
 
 ## DB for chat:

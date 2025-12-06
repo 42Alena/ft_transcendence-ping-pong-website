@@ -1,4 +1,4 @@
-import { AvatarUrl, DisplayName, MessageTypeChat, MessageContent, MessageId, Meta, PasswordHash, ReceiverId, SenderId, TimeSec,  UserId, Username } from "../types/domain";
+import { AvatarUrl, DisplayName, MessageTypeChat, MessageContent, MessageId,  PasswordHash,  SenderId, TimeSec,  UserId, Username } from "../types/domain";
 
 
 export type JsonText = string;       // plain JSON string
@@ -32,3 +32,13 @@ export type MessageDbInsertRow = Omit<MessageDbRow, 'id' | 'createdAt'>;
 export type MessageDbRowSenderReceiver = Pick<MessageDbRow, "senderId" | "receiverId">;
 
 
+// //types in db row chat
+// export type GameDbRow = {
+// 	id: MessageId;
+// 	type: MessageTypeChat;
+// 	senderId: SenderId;
+// 	receiverId: ReceiverId;
+// 	round: MessageContent;
+// 	// meta: MetaDb;
+// 	createdAt: TimeSec;
+// };
