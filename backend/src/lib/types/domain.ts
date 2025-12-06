@@ -231,7 +231,7 @@ export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
 //normal private DM: no meta
 export type NewPrivateMessage = {
 	type: "PrivateMessage";
-	senderId: SenderId;
+	senderId: PrivateSenderId;
 	receiverId: PrivateReceiverId;
 	content: MessageContent;
 	// meta: null;
