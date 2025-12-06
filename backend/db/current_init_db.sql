@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS messages (
 -- 
 -- round:
 --   NULL               -> normal game
---   'tournamentSemi'   -> tournament semi-final
---   'tournamentFinal'  -> tournament final
+--   'semi'   -> tournament semi-final
+--   'final'  -> tournament final
 -- 
 --    users are "deleted" by soft delete (deletedAt + anonymized name),
 --     so we normally never DELETE from users. Old games remain valid for stats.
@@ -122,18 +122,16 @@ CREATE TABLE IF NOT EXISTS games (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
     mode TEXT NOT NULL CHECK (mode IN ('normalGame', 'tournament')),
+    tournamentRound TEXT CHECK (tournamentRound IN ('semi', 'final')), --null for normalGame
 
-    winnerUserId TEXT REFERENCES users (id) ON DELETE SET NULL,
-    loserUserId TEXT REFERENCES users (id) ON DELETE SET NULL,
+    winnerUserId TEXT REFERENCES users (id) ON DELETE SET NULL,  --null for guest/ai
+    loserUserId TEXT REFERENCES users (id) ON DELETE SET NULL, --null for guest/ai
 
     winnerAlias TEXT NOT NULL,
     loserAlias TEXT NOT NULL,
 
     winnerScore INTEGER NOT NULL,
     loserScore INTEGER NOT NULL,
-
-
-    round TEXT CHECK (round IN ('tournamentSemi', 'tournamentFinal')),
 
     createdAt INTEGER NOT NULL DEFAULT (unixepoch())
 );

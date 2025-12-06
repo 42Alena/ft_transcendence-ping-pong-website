@@ -50,6 +50,7 @@ Not required for evaluation — used for organization and pull request preparati
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
 ## DB
+	-updated table for game, to save as winner and loser, simplified logic
 
 ## BACKEND
 ### UserManager
