@@ -357,7 +357,7 @@ export type GameScore = number;
 
 
 export type BaseGame = {
-	mode: GameMode;
+	mode: GameMode;  // "tournament" | "normalGame"
 	tournamentRound:  GameTournamentRound;
 
 	winnerUserId: PlayerId;

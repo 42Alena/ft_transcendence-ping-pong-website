@@ -154,7 +154,7 @@ Example meta JSON of the message:
   */
   async sendTournamentMessage(
     receiverId: Domain.PrivateSenderId,
-    meta: Domain.MetaTournamentNextMatch,
+    // meta: Domain.MetaTournamentNextMatch,
 
   ): Promise<Domain.SendMessageResult> {
 
