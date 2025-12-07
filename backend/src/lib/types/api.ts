@@ -156,13 +156,15 @@ export type UserGames = Game[];
 
 
 
-export type SaveGameBody = {
-	mode: Domain.GameMode;
-	tournamentRound: Domain.GameTournamentRound;
+export type SaveNormalGameBody =  Domain.GamePlayersScores & {
 
-	player1Alias: Alias;
-	player1Score:  GameScore;
+	mode: 'normalGame';   
+	tournamentRound: null;
+};
 
-	player2Alias: Alias;
-	player2Score: GameScore;
+
+export type SaveTournamentBody =  Domain.GamePlayersScores & {
+
+	mode: 'tournament';
+	tournamentRound: Domain.GameTournamentRound;  //'final' /'semi'
 };

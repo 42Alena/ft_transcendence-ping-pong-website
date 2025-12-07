@@ -358,16 +358,16 @@ export type GameScore = number;
 
 export type BaseGame = {
 	mode: GameMode;  // "tournament" | "normalGame"
-	tournamentRound:  GameTournamentRound;
+	tournamentRound: GameTournamentRound;
 
 	winnerUserId: PlayerId;
 	loserUserId: PlayerId;
-	
+
 	winnerScore: GameScore;
 	loserScore: GameScore;
 
-	winnerAlias: Alias;            
-	loserAlias: Alias;  
+	winnerAlias: Alias;
+	loserAlias: Alias;
 
 	createdAt: TimeSec;
 }
@@ -377,7 +377,7 @@ export type NormalGame = BaseGame & {
 	tournamentRound: null;
 }
 
-export type TournamentGame = BaseGame &{
+export type TournamentGame = BaseGame & {
 	mode: 'tournament';
 	tournamentRound: TournamentRound;
 }
@@ -389,13 +389,22 @@ export type AnyGame =
 
 
 export type SaveGameResult =
-  | { ok: true; saved: true }   
-  | { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
-  | {
-      ok: false;
-      reason:
-        | "not_me"             // not authenticated
-        | "invalid_tournament" // bad mode/round combination
-        | "invalid_game"       // structural problem, e.g. same winner/loser, empty alias
-        | "invalid_score";     // winnerScore/loserScore invalid
-    };
+	| { ok: true; saved: true }
+	| { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
+	| {
+		ok: false;
+		reason:
+		| "not_me"             // not authenticated
+		| "invalid_tournament" // bad mode/round combination
+		| "invalid_game"       // structural problem, e.g. same winner/loser, empty alias
+		| "invalid_score";     // winnerScore/loserScore invalid
+	};
+
+export type GamePlayersScores = {
+
+	player1Alias: Alias;
+	player1Score: GameScore;
+
+	player2Alias: Alias;
+	player2Score: GameScore;
+};

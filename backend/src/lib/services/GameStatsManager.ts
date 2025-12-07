@@ -81,25 +81,22 @@ export class GameStatsManager {
 	}
 
 
-	/* 
-buildAnyGameFromBody
-	*/
-	private buildAnyGameFromBody(body: SaveGameBody): Domain.BaseGame {
-
-		const {
-			mode,
-			tournamentRound,
-			player1Alias,
-			player1Score,
-			player2Alias,
-			player2Score,
-		} = body;
 
 
+// 	/* 
+// buildAnyGameFromBody
+// 	*/
+// 	private buildAnyGameFromBody(body: SaveGameBody): Domain.BaseGame {
+// 	/* 
+// buildAnyGameFromBody
+// 	*/
 
-		const player1Wins = player1Score >= player2Score;
 
-		const winnerAlias = player1Wins ? player1Alias : player2Alias;
+	private findWinerLoser(body: Domain.GamePlayersScores) {
+
+		const player1Wins = body.player1Score >= body.player2Score;
+
+		const winnerAlias = body.player1Wins ? player1Alias : player2Alias;
 		const loserAlias = player1Wins ? player2Alias : player1Alias;
 
 		const winnerScore = player1Wins ? player1Score : player2Score;

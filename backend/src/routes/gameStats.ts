@@ -9,13 +9,44 @@ export function registerGameStatsRoutes(fastify: FastifyInstance, gameStatsManag
 	mode: "normalGame" | "tournament";
 tournamentRound: null | "semi" | "final";
 	*/
-	fastify.post<{ Body: API.SaveGameBody }>(
-		"/games/save",
+	fastify.post<{ Body: API.SaveNormalGameBody }>(
+		"/games/normal/save",
 		authRequiredOptions,
 		async (req, reply) => {
 
 
+			const result = await gameStatsManager.recordFinishedGame(req.body);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "not_me")
+				return sendError(reply, "Sender not found or not authenticated", "id", 401);
+		});
+
+
+			/* 
+	mode: "normalGame" | "tournament";
+tournamentRound: null | "semi" | "final";
+	*/
+	fastify.post<{ Body: API.SaveTournamentBody }>(
+		"/games/tournament/save",
+		authRequiredOptions,
+		async (req, reply) => {
+
+
+			const result = await gameStatsManager.recordFinishedGame(req.body);
+
+			if (result.ok)
+				return sendNoContent(reply);                  // 204
+
+			// map domain reasons to HTTP
+			if (result.reason === "not_me")
+				return sendError(reply, "Sender not found or not authenticated", "id", 401);
 		});
 
 
 }
+
+
