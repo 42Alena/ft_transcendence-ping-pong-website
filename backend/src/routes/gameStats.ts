@@ -5,11 +5,14 @@ import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 
 export function registerGameStatsRoutes(fastify: FastifyInstance, gameStatsManager: GameStatsManager) {
 
-	/* send private message (user to user) */
+	/* 
+	mode: "normalGame" | "tournament";
+tournamentRound: null | "semi" | "final";
+	*/
 	fastify.post<{ Body: API.SaveGameBody }>(
 		"/games/save",
 		authRequiredOptions,
-		async (req, reply) => { 
+		async (req, reply) => {
 
 
 		});
