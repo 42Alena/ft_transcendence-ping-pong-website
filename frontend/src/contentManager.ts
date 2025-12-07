@@ -12,8 +12,8 @@ function displayPage(text: string): void {
   girlImgRight.classList.remove("hidden");
   girlImgRightLoser.classList.remove("block");
   girlImgRightLoser.classList.add("hidden");
-  registerSuccessPage.classList.add("hidden");
-  registerSuccessPage.classList.remove("flex");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   if (text == "chat") {
     chatP.classList.add("grid");
     chatP.classList.remove("hidden");

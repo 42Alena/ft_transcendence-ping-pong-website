@@ -237,10 +237,10 @@
                 action="http://127.0.0.1:3000/auth/register"
                 method="post"
                 id="register"
-                class="flex flex-col justify-center items-center rounded-xl p-1"
+                class="flex flex-col justify-center items-center rounded-xl p-1 absolute z-1"
               >
                 <div class="mb-3" id="usernameInput">
-                  <label class="text-xl font-medium text-heading" for="reg-username"
+                  <label class="text-xl font-bold text-heading" for="reg-username"
                     >Username (login)</label
                   >
                   <input
@@ -254,7 +254,7 @@
                   <div id="reg-usernama_error" class="text-red-600 hidden text-sm"></div>
                 </div>
                  <div class="mb-3">
-                  <label class="text-xl font-medium text-heading" for="reg-displayName"
+                  <label class="text-xl font-bold text-heading" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
@@ -268,7 +268,7 @@
                   <div id="reg-displayName_error" class="text-red-600 hidden text-sm"></div>
                 </div>
                 <div class="mb-3">
-                  <label class="text-xl font-medium text-heading" for="reg-password"
+                  <label class="text-xl font-bold text-heading" for="reg-password"
                     >Password</label
                   >
                   <input
@@ -286,28 +286,11 @@
               <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
               <img
               src="images/registration_success/pong_registrtion_success.png"
-              alt="welcome page"
-              class="absolute h-full w-full"
+              alt="register success page"
+              class="absolute inset-0 z-0 h-full w-full"
             />
-              <button type="submit" class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
+              <button type="button" class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
               </div>
-            </div>
-            <div
-              id="register-success"
-              class="relative hidden h-full w-full items-center justify-center"
-            >
-              <img
-                src="images/registration_sucess/pong_registrtion_success.png"
-                alt="registration success page"
-                class="absolute inset-0 z-0 h-full w-full"
-              />
-              <button
-                class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                type="button"
-                id="login-button"
-              >
-                Login
-              </button>
             </div>
             <div
               class="relative hidden h-full w-full items-center justify-center"

@@ -6,12 +6,12 @@ const errorDisplayName: any = document.getElementById("reg-displayName_error");
 const errorPaassword : any = document.getElementById("reg-password_error");
 const displayInput: any = document.getElementById("reg-display");
 const passwordInput: any = document.getElementById("reg-password");
-const successMessageDiv: any = document.getElementById("success-display");
+const successRegPage: any = document.getElementById("success-display");
 const loginButtonRedirect : any = document.getElementById("login-button");
 
 loginButtonRedirect.addEventListener("click", () => {
-  successMessageDiv.classList.add("hidden");
-  successMessageDiv.classList.remove("flex");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   setAccountPage('login');
 })
 reg.addEventListener("submit", async (event: any) => {
@@ -22,8 +22,8 @@ errorDisplayName.classList.add("hidden");
 errorDisplayName.classList.remove("block");
 errorPaassword.classList.add("hidden");
 errorPaassword.classList.remove("block");
-successMessageDiv.classList.add("hidden");
-successMessageDiv.classList.remove("flex");
+successRegPage.classList.add("hidden");
+successRegPage.classList.remove("flex");
   console.log("button pressed");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -72,8 +72,8 @@ successMessageDiv.classList.remove("flex");
         errorDisplayName.classList.remove("block");
         errorPaassword.classList.add("hidden");
         errorPaassword.classList.remove("block");
-      successMessageDiv.classList.add("flex");
-      successMessageDiv.classList.remove("hidden");
+      successRegPage.classList.add("flex");
+      successRegPage.classList.remove("hidden");
       reg.classList.add("hidden");
       reg.classList.remove("flex");
        reg.reset();

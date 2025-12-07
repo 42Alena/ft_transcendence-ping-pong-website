@@ -60,8 +60,8 @@ function setAccountPage(text: string) {
   girlImgRight.classList.remove("hidden");
   girlImgRightLoser.classList.remove("block");
   girlImgRightLoser.classList.add("hidden");
-  registerSuccessPage.classList.add("hidden");
-  registerSuccessPage.classList.remove("flex");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   if (text == "login") {
     logP.classList.add("flex");
     logP.classList.remove("hidden");
@@ -322,28 +322,28 @@ function displayUserProfile() {
   blockButton.classList.remove("block");
 }
 
-const registerForm: any = document.getElementById("register");
-const registerSuccessPage: any = document.getElementById("register-success");
-const loginButton: any = document.getElementById("login-button");
-const loginForm: any = document.getElementById("login");
+// const registerForm: any = document.getElementById("register");
+// const registerSuccessPage: any = document.getElementById("register-success");
+// const loginButton: any = document.getElementById("login-button");
+// const loginForm: any = document.getElementById("login");
 
-registerForm.addEventListener("click", (event: any) => {
-  event.preventDefault();
-  regP.classList.add("hidden");
-  regP.classList.remove("flex");
-  registerSuccessPage.classList.add("flex");
-  registerSuccessPage.classList.remove("hidden");
-});
+// registerForm.addEventListener("click", (event: any) => {
+//   event.preventDefault();
+//   regP.classList.add("hidden");
+//   regP.classList.remove("flex");
+//   registerSuccessPage.classList.add("flex");
+//   registerSuccessPage.classList.remove("hidden");
+// });
 
-loginButton.addEventListener("click", () => {
-  registerSuccessPage.classList.add("hidden");
-  registerSuccessPage.classList.remove("flex");
-  setAccountPage("login");
-});
+// loginButton.addEventListener("click", () => {
+//   registerSuccessPage.classList.add("hidden");
+//   registerSuccessPage.classList.remove("flex");
+//   setAccountPage("login");
+// });
 
-loginForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// loginForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
 const settingsPage: any = document.getElementById("settingsPage");
 const friendsPage: any = document.getElementById("friendsPage");
