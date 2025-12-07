@@ -1,3 +1,4 @@
+import { gameToDbRow } from "../mappers/games_db";
 import { db } from "./DB";
 import { User } from "./User";
 import { UserManager } from "./UserManager";
