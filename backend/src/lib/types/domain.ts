@@ -386,3 +386,16 @@ export type TournamentGame = BaseGame &{
 export type AnyGame =
 	| NormalGame
 	| TournamentGame;
+
+
+export type SaveGameResult =
+  | { ok: true; saved: true }   
+  | { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
+  | {
+      ok: false;
+      reason:
+        | "not_me"             // not authenticated
+        | "invalid_tournament" // bad mode/round combination
+        | "invalid_game"       // structural problem, e.g. same winner/loser, empty alias
+        | "invalid_score";     // winnerScore/loserScore invalid
+    };

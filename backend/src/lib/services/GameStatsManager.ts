@@ -28,6 +28,7 @@ export class GameStatsManager {
 	await this.dbTableGames().insert(dbGameRow);
   }
 
+  async recordFinishedGame(game: Domain.AnyGame):
 		
 }
 

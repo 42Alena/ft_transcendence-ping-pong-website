@@ -57,6 +57,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### User_routes
 ### domain types
 	+ added types for game and tournament
+	+ SaveGameResult
 
 ### api types
 	 + added API types for games
