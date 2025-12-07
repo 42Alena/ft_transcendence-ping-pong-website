@@ -14,8 +14,8 @@ tournamentRound: null | "semi" | "final";
 		authRequiredOptions,
 		async (req, reply) => {
 
-
-			const result = await gameStatsManager.recordFinishedGame(req.body);
+			const normalGameBody = gameStatsManager.buildNormalGameFromBody(req.body); 
+			const result = await gameStatsManager.recordFinishedGame(normalGameBody);
 
 			if (result.ok)
 				return sendNoContent(reply);                  // 204

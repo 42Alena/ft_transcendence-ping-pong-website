@@ -103,6 +103,7 @@ export class GameStatsManager {
 
 
 	/* 
+	PRIVATE
    export type SaveGameResult =
 	| { ok: true; saved: true }   
 	| { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
@@ -131,7 +132,7 @@ export class GameStatsManager {
 		  createdAt: TimeSec;
 	  }
 	*/
-	async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
+	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
 		// if (body.player1Score === body.player2Score) return null;
 
@@ -146,6 +147,20 @@ export class GameStatsManager {
 		}
 
 
+	}
+
+
+	// PUBLIC: called from route for normal game
+	public async recordNormalGameFromBody(
+		meId: Domain.UserId | null,
+		body: API.SaveNormalGameBody
+	): Promise<Domain.SaveGameResult> {
+
+		if (!meId)
+			return { ok: false, reason: "not_me" };
+
+		const game = this.buildNormalGameFromBody(body); // private call, OK
+		return this.recordFinishedGame(game);            // also private call
 	}
 
 }
