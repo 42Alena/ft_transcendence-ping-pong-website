@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Chat } from "../../src/lib/services/Chat";
+import { Chat } from "../../src/lib/services/ChatManager";
 import { User } from "../../src/lib/services/User";
 import { UserManager } from "../../src/lib/services/UserManager";
 import * as Types from "../../src/lib/types/domain";

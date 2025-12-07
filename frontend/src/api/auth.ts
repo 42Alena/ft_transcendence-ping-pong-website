@@ -8,7 +8,22 @@ import type *  as Types from './types.js';
 
 const SERVER = 'http://localhost:3000'
 
-/* // [{username: 'Alena',displayName: "akurmyza", , pasword: "fksadjfkl", avatar: "default.png"}] */
+
+//called "CLIENT SDK" or API BACKEND INTEGRATION, function that caled backend
+
+// using jsdoc 
+/** 
+ * [{username: 'Alena',displayName: "akurmyza", , pasword: "fksadjfkl", avatar: "default.png"}] 
+ * 
+ * @example
+ *    const res = await apiAuthRegister({
+ *       username: "aa",
+ *       displayName: "BB"
+ *    })
+ * 
+ * @params {Types.RegisterBody} data
+ * @returns {{ success: true, data: any } | {success: false, errors: any}}
+ */
 export async function apiAuthRegister(data: Types.RegisterBody) {
 	const payload = JSON.stringify(data) // string  JSON
 

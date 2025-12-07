@@ -31,7 +31,7 @@ Not required for evaluation — used for organization and pull request preparati
 	# 2. in 2.terminal: 
 	make tests_user_settings
 ```
-
+ 
 
 --------------------------
 ### ======    OLD PULLREQUESTS   ================================================================
@@ -57,15 +57,187 @@ Not required for evaluation — used for organization and pull request preparati
 
 	-TODO ROUTES: 
 
-	//_________________SETTINGS: CHANGE AVATAR____________
-	//_________________SETTINGS: CHANGE PASSWORD ____________
-	//_________________SETTINGS: DELETE USER____________
-	
-	//_________________ONLINE/OFFLINE____________
 
-------------------------
-------------------------
+
+
+
+
+
 ### ======    NEW PULLREQUESTS   ================================================================
+
+
+## DB for chat:
+	- PublicMessage
+	+ TournamentMessage
+
+## BACKEND
+	+ backend/src/lib/mappers/chat_db.ts
+	+ backend/src/lib/types/db.ts
+	+ added ChatDBRow in backend/src/lib/types/db.ts
+	+aded to reserved names 'SYSTEM_ID', 'ai'
+
+### CHat
+	- removed old in-memory chatMessages array
+	+ add Chat constructor with UserManager + messages table factory
+	+ saveMessageInDB()
+	+ added message validation with validateMessageContent 
+	- checkPrivateSender 
+	- checkPrivateReceiver
+	+ sendPrivateMessage()
+	+ sendUserToUserMessage()
+	+ sendPrivateGameInviteMessage()
+	+ sendTournamentMessage()
+	+ adapted send new messages with different types of NewMessageChat
+	+ corrected sendTournamentMessage to work withoit ender(system_id)
+	+ addeddd isCommmunicationBlocked for  both sides
+	+  getChatCoversationSideBar, working with DB
+
+### UserManager
+	+ added additional check for get users/id if not deleted
+### User_routes
+### domain types
+	- corrected types for messages, excuded public msg. will be no public chat 
+	+ sendMessageResult
+	+ TOURNAMENT_AI_ALIASES:
+		 - 5  reserved names for AI:
+		- 'AI',
+		- 'AI_AlENA',
+		- 'AI_SVEVA',
+		- 'AI_LUIS',
+		-'AI_42BERLIN',
+	+ added different type of meta for messages in Chat tournament/invite
+	+ added different types to messages with/without meta:
+	```
+		NewMessageChat =
+	| NewPrivateMessage
+	| NewGameInviteMessage
+	| NewTournamentMessage;
+	```
+
+	+ ChatSidebarItem
+	+ MessageDbRowSenderReceiver 
+
+### user_db.ts
+	- UserSidebarDbRow 
+	
+
+
+### api types
+	+ all types for chat sending messages
+	+ ChatConversationSidebar
+
+#### validators 
+	+ validateMessageContent
+	+ added
+	+ add check if name starts with AI_ or is 5  reserved names for AI'
+
+### TESTS
+	+ backend/tests/chat.sh  - tests for chat
+
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_chat
+```
+
+
+
+	
+### ======    NEW PULLREQUESTS   ================================================================
+
+## DB
+
+1. deleted old tables, that not rensponse current state:
+	- tournaments ( ... );
+
+	- tournamentPlayers ( ... );
+
+	- tournamentMatches ( ... );
+
+	- userStatistics 
+
+	- gdpr
+
+2. created single table "games" for all games and tournaments together
+```bash
+# -- One row = one finished game.
+# -- mode:
+# --   'game'       -> normal 1v1 game
+# --   'tournament' -> tournament semi / final
+# -- 
+# --   winner:
+# --       1 -> player1 won
+# --       2 -> player2 won
+
+# --   round:
+# --       NULL          -> normal game
+# --       'semi'        -> tournament semi-final
+# --       'final'       -> tournament final
+
+# --    users are "deleted" by soft delete (deletedAt + anonymized name),
+# --     so we normally never DELETE from users. Old games remain valid for stats.
+```
+
+
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+
+## FRONTEND
+ - added chart.js package (small library to draw graphs (used for Stats Dashboard))
+ - fixed tsconfig.json module resolution (so TypeScript can find Chart.js correctly)
+ - installed esbuild bundler to bundle modules (inline libraries). Bundles TS + Chart.js into one browser-ready file
+ - added script to  compile tailwind
+ - changed makefile `make frontend` that now is doing all this steps.  now runs all steps (TS → JS, bundling, Tailwind)
+ - added charts.ts
+
+
+ - you  can see charts on the main page on the bottom, if you put test example from TEST in index.html
+
+
+### TESTS
+
+!must be canvas element
+
+copy to index.html:
+```bash
+# index.html
+    # <script src="dist/createRules.js"></script> line before
+
+    <!-- ALENA -->
+    <canvas id="myChart"></canvas>
+    <script src="dist/charts.js"></script>
+    <!-- ALENA -->
+
+    # <script src="dist/api/user.js" type="module"></script> line after
+```
+
+
+## 🔗 LINKS / HELP
+
+example from
+
+ https://www.chartjs.org/docs/latest/getting-started/usage.html
+
+# HOW TO TEST: 
+1. copy example from TEST to index.html
+```bash
+	#  1. in 1.terminal 
+	make frontend
+
+```
+
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
 This PR adds online/offline status for logged-in users.
 Only authenticated users can check status, and only for themselves or their friends.
 Non-friends cannot see your status.
