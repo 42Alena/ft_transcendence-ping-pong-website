@@ -136,15 +136,12 @@ export class GameStatsManager {
 
 		// if (body.player1Score === body.player2Score) return null;
 
-		if (game.mode === "normalGame" && game.tournamentRound !== null)
-			return { ok: false, reason: "invalid_game" };
 
-		if (game.mode === "tournament" &&
-			game.tournamentRound !== 'semi' &&
-			game.tournamentRound !== 'final') {
 
-			return { ok: false, reason: "invalid_tournament" };
-		}
+		// if ()
+
+		// 	return { ok: false, reason: "invalid_tournament" };
+		// }
 
 
 	}
@@ -164,6 +161,7 @@ export class GameStatsManager {
 	}
 
 
+
 	// PUBLIC: called from route for tournament
 	public async recordTournamentFromBody(
 		meId: Domain.UserId | null,
@@ -178,7 +176,7 @@ export class GameStatsManager {
 	}
 
 
-	
+
 }
 
 

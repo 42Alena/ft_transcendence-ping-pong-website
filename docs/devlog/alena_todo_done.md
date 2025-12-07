@@ -77,6 +77,10 @@ Not required for evaluation — used for organization and pull request preparati
 ### game_db.ts
 	added types to save to db or get row from db
 
+### 
+	+ /games/tournament/save
+	+ /games/normal/save
+
 ## FRONTEND
 
 ### TESTS
