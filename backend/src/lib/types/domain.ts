@@ -355,20 +355,21 @@ export type PlayerId = UserId | null;  // null for guest, AI
 export type GameScore = number;
 
 
-
-export type BaseGame = {
-	mode: GameMode;  // "tournament" | "normalGame"
-	tournamentRound: GameTournamentRound;
-
-	winnerUserId: PlayerId;
-	loserUserId: PlayerId;
-
+export type GameWinnersLosers = {
 	winnerScore: GameScore;
 	loserScore: GameScore;
 
 	winnerAlias: Alias;
 	loserAlias: Alias;
+}
 
+export type BaseGame =  GameWinnersLosers & {
+	
+	mode: GameMode;  // "tournament" | "normalGame"
+	tournamentRound: GameTournamentRound;
+
+	winnerUserId: PlayerId;
+	loserUserId: PlayerId;
 	createdAt: TimeSec;
 }
 

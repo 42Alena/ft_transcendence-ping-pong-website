@@ -92,11 +92,20 @@ export class GameStatsManager {
 // 	*/
 
 
-	private findWinerLoser(body: Domain.GamePlayersScores) {
+	private findWinerLoser(body: Domain.GamePlayersScores): Domain.GameWinnersLosers {
 
-		const player1Wins = body.player1Score >= body.player2Score;
+		const {
+			player1Alias,
+			player1Score,
+			player2Alias,
+			player2Score,
+		} = body;
 
-		const winnerAlias = body.player1Wins ? player1Alias : player2Alias;
+
+
+		const player1Wins = player1Score >= player2Score;
+
+		const winnerAlias = player1Wins ? player1Alias : player2Alias;
 		const loserAlias = player1Wins ? player2Alias : player1Alias;
 
 		const winnerScore = player1Wins ? player1Score : player2Score;
@@ -104,21 +113,13 @@ export class GameStatsManager {
 
 
 
-		const game: Domain.BaseGame = {
-			mode,
-			tournamentRound,
-
-			winnerUserId: null,  //null for now
-			loserUserId: null, //null for now
+		const game: Domain.GameWinnersLosers = {
 
 			winnerAlias,
 			loserAlias,
 
 			winnerScore,
 			loserScore,
-
-
-			createdAt: unixTimeNow()
 		}
 
 		return game;

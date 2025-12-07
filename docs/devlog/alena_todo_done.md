@@ -56,6 +56,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### UserManager
 ### GameStatsManager
 	+ buildAnyGameFromBody to map from API body to domain
+	+ findWinerLoser 
 
 ### User_routes
 ### domain types
