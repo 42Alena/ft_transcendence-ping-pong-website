@@ -5,6 +5,7 @@ import *  from '../types/UserTypes';
 or 
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
+import *  as Domain from '../types/domain';
 
 import { FastifyRequest } from "fastify";
 
@@ -43,10 +44,10 @@ export type LoginBody = {
 };
 
 
-  export type ChangePasswordBody = {
-    currentPassword: PasswordPlain;
-    newPassword: PasswordPlain;
-  };
+export type ChangePasswordBody = {
+	currentPassword: PasswordPlain;
+	newPassword: PasswordPlain;
+};
 
 //_________PROFILE__send_ to_FRONTEND___________________
 
@@ -79,3 +80,61 @@ export type UserAwareRequest = FastifyRequest & {
 	userId: string;
 	loginSessionId: string;
 }
+
+
+//____________________CHAT_____________________
+
+export type PrivateSenderId = UserId;
+
+export type SenderId = PrivateSenderId;
+export type ReceiverId = PrivateSenderId;
+
+export type MessageContent = string;
+
+export type ChatMessageType =
+	| "PrivateMessage"
+	| "PrivateGameInviteMessage"
+	| "TournamentMessage";
+
+
+export type ChatMessage = {
+	type: ChatMessageType;
+	senderId: number | string; // user id OR SystemId
+	content: string; // what to display
+};
+
+
+// Body that client sends for send message
+
+export type SendGameInviteBody = {
+	receiverId: ReceiverId;
+	// no content, backend will use MESSAGE_GAME_INVITE
+};
+
+
+export type SendPrivateMessageBody = {
+	receiverId: ReceiverId;
+	content: MessageContent;
+	// no type, no senderId
+};
+
+export type SendTournamentMessageBody = {
+	receiverId: ReceiverId;
+  // no content, backend will use MESSAGE_GAME_INVITE
+};
+
+
+export type GetChatParams = {
+  userId: number;    // or chat partner id
+};
+
+export type GetChatResponse = {
+  messages: ChatMessage[];
+};
+
+//for Sidebar
+export type ChatConversations = Domain.ChatConversations;
+export type GetChatConversationsResult = ChatConversations[];
+
+//for messages between me and another user
+export type GetChatConversationWithResult = Domain.MessageChat[];

@@ -43,7 +43,11 @@ backend:
 	cd "$(BACKEND_DIR)" && npm run start
 
 frontend:
-	cd "$(FRONTEND_DIR)" && npm run compile && npm run serve
+	cd "$(FRONTEND_DIR)" && \
+	npm run compile && \
+	npm run bundle && \
+	npm run compile-css && \
+	npm run serve
 
 # old
 # db: check-tools
@@ -76,6 +80,9 @@ tests_users: db
 	@chmod +x backend/tests/users.sh
 	@BASE_URL=http://localhost:3000 backend/tests/users.sh
 
+tests_chat: db
+	@chmod +x backend/tests/chat.sh
+	@BASE_URL=http://localhost:3000 backend/tests/chat.sh
 
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:

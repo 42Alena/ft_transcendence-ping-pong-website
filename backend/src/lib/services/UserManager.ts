@@ -34,14 +34,18 @@ export class UserManager {
 	//_______________bool: existence_____________________
 	async existsById(userId: Domain.UserId): Promise<boolean> {
 
-		const row = await this.dbTableUser().where({ id: userId }).first("id");
+		const row = await this.dbTableUser()
+			.where({ id: userId, deletedAt: 0 })
+			.first("id");
 
 		return !!row;
 	}
 
 	async existsByUsername(username: Domain.Username): Promise<boolean> {
 
-		const row = await this.dbTableUser().where({ username }).first("id");
+		const row = await this.dbTableUser()
+			.where({ username: username, deletedAt: 0 })
+			.first("id");
 
 		return !!row;
 	}
@@ -54,7 +58,9 @@ export class UserManager {
 	//_______________READ__________________
 	async getUserByUsername(username: Domain.Username): Promise<Domain.User | null> {
 
-		const row = await this.dbTableUser().where({ username: username }).first()
+		const row = await this.dbTableUser()
+			.where({ username: username, deletedAt: 0 })
+			.first()
 		if (!row) {
 			return null;
 		}
@@ -64,7 +70,10 @@ export class UserManager {
 
 	async getUserById(userId: Domain.UserId): Promise<Domain.User | null> {
 
-		const row = await this.dbTableUser().where({ id: userId }).first()
+		const row = await this
+			.dbTableUser()
+			.where({ id: userId, deletedAt: 0 })
+			.first()
 
 		if (!row) {
 			return null;

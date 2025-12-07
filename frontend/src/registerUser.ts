@@ -1,23 +1,28 @@
 const reg: any = document.getElementById("register");
 const errorUsername: any = document.getElementById("reg-usernama_error");
 const errorDisplayName: any = document.getElementById("reg-displayName_error");
-const errorPaassword: any = document.getElementById("reg-password_error");
-const successMessageDiv: any = document.getElementById("success-display");
-const loginButtonRedirect: any = document.getElementById("login-button");
+const errorPaassword : any = document.getElementById("reg-password_error");
+const displayInput: any = document.getElementById("reg-display");
+const passwordInput: any = document.getElementById("reg-password");
+const successRegPage: any = document.getElementById("success-display");
+const loginButtonRedirect : any = document.getElementById("login-button");
 
 loginButtonRedirect.addEventListener("click", () => {
-  successMessageDiv.classList.add("hidden");
-  successMessageDiv.classList.remove("flex");
-  setAccountPage("login");
-});
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
+  setAccountPage('login');
+})
 reg.addEventListener("submit", async (event: any) => {
   event.preventDefault();
-  errorUsername.classList.add("hidden");
-  errorUsername.classList.remove("block");
-  errorDisplayName.classList.add("hidden");
-  errorDisplayName.classList.remove("block");
-  errorPaassword.classList.add("hidden");
-  errorPaassword.classList.remove("block");
+errorUsername.classList.add("hidden");
+errorUsername.classList.remove("block");
+errorDisplayName.classList.add("hidden");
+errorDisplayName.classList.remove("block");
+errorPaassword.classList.add("hidden");
+errorPaassword.classList.remove("block");
+successRegPage.classList.add("hidden");
+successRegPage.classList.remove("flex");
+  console.log("button pressed");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   const formData = new FormData(event.target);
@@ -54,14 +59,14 @@ reg.addEventListener("submit", async (event: any) => {
       }
       throw new Error(`Response status ${response.status}`);
     } else {
-      errorUsername.classList.add("hidden");
-      errorUsername.classList.remove("block");
-      errorDisplayName.classList.add("hidden");
-      errorDisplayName.classList.remove("block");
-      errorPaassword.classList.add("hidden");
-      errorPaassword.classList.remove("block");
-      successMessageDiv.classList.add("flex");
-      successMessageDiv.classList.remove("hidden");
+        errorUsername.classList.add("hidden");
+        errorUsername.classList.remove("block");
+        errorDisplayName.classList.add("hidden");
+        errorDisplayName.classList.remove("block");
+        errorPaassword.classList.add("hidden");
+        errorPaassword.classList.remove("block");
+      successRegPage.classList.add("flex");
+      successRegPage.classList.remove("hidden");
       reg.classList.add("hidden");
       reg.classList.remove("flex");
       reg.reset();
