@@ -6,19 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pong</title>
     <link href="styles/output.css" rel="stylesheet" />
-    <style>
-      /* if uncomment the css class image-box class, you can see how they would look like if taking full space */
-      /* .image-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    } */
-    </style>
+    <style></style>
   </head>
 
-  <body
-    class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]"
-  >
+  <body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
     <header class="flex justify-center bg-[#DFF7FF]">
       <div class="w-full max-w-6xl border">
         <div
@@ -45,6 +36,7 @@
                     alt="User Avatar"
                     width="50"
                     height="50"
+                    class="rounded-full"
                   />
                 </div>
               </a>
@@ -61,9 +53,20 @@
                 </li>
                 <li>
                   <a href="#" onclick="setAccountPage('profile')"
-                    ><span></span> View my profile</a
+                    ><span></span>Profile</a
                   >
                 </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('settings')"
+                    ><span></span>Settings</a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="setAccountPage('friends')"
+                    ><span></span>Friends</a
+                  >
+                </li>
+
                 <li>
                   <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
                 </li>
@@ -75,9 +78,20 @@
     </header>
     <main class="flex flex-row justify-center border">
       <div class="relative flex-1">
-        <img src="images/sides_page_girls/background_sky.png" class="absolute h-full w-full z-0"/>
-        <img src="images/sides_page_girls/pong_a.png" class="absolute m-auto z-1 inset-x-0 bottom-0 w-auto h-full" id="happy_a"/>
-        <img src="images/sides_page_girls/pong_a_sad.png" class="absolute m-auto z-1 hidden inset-x-0 bottom-0 w-full h-full" id="sad_a"/>
+        <img
+          src="images/sides_page_girls/background_sky.png"
+          class="absolute z-0 h-full w-full"
+        />
+        <img
+          src="images/sides_page_girls/pong_a.png"
+          class="absolute inset-x-0 bottom-0 z-1 m-auto h-full w-auto"
+          id="happy_a"
+        />
+        <img
+          src="images/sides_page_girls/pong_a_sad.png"
+          class="absolute inset-x-0 bottom-0 z-1 m-auto hidden h-full w-full"
+          id="sad_a"
+        />
       </div>
       <section
         class="grid w-full max-w-6xl grid-cols-[100px_1fr] grid-rows-[1fr] border bg-white"
@@ -210,18 +224,21 @@
             class="relative hidden h-full w-full items-center justify-center bg-white"
             id="accountPage"
           >
-            <div class="hidden relative bg-inherit w-full h-full justify-center items-center" id="registerPage">
+            <div
+              class="relative hidden h-full w-full items-center justify-center bg-inherit"
+              id="registerPage"
+            >
               <img
-                    src="images/pages_images/pong_registration_new.png"
-                    alt="registration page"
-                    class="absolute inset-0 z-0 h-full w-full"
-                  />
+                src="images/pages_images/pong_registration_new.png"
+                alt="registration page"
+                class="absolute inset-0 z-0 h-full w-full"
+              />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
                 enctype="multipart/form-data"
                 id="register"
-                class="table rounded-xl absolute z-1"
+                class="absolute z-1 table rounded-xl"
               >
                 <p>
                   <label class="table-cell text-xl font-bold" for="reg-username"
@@ -236,7 +253,9 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl font-bold" for="reg-displayName"
+                  <label
+                    class="table-cell text-xl font-bold"
+                    for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
@@ -262,35 +281,41 @@
                 <span class="block h-[1em]"></span>
                 <p class="flex justify-center">
                   <button
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="register-button"
-                    >
-                      Register
-                    </button>
+                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    type="button"
+                    id="register-button"
+                  >
+                    Register
+                  </button>
                 </p>
               </form>
             </div>
-            <div id="register-success" class="relative hidden w-full h-full justify-center items-center">
-                <img
-                    src="images/registration_sucess/pong_registrtion_success.png"
-                    alt="registration success page"
-                    class="absolute inset-0 z-0 w-full h-full"
-                  />
-                <button
-                      class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="login-button"
-                    >
-                      Login
-                    </button>
-              </div>
-            <div class="hidden relative w-full h-full justify-center items-center" id="loginPage">
+            <div
+              id="register-success"
+              class="relative hidden h-full w-full items-center justify-center"
+            >
               <img
-                    src="images/pages_images/pong_login_new.png"
-                    alt="login page"
-                    class="absolute inset-0 z-0 w-full h-full"
-                  />
+                src="images/registration_sucess/pong_registrtion_success.png"
+                alt="registration success page"
+                class="absolute inset-0 z-0 h-full w-full"
+              />
+              <button
+                class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                type="button"
+                id="login-button"
+              >
+                Login
+              </button>
+            </div>
+            <div
+              class="relative hidden h-full w-full items-center justify-center"
+              id="loginPage"
+            >
+              <img
+                src="images/pages_images/pong_login_new.png"
+                alt="login page"
+                class="absolute inset-0 z-0 h-full w-full"
+              />
               <form
                 action="http://127.0.0.1:8080"
                 method="post"
@@ -298,7 +323,9 @@
                 class="absolute z-1 table rounded-xl p-1"
               >
                 <p>
-                  <label class="table-cell text-xl font-bold" for="login-username"
+                  <label
+                    class="table-cell text-xl font-bold"
+                    for="login-username"
                     >Username:</label
                   >
                   <input
@@ -310,7 +337,9 @@
                   />
                 </p>
                 <p>
-                  <label class="table-cell text-xl font-bold" for="login-password"
+                  <label
+                    class="table-cell text-xl font-bold"
+                    for="login-password"
                     >Password:</label
                   >
                   <input
@@ -324,11 +353,11 @@
                 <span class="block h-[1em]"></span>
                 <p class="flex justify-center">
                   <button
-                      class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="submit"
-                    >
-                      Login
-                    </button>
+                    class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    type="submit"
+                  >
+                    Login
+                  </button>
                 </p>
               </form>
             </div>
@@ -350,6 +379,7 @@
                     id="acc-profile-avatar"
                     width="100px"
                     height="100px"
+                    class="rounded-full"
                   />
                 </div>
                 <div class="flex flex-col border" id="acc-info">
@@ -368,10 +398,10 @@
                 </div>
                 <div class="flex flex-col border" id="acc-options;">
                   <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
-                    <div
+                    <!-- <div
                       class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
                     ></div>
-                    <div class="">ONLINE</div>
+                    <div class="">ONLINE</div> -->
                   </div>
                   <div
                     class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs"
@@ -409,224 +439,25 @@
                 </div>
               </div>
               <div
-                class="grid cursor-pointer grid-cols-3 items-center justify-center border bg-amber-100 text-center"
+                class="flex items-center justify-center border bg-amber-100 text-center"
                 id="acc-profile-menu"
               >
-                <div id="acc-settings">SETTINGS</div>
-                <div id="acc-friends">FRIENDS</div>
-                <div id="acc-matches">MATCHES</div>
+                STATS
               </div>
               <div id="acc-profile-page">
-                <div
-                  class="flex h-full w-full items-center justify-center border text-left text-sm"
-                  id="update-settings"
-                >
-                  <div
-                    class="flex h-full w-full flex-col items-center justify-center border"
-                  >
-                    <form
-                      class="table rounded-xl border bg-blue-300 p-1"
-                      role="updateSettings"
-                      id="settings"
-                    >
-                      <div class="flex items-center justify-center">
-                        <label for="edit-avatar">
-                          <img
-                            src="images/profile/orange.png"
-                            id="avatarImgEdit"
-                            width="50px"
-                            height="50px"
-                            class="cursor-pointer"
-                          />
-                        </label>
-                        <input
-                          type="file"
-                          id="edit-avatar"
-                          name="edit-user_avatar"
-                          class="hidden"
-                        />
-                      </div>
-                      <div>
-                        <label class="table-cell text-xl">Username:</label>
-                        <div>
-                          <input
-                            type="text"
-                            value="Pinco"
-                            readonly
-                            class="bg-white text-xl"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <p>
-                          <label
-                            for="edit-displayName"
-                            class="table-cell text-xl"
-                            >Display Name:</label
-                          >
-                        </p>
-                        <div>
-                          <input
-                            id="edit-displayName"
-                            name="edit-user_displayName"
-                            type="text"
-                            value="Pallo"
-                            class="bg-white text-xl"
-                          />
-                        </div>
-                      </div>
-                      <span class="block h-[1em]"></span>
-                      <div class="flex items-center justify-center text-sm">
-                        <button
-                          type="submit"
-                          id="editDisplayNameButton"
-                          class="cursor-pointer rounded-full border border-black p-[5px]"
-                        >
-                          Change display name
-                        </button>
-                      </div>
-                      <div>
-                        <label class="table-cell text-xl" for="edit-oldPass"
-                          >Old Password:</label
-                        >
-                        <div>
-                          <input
-                            class="bg-white text-xl"
-                            id="edit-oldPass"
-                            name="edit-user_oldPass"
-                            type="password"
-                            value="aaaaaaaaa"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label class="table-cell text-xl" for="edit-newPass"
-                          >New Password:</label
-                        >
-                        <div>
-                          <input
-                            class="bg-white text-xl"
-                            id="edit-newPass"
-                            name="edit-user_newPass"
-                            type="password"
-                            value="aaaaaaaaa"
-                          />
-                        </div>
-                      </div>
-                      <span class="block h-[1em]"></span>
-                      <div class="flex items-center justify-center text-sm">
-                        <button
-                          type="submit"
-                          id="editPasswordButton"
-                          class="cursor-pointer rounded-full border border-black p-[5px]"
-                        >
-                          Change password
-                        </button>
-                      </div>
-                      <div>
-                        <p class="flex items-center justify-center text-sm">
-                          <input
-                            type="submit"
-                            name="delete_account"
-                            class="my-2.5 cursor-pointer rounded-full border border-black p-[5px]"
-                            value="Delete Account"
-                          />
-                        </p>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="hidden flex-col gap-[15px] p-2.5" id="friends">
-                  <div>
-                    <button
-                      class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="blockButton"
-                      onclick="displayBlockedFriends()"
-                    >
-                      See blocked users
-                    </button>
-                  </div>
-                  <div id="friendsList" class="flex; p-[5px]">
-                    <div class="friend flex items-center border p-2.5">
-                      <img
-                        src="images/profile/purple.png"
-                        alt=""
-                        width="100px"
-                        height="100px"
-                      />
-                      <div class="ml-2.5 flex flex-col" id="friend-description">
-                        <div class="flex items-center gap-2" id="friend-name">
-                          <div>Mafalda</div>
-                        </div>
-                        <div class="friend-action flex justify-start gap-1">
-                          <button
-                            class="flex w-[60px] justify-center rounded-sm border"
-                            type="button"
-                            id="remove-friend__page"
-                          >
-                            remove
-                          </button>
-                          <button
-                            class="flex w-[60px] justify-center rounded-sm border"
-                            type="button"
-                            id="block-friend__page"
-                          >
-                            block
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="blockedList" class="hidden p-[5px]">
-                    <div class="friend flex items-center border p-2.5">
-                      <img
-                        src="images/profile/purple.png"
-                        alt=""
-                        width="100px"
-                        height="100px"
-                      />
-                      <div class="ml-2.5 flex flex-col">
-                        <div class="flex items-center gap-2">
-                          <div>Zorro</div>
-                        </div>
-                        <div class="friend-action flex justify-start gap-1">
-                          <button
-                            class="flex w-[60px] justify-center rounded-sm border"
-                            type="button"
-                          >
-                            remove
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="hidden flex-col gap-2.5" id="matches">
-                  <div class="grid-rows-auto grid h-full items-center">
+                <div class="flex-col gap-2.5" id="matches">
+                  <div id="dashboards" class="flex flex-wrap">
                     <div
-                      class="flex w-full justify-center border"
-                      id="acc-stats"
+                      id="winPercentage"
+                      class="flex flex-1 items-center justify-center border"
                     >
-                      <strong>Quick Stats</strong>
+                      <canvas id="pieChart"></canvas>
                     </div>
-                    <div class="grid grid-cols-4 border">
-                      <div class="border p-2.5 text-center">
-                        3
-                        <span class="mt-[5px] block">Current Ranking</span>
-                      </div>
-                      <div class="border p-2.5 text-center">
-                        12-10
-                        <span class="mt-[5px] block">W-L</span>
-                      </div>
-                      <div class="border p-2.5 text-center">
-                        22
-                        <span class="mt-[5px] block">Tot games</span>
-                      </div>
-                      <div class="border p-2.5 text-center">
-                        54%
-                        <span class="mt-[5px] block">Average wins</span>
-                      </div>
+                    <div
+                      id="wAndLMonthly"
+                      class="flex flex-1 items-center justify-center border"
+                    >
+                      <canvas id="barChart"></canvas>
                     </div>
                   </div>
                   <div
@@ -660,6 +491,311 @@
                 </div>
               </div>
             </div>
+            <div
+              id="settingsPage"
+              class="relative hidden h-full w-full flex-col items-center justify-center bg-yellow-200"
+            >
+              <div
+                id="editInformation"
+                class="relative flex h-full w-full flex-1 flex-row"
+              >
+                <div
+                  id="avatarEdit"
+                  class="relative flex h-full w-full flex-1 items-center justify-center"
+                >
+                  <form
+                    action="http://127.0.0.1:3000/users/me/avatar"
+                    method="post"
+                    id="avatar"
+                    class="relative flex items-center justify-center"
+                  >
+                    <input
+                      type="image"
+                      id="avatarImgEdit"
+                      src="images/profile/orange.png"
+                      alt="Avatar"
+                      class="h-auto max-w-[80%] cursor-pointer rounded-full"
+                    />
+                    <div
+                      id="svgIcon"
+                      class="absolute bottom-0 left-1/2 z-3 -translate-x-1/2 transform cursor-pointer rounded-full p-1 hover:bg-blue-600"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        focusable="false"
+                        class="rounded-full fill-current text-white"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 14H4V7h16v12zM12 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </form>
+                  <div
+                    id="avatarOptions"
+                    class="absolute top-[75%] z-10 m-auto hidden h-60 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                  >
+                    <button
+                      class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
+                      id="closePopUp"
+                    >
+                      &times;
+                    </button>
+                    <h2>Select avatar</h2>
+                    <ul
+                      class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                    >
+                      <li class="w-1/4 cursor-pointer p-1">
+                        <div
+                          class="flex h-12 w-12 items-center justify-center rounded-full"
+                        >
+                          <input
+                            type="image"
+                            id="creatures_g"
+                            src="images/avatars/pong_avatar_creatures_g.png"
+                            alt="Avatar G"
+                            class="h-full w-full rounded-full"
+                            form="avatar"
+                          />
+                        </div>
+                        <span></span>
+                      </li>
+                      <li class="w-1/4 cursor-pointer p-1" data-url="b">
+                        <div
+                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-500"
+                        >
+                          <input
+                            type="image"
+                            id="pong_avatar_creatures_b"
+                            src="images/avatars/pong_avatar_creatures_b.png"
+                            alt="Avatar B"
+                            class="h-full w-full rounded-full"
+                            form="avatar"
+                          />
+                        </div>
+                        <span></span>
+                      </li>
+                      <li class="w-1/4 cursor-pointer p-1" data-url="upload">
+                        <label
+                          for="file-upload"
+                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          >&plus;</label
+                        >
+                        <input
+                          type="file"
+                          id="file-upload"
+                          name="settings-upload"
+                          form="avatar"
+                          class="hidden"
+                        />
+                      </li>
+                      <span></span>
+                    </ul>
+                    <div class="mt-6 flex items-center justify-center">
+                      <button
+                        class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="sumbit"
+                        id="save-avatar"
+                        form="avatar"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  id="displayNameEdit"
+                  class="flex flex-1 flex-col items-center justify-center"
+                >
+                  <form
+                    action="http://127.0.0.1:3000/users/me/display-name"
+                    method="post"
+                    id="displayName"
+                    class="flex flex-col items-center justify-center"
+                  >
+                    <h2 class="mb-3 text-2xl font-bold">
+                      Personal information
+                    </h2>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-username"
+                        >Username</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="text"
+                        id="settings-username"
+                        name="settings-user_username"
+                        autocomplete="off"
+                        readonly
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-displayName"
+                        >Display name</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="text"
+                        id="settings-displayName"
+                        name="settings-user_displayName"
+                        autocomplete="off"
+                      />
+                      <div
+                        id="settings-displayName_error"
+                        class="hidden text-sm text-red-600"
+                      ></div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    >
+                      Save
+                    </button>
+                  </form>
+                </div>
+                <div
+                  id="passwordEdit"
+                  class="flex flex-1 flex-col items-center justify-center"
+                >
+                  <form
+                    action="http://127.0.0.1:3000/users/me/change-password"
+                    method="post"
+                    id="password"
+                    class="flex flex-col items-center justify-center"
+                  >
+                    <h2 class="mb-3 text-2xl font-bold">Password</h2>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-current-password"
+                        >Current password</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="password"
+                        id="settings-current-password"
+                        name="settings-user_username"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-new-password"
+                        >New password</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="password"
+                        id="settings-new-password"
+                        name="settings-new-password"
+                        autocomplete="off"
+                      />
+                      <div
+                        id="settings-new-password_error"
+                        class="hidden text-sm text-red-600"
+                      ></div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    >
+                      Save
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div
+                id="deleteAccount"
+                class="flex flex-1 items-center justify-center"
+              >
+                <fieldset class="rounded border-2 border-red-500 p-4">
+                  <legend class="text-red-600">DANGER ZONE</legend>
+                  <button
+                    type="submit"
+                    class="flex h-10 w-[140px] items-center justify-center rounded border-2 border-red-950 bg-red-500 font-bold text-white hover:bg-red-700"
+                  >
+                    Delete Account
+                  </button>
+                </fieldset>
+              </div>
+            </div>
+            <div
+              id="friendsPage"
+              class="relative hidden h-full w-full flex-col bg-purple-200"
+            >
+              <div class="block p-2">
+                <button
+                  class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  id="blockButton"
+                  onclick="displayBlockedFriends()"
+                >
+                  See blocked users
+                </button>
+              </div>
+              <div id="friendsList" class="flex flex-wrap p-[5px]">
+                <div class="friend flex items-center border p-2.5">
+                  <img
+                    src="images/profile/purple.png"
+                    alt=""
+                    width="100px"
+                    height="100px"
+                  />
+                  <div class="ml-2.5 flex flex-col" id="friend-description">
+                    <div class="flex items-center gap-2" id="friend-name">
+                      <div>Mafalda</div>
+                    </div>
+                    <div class="friend-action flex justify-start gap-1">
+                      <button
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                        id="remove-friend__page"
+                      >
+                        remove
+                      </button>
+                      <button
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                        id="block-friend__page"
+                      >
+                        block
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="blockedList" class="hidden p-[5px]">
+                <div class="friend flex items-center border p-2.5">
+                  <img
+                    src="images/profile/green.png"
+                    alt=""
+                    width="100px"
+                    height="100px"
+                  />
+                  <div class="ml-2.5 flex flex-col">
+                    <div class="flex items-center gap-2">
+                      <div>Zorro</div>
+                    </div>
+                    <div class="friend-action flex justify-start gap-1">
+                      <button
+                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                      >
+                        remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             id="gamePage"
@@ -668,17 +804,20 @@
             <img
               src="images/pages_images/pong_game_new.png"
               alt="welcome page"
-              class="absolute h-full w-full z-0"
+              class="absolute z-0 h-full w-full"
             />
             <div
               id="setUpGame"
-              class="max-h-full z-2 flex h-[480px] w-[640px] justify-center absolute  bg-white/30 backdrop-invert backdrop-opacity-10 absolute">
+              class="absolute z-2 flex h-[480px] max-h-full w-[640px] justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+            >
               <div
                 id="setUpPlayers"
                 class="flex h-full flex-wrap items-center justify-center gap-5"
               >
                 <div id="aliasPlayerOne">
-                  <label for="namePlayerOne" class="text-black font-bold text-xl"
+                  <label
+                    for="namePlayerOne"
+                    class="text-xl font-bold text-black"
                     >Player one</label
                   >
                   <div class="flex flex-row">
@@ -722,7 +861,9 @@
                   </div>
                 </div>
                 <div id="aliasPlayerTwo">
-                  <label for="namePlayerTwo" class="text-black font-bold text-xl"
+                  <label
+                    for="namePlayerTwo"
+                    class="text-xl font-bold text-black"
                     >Player two</label
                   >
                   <div class="flex flex-row">
@@ -764,7 +905,9 @@
                   </div>
                 </div>
                 <div id="aliasPlayerThree" class="-mt-50">
-                  <label for="namePlayerThree" class="text-black font-bold text-xl"
+                  <label
+                    for="namePlayerThree"
+                    class="text-xl font-bold text-black"
                     >Player three</label
                   >
                   <div class="flex flex-row">
@@ -806,7 +949,9 @@
                   </div>
                 </div>
                 <div id="aliasPlayerFour" class="-mt-50">
-                  <label for="namePlayerFour" class="text-black font-bold text-xl"
+                  <label
+                    for="namePlayerFour"
+                    class="text-xl font-bold text-black"
                     >Player four</label
                   >
                   <div class="flex flex-row">
@@ -851,13 +996,15 @@
             </div>
             <div
               id="setInstructions"
-              class="z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10 absolute"
+              class="absolute z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
-                <div class="flex w-full flex-1 items-center justify-center font-bold text-5xl">
+                <div
+                  class="flex w-full flex-1 items-center justify-center text-5xl font-bold"
+                >
                   First to score to 3 wins
                 </div>
                 <div class="flex w-full flex-1 flex-row items-center">
@@ -868,7 +1015,7 @@
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center font-bold text-4xl">vs</div>
+                  <div class="flex items-center text-4xl font-bold">vs</div>
                   <div
                     class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
@@ -892,7 +1039,7 @@
             </div>
             <div
               id="gameScreen"
-              class="hidden abosolute z-10 h-[600px] w-[800px] items-center justify-center bg-black"
+              class="abosolute z-10 hidden h-[600px] w-[800px] items-center justify-center bg-black"
             >
               <canvas
                 id="myCanvas"
@@ -903,14 +1050,17 @@
             </div>
             <div
               id="gameOverScreen"
-              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center  bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="result"
-                class="flex flex-col items-center justify-center text-center font-bold text-5xl"
+                class="flex flex-col items-center justify-center text-center text-5xl font-bold"
               >
                 GAME OVER
-                <div id="winner-text" class="font-bold text-5xl bg-white/30 backdrop-invert backdrop-opacity-10"></div>
+                <div
+                  id="winner-text"
+                  class="bg-white/30 text-5xl font-bold backdrop-invert backdrop-opacity-10"
+                ></div>
               </div>
               <div id="gameOptions" class="flex flex-row gap-2.5">
                 <!-- <button
@@ -941,9 +1091,20 @@
         </div>
       </section>
       <div class="relative flex-1">
-        <img src="images/sides_page_girls/background_sky.png" class="absolute h-full w-full z-0"/>
-        <img src="images/sides_page_girls/pong_s.png" class="absolute m-auto z-1 inset-x-0 bottom-0 w-auto h-full" id="happy_s"/>
-        <img src="images/sides_page_girls/pong_s_sad.png" class="absolute z-1 hidden m-auto inset-x-0 bottom-0 w-auto h-full" id="sad_s"/>
+        <img
+          src="images/sides_page_girls/background_sky.png"
+          class="absolute z-0 h-full w-full"
+        />
+        <img
+          src="images/sides_page_girls/pong_s.png"
+          class="absolute inset-x-0 bottom-0 z-1 m-auto h-full w-auto"
+          id="happy_s"
+        />
+        <img
+          src="images/sides_page_girls/pong_s_sad.png"
+          class="absolute inset-x-0 bottom-0 z-1 m-auto hidden h-full w-auto"
+          id="sad_s"
+        />
       </div>
     </main>
     <footer class="flex justify-center border bg-[#D9F7C7]">
@@ -960,6 +1121,7 @@
     <script src="dist/gameLogic.js"></script>
     <script src="dist/setUpPlayers.js"></script>
     <script src="dist/createRules.js"></script>
+    <script src="dist/charts.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>

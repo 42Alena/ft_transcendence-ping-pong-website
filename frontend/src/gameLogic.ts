@@ -582,18 +582,15 @@ function startGame() {
     interval = setInterval(() => game.draw(), 20);
   } else {
     if (matchPlayed == 0) {
-      console.log("start tournament");
       tournament = new Tournament(players);
       gameQueue = tournament.getGamesList();
       tournament.playGame(gameQueue[0]);
     }
     if (matchPlayed == 1) {
-      console.log("next tournament");
       gameQueue = tournament.getGamesList();
       tournament.playGame(gameQueue[1]);
     }
     if (matchPlayed == 2) {
-      console.log("last tournament");
       gameQueue = tournament.getGamesList();
       let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
       tournament.playGame(newGame);
