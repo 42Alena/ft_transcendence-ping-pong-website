@@ -36,7 +36,7 @@ tournamentRound: null | "semi" | "final";
 		async (req, reply) => {
 
 
-			const result = await gameStatsManager.recordFinishedGame(req.body);
+			const result = await gameStatsManager.recordFinishedTournament(req.body);
 
 			if (result.ok)
 				return sendNoContent(reply);                  // 204

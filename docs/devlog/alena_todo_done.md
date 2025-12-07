@@ -57,6 +57,7 @@ Not required for evaluation — used for organization and pull request preparati
 ### GameStatsManager
 	+ buildAnyGameFromBody to map from API body to domain
 	+ findWinerLoser 
+	+ added separate buildTournamentFromBody and buildNormalGameFromBody
 
 ### User_routes
 ### domain types

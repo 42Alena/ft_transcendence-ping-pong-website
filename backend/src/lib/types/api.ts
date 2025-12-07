@@ -166,5 +166,5 @@ export type SaveNormalGameBody =  Domain.GamePlayersScores & {
 export type SaveTournamentBody =  Domain.GamePlayersScores & {
 
 	mode: 'tournament';
-	tournamentRound: Domain.GameTournamentRound;  //'final' /'semi'
+	tournamentRound: Domain.TournamentRound;  //'final' /'semi'
 };

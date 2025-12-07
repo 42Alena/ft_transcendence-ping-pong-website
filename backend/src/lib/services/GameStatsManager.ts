@@ -1,6 +1,7 @@
 import { gameToDbRow } from "../mappers/games_db";
-import { SaveGameBody } from "../types/api";
+
 import *  as Domain from '../types/domain';
+import *  as API from '../types/api';
 import { unixTimeNow } from "../utils/time";
 import { db } from "./DB";
 import { User } from "./User";
@@ -31,6 +32,73 @@ export class GameStatsManager {
 
 		await this.dbTableGames().insert(dbGameRow);
 	}
+
+
+
+	private computeGameResult(body: Domain.GamePlayersScores): Domain.GameWinnersLosers {
+
+		const {
+			player1Alias,
+			player1Score,
+			player2Alias,
+			player2Score,
+		} = body;
+
+
+
+		const player1Wins = player1Score >= player2Score;
+
+		const winnerAlias = player1Wins ? player1Alias : player2Alias;
+		const loserAlias = player1Wins ? player2Alias : player1Alias;
+
+		const winnerScore = player1Wins ? player1Score : player2Score;
+		const loserScore = player1Wins ? player2Score : player1Score;
+
+
+
+		const game: Domain.GameWinnersLosers = {
+
+			winnerAlias,
+			loserAlias,
+
+			winnerScore,
+			loserScore,
+		}
+
+		return game;
+	}
+
+
+
+	private buildNormalGameFromBody(body: API.SaveNormalGameBody): Domain.NormalGame {
+
+		const result = this.computeGameResult(body as Domain.GamePlayersScores);
+
+		return {
+			mode: 'normalGame',
+			tournamentRound: null,
+			winnerUserId: null,
+			loserUserId: null,
+			...result,
+			createdAt: unixTimeNow(),
+		};
+	}
+
+	private buildTournamentFromBody(body: API.SaveTournamentBody): Domain.TournamentGame {
+
+		const result = this.computeGameResult(body as Domain.GamePlayersScores);
+
+		return {
+			mode: 'tournament',
+			tournamentRound: body.tournamentRound,
+			winnerUserId: null,
+			loserUserId: null,
+			...result,
+			createdAt: unixTimeNow(),
+		};
+
+	}
+
 
 
 
@@ -78,51 +146,6 @@ export class GameStatsManager {
 		}
 
 
-	}
-
-
-
-
-// 	/* 
-// buildAnyGameFromBody
-// 	*/
-// 	private buildAnyGameFromBody(body: SaveGameBody): Domain.BaseGame {
-// 	/* 
-// buildAnyGameFromBody
-// 	*/
-
-
-	private findWinerLoser(body: Domain.GamePlayersScores): Domain.GameWinnersLosers {
-
-		const {
-			player1Alias,
-			player1Score,
-			player2Alias,
-			player2Score,
-		} = body;
-
-
-
-		const player1Wins = player1Score >= player2Score;
-
-		const winnerAlias = player1Wins ? player1Alias : player2Alias;
-		const loserAlias = player1Wins ? player2Alias : player1Alias;
-
-		const winnerScore = player1Wins ? player1Score : player2Score;
-		const loserScore = player1Wins ? player2Score : player1Score;
-
-
-
-		const game: Domain.GameWinnersLosers = {
-
-			winnerAlias,
-			loserAlias,
-
-			winnerScore,
-			loserScore,
-		}
-
-		return game;
 	}
 
 }

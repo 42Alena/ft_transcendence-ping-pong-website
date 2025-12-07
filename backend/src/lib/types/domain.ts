@@ -364,7 +364,7 @@ export type GameWinnersLosers = {
 }
 
 export type BaseGame =  GameWinnersLosers & {
-	
+
 	mode: GameMode;  // "tournament" | "normalGame"
 	tournamentRound: GameTournamentRound;
 
@@ -401,7 +401,7 @@ export type SaveGameResult =
 		| "invalid_score";     // winnerScore/loserScore invalid
 	};
 
-export type GamePlayersScores = {
+export type GamePlayersScores = {  //from API
 
 	player1Alias: Alias;
 	player1Score: GameScore;
