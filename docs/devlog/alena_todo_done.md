@@ -59,6 +59,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ findWinerLoser 
 	+ added separate buildTournamentFromBody and buildNormalGameFromBody
 	+ recordNormalGameFromBody
+	+ recordTournamentFromBody
 
 ### User_routes
 ### domain types

@@ -163,6 +163,22 @@ export class GameStatsManager {
 		return this.recordFinishedGame(game);            // also private call
 	}
 
+
+	// PUBLIC: called from route for tournament
+	public async recordTournamentFromBody(
+		meId: Domain.UserId | null,
+		body: API.SaveTournamentBody
+	): Promise<Domain.SaveGameResult> {
+
+		if (!meId)
+			return { ok: false, reason: "not_me" };
+
+		const game = this.buildTournamentFromBody(body); // private call, OK
+		return this.recordFinishedGame(game);            // also private call
+	}
+
+
+	
 }
 
 
