@@ -17,12 +17,8 @@ const profileAddRemFriend: any = document.getElementById(
 const profileBlockUnbFriend: any = document.getElementById(
   "block-unblock-friend__header",
 );
-//settings page
-// const profileMenuSettings: any = document.getElementById("acc-settings");
-// const profileSettingsPage: any = document.getElementById("update-settings");
 const tempdisplayN: any = document.getElementById("temp-displayname");
 
-//events on profile button
 let isFriend = false;
 let isBlocked = true;
 
@@ -117,10 +113,7 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "profile") {
-    profP.classList.add("grid");
-    profP.classList.remove("hidden");
-    accP.appendChild(profP);
-    displayPersonalProfile();
+
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
@@ -129,8 +122,6 @@ function setAccountPage(text: string) {
     settingsPage.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -145,6 +136,7 @@ function setAccountPage(text: string) {
       canvas.classList.remove("block");
       gameisOn = false;
     }
+    requestProfile();
   } else if (text == "settings") {
     settingsPage.classList.add("flex");
     settingsPage.classList.remove("hidden");
@@ -152,16 +144,13 @@ function setAccountPage(text: string) {
     popup.classList.remove("block");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
-    accP.appendChild(profP);
-    displayPersonalProfile();
+    // displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
     regP.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -181,16 +170,12 @@ function setAccountPage(text: string) {
     friendsPage.classList.remove("hidden");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
-    accP.appendChild(profP);
-    displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
     regP.classList.remove("flex");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
