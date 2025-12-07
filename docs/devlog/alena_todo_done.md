@@ -61,6 +61,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### api types
 	 + added API types for games
+	 + SaveGameBody
 
 
 ### db.ts

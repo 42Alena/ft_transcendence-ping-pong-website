@@ -120,16 +120,16 @@ export type SendPrivateMessageBody = {
 
 export type SendTournamentMessageBody = {
 	receiverId: ReceiverId;
-  // no content, backend will use MESSAGE_GAME_INVITE
+	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
 
 export type GetChatParams = {
-  userId: number;    // or chat partner id
+	userId: number;    // or chat partner id
 };
 
 export type GetChatResponse = {
-  messages: ChatMessage[];
+	messages: ChatMessage[];
 };
 
 //for Sidebar
@@ -153,3 +153,16 @@ export type Game = Domain.AnyGame;
 
 // “get all games for this user”
 export type UserGames = Game[];
+
+
+
+export type SaveGameBody = {
+	mode: Domain.GameMode;
+	tournamentRound: Domain.GameTournamentRound;
+
+	player1Alias: Alias;
+	player1Score:  GameScore;
+
+	player2Alias: Alias;
+	player2Score: GameScore;
+};
