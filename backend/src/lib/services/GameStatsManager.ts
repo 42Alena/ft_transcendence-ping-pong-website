@@ -173,6 +173,33 @@ export class GameStatsManager {
 	}
 
 
+	private buildUserProfileMatches(
+		games: Domain.AnyGame[],
+		userId: Domain.UserId
+	): Domain.UserProfileMatches {
+
+		return games.map(game => {
+			const iAmWinner = game.winnerUserId === userId;
+
+			const opponentAlias = iAmWinner ? game.loserAlias : game.winnerAlias;
+			const myScore = iAmWinner ? game.winnerScore : game.loserScore;
+			const opponentScore = iAmWinner ? game.loserScore : game.winnerScore;
+
+			const scoreMeOther = `${myScore}-${opponentScore}`;
+			const date = formatDateDDMMYY(game.createdAt);
+
+			return {
+				opponentAlias,
+				date,
+				scoreMeOther,
+			};
+		});
+	}
+
+
+
+
+
 
 
 	/* 
@@ -209,24 +236,9 @@ export class GameStatsManager {
 		const games: Domain.AnyGame[] = dbRows.map((row: GameDbRow) => gameFromDbRow(row));
 
 		//_____________GAMES__________________________
-		const matches: Domain.UserProfileMatches = games.map(game => {
-			const iAmWinner = game.winnerUserId === userId;
+		const matches = this.buildUserProfileMatches(games, userId);
 
-			const opponentAlias = iAmWinner ? game.loserAlias : game.winnerAlias;
-			const myScore = iAmWinner ? game.winnerScore : game.loserScore;
-			const opponentScore = iAmWinner ? game.loserScore : game.winnerScore;
 
-			const scoreMeOther = `${myScore}-${opponentScore}`;
-			const date = formatDateDDMMYY(game.createdAt);
-
-			const matchRow: Domain.UserProfileMatchRow = {
-				opponentAlias,
-				date,          // "08/12/25"
-				scoreMeOther,  // "3-0"
-			};
-
-			return matchRow;
-		});
 
 		//_____________STATS__________________________
 
