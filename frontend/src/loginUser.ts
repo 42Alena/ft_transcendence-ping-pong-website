@@ -20,7 +20,7 @@ if (localStorage.getItem('userData'))
       const userData = JSON.parse(userDataString)
       logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
       console.log("here", userData.avatarUrl);
-      logAvatHeaderDiv.src = userData.avatarUrl;
+      logAvatHeaderDiv.src = userData.avatarUrl; //need to fix
     }
 }
 

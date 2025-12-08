@@ -46,7 +46,7 @@ async function requestProfile() {
 		displayNameDiv.appendChild(document.createTextNode('\u00A0'));
 		displayNameDiv.appendChild(displayNameData);
 		console.log(`url: ${data.avatarUrl}`);
-		avatarImg.src = data.avatarUrl;
+		avatarImg.src = data.avatarUrl; //need to be fixed
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -79,12 +79,7 @@ avatarForm.addEventListener("submit", async (event: any) => {
    const formData  = new FormData();
    if (avatarInput.files.length > 0) {
     formData.append("avatar", avatarInput.files[0]);
-  } else {
-    console.log(existingImgAvatarInput.value);
-    formData.append("avatar", existingImgAvatarInput.value);
-  }
-
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
+    const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
     method: "POST",
     body: formData,
 	credentials : "include",
@@ -105,12 +100,20 @@ avatarForm.addEventListener("submit", async (event: any) => {
           const userData = JSON.parse(userDataString)
           userData.url = data.avatarUrl; //default img
         }
+        popup.classList.add("hidden");
+        popup.classList.remove("block");
       	console.log("avatar uploaded:", data);
     }
   } catch (error: any) {
     avatarForm.reset();
     console.error("Error during avatar:", error.message);
   }
+  } else {
+    console.log("need to handle url");
+    formData.append("avatar", existingImgAvatarInput.value);
+  }
+
+  
 });
 
 displayNameForm.addEventListener("submit", (event: any) => {
