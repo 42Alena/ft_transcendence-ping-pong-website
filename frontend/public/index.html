@@ -394,6 +394,7 @@
                     class="flex flex-1 items-center border "
                     id="profile-info-username"
                   >
+                  
                   </div>
                   <div
                     class="flex flex-1 items-center border"
@@ -663,19 +664,21 @@
                   >
                     <h2 class="mb-3 text-2xl font-bold">Password</h2>
                     <div class="mb-3">
-                      <label
-                        class="text-heading text-xl font-medium"
-                        for="settings-current-password"
-                        >Current password</label
-                      >
-                      <input
-                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                        type="password"
-                        id="settings-current-password"
-                        name="settings-user_username"
-                        autocomplete="off"
-                      />
-                    </div>
+                      <label class="text-heading text-xl font-medium" for="settings-current-password"
+                    >Current password</label
+                  >
+                  <input
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                    type="password"
+                    id="settings-current-password"
+                    name="settings-user_current-password"
+                    autocomplete="off"
+                  />
+                  <div
+                    id="settings-current-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
                     <div class="mb-3">
                       <label
                         class="text-heading text-xl font-medium"
@@ -686,7 +689,7 @@
                         class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                         type="password"
                         id="settings-new-password"
-                        name="settings-new-password"
+                        name="settings-user_new-password"
                         autocomplete="off"
                       />
                       <div

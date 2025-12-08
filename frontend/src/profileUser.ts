@@ -1,17 +1,17 @@
 const usernameDiv = document.getElementById("profile-info-username") as HTMLDivElement;
 const displayNameDiv = document.getElementById("profile-info-displayName") as HTMLDivElement;
 const avatarImg = document.querySelector('#profile-avatar img') as HTMLImageElement;
+const usernameSpan : HTMLSpanElement = document.createElement("span");
+const usernameData : HTMLSpanElement = document.createElement("span");
+const displayNameSpan : HTMLSpanElement = document.createElement("span");
+const displayNameData : HTMLSpanElement = document.createElement("span");
+
 let firstView : boolean = false;
 
 async function requestProfile() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const formData = new FormData(log);
 
-  const profileBody = {
-    username: formData.get("login-user_username"),
-    passwordPlain: formData.get("login-user_password"),
-  };
   const myRequest = new Request("http://127.0.0.1:3000/users/me", {
     method: "GET",
     headers: myHeaders,
@@ -30,27 +30,29 @@ async function requestProfile() {
 		profP.classList.remove("hidden");
     if (!firstView)
     {
-      const usernameSpan : HTMLSpanElement = document.createElement("span");
+      console.log("first load");
       usernameSpan.classList.add("font-bold", "text-xl");
       usernameSpan.textContent = "Username:";
-      const usernameData : HTMLSpanElement = document.createElement("span");
       usernameData.classList.add("text-xl");
-      usernameData.textContent = `${data.username}`;
+      usernameData.textContent = data.username;
       usernameDiv.appendChild(usernameSpan);
       usernameDiv.appendChild(document.createTextNode('\u00A0'));
       usernameDiv.appendChild(usernameData);
-      const displayNameSpan : HTMLSpanElement = document.createElement("span");
       displayNameSpan.classList.add("font-bold", "text-xl");
       displayNameSpan.textContent = "Username:";
-      const displayNameData : HTMLSpanElement = document.createElement("span");
       displayNameData.classList.add("text-xl");
-      displayNameData.textContent = `${data.displayName}`;
+      displayNameData.textContent = data.displayName;
       displayNameDiv.appendChild(displayNameSpan);
       displayNameDiv.appendChild(document.createTextNode('\u00A0'));
       displayNameDiv.appendChild(displayNameData);
-      console.log(`url: ${data.avatarUrl}`);
-      avatarImg.src = data.avatarUrl; //need to be fixed
+      avatarImg.src = "images/profile/blue.png" //need to be fixed
       firstView = true;
+    }
+    else
+    {
+      console.log("second load");
+      usernameData.textContent = data.username;
+      displayNameData.textContent = data.displayName;
     }
     }
   } catch (error) {
@@ -60,6 +62,7 @@ async function requestProfile() {
 
 const settingsPage: any = document.getElementById("settingsPage");
 const settingsUsernameInput = document.getElementById("settings-username") as HTMLInputElement;
+const settingsDisplayNameInput = document.getElementById("settings-displayName") as HTMLInputElement;
 const avatarForm: any = document.getElementById("avatar");
 const imgIcon: any = document.getElementById("svgIcon");
 const avatarInput: any = document.getElementById("avatarImgEdit"); //file
@@ -134,7 +137,7 @@ displayNameForm.addEventListener("submit", async(event: any) => {
     displayName: formData.get("settings-user_displayName"),
   };
   const myRequest = new Request("http://127.0.0.1:3000/users/me/display-name", {
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify(displayNameBody),
     credentials: "include",
     headers: myHeaders,
@@ -142,19 +145,25 @@ displayNameForm.addEventListener("submit", async(event: any) => {
   try {
     const response = await fetch(myRequest);
     console.log(response);
-    const data = await response.json();
+    const responseText = await response.text();
+    const data = responseText ? JSON.parse(responseText) : {};
     if (!response.ok) {
-      if (data.field == "displayName") {
         errorSettingsDisplayName.classList.add("block");
         errorSettingsDisplayName.classList.remove("hidden");
         errorSettingsDisplayName.textContent = data.error;
-      }
       throw new Error(`Error ${response.status}`);
     } else {
       errorSettingsDisplayName.classList.add("hidden");
       errorSettingsDisplayName.classList.remove("block");
-      displayNameForm.reset();
-      logUserHeaderDiv.textContent = "";
+      const userDataString: string | null = localStorage.getItem("userData");
+      if (userDataString) {
+        localStorage.setItem("userData", JSON.stringify(data));
+        const userData = JSON.parse(userDataString);
+        console.log(userData.displayName);
+        userData.displayName = formData.get("settings-user_displayName");
+        localStorage.setItem("userData", JSON.stringify(userData)); 
+        console.log(userData.displayName);
+      }
       console.log("displayName user:", data);
     }
   } catch (error) {
@@ -163,8 +172,60 @@ displayNameForm.addEventListener("submit", async(event: any) => {
 
 });
 
-passwordForm.addEventListener("submit", (event: any) => {
+const errorSettingsCurrPass = document.getElementById("settings-current-password_error") as HTMLDivElement;
+const errorSettingsNewPass = document.getElementById("settings-new-password_error") as HTMLDivElement;
+passwordForm.addEventListener("submit", async(event: any) => {
   event.preventDefault();
+  console.log("password");
+  errorSettingsCurrPass.classList.add("hidden");
+  errorSettingsCurrPass.classList.remove("block");
+   errorSettingsNewPass.classList.add("hidden");
+  errorSettingsNewPass.classList.remove("block");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(passwordForm);
+
+  const passwordBody = {
+    currentPassword: formData.get("settings-user_current-password"),
+    newPassword : formData.get("settings-user_new-password"),
+  };
+  console.log(passwordBody.currentPassword);
+  console.log(passwordBody.newPassword);
+  const myRequest = new Request("http://127.0.0.1:3000/users/me/change-password", {
+    method: "PATCH",
+    body: JSON.stringify(passwordBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    const responseText = await response.text();
+    const data = responseText ? JSON.parse(responseText) : {};
+    if (!response.ok) {
+      if (data.field == "currentPassword") {
+        errorSettingsCurrPass.classList.add("block");
+        errorSettingsCurrPass.classList.remove("hidden");
+        errorSettingsCurrPass.textContent = data.error;
+      }
+      else
+      {
+        errorSettingsNewPass.classList.add("block");
+        errorSettingsNewPass.classList.remove("hidden");
+        errorSettingsNewPass.textContent = data.error;
+      }
+      passwordForm.reset();
+      throw new Error(`Error ${response.status}`);
+    } else {
+      errorSettingsCurrPass.classList.add("hidden");
+      errorSettingsCurrPass.classList.remove("block");
+      errorSettingsNewPass.classList.add("hidden");
+      errorSettingsNewPass.classList.remove("block");
+      passwordForm.reset();
+    }
+  } catch (error) {
+    console.error("Error during password change:", error);
+  }
 });
 
 function showPopUp() {

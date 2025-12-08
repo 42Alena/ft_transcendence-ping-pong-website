@@ -23,6 +23,8 @@ if (localStorage.getItem("userData")) {
     if (logAvatHeaderDiv.src !== userData.avatarUrl) {
       logAvatHeaderDiv.src = userData.avatarUrl; //need to fix
     }
+    settingsUsernameInput.value = userData.username;
+    settingsDisplayNameInput.value = userData.displayName;
   }
 }
 
@@ -69,15 +71,13 @@ log.addEventListener("submit", async (event: any) => {
       errorPasswordLog.classList.add("hidden");
       log.reset();
       logUserHeaderDiv.textContent = "";
-      //need to change menu bar, change the name in the header and the avatar
       localStorage.setItem("userData", JSON.stringify(data));
       const userDataString: string | null = localStorage.getItem("userData");
       if (userDataString) {
         const userData = JSON.parse(userDataString);
-        userData.url = "/images/profile/blue.png"; //default img
-        // localStorage.setItem('loggedUser', user);
+        userData.avatarUrl = "/images/profile/blue.png"; //default img
         logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
-        logAvatHeaderDiv.src = userData.url;
+        logAvatHeaderDiv.src = userData.avatarUrl;
         dropMenuUserDiv.classList.add("block");
         dropMenuUserDiv.classList.remove("hidden");
         dropMenuGuestDiv.classList.add("hidden");

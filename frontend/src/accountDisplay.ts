@@ -147,6 +147,7 @@ function setAccountPage(text: string) {
     {
       const userData = JSON.parse(userDataString);
       settingsUsernameInput.value = userData.username;
+      settingsDisplayNameInput.value = userData.displayName;
     }
   }
     popup.classList.add("hidden");
