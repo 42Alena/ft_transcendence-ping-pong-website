@@ -228,6 +228,33 @@ passwordForm.addEventListener("submit", async(event: any) => {
   }
 });
 
+const deleteAccountButton = document.getElementById("delete-account-button") as HTMLButtonElement;
+
+deleteAccountButton.addEventListener("click", async () => {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+    method: "DELETE",
+    credentials : "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    // const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    }
+    else
+    {
+      localStorage.clear();
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+
+});
+
 function showPopUp() {
 	popup.classList.add("block");
   	popup.classList.remove("hidden");
