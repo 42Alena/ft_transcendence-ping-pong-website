@@ -135,12 +135,16 @@ export class GameStatsManager {
 	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
 
-		const winner = await this.userManager.getUserById(game.winnerUserId);
-		const loser = await this.userManager.getUserById(game.loserUserId);
+		const winner = await this.userManager.getUserByDisplayname(game.winnerAlias);
+		const loser = await this.userManager.getUserByDisplayname(game.loserAlias);
 
 		if (!winner && !loser)
 			return { ok: true, saved: false };
+
+		game.winnerUserId = winner ? winner.id : null;
+		game.loserUserId = loser ? loser.id : null;
 		
+
 		//get User from alias(domainName)
 		//if no one user - send ok, not saved
 		// if (body.player1Score === body.player2Score) return null;
