@@ -189,7 +189,7 @@ export class GameStatsManager {
 
 
 	// PUBLIC: called from route for tournament
-	public async recordTournamentFromBody(
+	async recordTournamentFromBody(
 		meId: Domain.UserId | null,
 		body: API.SaveTournamentBody
 	): Promise<Domain.SaveGameResult> {
@@ -201,35 +201,8 @@ export class GameStatsManager {
 		return this.recordFinishedGame(tournament);            // also private call
 	}
 
+	// async getUserMatches
 
 
 }
 
-
-/*
-	
-* 
-from USER class. Need adapt
-	
-	
-	//________Game
-	addMatch(opponentId: Types.UserId, result: Types.GameResult) {
-		this.matchHistory.push({
-			opponentId: opponentId,
-			date: new Date(),  //TODO: change from Date to number
-			result: result
-		});
-	}
-	
-	get resultWon(): number {
-		const wins = this.matchHistory.filter(match => match.result == "won");
-		return wins.length;
-	}
-	
-	get resultLost(): number {
-		const lose = this.matchHistory.filter(match => match.result == "lost");
-		return lose.length;
-	}
-	
-	
-*/
