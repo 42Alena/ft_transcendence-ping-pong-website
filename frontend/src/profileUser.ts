@@ -59,7 +59,7 @@ async function requestProfile() {
 }
 
 const settingsPage: any = document.getElementById("settingsPage");
-
+const settingsUsernameInput = document.getElementById("settings-username") as HTMLInputElement;
 const avatarForm: any = document.getElementById("avatar");
 const imgIcon: any = document.getElementById("svgIcon");
 const avatarInput: any = document.getElementById("avatarImgEdit"); //file
@@ -120,9 +120,47 @@ avatarForm.addEventListener("submit", async (event: any) => {
 
   
 });
+const errorSettingsDisplayName = document.getElementById("settings-displayName_error") as HTMLDivElement;
 
-displayNameForm.addEventListener("submit", (event: any) => {
+displayNameForm.addEventListener("submit", async(event: any) => {
   event.preventDefault();
+  errorSettingsDisplayName.classList.add("hidden");
+  errorSettingsDisplayName.classList.remove("block");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(displayNameForm);
+
+  const displayNameBody = {
+    displayName: formData.get("settings-user_displayName"),
+  };
+  const myRequest = new Request("http://127.0.0.1:3000/users/me/display-name", {
+    method: "POST",
+    body: JSON.stringify(displayNameBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    const data = await response.json();
+    if (!response.ok) {
+      if (data.field == "displayName") {
+        errorSettingsDisplayName.classList.add("block");
+        errorSettingsDisplayName.classList.remove("hidden");
+        errorSettingsDisplayName.textContent = data.error;
+      }
+      throw new Error(`Error ${response.status}`);
+    } else {
+      errorSettingsDisplayName.classList.add("hidden");
+      errorSettingsDisplayName.classList.remove("block");
+      displayNameForm.reset();
+      logUserHeaderDiv.textContent = "";
+      console.log("displayName user:", data);
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+
 });
 
 passwordForm.addEventListener("submit", (event: any) => {

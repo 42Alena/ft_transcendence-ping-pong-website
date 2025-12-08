@@ -137,9 +137,18 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
     requestProfile();
-  } else if (text == "settings") {
+  } else if (text == "settings") { //add route to this?
     settingsPage.classList.add("flex");
     settingsPage.classList.remove("hidden");
+    console.log("here");
+    const userDataString: string | null = localStorage.getItem("userData");
+    if (localStorage.getItem("userData")) {
+    if (userDataString)
+    {
+      const userData = JSON.parse(userDataString);
+      settingsUsernameInput.value = userData.username;
+    }
+  }
     popup.classList.add("hidden");
     popup.classList.remove("block");
     profP.classList.add("hidden");
