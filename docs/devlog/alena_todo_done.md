@@ -86,8 +86,8 @@ Not required for evaluation — used for organization and pull request preparati
 ### 
 	+ /games/tournament/save
 	+ /games/normal/save
+	+ /profile/:userId/stats
 
-## FRONTEND
 
 ### TESTS
 

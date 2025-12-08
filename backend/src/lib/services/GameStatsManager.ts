@@ -183,14 +183,21 @@ export class GameStatsManager {
 		reason: "not_me" ;
 	}
 	*/
-	async getUserMatches(
+	async getUserProfileGamesAndStats(
+		meId: Domain.UserId,
 		userId: Domain.UserId
-	): Promise<Domain.GetUserProfileMatchesResult> {
+	): Promise<Domain.GetUserProfileGamesAndStatsResult> {
 
-		const me = await this.userManager.getUserById(userId);
+		const me = await this.userManager.getUserById(meId);
 
 		if (!me)
 			return { ok: false, reason: "not_me" };
+
+		const user = await this.userManager.getUserById(userId);
+
+		if (!user)
+			return { ok: false, reason: "no_user" };
+
 
 		const dbRows = await this.dbTableGames()
 			.where({ winnerUserId: userId })
@@ -224,4 +231,6 @@ export class GameStatsManager {
 
 
 }
+
+
 

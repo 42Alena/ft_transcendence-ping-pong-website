@@ -81,6 +81,35 @@ tournamentRound:   "semi" | "final";
 		});
 
 
+
+	fastify.get<{
+		Params: API.GetUserParams;
+		Reply: API.GetUserProfileGamesAndStatsResponse
+	}>(
+		"/profile/:userId/stats",
+		authRequiredOptions,
+		async (req, reply) => {
+
+			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
+
+			const { userId } = req.params;
+
+			const result = await gameStatsManager.getUserProfileGamesAndStats(meId, userId);
+
+			if (result.ok)
+				return sendOK(reply, {
+					matches: result.matches,
+					stats: result.stats
+				});
+
+			if (result.reason === "not_me")
+				return sendError(reply, "Not authenticated", "auth", 401);
+
+			if (result.reason === "no_user")
+				return sendError(reply, "User not found", "id", 404);
+
+		});
+
 }
 
 

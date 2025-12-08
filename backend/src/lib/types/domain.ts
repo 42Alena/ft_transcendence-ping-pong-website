@@ -402,6 +402,14 @@ export type SaveGameResult =
 	};
 
 
+export type GamePlayersScores = {
+			player1Alias: Alias,
+			player1Score:GameScore,
+			player2Alias: Alias,
+			player2Score: GameScore
+};
+
+
 // one row in Sveva's "Matches" table on the profile page
 export type UserProfileMatchRow = {
 	opponentAlias: Alias;   // othermdisplayName,/ AI/guest alias
@@ -412,10 +420,27 @@ export type UserProfileMatchRow = {
 // whole history for that profile
 export type UserProfileMatches = UserProfileMatchRow[];
 
-export type GetUserProfileMatchesResult = {
+
+export type GetUserProfileGamesAndStatsResult = {
 	ok: true;
-	matches: UserProfileMatchRow[];
+	matches: UserProfileMatchRow[];   // your rows with opponent/date/score
+	stats: UserProfileStats;        // for 1./2/3. places total wins
 } | {
 	ok: false;
-	reason: "not_me" ;
+	reason: "not_me" | "no_user" ;
 }
+
+
+export type UserProfileStats = {
+	totalGames: number;
+
+	wins: number;
+	losses: number;
+	winRatePercent: number;   // 0–100
+	lossRatePercent: number;  // 0–100 (or derive on frontend)
+
+	place1: number;           // how many times 1st place
+	place2: number;           // how many times 2nd place
+	place3: number;           // how many times 3rd place
+};
+

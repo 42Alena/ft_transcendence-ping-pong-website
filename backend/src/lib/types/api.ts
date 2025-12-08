@@ -171,3 +171,14 @@ export type SaveTournamentBody =  Domain.GamePlayersScores & {
 
 export type UserProfileMatchRow = Domain.UserProfileMatchRow;
 export type UserProfileMatches = Domain.UserProfileMatches;
+
+export type UserProfileStats = Domain.UserProfileStats;
+
+export type GetUserProfileGamesAndStatsResult = Domain.GetUserProfileGamesAndStatsResult;
+
+
+// API reply body – what the route actually sends on 200
+export type GetUserProfileGamesAndStatsResponse = {
+  matches: UserProfileMatchRow[];
+  stats: UserProfileStats;
+};
