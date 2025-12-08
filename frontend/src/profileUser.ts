@@ -249,6 +249,10 @@ deleteAccountButton.addEventListener("click", async () => {
     else
     {
       localStorage.clear();
+        dropMenuUserDiv.classList.add("hidden");
+        dropMenuUserDiv.classList.remove("block");
+        dropMenuGuestDiv.classList.add("block");
+        dropMenuGuestDiv.classList.remove("hidden");
       logUserHeaderDiv.textContent = 'Hello, you!'
       logAvatHeaderDiv.src = "images/avatars/pong_default.png";
       displayPage('welcome');
