@@ -1,35 +1,37 @@
-const log : any = document.getElementById("login");
+const log: any = document.getElementById("login");
 const errorUsernameLog: any = document.getElementById("log-username_error");
 const errorPasswordLog: any = document.getElementById("log-password_error");
-const logUserHeaderDiv : any = document.getElementById("logged-user");
-const logAvatHeaderDiv : any = document.querySelector('#logged-user-avatar img');
-const dropMenuGuestDiv : any = document.getElementById("dropdown-menu_guests");
-const dropMenuUserDiv : any = document.getElementById("dropdown-menu_user");
+const logUserHeaderDiv: any = document.getElementById("logged-user");
+const logAvatHeaderDiv: any = document.querySelector("#logged-user-avatar img");
+const dropMenuGuestDiv: any = document.getElementById("dropdown-menu_guests");
+const dropMenuUserDiv: any = document.getElementById("dropdown-menu_user");
 
-let loggedUser : boolean = false;
+let loggedUser: boolean = false;
 
-if (localStorage.getItem('userData'))
-{
-    dropMenuUserDiv.classList.add("block");
-    dropMenuUserDiv.classList.remove("hidden");
-    dropMenuGuestDiv.classList.add("hidden");
-    dropMenuGuestDiv.classList.remove("block");
-    const userDataString : string | null = localStorage.getItem('userData');
-    if (userDataString)
-    {
-      const userData = JSON.parse(userDataString)
+if (localStorage.getItem("userData")) {
+  dropMenuUserDiv.classList.add("block");
+  dropMenuUserDiv.classList.remove("hidden");
+  dropMenuGuestDiv.classList.add("hidden");
+  dropMenuGuestDiv.classList.remove("block");
+  const userDataString: string | null = localStorage.getItem("userData");
+  if (userDataString) {
+    const userData = JSON.parse(userDataString);
+    if (logUserHeaderDiv.textContent !== `Hello, ${userData.username}`) {
       logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
-      console.log("here", userData.avatarUrl);
+    }
+
+    if (logAvatHeaderDiv.src !== userData.avatarUrl) {
       logAvatHeaderDiv.src = userData.avatarUrl; //need to fix
     }
+  }
 }
 
 log.addEventListener("submit", async (event: any) => {
   event.preventDefault();
-    errorUsernameLog.classList.add("hidden");
-        errorUsernameLog.classList.remove("block");
-        errorPasswordLog.classList.remove("block");
-        errorPasswordLog.classList.add("hidden");
+  errorUsernameLog.classList.add("hidden");
+  errorUsernameLog.classList.remove("block");
+  errorPasswordLog.classList.remove("block");
+  errorPasswordLog.classList.add("hidden");
   console.log("button login pressed");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -60,32 +62,29 @@ log.addEventListener("submit", async (event: any) => {
         errorPasswordLog.textContent = data.error;
       }
       throw new Error(`Error ${response.status}`);
-    }
-    else
-    {
-        errorUsernameLog.classList.add("hidden");
-        errorUsernameLog.classList.remove("block");
-        errorPasswordLog.classList.remove("block");
-        errorPasswordLog.classList.add("hidden");
-        log.reset();
-        logUserHeaderDiv.textContent = '';
-        //need to change menu bar, change the name in the header and the avatar
-        localStorage.setItem('userData', JSON.stringify(data));
-        const userDataString : string | null = localStorage.getItem('userData');
-        if (userDataString)
-        {
-          const userData = JSON.parse(userDataString)
-          userData.url = "/images/profile/blue.png" //default img
-          // localStorage.setItem('loggedUser', user);
-          logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
-          logAvatHeaderDiv.src = userData.url;
-          dropMenuUserDiv.classList.add("block");
-          dropMenuUserDiv.classList.remove("hidden");
-          dropMenuGuestDiv.classList.add("hidden");
-          dropMenuGuestDiv.classList.remove("block");
-          displayPage('welcome');
-        }
-        console.log("login user:", data);
+    } else {
+      errorUsernameLog.classList.add("hidden");
+      errorUsernameLog.classList.remove("block");
+      errorPasswordLog.classList.remove("block");
+      errorPasswordLog.classList.add("hidden");
+      log.reset();
+      logUserHeaderDiv.textContent = "";
+      //need to change menu bar, change the name in the header and the avatar
+      localStorage.setItem("userData", JSON.stringify(data));
+      const userDataString: string | null = localStorage.getItem("userData");
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        userData.url = "/images/profile/blue.png"; //default img
+        // localStorage.setItem('loggedUser', user);
+        logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
+        logAvatHeaderDiv.src = userData.url;
+        dropMenuUserDiv.classList.add("block");
+        dropMenuUserDiv.classList.remove("hidden");
+        dropMenuGuestDiv.classList.add("hidden");
+        dropMenuGuestDiv.classList.remove("block");
+        displayPage("welcome");
+      }
+      console.log("login user:", data);
     }
   } catch (error) {
     console.error("Error during registration:", error);

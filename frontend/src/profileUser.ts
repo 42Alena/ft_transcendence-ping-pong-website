@@ -1,6 +1,7 @@
 const usernameDiv = document.getElementById("profile-info-username") as HTMLDivElement;
 const displayNameDiv = document.getElementById("profile-info-displayName") as HTMLDivElement;
 const avatarImg = document.querySelector('#profile-avatar img') as HTMLImageElement;
+let firstView : boolean = false;
 
 async function requestProfile() {
   const myHeaders = new Headers();
@@ -27,26 +28,30 @@ async function requestProfile() {
     {
 		profP.classList.add("grid");
 		profP.classList.remove("hidden");
-		const usernameSpan : HTMLSpanElement = document.createElement("span");
-		usernameSpan.classList.add("font-bold", "text-xl");
-		usernameSpan.textContent = "Username:";
-		const usernameData : HTMLSpanElement = document.createElement("span");
-		usernameData.classList.add("text-xl");
-		usernameData.textContent = `${data.username}`;
-		usernameDiv.appendChild(usernameSpan);
-		usernameDiv.appendChild(document.createTextNode('\u00A0'));
-		usernameDiv.appendChild(usernameData);
-		const displayNameSpan : HTMLSpanElement = document.createElement("span");
-		displayNameSpan.classList.add("font-bold", "text-xl");
-		displayNameSpan.textContent = "Username:";
-		const displayNameData : HTMLSpanElement = document.createElement("span");
-		displayNameData.classList.add("text-xl");
-		displayNameData.textContent = `${data.displayName}`;
-		displayNameDiv.appendChild(displayNameSpan);
-		displayNameDiv.appendChild(document.createTextNode('\u00A0'));
-		displayNameDiv.appendChild(displayNameData);
-		console.log(`url: ${data.avatarUrl}`);
-		avatarImg.src = data.avatarUrl; //need to be fixed
+    if (!firstView)
+    {
+      const usernameSpan : HTMLSpanElement = document.createElement("span");
+      usernameSpan.classList.add("font-bold", "text-xl");
+      usernameSpan.textContent = "Username:";
+      const usernameData : HTMLSpanElement = document.createElement("span");
+      usernameData.classList.add("text-xl");
+      usernameData.textContent = `${data.username}`;
+      usernameDiv.appendChild(usernameSpan);
+      usernameDiv.appendChild(document.createTextNode('\u00A0'));
+      usernameDiv.appendChild(usernameData);
+      const displayNameSpan : HTMLSpanElement = document.createElement("span");
+      displayNameSpan.classList.add("font-bold", "text-xl");
+      displayNameSpan.textContent = "Username:";
+      const displayNameData : HTMLSpanElement = document.createElement("span");
+      displayNameData.classList.add("text-xl");
+      displayNameData.textContent = `${data.displayName}`;
+      displayNameDiv.appendChild(displayNameSpan);
+      displayNameDiv.appendChild(document.createTextNode('\u00A0'));
+      displayNameDiv.appendChild(displayNameData);
+      console.log(`url: ${data.avatarUrl}`);
+      avatarImg.src = data.avatarUrl; //need to be fixed
+      firstView = true;
+    }
     }
   } catch (error) {
     console.error("Error during registration:", error);
