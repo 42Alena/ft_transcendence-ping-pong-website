@@ -226,9 +226,15 @@ export class GameStatsManager {
 			}
 		}
 
-		const winRatePercent = totalGames ? (wins * 100) / totalGames : 0;
-		const lossRatePercent = totalGames ? (losses * 100) / totalGames : 0;
+		let winRatePercent = 0;
+		let lossRatePercent = 0;
 
+		if (totalGames > 0) {
+			winRatePercent = Math.round((wins * 100) / totalGames);
+			lossRatePercent = 100 - winRatePercent;
+		}
+
+		
 		return {
 			totalGames,
 			wins,
@@ -273,7 +279,6 @@ export class GameStatsManager {
 
 		//_____________STATS__________________________
 		const stats = this.buildUserProfileStats(games, userId);
-		
 
 		return { ok: true, matches, stats };
 	}
