@@ -142,9 +142,15 @@ export class GameStatsManager {
 		if (
 			game.winnerScore < 0 || game.winnerScore > 3 ||
 			game.loserScore < 0 || game.loserScore > 3 ||
-			game.winnerScore === game.loserScore
+			game.winnerScore <= game.loserScore
 		)
 			return { ok: false, reason: "invalid_score" };
+
+		if (game.mode === 'normalGame' && game.tournamentRound !== null)
+			return { ok: false, reason: "invalid_game" };
+
+		if (game.mode === 'tournament' && game.tournamentRound == null)
+			return { ok: false, reason: "invalid_tournament" };
 
 
 		//get User from alias(domainName)
@@ -154,15 +160,15 @@ export class GameStatsManager {
 		//if no one user - send ok, not saved
 		if (!winner && !loser)
 			return { ok: true, saved: false };
-
-
-
+		
+		
+		
 		game.winnerUserId = winner ? winner.id : null;
 		game.loserUserId = loser ? loser.id : null;
+		
+		await this.saveGameInDB(game);
 
-
-
-
+		return { ok: true, saved: true };
 
 	}
 

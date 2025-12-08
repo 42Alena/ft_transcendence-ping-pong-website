@@ -61,6 +61,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ added separate buildTournamentFromBody and buildNormalGameFromBody
 	+ recordNormalGameFromBody
 	+ recordTournamentFromBody
+	+ recordFinishedGame + saveGameInDB
 
 ### User_routes
 ### domain types
