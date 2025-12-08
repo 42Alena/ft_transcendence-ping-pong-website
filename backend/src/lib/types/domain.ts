@@ -363,7 +363,7 @@ export type GameWinnersLosers = {
 	loserAlias: Alias;
 }
 
-export type BaseGame =  GameWinnersLosers & {
+export type BaseGame = GameWinnersLosers & {
 
 	mode: GameMode;  // "tournament" | "normalGame"
 	tournamentRound: GameTournamentRound;
@@ -403,11 +403,19 @@ export type SaveGameResult =
 
 // one row in Sveva's "Matches" table on the profile page
 export type UserProfileMatchRow = {
-  opponentAlias: Alias;   // othermdisplayName,/ AI/guest alias
-  date: TimeSec;          
-  myScore: GameScore;        // my first
-  opponentScore: GameScore;  // opponent second
+	opponentAlias: Alias;   // othermdisplayName,/ AI/guest alias
+	date: TimeSec;
+	myScore: GameScore;        // my first
+	opponentScore: GameScore;  // opponent second
 };
 
 // whole history for that profile
 export type UserProfileMatches = UserProfileMatchRow[];
+
+export type GetUserProfileMatchesResult = {
+	ok: true;
+	matches: UserProfileMatchRow[];
+} | {
+	ok: false;
+	reason: "not_me" ;
+}

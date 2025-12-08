@@ -67,6 +67,9 @@ Not required for evaluation — used for organization and pull request preparati
 ### domain types
 	+ added types for game and tournament
 	+ SaveGameResult
+	+ UserProfileMatchRow
+	+ UserProfileMatches
+	+ GetUserProfileMatchesResult
 
 ### api types
 	 + added API types for games
