@@ -85,7 +85,7 @@ tests_chat: db
 	@BASE_URL=http://localhost:3000 backend/tests/chat.sh
 
 tests_game_stats: db
-	@chmod +x backend/tests/chat.sh
+	@chmod +x backend/tests/gameStats.sh
 	@BASE_URL=http://localhost:3000 backend/tests/gameStats.sh
 
 # ---- Tooling guards ---------------------------------------------------------
