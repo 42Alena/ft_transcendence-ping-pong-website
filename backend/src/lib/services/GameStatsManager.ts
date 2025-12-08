@@ -134,6 +134,10 @@ export class GameStatsManager {
 	*/
 	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
+		if (game.winnerAlias === game.loserAlias) {
+			return { ok: false, reason: "invalid_game" };
+		}
+
 
 		if (
 			game.winnerScore < 0 || game.winnerScore > 3 ||
@@ -142,26 +146,22 @@ export class GameStatsManager {
 		)
 			return { ok: false, reason: "invalid_score" };
 
+
+		//get User from alias(domainName)
 		const winner = await this.userManager.getUserByDisplayname(game.winnerAlias);
 		const loser = await this.userManager.getUserByDisplayname(game.loserAlias);
 
+		//if no one user - send ok, not saved
 		if (!winner && !loser)
 			return { ok: true, saved: false };
+
+
 
 		game.winnerUserId = winner ? winner.id : null;
 		game.loserUserId = loser ? loser.id : null;
 
 
-		//get User from alias(domainName)
-		//if no one user - send ok, not saved
-		// if (body.player1Score === body.player2Score) return null;
 
-
-
-		// if ()
-
-		// 	return { ok: false, reason: "invalid_tournament" };
-		// }
 
 
 	}
