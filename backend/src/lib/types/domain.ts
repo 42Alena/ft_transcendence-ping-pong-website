@@ -401,11 +401,13 @@ export type SaveGameResult =
 		| "invalid_score";     // winnerScore/loserScore invalid
 	};
 
-export type GamePlayersScores = {  //from API
-
-	player1Alias: Alias;
-	player1Score: GameScore;
-
-	player2Alias: Alias;
-	player2Score: GameScore;
+// one row in Sveva's "Matches" table on the profile page
+export type UserProfileMatchRow = {
+  opponentAlias: Alias;   // othermdisplayName,/ AI/guest alias
+  date: TimeSec;          
+  myScore: GameScore;        // my first
+  opponentScore: GameScore;  // opponent second
 };
+
+// whole history for that profile
+export type UserProfileMatches = UserProfileMatchRow[];

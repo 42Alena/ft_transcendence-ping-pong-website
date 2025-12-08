@@ -201,7 +201,9 @@ export class GameStatsManager {
 		return this.recordFinishedGame(tournament);            // also private call
 	}
 
-	// async getUserMatches
+	 async getUserMatches(
+		userId: Domain.UserId
+	): Promise <
 
 
 }

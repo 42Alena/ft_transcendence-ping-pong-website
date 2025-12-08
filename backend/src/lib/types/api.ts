@@ -168,3 +168,6 @@ export type SaveTournamentBody =  Domain.GamePlayersScores & {
 	mode: 'tournament';
 	tournamentRound: Domain.TournamentRound;  //'final' /'semi'
 };
+
+export type UserProfileMatchRow = Domain.UserProfileMatchRow;
+export type UserProfileMatches = Domain.UserProfileMatches;
