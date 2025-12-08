@@ -135,6 +135,13 @@ export class GameStatsManager {
 	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
 
+		if (
+			game.winnerScore < 0 || game.winnerScore > 3 ||
+			game.loserScore < 0 || game.loserScore > 3 ||
+			game.winnerScore === game.loserScore
+		)
+			return { ok: false, reason: "invalid_score" };
+
 		const winner = await this.userManager.getUserByDisplayname(game.winnerAlias);
 		const loser = await this.userManager.getUserByDisplayname(game.loserAlias);
 
@@ -143,7 +150,7 @@ export class GameStatsManager {
 
 		game.winnerUserId = winner ? winner.id : null;
 		game.loserUserId = loser ? loser.id : null;
-		
+
 
 		//get User from alias(domainName)
 		//if no one user - send ok, not saved
