@@ -45,9 +45,110 @@ async function requestProfile() {
 		displayNameDiv.appendChild(displayNameSpan);
 		displayNameDiv.appendChild(document.createTextNode('\u00A0'));
 		displayNameDiv.appendChild(displayNameData);
-		avatarImg.src = "/images/profile/blue.png"; //to change
+		console.log(`url: ${data.avatarUrl}`);
+		avatarImg.src = data.avatarUrl;
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
 }
+
+const settingsPage: any = document.getElementById("settingsPage");
+
+const avatarForm: any = document.getElementById("avatar");
+const imgIcon: any = document.getElementById("svgIcon");
+const avatarInput: any = document.getElementById("avatarImgEdit"); //file
+const popup: any = document.getElementById("avatarOptions");
+const popUpButton: any = document.getElementById("closePopUp");
+const displayNameForm: any = document.getElementById("displayName");
+const passwordForm: any = document.getElementById("password");
+const previewNewAvatar = document.getElementById("avatar-image") as HTMLImageElement; //preview
+const existingImgAvatarInput = document.getElementById("existingAvatar") as HTMLInputElement;
+
+// When the user clicks on <span> (x), close the modal
+popUpButton.addEventListener("click", () => {
+  popup.classList.add("hidden");
+  popup.classList.remove("block");
+});
+
+let pop: boolean = false;
+avatarForm.addEventListener("submit", async (event: any) => {
+  event.preventDefault();
+  console.log("submiut avatar");
+
+   const formData  = new FormData();
+   if (avatarInput.files.length > 0) {
+    formData.append("avatar", avatarInput.files[0]);
+  } else {
+    console.log(existingImgAvatarInput.value);
+    formData.append("avatar", existingImgAvatarInput.value);
+  }
+
+  const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
+    method: "POST",
+    body: formData,
+	credentials : "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    console.log(response.json);
+    const data = await response.json();
+    if (!response.ok) {
+      avatarForm.reset();
+      throw new Error(`Response status ${response.status}`);
+    } else {
+		const userDataString : string | null = localStorage.getItem('userData');
+    avatarForm.reset();
+        if (userDataString)
+        {
+          const userData = JSON.parse(userDataString)
+          userData.url = data.avatarUrl; //default img
+        }
+      	console.log("avatar uploaded:", data);
+    }
+  } catch (error: any) {
+    avatarForm.reset();
+    console.error("Error during avatar:", error.message);
+  }
+});
+
+displayNameForm.addEventListener("submit", (event: any) => {
+  event.preventDefault();
+});
+
+passwordForm.addEventListener("submit", (event: any) => {
+  event.preventDefault();
+});
+
+function showPopUp() {
+	popup.classList.add("block");
+  	popup.classList.remove("hidden");
+}
+
+function previewImage(event : Event) {
+  const input = (event.target as HTMLInputElement);
+	const file = input.files ? input.files[0] : null;
+    const preview = document.getElementById('avatar-image') as HTMLImageElement;
+
+    if (file) {
+        const objectURL = URL.createObjectURL(file);
+        preview.src = objectURL;
+    }
+}
+
+function displayPreview() {
+   const imgElement = document.getElementById("G") as HTMLImageElement;
+   previewNewAvatar.src = imgElement.src;
+   existingImgAvatarInput.value = imgElement.src;
+}
+
+// imgIcon.addEventListener("click", (event: any) => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });
+
+// avatar.addEventListener("click", () => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });

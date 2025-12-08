@@ -307,6 +307,9 @@
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
+  .h-52 {
+    height: calc(var(--spacing) * 52);
+  }
   .h-60 {
     height: calc(var(--spacing) * 60);
   }
@@ -352,6 +355,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-52 {
+    width: calc(var(--spacing) * 52);
+  }
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
@@ -384,9 +390,6 @@
   }
   .max-w-6xl {
     max-width: var(--container-6xl);
-  }
-  .max-w-\[80\%\] {
-    max-width: 80%;
   }
   .max-w-full {
     max-width: 100%;

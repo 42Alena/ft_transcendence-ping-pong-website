@@ -331,41 +331,41 @@ function displayUserProfile() {
 //   event.preventDefault();
 // });
 
-const settingsPage: any = document.getElementById("settingsPage");
+// const settingsPage: any = document.getElementById("settingsPage");
 const friendsPage: any = document.getElementById("friendsPage");
-const avatarForm: any = document.getElementById("avatar");
-const imgIcon: any = document.getElementById("svgIcon");
-const avatar: any = document.getElementById("avatarImgEdit");
-const popup: any = document.getElementById("avatarOptions");
-const popUpButton: any = document.getElementById("closePopUp");
-const displayNameForm: any = document.getElementById("displayName");
-const passwordForm: any = document.getElementById("password");
+// const avatarForm: any = document.getElementById("avatar");
+// const imgIcon: any = document.getElementById("svgIcon");
+// const avatar: any = document.getElementById("avatarImgEdit");
+// const popup: any = document.getElementById("avatarOptions");
+// const popUpButton: any = document.getElementById("closePopUp");
+// const displayNameForm: any = document.getElementById("displayName");
+// const passwordForm: any = document.getElementById("password");
 
-// When the user clicks on <span> (x), close the modal
-popUpButton.addEventListener("click", () => {
-  popup.classList.add("hidden");
-  popup.classList.remove("block");
-});
+// // When the user clicks on <span> (x), close the modal
+// popUpButton.addEventListener("click", () => {
+//   popup.classList.add("hidden");
+//   popup.classList.remove("block");
+// });
 
-let pop: boolean = false;
-avatarForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// let pop: boolean = false;
+// avatarForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-displayNameForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// displayNameForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-passwordForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// passwordForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-imgIcon.addEventListener("click", (event: any) => {
-  popup.classList.add("block");
-  popup.classList.remove("hidden");
-});
+// imgIcon.addEventListener("click", (event: any) => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });
 
-avatar.addEventListener("click", () => {
-  popup.classList.add("block");
-  popup.classList.remove("hidden");
-});
+// avatar.addEventListener("click", () => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });

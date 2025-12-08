@@ -18,9 +18,9 @@ if (localStorage.getItem('userData'))
     if (userDataString)
     {
       const userData = JSON.parse(userDataString)
-      userData.url = "/images/profile/blue.png" //default img
       logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
-      logAvatHeaderDiv.src = userData.url;
+      console.log("here", userData.avatarUrl);
+      logAvatHeaderDiv.src = userData.avatarUrl;
     }
 }
 
