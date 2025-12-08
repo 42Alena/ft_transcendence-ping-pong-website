@@ -120,16 +120,16 @@ export type SendPrivateMessageBody = {
 
 export type SendTournamentMessageBody = {
 	receiverId: ReceiverId;
-  // no content, backend will use MESSAGE_GAME_INVITE
+	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
 
 export type GetChatParams = {
-  userId: number;    // or chat partner id
+	userId: number;    // or chat partner id
 };
 
 export type GetChatResponse = {
-  messages: ChatMessage[];
+	messages: ChatMessage[];
 };
 
 //for Sidebar
@@ -138,3 +138,47 @@ export type GetChatConversationsResult = ChatConversations[];
 
 //for messages between me and another user
 export type GetChatConversationWithResult = Domain.MessageChat[];
+
+
+
+//__________________GAME: MATCH TOURNAMENT______________
+
+export type GameMode = Domain.GameMode;
+export type TournamentRound = Domain.TournamentRound;
+export type GameTournamentRound = Domain.GameTournamentRound;
+export type GameScore = Domain.GameScore;
+export type Alias = Domain.Alias;
+
+export type Game = Domain.AnyGame;
+
+// “get all games for this user”
+export type UserGames = Game[];
+
+
+
+export type SaveNormalGameBody =  Domain.GamePlayersScores & {
+
+	mode: 'normalGame';   
+	tournamentRound: null;
+};
+
+
+export type SaveTournamentBody =  Domain.GamePlayersScores & {
+
+	mode: 'tournament';
+	tournamentRound: Domain.TournamentRound;  //'final' /'semi'
+};
+
+export type UserProfileMatchRow = Domain.UserProfileMatchRow;
+export type UserProfileMatches = Domain.UserProfileMatches;
+
+export type UserProfileStats = Domain.UserProfileStats;
+
+export type GetUserProfileGamesAndStatsResult = Domain.GetUserProfileGamesAndStatsResult;
+
+
+// API reply body – what the route actually sends on 200
+export type GetUserProfileGamesAndStatsResponse = {
+  matches: UserProfileMatchRow[];
+  stats: UserProfileStats;
+};

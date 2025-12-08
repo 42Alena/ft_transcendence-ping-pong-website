@@ -40,30 +40,76 @@ Not required for evaluation — used for organization and pull request preparati
 -----------------------
 
 ##_____________  TODO FOR FUTURE:
+- update each time last activity. Not active after 10min
 
-- ROUTES/USer
-	- add data validation (deleted from User constructor)
-
-- Tournament:
-	- unique alias(insttead displayname) for tournament only, not globally
-
-- USER: 
 	-lastSeenAt(change logic for  for online/ offline)
-   [] make in authRequiredOptions and Usermanager(fkt) updating online in lastSeenAt
-	-- Alena online/offline /not in db./ laschange after last activity, update each time last activity. Not active after 10min
 	- add conversion for Time from number to Date, if needed
+	-statistic
+	-gamemanager ; save Game and tournament
 
-	- loginSession id: set expire date?
-
-	-TODO ROUTES: 
-
-
-
-
-
-
-
+------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+## DB
+	-updated table for game, to save as winner and loser, simplified logic
+
+## BACKEND
+### UserManager
+	 + added  get user by display Name
+### GameStatsManager
+	+ buildAnyGameFromBody to map from API body to domain
+	+ findWinerLoser 
+	+ added separate buildTournamentFromBody and buildNormalGameFromBody
+	+ recordNormalGameFromBody
+	+ recordTournamentFromBody
+	+ recordFinishedGame + saveGameInDB
+	+ getUserMatches
+	+ added statistic 
+
+### User_routes
+### domain types
+	+ added types for game and tournament
+	+ SaveGameResult
+	+ UserProfileMatchRow
+	+ UserProfileMatches
+	+ GetUserProfileMatchesResult
+
+### api types
+	 + added API types for games
+	 + SaveGameBody
+
+
+### db.ts
+  - added types for db.ts for  GamesDbRow 
+
+### game_db.ts
+	added types to save to db or get row from db
+
+### 
+	+ /games/tournament/save
+	+ /games/normal/save
+	+ /profile/:userId/stats
+
+### Makefile
+	+ tests_game_stats
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_game_stats
+```
+ 
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
 
 
 ## DB for chat:
@@ -120,7 +166,8 @@ Not required for evaluation — used for organization and pull request preparati
 ### user_db.ts
 	- UserSidebarDbRow 
 	
-
+### time.ts
+	+ formatDateDDMMYY to convert from db
 
 ### api types
 	+ all types for chat sending messages
