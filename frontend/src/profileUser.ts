@@ -285,12 +285,63 @@ function displayPreview() {
    existingImgAvatarInput.value = imgElement.src;
 }
 
-// imgIcon.addEventListener("click", (event: any) => {
-//   popup.classList.add("block");
-//   popup.classList.remove("hidden");
-// });
 
-// avatar.addEventListener("click", () => {
-//   popup.classList.add("block");
-//   popup.classList.remove("hidden");
-// });
+const friendsList = document.getElementById("friendsList") as HTMLDivElement;
+const friendDiv = document.createElement("div") as HTMLDivElement;
+const friendImg = document.createElement("img") as HTMLImageElement;
+const friendInfoDiv = document.createElement("div") as HTMLDivElement;
+const friendNameDiv = document.createElement("div") as HTMLDivElement;
+const friendButtonsDiv = document.createElement("div") as HTMLDivElement;
+const friendRemoveButton = document.createElement("button") as HTMLButtonElement;
+const friendBlockButton = document.createElement("button") as HTMLButtonElement;
+
+async function requestFriendsList() {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request("http://127.0.0.1:3000/users/me/friends", {
+    method: "GET",
+    headers: myHeaders,
+    credentials : "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    const friends = await response.json();
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    }
+    else
+    {
+      friendsPage.classList.add("flex");
+      friendsPage.classList.remove("hidden");
+      for (const friend of friends)
+      {
+        friendDiv.classList.add("flex", "items-center", "border", "p-2.5");
+        friendImg.src = friend.avatarUrl;
+        friendImg.classList.add("h-[100px]", "w-[100px]");
+        friendDiv.appendChild(friendImg);
+        friendInfoDiv.classList.add("ml-2.5", "flex", "flex-col");
+        friendNameDiv.classList.add("flex", "items-center", "gap-2");
+        friendNameDiv.textContent = friend.displayName;
+        friendInfoDiv.appendChild(friendNameDiv);
+        friendButtonsDiv.classList.add("flex", "justify-start", "gap-1");
+        friendRemoveButton.classList.add("flex", "h-10", "w-[70px]", "items-center", "justify-center", "rounded", "border-2", "border-blue-950", "bg-blue-500", "font-bold", "text-white", "hover:bg-blue-700");
+        friendRemoveButton.textContent = "remove";
+        friendRemoveButton.setAttribute('type', 'button');
+        friendButtonsDiv.appendChild(friendRemoveButton);
+        friendBlockButton.classList.add("flex", "h-10", "w-[70px]", "items-center", "justify-center", "rounded", "border-2", "border-blue-950", "bg-blue-500", "font-bold", "text-white", "hover:bg-blue-700");
+        friendBlockButton.textContent = "block";
+        friendBlockButton.setAttribute('type', 'button');
+        friendButtonsDiv.appendChild(friendBlockButton);
+        friendInfoDiv.appendChild(friendButtonsDiv);
+        friendDiv.appendChild(friendInfoDiv);
+        friendsList.append(friendDiv);
+      }
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+
+}
+

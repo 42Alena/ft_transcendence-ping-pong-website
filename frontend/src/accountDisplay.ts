@@ -188,8 +188,7 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "friends") {
-    friendsPage.classList.add("flex");
-    friendsPage.classList.remove("hidden");
+    requestFriendsList();
     profP.classList.add("hidden");
     profP.classList.remove("grid");
     logP.classList.add("hidden");
