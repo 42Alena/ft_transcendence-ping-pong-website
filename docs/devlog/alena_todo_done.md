@@ -89,6 +89,8 @@ Not required for evaluation — used for organization and pull request preparati
 	+ /games/normal/save
 	+ /profile/:userId/stats
 
+### Makefile
+	+ tests_game_stats
 
 ### TESTS
 
@@ -102,7 +104,7 @@ Not required for evaluation — used for organization and pull request preparati
 	make backend
 
 	# 2. in 2.terminal: 
-	make tests_user_settings
+	make tests_game_stats
 ```
  
 
