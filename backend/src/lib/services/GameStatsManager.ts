@@ -6,6 +6,7 @@ import { formatDateDDMMYY, unixTimeNow } from "../utils/time";
 import { db } from "./DB";
 import { User } from "./User";
 import { UserManager } from "./UserManager";
+import { GameDbRow } from "../types/db";
 
 
 
@@ -205,8 +206,9 @@ export class GameStatsManager {
 			.orderBy("createdAt", "desc");
 
 
-		const games: Domain.AnyGame[] = dbRows.map(row => gameFromDbRow(row));
+		const games: Domain.AnyGame[] = dbRows.map((row: GameDbRow) => gameFromDbRow(row));
 
+		//_____________GAMES__________________________
 		const matches: Domain.UserProfileMatches = games.map(game => {
 			const iAmWinner = game.winnerUserId === userId;
 
@@ -226,11 +228,45 @@ export class GameStatsManager {
 			return matchRow;
 		});
 
-		return { ok: true, matches };
+		//_____________STATS__________________________
+
+		const totalGames = games.length;
+		let wins = 0;
+		let losses = 0;
+		let place1 = 0;
+		let place2 = 0;
+		let place3 = 0;
+
+		for (const game of games) {
+			if (game.winnerUserId === userId) wins++;
+			if (game.loserUserId === userId) losses++;
+
+			if (game.mode === "tournament") {
+				if (game.tournamentRound === "final") {
+					if (game.winnerUserId === userId) place1++; // 1st place
+					else if (game.loserUserId === userId) place2++; // 2nd place
+				} else if (game.tournamentRound === "semi") {
+					if (game.loserUserId === userId) place3++; // lost in semi => 3rd
+				}
+			}
+		}
+
+		const winRatePercent = totalGames ? (wins * 100) / totalGames : 0;
+		const lossRatePercent = totalGames ? (losses * 100) / totalGames : 0;
+
+		const stats: Domain.UserProfileStats = {
+			totalGames,
+			wins,
+			losses,
+			winRatePercent,
+			lossRatePercent,
+			place1,
+			place2,
+			place3,
+		};
+
+		return { ok: true, matches, stats };
 	}
 
 
 }
-
-
-

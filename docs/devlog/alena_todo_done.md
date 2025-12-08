@@ -63,6 +63,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ recordTournamentFromBody
 	+ recordFinishedGame + saveGameInDB
 	+ getUserMatches
+	+ added statistic 
 
 ### User_routes
 ### domain types
