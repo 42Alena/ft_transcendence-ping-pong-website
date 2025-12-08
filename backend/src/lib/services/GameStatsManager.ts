@@ -199,18 +199,51 @@ export class GameStatsManager {
 
 
 
+	private buildUserProfileStats(
+		games: Domain.AnyGame[],
+		userId: Domain.UserId
+	): Domain.UserProfileStats {
 
 
+		const totalGames = games.length;
+		let wins = 0;
+		let losses = 0;
+		let place1 = 0;
+		let place2 = 0;
+		let place3 = 0;
 
-	/* 
-	export type GetUserProfileMatchesResult = {
-		ok: true;
-		matches: UserProfileMatchRow[];
-	} | {
-		ok: false;
-		reason: "not_me" ;
+		for (const game of games) {
+			if (game.winnerUserId === userId) wins++;
+			if (game.loserUserId === userId) losses++;
+
+			if (game.mode === "tournament") {
+				if (game.tournamentRound === "final") {
+					if (game.winnerUserId === userId) place1++; // 1st place
+					else if (game.loserUserId === userId) place2++; // 2nd place
+				} else if (game.tournamentRound === "semi") {
+					if (game.loserUserId === userId) place3++; // lost in semi => 3rd
+				}
+			}
+		}
+
+		const winRatePercent = totalGames ? (wins * 100) / totalGames : 0;
+		const lossRatePercent = totalGames ? (losses * 100) / totalGames : 0;
+
+		return {
+			totalGames,
+			wins,
+			losses,
+			winRatePercent,
+			lossRatePercent,
+			place1,
+			place2,
+			place3,
+		};
+
+
 	}
-	*/
+
+
 	async getUserProfileGamesAndStats(
 		meId: Domain.UserId,
 		userId: Domain.UserId
@@ -238,44 +271,9 @@ export class GameStatsManager {
 		//_____________GAMES__________________________
 		const matches = this.buildUserProfileMatches(games, userId);
 
-
-
 		//_____________STATS__________________________
-
-		const totalGames = games.length;
-		let wins = 0;
-		let losses = 0;
-		let place1 = 0;
-		let place2 = 0;
-		let place3 = 0;
-
-		for (const game of games) {
-			if (game.winnerUserId === userId) wins++;
-			if (game.loserUserId === userId) losses++;
-
-			if (game.mode === "tournament") {
-				if (game.tournamentRound === "final") {
-					if (game.winnerUserId === userId) place1++; // 1st place
-					else if (game.loserUserId === userId) place2++; // 2nd place
-				} else if (game.tournamentRound === "semi") {
-					if (game.loserUserId === userId) place3++; // lost in semi => 3rd
-				}
-			}
-		}
-
-		const winRatePercent = totalGames ? (wins * 100) / totalGames : 0;
-		const lossRatePercent = totalGames ? (losses * 100) / totalGames : 0;
-
-		const stats: Domain.UserProfileStats = {
-			totalGames,
-			wins,
-			losses,
-			winRatePercent,
-			lossRatePercent,
-			place1,
-			place2,
-			place3,
-		};
+		const stats = this.buildUserProfileStats(games, userId);
+		
 
 		return { ok: true, matches, stats };
 	}
