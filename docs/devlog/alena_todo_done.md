@@ -54,6 +54,7 @@ Not required for evaluation — used for organization and pull request preparati
 
 ## BACKEND
 ### UserManager
+	 + added  get user by display Name
 ### GameStatsManager
 	+ buildAnyGameFromBody to map from API body to domain
 	+ findWinerLoser 

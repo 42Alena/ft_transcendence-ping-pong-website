@@ -134,6 +134,15 @@ export class GameStatsManager {
 	*/
 	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
+
+		const winner = await this.userManager.getUserById(game.winnerUserId);
+		const loser = await this.userManager.getUserById(game.loserUserId);
+
+		if (!winner && !loser)
+			return { ok: true, saved: false };
+		
+		//get User from alias(domainName)
+		//if no one user - send ok, not saved
 		// if (body.player1Score === body.player2Score) return null;
 
 
@@ -171,8 +180,8 @@ export class GameStatsManager {
 		if (!meId)
 			return { ok: false, reason: "not_me" };
 
-		const game = this.buildTournamentFromBody(body); // private call, OK
-		return this.recordFinishedGame(game);            // also private call
+		const tournament = this.buildTournamentFromBody(body); // private call, OK
+		return this.recordFinishedGame(tournament);            // also private call
 	}
 
 
