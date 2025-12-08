@@ -42,6 +42,11 @@ profileBlockUnbFriend.addEventListener("click", (event: any) => {
   }
 });
 function setAccountPage(text: string) {
+  reg.reset();
+  log.reset();
+  displayNameForm.reset();
+  passwordForm.reset();
+  avatarForm.reset();
   accP.classList.add("flex");
   accP.classList.remove("hidden");
   chatP.classList.remove("grid");
@@ -77,6 +82,10 @@ function setAccountPage(text: string) {
     gameOverDiv.classList.remove("flex");
     instruction.classList.add("hidden");
     instruction.classList.remove("flex");
+    errorUsernameLog.classList.add("hidden");
+    errorUsernameLog.classList.remove("block");
+    errorPasswordLog.classList.remove("block");
+    errorPasswordLog.classList.add("hidden");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");
@@ -84,8 +93,6 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "register") {
-    reg.reset();
-    log.reset();
     regP.classList.add("flex");
     regP.classList.remove("hidden");
     reg.classList.add("flex");
@@ -106,6 +113,12 @@ function setAccountPage(text: string) {
     gameOverDiv.classList.remove("flex");
     instruction.classList.add("hidden");
     instruction.classList.remove("flex");
+    errorUsername.classList.add("hidden");
+    errorUsername.classList.remove("block");
+    errorDisplayName.classList.add("hidden");
+    errorDisplayName.classList.remove("block");
+    errorPaassword.classList.add("hidden");
+    errorPaassword.classList.remove("block");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");
@@ -113,7 +126,6 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "profile") {
-
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
@@ -137,19 +149,19 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
     requestProfile();
-  } else if (text == "settings") { //add route to this?
+  } else if (text == "settings") {
+    //add route to this?
     settingsPage.classList.add("flex");
     settingsPage.classList.remove("hidden");
     console.log("here");
     const userDataString: string | null = localStorage.getItem("userData");
     if (localStorage.getItem("userData")) {
-    if (userDataString)
-    {
-      const userData = JSON.parse(userDataString);
-      settingsUsernameInput.value = userData.username;
-      settingsDisplayNameInput.value = userData.displayName;
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        settingsUsernameInput.value = userData.username;
+        settingsDisplayNameInput.value = userData.displayName;
+      }
     }
-  }
     popup.classList.add("hidden");
     popup.classList.remove("block");
     profP.classList.add("hidden");

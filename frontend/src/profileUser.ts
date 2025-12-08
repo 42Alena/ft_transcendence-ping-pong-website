@@ -106,7 +106,8 @@ avatarForm.addEventListener("submit", async (event: any) => {
         if (userDataString)
         {
           const userData = JSON.parse(userDataString)
-          userData.url = data.avatarUrl; //default img
+          userData.url = data.avatarUrl;
+          localStorage.setItem("userData", JSON.stringify(userData)); 
         }
         popup.classList.add("hidden");
         popup.classList.remove("block");
@@ -248,6 +249,9 @@ deleteAccountButton.addEventListener("click", async () => {
     else
     {
       localStorage.clear();
+      logUserHeaderDiv.textContent = 'Hello, you!'
+      logAvatHeaderDiv.src = "images/avatars/pong_default.png";
+      displayPage('welcome');
     }
   } catch (error) {
     console.error("Error during registration:", error);
