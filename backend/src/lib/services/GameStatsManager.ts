@@ -1,8 +1,8 @@
-import { gameToDbRow } from "../mappers/games_db";
+import { gameFromDbRow, gameToDbRow } from "../mappers/games_db";
 
 import *  as Domain from '../types/domain';
 import *  as API from '../types/api';
-import { unixTimeNow } from "../utils/time";
+import { formatDateDDMMYY, unixTimeNow } from "../utils/time";
 import { db } from "./DB";
 import { User } from "./User";
 import { UserManager } from "./UserManager";
@@ -102,36 +102,6 @@ export class GameStatsManager {
 
 
 
-	/* 
-	PRIVATE
-   export type SaveGameResult =
-	| { ok: true; saved: true }   
-	| { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
-	| {
-		ok: false;
-		reason:
-		  | "not_me"             // not authenticated
-		  | "invalid_tournament" // bad mode/round combination
-		  | "invalid_game"       // structural problem, e.g. same winner/loser, empty alias
-		  | "invalid_score";     // winnerScore/loserScore invalid
-	  }; 
-  
-	  export type BaseGame = {
-		  mode: GameMode;  "tournament" | "normalGame"
-		  tournamentRound:  GameTournamentRound;
-  	
-		  winnerUserId: PlayerId;
-		  loserUserId: PlayerId;
-	  	
-		  winnerScore: GameScore;
-		  loserScore: GameScore;
-  	
-		  winnerAlias: Alias;            
-		  loserAlias: Alias;  
-  	
-		  createdAt: TimeSec;
-	  }
-	*/
 	private async recordFinishedGame(game: Domain.AnyGame): Promise<Domain.SaveGameResult> {
 
 		if (game.winnerAlias === game.loserAlias) {
@@ -160,12 +130,12 @@ export class GameStatsManager {
 		//if no one user - send ok, not saved
 		if (!winner && !loser)
 			return { ok: true, saved: false };
-		
-		
-		
+
+
+
 		game.winnerUserId = winner ? winner.id : null;
 		game.loserUserId = loser ? loser.id : null;
-		
+
 		await this.saveGameInDB(game);
 
 		return { ok: true, saved: true };
@@ -201,9 +171,56 @@ export class GameStatsManager {
 		return this.recordFinishedGame(tournament);            // also private call
 	}
 
-	 async getUserMatches(
+
+
+
+	/* 
+	export type GetUserProfileMatchesResult = {
+		ok: true;
+		matches: UserProfileMatchRow[];
+	} | {
+		ok: false;
+		reason: "not_me" ;
+	}
+	*/
+	async getUserMatches(
 		userId: Domain.UserId
-	): Promise <
+	): Promise<Domain.GetUserProfileMatchesResult> {
+
+		const me = await this.userManager.getUserById(userId);
+
+		if (!me)
+			return { ok: false, reason: "not_me" };
+
+		const dbRows = await this.dbTableGames()
+			.where({ winnerUserId: userId })
+			.orWhere({ loserUserId: userId })
+			.orderBy("createdAt", "desc");
+
+
+		const games: Domain.AnyGame[] = dbRows.map(row => gameFromDbRow(row));
+
+		const matches: Domain.UserProfileMatches = games.map(game => {
+			const iAmWinner = game.winnerUserId === userId;
+
+			const opponentAlias = iAmWinner ? game.loserAlias : game.winnerAlias;
+			const myScore = iAmWinner ? game.winnerScore : game.loserScore;
+			const opponentScore = iAmWinner ? game.loserScore : game.winnerScore;
+
+			const scoreMeOther = `${myScore}-${opponentScore}`;
+			const date = formatDateDDMMYY(game.createdAt);
+
+			const matchRow: Domain.UserProfileMatchRow = {
+				opponentAlias,
+				date,          // "08/12/25"
+				scoreMeOther,  // "3-0"
+			};
+
+			return matchRow;
+		});
+
+		return { ok: true, matches };
+	}
 
 
 }

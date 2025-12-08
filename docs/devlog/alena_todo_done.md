@@ -62,6 +62,7 @@ Not required for evaluation — used for organization and pull request preparati
 	+ recordNormalGameFromBody
 	+ recordTournamentFromBody
 	+ recordFinishedGame + saveGameInDB
+	+ getUserMatches
 
 ### User_routes
 ### domain types
@@ -162,7 +163,8 @@ Not required for evaluation — used for organization and pull request preparati
 ### user_db.ts
 	- UserSidebarDbRow 
 	
-
+### time.ts
+	+ formatDateDDMMYY to convert from db
 
 ### api types
 	+ all types for chat sending messages
