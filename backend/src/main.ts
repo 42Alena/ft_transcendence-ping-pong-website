@@ -17,7 +17,10 @@ const userManager = new UserManager()
 const chatManager = new ChatManager(userManager)
 const gameStatsManager = new GameStatsManager(userManager)
 
-fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
+fastify.register(require('@fastify/cors'), {
+  origin: true,
+  credentials: true,
+}) //https://github.com/fastify/fastify-cors
 
 //for file upload
 fastify.register(require('@fastify/multipart'))
@@ -30,7 +33,7 @@ fastify.register(require('@fastify/multipart'))
 
 // 1) Parse "auth" cookie on every request and put the value into req.loginSessionId.
 //  Call this BEFORE registering routes that use authRequiredOptions.
-initDecorators(fastify);  
+initDecorators(fastify);
 
 // 2) Attach userManager to the Fastify instance.
 //    In any handler/preHandler you can access it as: req.server.userManager.
