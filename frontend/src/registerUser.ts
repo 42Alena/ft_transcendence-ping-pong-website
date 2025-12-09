@@ -1,7 +1,5 @@
-const reg : any = document.getElementById("register");
-const usernameInput: any = document.getElementById("reg-username");
-const usernameInputDiv : any = document.getElementById("usernameInput");
-const errorUsername : any = document.getElementById("reg-usernama_error");
+const reg: any = document.getElementById("register");
+const errorUsername: any = document.getElementById("reg-usernama_error");
 const errorDisplayName: any = document.getElementById("reg-displayName_error");
 const errorPaassword : any = document.getElementById("reg-password_error");
 const displayInput: any = document.getElementById("reg-display");
@@ -76,7 +74,7 @@ successRegPage.classList.remove("flex");
       successRegPage.classList.remove("hidden");
       reg.classList.add("hidden");
       reg.classList.remove("flex");
-       reg.reset();
+      reg.reset();
       console.log("Registered user:", data);
     }
   } catch (error: any) {

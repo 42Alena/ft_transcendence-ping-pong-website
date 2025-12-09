@@ -89,6 +89,7 @@ function setAccountPage(text: string) {
     }
   } else if (text == "register") {
     reg.reset();
+    log.reset();
     regP.classList.add("flex");
     regP.classList.remove("hidden");
     reg.classList.add("flex");

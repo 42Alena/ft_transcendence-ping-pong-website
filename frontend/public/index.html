@@ -29,7 +29,7 @@
           <div id="header-navbar-user" class="flex flex-row items-center p-2.5">
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
-                <span id="logged-user" class="mr-2.5"> Hello, you! </span>
+                <span id="logged-user" class="mr-2.5">Hello, you</span>
                 <div id="logged-user-avatar">
                   <img
                     src="images/avatars/pong_default.png"
@@ -41,16 +41,19 @@
                 </div>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="#" onclick="setAccountPage('register')"
-                    ><span></span>Register</a
-                  >
-                </li>
-                <li>
-                  <a href="#" onclick="setAccountPage('login')"
-                    ><span></span>Login</a
-                  >
-                </li>
+                <div id="dropdown-menu_guests">
+                  <li>
+                    <a href="#" onclick="setAccountPage('register')"
+                      ><span></span>Register</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" onclick="setAccountPage('login')"
+                      ><span></span>Login</a
+                    >
+                  </li>
+                </div>
+                <div id="dropdown-menu_user" class="hidden">
                 <li>
                   <a href="#" onclick="setAccountPage('profile')"
                     ><span></span>Profile</a
@@ -70,6 +73,7 @@
                 <li>
                   <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
                 </li>
+                </div>
               </ul>
             </span>
           </div>
@@ -99,7 +103,7 @@
         <nav class="grid grid-rows-[1fr] border bg-[#FFF3CC]">
           <ul class="flex flex-col items-center justify-start p-2.5">
             <li class="p-1 text-center leading-none">
-              <a href="#chat" onclick="displayPage('chat')">
+              <a href="#" onclick="displayPage('chat')">
                 <img src="images/icons/chat.png" alt="chat page"
               /></a>
             </li>
@@ -302,48 +306,53 @@
                 class="absolute inset-0 z-0 h-full w-full"
               />
               <form
-                action="http://127.0.0.1:8080"
+                action="http://127.0.0.1:3000/auth/login"
                 method="post"
                 id="login"
-                class="absolute z-1 table rounded-xl p-1"
+                class="flex flex-col items-center justify-center rounded-xl p-1 absolute z-1"
               >
-                <p>
+                <div class="mb-3">
                   <label
-                    class="table-cell text-xl font-bold"
+                    class="text-heading text-xl font-bold"
                     for="login-username"
                     >Username:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="login-username"
                     name="login-user_username"
                     required
                   />
-                </p>
-                <p>
+                  <div
+                    id="log-username_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
+                <div class="mb-3">
                   <label
-                    class="table-cell text-xl font-bold"
+                    class="text-heading text-xl font-bold"
                     for="login-password"
                     >Password:</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="password"
                     id="login-password"
                     name="login-user_password"
                     required
                   />
-                </p>
-                <span class="block h-[1em]"></span>
-                <p class="flex justify-center">
-                  <button
-                    class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="submit"
-                  >
-                    Login
-                  </button>
-                </p>
+                  <div
+                    id="log-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
+                <button
+                  type="submit"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Login
+                </button>
               </form>
             </div>
             <div
@@ -1108,6 +1117,7 @@
     <script src="dist/createRules.js"></script>
     <script src="dist/charts.js"></script>
     <script src="dist/registerUser.js"></script>
+    <script src="dist/loginUser.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>
