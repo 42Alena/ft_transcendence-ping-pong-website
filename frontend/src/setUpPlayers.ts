@@ -247,6 +247,7 @@ AIoffButtonPlayerFour.addEventListener("click", (event: any) => {
 //buttons
 //process input and check if we can start the game
 aliasPlayerOneButton.addEventListener("click", () => {
+  console.log("button ok pressed");
   const startGame = processInput(
     aliasPlayerOneInput,
     1,

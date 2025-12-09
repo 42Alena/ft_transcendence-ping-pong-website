@@ -93,6 +93,13 @@
   background-color: grey;
 }
 
+#register > div > p > input:valid {
+  border: 2px green;
+}
+
+#register > div > p > input:invalid {
+  border: 2px red;
+}
 .custom-input:focus {
     border-color: #007BFF;
     outline: none;

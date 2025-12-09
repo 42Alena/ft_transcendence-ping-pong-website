@@ -9,7 +9,7 @@
     <style></style>
   </head>
 
-  <body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
+<body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
     <header class="flex justify-center bg-[#DFF7FF]">
       <div class="w-full max-w-6xl border">
         <div
@@ -221,7 +221,7 @@
             </div>
           </div>
           <div
-            class="relative hidden h-full w-full items-center justify-center bg-white"
+            class="relative hidden h-full w-full items-center justify-center bg-sky-200"
             id="accountPage"
           >
             <div
@@ -234,78 +234,63 @@
                 class="absolute inset-0 z-0 h-full w-full"
               />
               <form
-                action="http://127.0.0.1:8080"
+                action="http://127.0.0.1:3000/auth/register"
                 method="post"
-                enctype="multipart/form-data"
                 id="register"
-                class="absolute z-1 table rounded-xl"
+                class="flex flex-col justify-center items-center rounded-xl p-1 absolute z-1"
               >
-                <p>
-                  <label class="table-cell text-xl font-bold" for="reg-username"
+                <div class="mb-3" id="usernameInput">
+                  <label class="text-xl font-bold text-heading" for="reg-username"
                     >Username (login)</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
+                    autocomplete="off"
                     required
                   />
-                </p>
-                <p>
-                  <label
-                    class="table-cell text-xl font-bold"
-                    for="reg-displayName"
+                  <div id="reg-usernama_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                </div>
+                 <div class="mb-3">
+                  <label class="text-xl font-bold text-heading" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
+                    autocomplete="off"
                     required
                   />
-                </p>
-                <p>
-                  <label class="table-cell text-xl font-bold" for="reg-password"
+                  <div id="reg-displayName_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="text-xl font-bold text-heading" for="reg-password"
                     >Password</label
                   >
                   <input
-                    class="table-cell bg-white text-xl"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
+                    autocomplete="off"
                     required
                   />
-                </p>
-                <span class="block h-[1em]"></span>
-                <p class="flex justify-center">
-                  <button
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    type="button"
-                    id="register-button"
-                  >
-                    Register
-                  </button>
-                </p>
+                <div id="reg-password_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                </div>
+                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
               </form>
-            </div>
-            <div
-              id="register-success"
-              class="relative hidden h-full w-full items-center justify-center"
-            >
+              <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
               <img
-                src="images/registration_sucess/pong_registrtion_success.png"
-                alt="registration success page"
-                class="absolute inset-0 z-0 h-full w-full"
-              />
-              <button
-                class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                type="button"
-                id="login-button"
-              >
-                Login
-              </button>
+              src="images/registration_success/pong_registrtion_success.png"
+              alt="register success page"
+              class="absolute inset-0 z-0 h-full w-full"
+            />
+              <button type="button" class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
+              </div>
             </div>
             <div
               class="relative hidden h-full w-full items-center justify-center"
@@ -1122,6 +1107,7 @@
     <script src="dist/setUpPlayers.js"></script>
     <script src="dist/createRules.js"></script>
     <script src="dist/charts.js"></script>
+    <script src="dist/registerUser.js"></script>
     <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script>
   </body>

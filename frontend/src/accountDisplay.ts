@@ -4,6 +4,8 @@ const regP: any = document.getElementById("registerPage");
 const logP: any = document.getElementById("loginPage");
 const profP: any = document.getElementById("profilePage");
 //register form
+const registerForm: any = document.getElementById("register");
+// const regAvatar: any = document.getElementById("reg-avatar");
 //profile page
 const profileUsername: any = document.getElementById("acc-username");
 const profileAvatarImg: any = document.getElementById("acc-profile-avatar");
@@ -58,8 +60,8 @@ function setAccountPage(text: string) {
   girlImgRight.classList.remove("hidden");
   girlImgRightLoser.classList.remove("block");
   girlImgRightLoser.classList.add("hidden");
-  registerSuccessPage.classList.add("hidden");
-  registerSuccessPage.classList.remove("flex");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   if (text == "login") {
     logP.classList.add("flex");
     logP.classList.remove("hidden");
@@ -86,8 +88,11 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "register") {
+    reg.reset();
     regP.classList.add("flex");
     regP.classList.remove("hidden");
+    reg.classList.add("flex");
+    reg.classList.remove("hidden");
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     profP.classList.add("hidden");
@@ -202,6 +207,12 @@ function setAccountPage(text: string) {
   }
 }
 
+// It makes the preview of the avatar the user wants to upload
+// regAvatar.addEventListener("change", (event: any) => {
+//   const img: any = document.getElementById("avatar");
+//   img.src = URL.createObjectURL(regAvatar.files[0]);
+// });
+
 /*Implementation to display pages triggered by menu selection */
 //divs in menu
 const settingsDiv: any = document.getElementById("acc-settings");
@@ -311,28 +322,28 @@ function displayUserProfile() {
   blockButton.classList.remove("block");
 }
 
-const registerForm: any = document.getElementById("register");
-const registerSuccessPage: any = document.getElementById("register-success");
-const loginButton: any = document.getElementById("login-button");
-const loginForm: any = document.getElementById("login");
+// const registerForm: any = document.getElementById("register");
+// const registerSuccessPage: any = document.getElementById("register-success");
+// const loginButton: any = document.getElementById("login-button");
+// const loginForm: any = document.getElementById("login");
 
-registerForm.addEventListener("click", (event: any) => {
-  event.preventDefault();
-  regP.classList.add("hidden");
-  regP.classList.remove("flex");
-  registerSuccessPage.classList.add("flex");
-  registerSuccessPage.classList.remove("hidden");
-});
+// registerForm.addEventListener("click", (event: any) => {
+//   event.preventDefault();
+//   regP.classList.add("hidden");
+//   regP.classList.remove("flex");
+//   registerSuccessPage.classList.add("flex");
+//   registerSuccessPage.classList.remove("hidden");
+// });
 
-loginButton.addEventListener("click", () => {
-  registerSuccessPage.classList.add("hidden");
-  registerSuccessPage.classList.remove("flex");
-  setAccountPage("login");
-});
+// loginButton.addEventListener("click", () => {
+//   registerSuccessPage.classList.add("hidden");
+//   registerSuccessPage.classList.remove("flex");
+//   setAccountPage("login");
+// });
 
-loginForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// loginForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
 const settingsPage: any = document.getElementById("settingsPage");
 const friendsPage: any = document.getElementById("friendsPage");

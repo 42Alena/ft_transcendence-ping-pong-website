@@ -19,6 +19,7 @@
     --color-green-300: oklch(87.1% 0.15 154.449);
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-700: oklch(52.7% 0.154 150.069);
+    --color-sky-200: oklch(90.1% 0.058 230.902);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-blue-700: oklch(48.8% 0.243 264.376);
@@ -591,6 +592,9 @@
   .bg-red-500 {
     background-color: var(--color-red-500);
   }
+  .bg-sky-200 {
+    background-color: var(--color-sky-200);
+  }
   .bg-white {
     background-color: var(--color-white);
   }
@@ -852,6 +856,12 @@
 }
 .ai-button-off.active {
   background-color: grey;
+}
+#register > div > p > input:valid {
+  border: 2px green;
+}
+#register > div > p > input:invalid {
+  border: 2px red;
 }
 .custom-input:focus {
   border-color: #007BFF;
