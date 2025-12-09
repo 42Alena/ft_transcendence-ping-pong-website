@@ -214,6 +214,9 @@
   .absolute {
     position: absolute;
   }
+  .fixed {
+    position: fixed;
+  }
   .relative {
     position: relative;
   }
@@ -310,6 +313,9 @@
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
+  .h-52 {
+    height: calc(var(--spacing) * 52);
+  }
   .h-60 {
     height: calc(var(--spacing) * 60);
   }
@@ -324,6 +330,9 @@
   }
   .h-\[60px\] {
     height: 60px;
+  }
+  .h-\[100px\] {
+    height: 100px;
   }
   .h-\[480px\] {
     height: 480px;
@@ -340,6 +349,9 @@
   .max-h-full {
     max-height: 100%;
   }
+  .max-h-screen {
+    max-height: 100vh;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -355,6 +367,9 @@
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
+  .w-52 {
+    width: calc(var(--spacing) * 52);
+  }
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
@@ -366,6 +381,9 @@
   }
   .w-\[70px\] {
     width: 70px;
+  }
+  .w-\[100px\] {
+    width: 100px;
   }
   .w-\[120px\] {
     width: 120px;
@@ -387,9 +405,6 @@
   }
   .max-w-6xl {
     max-width: var(--container-6xl);
-  }
-  .max-w-\[80\%\] {
-    max-width: 80%;
   }
   .max-w-full {
     max-width: 100%;
@@ -487,6 +502,12 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .rounded {
     border-radius: 0.25rem;

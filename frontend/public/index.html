@@ -36,7 +36,7 @@
                     alt="User Avatar"
                     width="50"
                     height="50"
-                    class="rounded-full"
+                    class="rounded-full bg-white"
                   />
                 </div>
               </a>
@@ -248,44 +248,58 @@
                     >Username (login)</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
                     autocomplete="off"
                     required
                   />
-                  <div id="reg-usernama_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                  <div
+                    id="reg-usernama_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
                  <div class="mb-3">
                   <label class="text-xl font-bold text-heading" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
                     autocomplete="off"
                     required
                   />
-                  <div id="reg-displayName_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                  <div
+                    id="reg-displayName_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
                 <div class="mb-3">
                   <label class="text-xl font-bold text-heading" for="reg-password"
                     >Password</label
                   >
                   <input
-                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
                     autocomplete="off"
                     required
                   />
-                <div id="reg-password_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
+                  <div
+                    id="reg-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
                 </div>
-                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
+                <button
+                  type="submit"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Submit
+                </button>
               </form>
               <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
               <img
@@ -361,33 +375,31 @@
             >
               <div
                 class="grid grid-cols-3 border bg-amber-500"
-                id="acc-profile-header"
+                id="profile"
               >
                 <div
                   class="flex items-center justify-center border"
-                  id="acc-avatar"
+                  id="profile-avatar"
                 >
                   <img
                     src="images/profile/orange.png"
-                    alt=""
-                    id="acc-profile-avatar"
+                    alt="profile page"
                     width="100px"
                     height="100px"
                     class="rounded-full"
                   />
                 </div>
-                <div class="flex flex-col border" id="acc-info">
+                <div class="flex flex-col border" id="profile-info">
                   <div
-                    class="flex flex-1 items-center border"
-                    id="acc-username"
+                    class="flex flex-1 items-center border "
+                    id="profile-info-username"
                   >
-                    <p>Username: Pinco</p>
+
                   </div>
                   <div
                     class="flex flex-1 items-center border"
-                    id="acc-displayName"
+                    id="profile-info-displayName"
                   >
-                    <p id="temp-displayname">Display Name: Pallo</p>
                   </div>
                 </div>
                 <div class="flex flex-col border" id="acc-options;">
@@ -497,20 +509,17 @@
                   id="avatarEdit"
                   class="relative flex h-full w-full flex-1 items-center justify-center"
                 >
-                  <form
-                    action="http://127.0.0.1:3000/users/me/avatar"
-                    method="post"
-                    id="avatar"
-                    class="relative flex items-center justify-center"
-                  >
-                    <input
-                      type="image"
-                      id="avatarImgEdit"
-                      src="images/profile/orange.png"
-                      alt="Avatar"
-                      class="h-auto max-w-[80%] cursor-pointer rounded-full"
-                    />
-                    <div
+                <div class="cursor-pointer flex justify-center items-center object-cover relative">
+                  <div class="cursor-pointer flex justify-center items-center object-cover relative w-52 h-52">
+                    <img
+                        id="avatar-image"
+                        src="/images/profile/blue.png"
+                        alt="default avatar"
+                        class="rounded-full w-full h-full object-cover"
+                        onclick="showPopUp()"
+                      />
+                      </div>
+                      <div
                       id="svgIcon"
                       class="absolute bottom-0 left-1/2 z-3 -translate-x-1/2 transform cursor-pointer rounded-full p-1 hover:bg-blue-600"
                     >
@@ -520,6 +529,7 @@
                         viewBox="0 0 24 24"
                         focusable="false"
                         class="rounded-full fill-current text-white"
+                        onclick="showPopUp()"
                         aria-hidden="true"
                       >
                         <path
@@ -527,6 +537,21 @@
                         ></path>
                       </svg>
                     </div>
+                 </div>
+                  <form
+                    action="http://127.0.0.1:3000/users/me/avatar"
+                    method="post"
+                    id="avatar"
+                    enctype="multipart/form-data"
+                  >
+                    <input
+                      type="file"
+                      id="avatarImgEdit"
+                      alt="Avatar"
+                      class="cursor-pointer hidden"
+                      onchange="previewImage(event)" 
+                    />
+                    <input type="hidden" id="existingAvatar" value="" />
                   </form>
                   <div
                     id="avatarOptions"
@@ -546,45 +571,16 @@
                         <div
                           class="flex h-12 w-12 items-center justify-center rounded-full"
                         >
-                          <input
-                            type="image"
-                            id="creatures_g"
-                            src="images/avatars/pong_avatar_creatures_g.png"
-                            alt="Avatar G"
-                            class="h-full w-full rounded-full"
-                            form="avatar"
-                          />
-                        </div>
-                        <span></span>
-                      </li>
-                      <li class="w-1/4 cursor-pointer p-1" data-url="b">
-                        <div
-                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-500"
-                        >
-                          <input
-                            type="image"
-                            id="pong_avatar_creatures_b"
-                            src="images/avatars/pong_avatar_creatures_b.png"
-                            alt="Avatar B"
-                            class="h-full w-full rounded-full"
-                            form="avatar"
-                          />
+                          <img src="images/avatars/pong_avatar_creatures_g.png" alt="Avatar G" id="G" class="h-full w-full rounded-full" onclick="displayPreview()"/>
                         </div>
                         <span></span>
                       </li>
                       <li class="w-1/4 cursor-pointer p-1" data-url="upload">
                         <label
-                          for="file-upload"
+                          for="avatarImgEdit"
                           class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                           >&plus;</label
                         >
-                        <input
-                          type="file"
-                          id="file-upload"
-                          name="settings-upload"
-                          form="avatar"
-                          class="hidden"
-                        />
                       </li>
                       <span></span>
                     </ul>
@@ -625,6 +621,7 @@
                         id="settings-username"
                         name="settings-user_username"
                         autocomplete="off"
+                        value=""
                         readonly
                       />
                     </div>
@@ -640,6 +637,7 @@
                         id="settings-displayName"
                         name="settings-user_displayName"
                         autocomplete="off"
+                        value=""
                       />
                       <div
                         id="settings-displayName_error"
@@ -666,19 +664,21 @@
                   >
                     <h2 class="mb-3 text-2xl font-bold">Password</h2>
                     <div class="mb-3">
-                      <label
-                        class="text-heading text-xl font-medium"
-                        for="settings-current-password"
-                        >Current password</label
-                      >
-                      <input
-                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                        type="password"
-                        id="settings-current-password"
-                        name="settings-user_username"
-                        autocomplete="off"
-                      />
-                    </div>
+                    <label class="text-heading text-xl font-medium" for="settings-current-password"
+                    >Current password</label
+                  >
+                  <input
+                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                    type="password"
+                    id="settings-current-password"
+                    name="settings-user_current-password"
+                    autocomplete="off"
+                  />
+                  <div
+                    id="settings-current-password_error"
+                    class="hidden text-sm text-red-600"
+                  ></div>
+                </div>
                     <div class="mb-3">
                       <label
                         class="text-heading text-xl font-medium"
@@ -689,7 +689,7 @@
                         class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
                         type="password"
                         id="settings-new-password"
-                        name="settings-new-password"
+                        name="settings-user_new-password"
                         autocomplete="off"
                       />
                       <div
@@ -713,8 +713,9 @@
                 <fieldset class="rounded border-2 border-red-500 p-4">
                   <legend class="text-red-600">DANGER ZONE</legend>
                   <button
-                    type="submit"
+                    type="button"
                     class="flex h-10 w-[140px] items-center justify-center rounded border-2 border-red-950 bg-red-500 font-bold text-white hover:bg-red-700"
+                    id="delete-account-button"
                   >
                     Delete Account
                   </button>
@@ -735,59 +736,9 @@
                   See blocked users
                 </button>
               </div>
-              <div id="friendsList" class="flex flex-wrap p-[5px]">
-                <div class="friend flex items-center border p-2.5">
-                  <img
-                    src="images/profile/purple.png"
-                    alt=""
-                    width="100px"
-                    height="100px"
-                  />
-                  <div class="ml-2.5 flex flex-col" id="friend-description">
-                    <div class="flex items-center gap-2" id="friend-name">
-                      <div>Mafalda</div>
-                    </div>
-                    <div class="friend-action flex justify-start gap-1">
-                      <button
-                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="button"
-                        id="remove-friend__page"
-                      >
-                        remove
-                      </button>
-                      <button
-                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="button"
-                        id="block-friend__page"
-                      >
-                        block
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div id="friendsList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
               </div>
-              <div id="blockedList" class="hidden p-[5px]">
-                <div class="friend flex items-center border p-2.5">
-                  <img
-                    src="images/profile/green.png"
-                    alt=""
-                    width="100px"
-                    height="100px"
-                  />
-                  <div class="ml-2.5 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <div>Zorro</div>
-                    </div>
-                    <div class="friend-action flex justify-start gap-1">
-                      <button
-                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="button"
-                      >
-                        remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div id="blockedList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
               </div>
             </div>
           </div>
@@ -1118,7 +1069,8 @@
     <script src="dist/charts.js"></script>
     <script src="dist/registerUser.js"></script>
     <script src="dist/loginUser.js"></script>
-    <script src="dist/api/user.js" type="module"></script>
-    <script src="dist/api/chat.js" type="module"></script>
+    <script src="dist/profileUser.js"></script>
+    <!-- <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/chat.js" type="module"></script> -->
   </body>
 </html>

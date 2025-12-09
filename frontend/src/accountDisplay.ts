@@ -17,12 +17,8 @@ const profileAddRemFriend: any = document.getElementById(
 const profileBlockUnbFriend: any = document.getElementById(
   "block-unblock-friend__header",
 );
-//settings page
-// const profileMenuSettings: any = document.getElementById("acc-settings");
-// const profileSettingsPage: any = document.getElementById("update-settings");
 const tempdisplayN: any = document.getElementById("temp-displayname");
 
-//events on profile button
 let isFriend = false;
 let isBlocked = true;
 
@@ -46,6 +42,11 @@ profileBlockUnbFriend.addEventListener("click", (event: any) => {
   }
 });
 function setAccountPage(text: string) {
+  reg.reset();
+  log.reset();
+  displayNameForm.reset();
+  passwordForm.reset();
+  avatarForm.reset();
   accP.classList.add("flex");
   accP.classList.remove("hidden");
   chatP.classList.remove("grid");
@@ -81,6 +82,10 @@ function setAccountPage(text: string) {
     gameOverDiv.classList.remove("flex");
     instruction.classList.add("hidden");
     instruction.classList.remove("flex");
+    errorUsernameLog.classList.add("hidden");
+    errorUsernameLog.classList.remove("block");
+    errorPasswordLog.classList.remove("block");
+    errorPasswordLog.classList.add("hidden");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");
@@ -110,6 +115,12 @@ function setAccountPage(text: string) {
     gameOverDiv.classList.remove("flex");
     instruction.classList.add("hidden");
     instruction.classList.remove("flex");
+    errorUsername.classList.add("hidden");
+    errorUsername.classList.remove("block");
+    errorDisplayName.classList.add("hidden");
+    errorDisplayName.classList.remove("block");
+    errorPaassword.classList.add("hidden");
+    errorPaassword.classList.remove("block");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");
@@ -117,10 +128,6 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "profile") {
-    profP.classList.add("grid");
-    profP.classList.remove("hidden");
-    accP.appendChild(profP);
-    displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
@@ -129,8 +136,6 @@ function setAccountPage(text: string) {
     settingsPage.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -145,23 +150,30 @@ function setAccountPage(text: string) {
       canvas.classList.remove("block");
       gameisOn = false;
     }
+    requestProfile();
   } else if (text == "settings") {
+    //add route to this?
     settingsPage.classList.add("flex");
     settingsPage.classList.remove("hidden");
+    console.log("here");
+    const userDataString: string | null = localStorage.getItem("userData");
+    if (localStorage.getItem("userData")) {
+      if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        settingsUsernameInput.value = userData.username;
+        settingsDisplayNameInput.value = userData.displayName;
+      }
+    }
     popup.classList.add("hidden");
     popup.classList.remove("block");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
-    accP.appendChild(profP);
-    displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
     regP.classList.remove("flex");
     friendsPage.classList.add("hidden");
     friendsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -177,20 +189,17 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "friends") {
-    friendsPage.classList.add("flex");
-    friendsPage.classList.remove("hidden");
+    requestFriendsList();
+    blockedList.classList.add("hidden");
+    blockedList.classList.remove("flex");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
-    accP.appendChild(profP);
-    displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
     regP.classList.remove("flex");
     settingsPage.classList.add("hidden");
     settingsPage.classList.remove("flex");
-    // matchesPage.classList.add("hidden");
-    // matchesPage.classList.remove("flex");
     gameP.classList.add("hidden");
     gameP.classList.remove("flex");
     setGame.classList.add("hidden");
@@ -237,6 +246,7 @@ function displayBlockedFriends() {
     blockedList.classList.remove("hidden");
     friendList.classList.add("hidden");
     friendList.classList.remove("flex");
+    requestBlockedList();
     toggle = true;
   } else {
     blockButton.textContent = "See blocked users";
@@ -244,6 +254,7 @@ function displayBlockedFriends() {
     blockedList.classList.remove("flex");
     friendList.classList.add("flex");
     friendList.classList.remove("hidden");
+    requestFriendsList();
     toggle = false;
   }
 }
@@ -346,41 +357,41 @@ function displayUserProfile() {
 //   event.preventDefault();
 // });
 
-const settingsPage: any = document.getElementById("settingsPage");
+// const settingsPage: any = document.getElementById("settingsPage");
 const friendsPage: any = document.getElementById("friendsPage");
-const avatarForm: any = document.getElementById("avatar");
-const imgIcon: any = document.getElementById("svgIcon");
-const avatar: any = document.getElementById("avatarImgEdit");
-const popup: any = document.getElementById("avatarOptions");
-const popUpButton: any = document.getElementById("closePopUp");
-const displayNameForm: any = document.getElementById("displayName");
-const passwordForm: any = document.getElementById("password");
+// const avatarForm: any = document.getElementById("avatar");
+// const imgIcon: any = document.getElementById("svgIcon");
+// const avatar: any = document.getElementById("avatarImgEdit");
+// const popup: any = document.getElementById("avatarOptions");
+// const popUpButton: any = document.getElementById("closePopUp");
+// const displayNameForm: any = document.getElementById("displayName");
+// const passwordForm: any = document.getElementById("password");
 
-// When the user clicks on <span> (x), close the modal
-popUpButton.addEventListener("click", () => {
-  popup.classList.add("hidden");
-  popup.classList.remove("block");
-});
+// // When the user clicks on <span> (x), close the modal
+// popUpButton.addEventListener("click", () => {
+//   popup.classList.add("hidden");
+//   popup.classList.remove("block");
+// });
 
-let pop: boolean = false;
-avatarForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// let pop: boolean = false;
+// avatarForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-displayNameForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// displayNameForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-passwordForm.addEventListener("submit", (event: any) => {
-  event.preventDefault();
-});
+// passwordForm.addEventListener("submit", (event: any) => {
+//   event.preventDefault();
+// });
 
-imgIcon.addEventListener("click", (event: any) => {
-  popup.classList.add("block");
-  popup.classList.remove("hidden");
-});
+// imgIcon.addEventListener("click", (event: any) => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });
 
-avatar.addEventListener("click", () => {
-  popup.classList.add("block");
-  popup.classList.remove("hidden");
-});
+// avatar.addEventListener("click", () => {
+//   popup.classList.add("block");
+//   popup.classList.remove("hidden");
+// });
