@@ -27,7 +27,11 @@ fastify.register(require('@fastify/cors'), {
 fastify.register(require('@fastify/multipart'))
 
 
-
+//for avatar urls
+fastify.register(require('@fastify/static'), {
+  root: UPLOAD_DIR,          // ../avatars/users/
+  prefix: URL_AVATAR_PREFIX, //  http://127.0.0.1:3000/avatars/users/...
+});
 
 
 //________________DECORATORS___________________
