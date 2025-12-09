@@ -93,55 +93,67 @@ CREATE TABLE IF NOT EXISTS messages (
         )
     ),
     senderId TEXT NOT NULL, -- users.id or a fixed SystemId string
-    receiverId TEXT NOT NULL, -- 'all' for public, or users.id for DM/invite
+    receiverId TEXT NOT NULL, 
     content TEXT NOT NULL, -- message text OR short invite note
     meta TEXT, -- JSON: { "sender":"abc", "message": "hello", ... } or null
     createdAt INTEGER NOT NULL DEFAULT(unixepoch ())
 );
 
+CREATE INDEX IF NOT EXISTS i_messages_conv_createdAt
+    ON messages (senderId, receiverId, createdAt);
 
 -- ============================================
 -- GAMES  (all stored 1v1 matches for stats)
 -- ============================================
 -- One row = one finished game.
--- mode:
---   'game'       -> normal 1v1 game
---   'tournament' -> tournament semi / final
 -- 
---   winner:
---       1 -> player1 won
---       2 -> player2 won
-
---   round:
---       NULL          -> normal game
---       'semi'        -> tournament semi-final
---       'final'       -> tournament final
-
+-- UserId:
+-- real user = user id
+-- guest/AI = NULL
+-- 
+-- round:
+--   NULL               -> normal game
+--   'semi'   -> tournament semi-final
+--   'final'  -> tournament final
+-- 
 --    users are "deleted" by soft delete (deletedAt + anonymized name),
 --     so we normally never DELETE from users. Old games remain valid for stats.
 -- ============================================
-
 CREATE TABLE IF NOT EXISTS games (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-    mode TEXT NOT NULL CHECK (mode IN ('game', 'tournament')),
+    -- game type
+    mode TEXT NOT NULL
+        CHECK (mode IN ('normalGame', 'tournament')),
 
-    player1UserId TEXT REFERENCES users (id) ON DELETE SET NULL,
-    player2UserId TEXT REFERENCES users (id) ON DELETE SET NULL,
+    -- null for normal games, 'semi' or 'final' for tournaments
+    tournamentRound TEXT,
 
-    player1Alias TEXT NOT NULL,
-    player2Alias TEXT NOT NULL,
+    -- null for guest/AI players, or if user hard-deleted
+    winnerUserId TEXT REFERENCES users (id) ON DELETE SET NULL,
+    loserUserId  TEXT REFERENCES users (id) ON DELETE SET NULL,
 
-    player1Score INTEGER NOT NULL,
-    player2Score INTEGER NOT NULL,
+    -- aliases as shown in UI at the time of the game
+    winnerAlias TEXT NOT NULL,
+    loserAlias  TEXT NOT NULL,
 
-    winner INTEGER NOT NULL CHECK (winner IN (1, 2)),
+    -- scores
+    winnerScore INTEGER NOT NULL,
+    loserScore  INTEGER NOT NULL,
 
-    round TEXT CHECK (round IN ('semi', 'final')),
+    createdAt INTEGER NOT NULL DEFAULT (unixepoch()),
 
-    createdAt INTEGER NOT NULL DEFAULT (unixepoch())
+    -- consistency between mode and tournamentRound
+    CHECK (
+      (mode = 'normalGame' AND tournamentRound IS NULL)
+      OR
+      (mode = 'tournament' AND tournamentRound IN ('semi','final'))
+    ),
+
+    -- basic score sanity: non-negative and winner really wins
+    CHECK (winnerScore >= 0 AND loserScore >= 0 AND winnerScore > loserScore)
 );
 
-CREATE INDEX IF NOT EXISTS i_games_player1UserId ON games (player1UserId);
-CREATE INDEX IF NOT EXISTS i_games_player2UserId ON games (player2UserId);
-CREATE INDEX IF NOT EXISTS i_games_createdAt     ON games (createdAt);
+CREATE INDEX IF NOT EXISTS i_games_winnerUserId ON games (winnerUserId);
+CREATE INDEX IF NOT EXISTS i_games_loserUserId  ON games (loserUserId);
+CREATE INDEX IF NOT EXISTS i_games_createdAt    ON games (createdAt);

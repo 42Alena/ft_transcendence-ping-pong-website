@@ -81,6 +81,21 @@ export class UserManager {
 		return userFromDbRow(row)
 	}
 
+	//_______________READ__________________
+	async getUserByDisplayname(displayName: Domain.DisplayName): Promise<Domain.User | null> {
+
+		const row = await this.dbTableUser()
+			.where({ displayName: displayName, deletedAt: 0 })
+			.first();
+
+		if (!row) {
+			return null;
+		}
+
+		return userFromDbRow(row);
+	}
+
+
 
 	async getAllUsers(): Promise<Domain.User[]> {
 

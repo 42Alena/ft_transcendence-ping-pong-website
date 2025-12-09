@@ -11,18 +11,54 @@ or what you  special need:
 import { UserId, UserStatus, MatchResult } from './types/types';
 */
 
-import { ReceiverId } from "./api";
 
 
 
+//_____________ CONSTANTS__________________
+export const SYSTEM_ID = "TOURNAMENT" as const;
+export const GUEST_ID = "GUEST" as const;
+export const AI_ID = "AI" as const;
 
-
-//_____________GDPR: delete/anonymize user account
+//_____________CONSTANTS_ GDPR: delete/anonymize user account
 export const DELETED_USER_DISPLAY_NAME = "Deleted user" as const;
 export const DELETED_USERNAME = "Deleted_" as const;
 export const DELETED_AVATARURL = null;
 // export type DeletedUser = null;
 // export type UserOrDeleted = User | DeletedUser;
+
+
+export const TOURNAMENT_AI_ALIASES = [
+	'AI_ALENA',
+	'AI_SVEVA',
+	'AI_LUIS',
+] as const;
+
+export const AI_NAME_PREFIX = "AI_";
+export const AI_NAME_SUFFIX = "_AI";
+
+const RESERVED_NAMES: string[] = [
+	'admin',
+	'root',
+	'null',
+	'system',
+	'SYSTEM_ID',
+	'api',
+	'delete',
+	'tournament',
+	SYSTEM_ID,
+	GUEST_ID,
+	AI_ID,
+	DELETED_USER_DISPLAY_NAME,  // Deleted_
+	DELETED_USERNAME,
+	...TOURNAMENT_AI_ALIASES,
+];
+export const RESERVED = RESERVED_NAMES;
+
+// const newObj = Object.assign({}, baseObject, { new: prop })
+// const newObj = { ...baseObject, ...{new: prop}}
+
+
+
 
 //_______________Primitives, single source of truth_____________
 export type Username = string;
@@ -152,7 +188,6 @@ export type UnblockUserResult =
 
 //_____________CHAT___________
 
-export const SYSTEM_ID = "TOURNAMENT" as const;
 export type SystemId = typeof SYSTEM_ID;
 
 export type MessageContent = string;
@@ -191,12 +226,14 @@ export type MessageChat = {
 	createdAt: TimeSec;
 };
 
-export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
+// export type NewMessageChat = Omit<MessageChat, "id" | "createdAt">;
+export type NewMessageChat = NewMessageTypeChat;
+
 
 //normal private DM: no meta
 export type NewPrivateMessage = {
 	type: "PrivateMessage";
-	senderId: SenderId;
+	senderId: PrivateSenderId;
 	receiverId: PrivateReceiverId;
 	content: MessageContent;
 	// meta: null;
@@ -254,10 +291,11 @@ export type ChatConversationsResult =
 
 export type ChatConversationWithResult =
 	| { ok: true; conversations: ChatConversations[] }
-	| { 
+	| {
 		ok: false; reason:
 		| "not_me"    // sender id != current user / invalid session
-		| "no_receiver" };
+		| "no_receiver"
+	};
 
 
 export type ChatConversationsItem = {
@@ -296,51 +334,113 @@ export type MessageTournamentInvite = typeof MESSAGE_TOURNAMENT_INVITE;
 // };
 
 
+//__________________GAME: MATCH TOURNAMENT______________
+
 export type TournamentAiAlias = typeof TOURNAMENT_AI_ALIASES[number];
 
-export type MetaTournamentNextMatch = {
-	kind: "next_match";
-	tournamentId: string;
-	matchId: string;
-	player1: { id: UserId | null; alias: string };
-	player2: { id: UserId | null; alias: string };
+export type GameId = number;
+export type GameMode = 'tournament' | 'normalGame';
+
+export type Alias = string;
+
+export type TournamentRound =
+	| 'semi'
+	| 'final';
+
+export type GameTournamentRound =
+	| TournamentRound
+	| null;  //for normallGame
+
+export type PlayerId = UserId | null;  // null for guest, AI
+export type GameScore = number;
+
+
+export type GameWinnersLosers = {
+	winnerScore: GameScore;
+	loserScore: GameScore;
+
+	winnerAlias: Alias;
+	loserAlias: Alias;
+}
+
+export type BaseGame = GameWinnersLosers & {
+
+	mode: GameMode;  // "tournament" | "normalGame"
+	tournamentRound: GameTournamentRound;
+
+	winnerUserId: PlayerId;
+	loserUserId: PlayerId;
+	createdAt: TimeSec;
+}
+
+export type NormalGame = BaseGame & {
+	mode: 'normalGame';
+	tournamentRound: null;
+}
+
+export type TournamentGame = BaseGame & {
+	mode: 'tournament';
+	tournamentRound: TournamentRound;
+}
+
+
+export type AnyGame =
+	| NormalGame
+	| TournamentGame;
+
+
+export type SaveGameResult =
+	| { ok: true; saved: true }
+	| { ok: true; saved: false }  // valid game, but skipped (AI vs AI or guest vs guest)
+	| {
+		ok: false;
+		reason:
+		| "not_me"             // not authenticated
+		| "invalid_tournament" // bad mode/round combination
+		| "invalid_game"       // structural problem, e.g. same winner/loser, empty alias
+		| "invalid_score";     // winnerScore/loserScore invalid
+	};
+
+
+export type GamePlayersScores = {
+			player1Alias: Alias,
+			player1Score:GameScore,
+			player2Alias: Alias,
+			player2Score: GameScore
 };
 
-//_____________MATCH______________________
-export type MatchResult = {
-	opponentId: UserId;
-	// date: Date;                //TODO: change from DAte to number as in DB
-	result: GameResult;
+
+// one row in Sveva's "Matches" table on the profile page
+export type UserProfileMatchRow = {
+	opponentAlias: Alias;   // othermdisplayName,/ AI/guest alias
+	date: string;			// 08/12/25
+	scoreMeOther: string;        //  "3-0" my first
 };
 
+// whole history for that profile
+export type UserProfileMatches = UserProfileMatchRow[];
 
-//_____________ CONSTANTS__________________
 
-export const TOURNAMENT_AI_ALIASES = [
-	'AI_ALENA',
-	'AI_SVEVA',
-	'AI_LUIS',
-	'AI_42BERLIN',
-] as const;
+export type GetUserProfileGamesAndStatsResult = {
+	ok: true;
+	matches: UserProfileMatchRow[];   // your rows with opponent/date/score
+	stats: UserProfileStats;        // for 1./2/3. places total wins
+} | {
+	ok: false;
+	reason: "not_me" | "no_user" ;
+}
 
-export const AI_NAME_PREFIX = "AI_";
-export const AI_NAME_SUFFIX = "_AI";
 
-const RESERVED_NAMES: string[] = [
-	'admin',
-	'root',
-	'null',
-	'system',
-	'SYSTEM_ID',
-	'api',
-	'delete',
-	'tournament',
-	DELETED_USER_DISPLAY_NAME,  // Deleted_
-	DELETED_USERNAME,
-	SYSTEM_ID,
-	...TOURNAMENT_AI_ALIASES,
-];
-export const RESERVED = RESERVED_NAMES;
+export type UserProfileStats = {
+	totalGames: number;
 
-// const newObj = Object.assign({}, baseObject, { new: prop })
-// const newObj = { ...baseObject, ...{new: prop}}
+	wins: number;
+	losses: number;
+	winRatePercent: number;   // 0–100
+	lossRatePercent: number;  // 0–100 (or derive on frontend)
+
+	place1: number;           // how many times 1st place
+	place2: number;           // how many times 2nd place
+	place3: number;           // how many times 3rd place
+};
+
