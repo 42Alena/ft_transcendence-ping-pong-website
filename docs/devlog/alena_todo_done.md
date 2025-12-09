@@ -7,6 +7,50 @@ Not required for evaluation — used for organization and pull request preparati
 ---------------------
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+change from absolute path
+ "avatarUrl": "my_storage/.../backend/avatars/users/56f3d15ff268eb0ab0b48415.png"
+  to 
+  /avatars/users/56f3d15ff268eb0ab0b48415.png
+
+### config.ts
+added avatar url prefix
+
+  ### main.ts
+  added static for avatars
+## DB
+
+
+## BACKEND
+### UserManager
+### User_routes
+### domain types
+
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+ 
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+---------------------
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
 ## DB
 
 ## BACKEND

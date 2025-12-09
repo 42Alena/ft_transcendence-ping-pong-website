@@ -9,6 +9,7 @@ import { UserManager } from './lib/services/UserManager';
 import { initDecorators } from './decorators';
 import { ChatManager } from './lib/services/ChatManager';
 import { GameStatsManager } from './lib/services/GameStatsManager';
+import { UPLOAD_DIR, URL_AVATAR_PREFIX } from './config';
 
 
 const fastify = Fastify();
@@ -24,6 +25,9 @@ fastify.register(require('@fastify/cors'), {
 
 //for file upload
 fastify.register(require('@fastify/multipart'))
+
+
+
 
 
 //________________DECORATORS___________________
