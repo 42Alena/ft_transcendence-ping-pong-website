@@ -44,19 +44,24 @@ successRegPage.classList.remove("flex");
     console.log(response.json);
     const data = await response.json();
     if (!response.ok) {
-      if (data.field == "username") {
-        errorUsername.classList.add("block");
-        errorUsername.classList.remove("hidden");
-        errorUsername.textContent = data.error;
-      } else if (data.field == "displayName") {
-        errorDisplayName.classList.add("block");
-        errorDisplayName.classList.remove("hidden");
-        errorDisplayName.textContent = data.error;
-      } else {
-        errorPaassword.classList.add("block");
-        errorPaassword.classList.remove("hidden");
-        errorPaassword.textContent = data.error;
-      }
+        if (data.field == "username")
+        {
+            errorUsername.classList.add("block");
+            errorUsername.classList.remove("hidden");
+            errorUsername.textContent = data.error;
+        }
+        else if (data.field == "displayName")
+        {
+            errorDisplayName.classList.add("block");
+            errorDisplayName.classList.remove("hidden");
+            errorDisplayName.textContent = data.error;
+        }
+        else
+        {
+            errorPaassword.classList.add("block");
+            errorPaassword.classList.remove("hidden");
+            errorPaassword.textContent = data.error;
+        }
       throw new Error(`Response status ${response.status}`);
     } else {
         errorUsername.classList.add("hidden");

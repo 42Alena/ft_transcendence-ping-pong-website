@@ -4,14 +4,18 @@ import { registerRoutes as registerMainRoutes } from './routes/routes';
 import { registerChatRoutes } from './routes/chat';
 import { registerUserRoutes } from './routes/user';
 import { registerAuthRoutes } from './routes/auth';
+import { registerGameStatsRoutes } from './routes/gameStats';
 import { UserManager } from './lib/services/UserManager';
 import { initDecorators } from './decorators';
 import { ChatManager } from './lib/services/ChatManager';
+import { GameStatsManager } from './lib/services/GameStatsManager';
+
 
 const fastify = Fastify();
 
 const userManager = new UserManager()
 const chatManager = new ChatManager(userManager)
+const gameStatsManager = new GameStatsManager(userManager)
 
 fastify.register(require('@fastify/cors'), { origin: '*' }) //https://github.com/fastify/fastify-cors
 
@@ -40,6 +44,7 @@ registerChatRoutes(fastify, chatManager)
 registerUserRoutes(fastify, userManager)
 registerHealthzRoutes(fastify);
 registerAuthRoutes(fastify, userManager);
+registerGameStatsRoutes(fastify, gameStatsManager);
 
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, (err: Error | null, address: string) => {

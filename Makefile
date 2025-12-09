@@ -84,6 +84,10 @@ tests_chat: db
 	@chmod +x backend/tests/chat.sh
 	@BASE_URL=http://localhost:3000 backend/tests/chat.sh
 
+tests_game_stats: db
+	@chmod +x backend/tests/gameStats.sh
+	@BASE_URL=http://localhost:3000 backend/tests/gameStats.sh
+
 # ---- Tooling guards ---------------------------------------------------------
 check-tools:
 	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }

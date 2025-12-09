@@ -248,58 +248,44 @@
                     >Username (login)</label
                   >
                   <input
-                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="text"
                     id="reg-username"
                     name="reg-user_username"
                     autocomplete="off"
                     required
                   />
-                  <div
-                    id="reg-usernama_error"
-                    class="hidden text-sm text-red-600"
-                  ></div>
+                  <div id="reg-usernama_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
                 </div>
                  <div class="mb-3">
                   <label class="text-xl font-bold text-heading" for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
-                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="text"
                     id="reg-displayName"
                     name="reg-user_displayName"
                     autocomplete="off"
                     required
                   />
-                  <div
-                    id="reg-displayName_error"
-                    class="hidden text-sm text-red-600"
-                  ></div>
+                  <div id="reg-displayName_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
                 </div>
                 <div class="mb-3">
                   <label class="text-xl font-bold text-heading" for="reg-password"
                     >Password</label
                   >
                   <input
-                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                    class="text-heading text-lg rounded-sm focus:ring-brand focus:border-brand block w-full shadow-xs px-1 py-1 bg-white"
                     type="password"
                     id="reg-password"
                     name="reg-user_password"
                     autocomplete="off"
                     required
                   />
-                  <div
-                    id="reg-password_error"
-                    class="hidden text-sm text-red-600"
-                  ></div>
+                <div id="reg-password_error" class="mt-1.5 text-red-600 border bg-white hidden text-sm"></div>
                 </div>
-                <button
-                  type="submit"
-                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                >
-                  Submit
-                </button>
+                <button type="submit" class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700">Submit</button>
               </form>
               <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
               <img
@@ -1131,8 +1117,7 @@
     <script src="dist/createRules.js"></script>
     <script src="dist/charts.js"></script>
     <script src="dist/registerUser.js"></script>
-    <script src="dist/loginUser.js"></script>
-    <!-- <script src="dist/api/user.js" type="module"></script>
-    <script src="dist/api/chat.js" type="module"></script> -->
+    <script src="dist/api/user.js" type="module"></script>
+    <script src="dist/api/chat.js" type="module"></script>
   </body>
 </html>
