@@ -166,7 +166,6 @@ function setAccountPage(text: string) {
     popup.classList.remove("block");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
-    // displayPersonalProfile();
     logP.classList.add("hidden");
     logP.classList.remove("flex");
     regP.classList.add("hidden");
@@ -189,6 +188,8 @@ function setAccountPage(text: string) {
     }
   } else if (text == "friends") {
     requestFriendsList();
+    blockedList.classList.add("hidden");
+    blockedList.classList.remove("flex");
     profP.classList.add("hidden");
     profP.classList.remove("grid");
     logP.classList.add("hidden");
@@ -243,6 +244,7 @@ function displayBlockedFriends() {
     blockedList.classList.remove("hidden");
     friendList.classList.add("hidden");
     friendList.classList.remove("flex");
+    requestBlockedList();
     toggle = true;
   } else {
     blockButton.textContent = "See blocked users";
@@ -250,6 +252,7 @@ function displayBlockedFriends() {
     blockedList.classList.remove("flex");
     friendList.classList.add("flex");
     friendList.classList.remove("hidden");
+    requestFriendsList();
     toggle = false;
   }
 }

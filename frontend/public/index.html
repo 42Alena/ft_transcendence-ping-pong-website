@@ -736,30 +736,9 @@
                   See blocked users
                 </button>
               </div>
-              <div id="friendsList" class="flex flex-wrap p-[5px] gap-2">
+              <div id="friendsList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
               </div>
-              <div id="blockedList" class="hidden p-[5px]">
-                <div class="friend flex items-center border p-2.5">
-                  <img
-                    src="images/profile/green.png"
-                    alt=""
-                    width="100px"
-                    height="100px"
-                  />
-                  <div class="ml-2.5 flex flex-col">
-                    <div class="flex items-center gap-2">
-                      <div>Zorro</div>
-                    </div>
-                    <div class="friend-action flex justify-start gap-1">
-                      <button
-                        class="flex h-10 w-[70px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="button"
-                      >
-                        remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div id="blockedList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
               </div>
             </div>
           </div>
