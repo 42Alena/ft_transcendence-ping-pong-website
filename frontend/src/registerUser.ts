@@ -1,7 +1,5 @@
-const reg : any = document.getElementById("register");
-const usernameInput: any = document.getElementById("reg-username");
-const usernameInputDiv : any = document.getElementById("usernameInput");
-const errorUsername : any = document.getElementById("reg-usernama_error");
+const reg: any = document.getElementById("register");
+const errorUsername: any = document.getElementById("reg-usernama_error");
 const errorDisplayName: any = document.getElementById("reg-displayName_error");
 const errorPaassword : any = document.getElementById("reg-password_error");
 const displayInput: any = document.getElementById("reg-display");
@@ -46,24 +44,19 @@ successRegPage.classList.remove("flex");
     console.log(response.json);
     const data = await response.json();
     if (!response.ok) {
-        if (data.field == "username")
-        {
-            errorUsername.classList.add("block");
-            errorUsername.classList.remove("hidden");
-            errorUsername.textContent = data.error;
-        }
-        else if (data.field == "displayName")
-        {
-            errorDisplayName.classList.add("block");
-            errorDisplayName.classList.remove("hidden");
-            errorDisplayName.textContent = data.error;
-        }
-        else
-        {
-            errorPaassword.classList.add("block");
-            errorPaassword.classList.remove("hidden");
-            errorPaassword.textContent = data.error;
-        }
+      if (data.field == "username") {
+        errorUsername.classList.add("block");
+        errorUsername.classList.remove("hidden");
+        errorUsername.textContent = data.error;
+      } else if (data.field == "displayName") {
+        errorDisplayName.classList.add("block");
+        errorDisplayName.classList.remove("hidden");
+        errorDisplayName.textContent = data.error;
+      } else {
+        errorPaassword.classList.add("block");
+        errorPaassword.classList.remove("hidden");
+        errorPaassword.textContent = data.error;
+      }
       throw new Error(`Response status ${response.status}`);
     } else {
         errorUsername.classList.add("hidden");
@@ -76,7 +69,7 @@ successRegPage.classList.remove("flex");
       successRegPage.classList.remove("hidden");
       reg.classList.add("hidden");
       reg.classList.remove("flex");
-       reg.reset();
+      reg.reset();
       console.log("Registered user:", data);
     }
   } catch (error: any) {
