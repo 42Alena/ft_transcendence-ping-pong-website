@@ -38,7 +38,7 @@ function displayList(event: any, text: string) {
 }
 
 //display
-function addBubble(role: string, content: string) {
+function addBubble(role: string, content: string, timeStamp : HTMLDivElement) {
   const newBubble = document.createElement("div");
   const newContent = document.createTextNode(content);
   newBubble.append(newContent);
@@ -48,39 +48,40 @@ function addBubble(role: string, content: string) {
     newBubble.className = "chat-right__bubble-received border";
   }
   historyConversation.append(newBubble);
+  historyConversation.append(timeStamp);
   bubbleDiv.appendChild(historyConversation);
 }
 
-function displayConversationHistory(
-  id: string,
-  list: Chat[],
-  name: string,
-  avatar: string,
-) {
-  userProfileDiv.classList.add("hidden");
-  userProfileDiv.classList.remove("block");
-  fillConversationInfo(name, avatar);
-  currChatId = id;
-  const existingBubble = document.getElementById("history-conv");
-  if (existingBubble) existingBubble.remove();
-  historyConversation = document.createElement("div");
-  historyConversation.className = "chat-right__bubble border";
-  historyConversation.setAttribute("id", "history-conv");
-  for (let step = 0; step < list.length; step++) {
-    if (list[step].id == id) {
-      let historyMex: {
-        sender: boolean;
-        receiver: boolean;
-        content: string;
-      }[] = list[step].messages;
-      for (let step = 0; step < historyMex.length; step++) {
-        if (historyMex[step].receiver == true)
-          addBubble("sender", historyMex[step].content);
-        else addBubble("recv", historyMex[step].content);
-      }
-    }
-  }
-}
+// function displayConversationHistory(
+//   id: string,
+//   list: Chat[],
+//   name: string,
+//   avatar: string,
+// ) {
+//   userProfileDiv.classList.add("hidden");
+//   userProfileDiv.classList.remove("block");
+//   fillConversationInfo(name, avatar);
+//   currChatId = id;
+//   const existingBubble = document.getElementById("history-conv");
+//   if (existingBubble) existingBubble.remove();
+//   historyConversation = document.createElement("div");
+//   historyConversation.className = "chat-right__bubble border";
+//   historyConversation.setAttribute("id", "history-conv");
+//   for (let step = 0; step < list.length; step++) {
+//     if (list[step].id == id) {
+//       let historyMex: {
+//         sender: boolean;
+//         receiver: boolean;
+//         content: string;
+//       }[] = list[step].messages;
+//       for (let step = 0; step < historyMex.length; step++) {
+//         if (historyMex[step].receiver == true)
+//           addBubble("sender", historyMex[step].content);
+//         else addBubble("recv", historyMex[step].content);
+//       }
+//     }
+//   }
+// }
 
 function fillConversationInfo(name: string, avatar: string) {
   const existingContactDiv = document.getElementById("contact-name");
@@ -116,135 +117,135 @@ function fillConversationInfo(name: string, avatar: string) {
   startConvDiv.classList.remove("flex");
 }
 
-function addElement(name: string, id: string, avatar: string) {
-  const newDiv = document.createElement("div");
+// function addElement(name: string, id: string, avatar: string) {
+//   const newDiv = document.createElement("div");
 
-  const avatDiv = document.createElement("div");
-  const avatImg = document.createElement("img");
-  avatImg.src = avatar;
-  avatImg.width = 30;
-  avatImg.height = 30;
-  avatDiv.appendChild(avatImg);
-  newDiv.appendChild(avatDiv);
+//   const avatDiv = document.createElement("div");
+//   const avatImg = document.createElement("img");
+//   avatImg.src = avatar;
+//   avatImg.width = 30;
+//   avatImg.height = 30;
+//   avatDiv.appendChild(avatImg);
+//   newDiv.appendChild(avatDiv);
 
-  const userDiv = document.createElement("div");
-  userDiv.setAttribute("id", name);
-  const newContent = document.createTextNode(name);
-  userDiv.appendChild(newContent);
-  newDiv.appendChild(userDiv);
-  newDiv.onclick = function () {
-    displayConversationHistory(id, chatList, name, avatar);
-  };
-  newDiv.classList.add(
-    "flex",
-    "items-center",
-    "gap-2.5",
-    "border",
-    "p-2.5",
-    "bg-white",
-  );
-  listDmsDiv.append(newDiv);
-}
+//   const userDiv = document.createElement("div");
+//   userDiv.setAttribute("id", name);
+//   const newContent = document.createTextNode(name);
+//   userDiv.appendChild(newContent);
+//   newDiv.appendChild(userDiv);
+//   newDiv.onclick = function () {
+//     displayConversationHistory(id, chatList, name, avatar);
+//   };
+//   newDiv.classList.add(
+//     "flex",
+//     "items-center",
+//     "gap-2.5",
+//     "border",
+//     "p-2.5",
+//     "bg-white",
+//   );
+//   listDmsDiv.append(newDiv);
+// }
 
-function storeNewMessage(id: string, mess: string) {
-  for (let step = 0; step < chatList.length; step++) {
-    if (chatList[step].id == id) {
-      let newMess: { sender: boolean; receiver: boolean; content: string } = {
-        sender: true,
-        receiver: false,
-        content: mess,
-      };
-      chatList[step].messages.push(newMess);
-      break;
-    }
-  }
-}
+// function storeNewMessage(id: string, mess: string) {
+//   for (let step = 0; step < chatList.length; step++) {
+//     if (chatList[step].id == id) {
+//       let newMess: { sender: boolean; receiver: boolean; content: string } = {
+//         sender: true,
+//         receiver: false,
+//         content: mess,
+//       };
+//       chatList[step].messages.push(newMess);
+//       break;
+//     }
+//   }
+// }
 
-function captureInput() {
-  const mess = inputEl.value;
-  addBubble("recv", mess);
-  storeNewMessage(currChatId, mess);
-  inputEl.value = "";
-}
+// function captureInput() {
+//   const mess = inputEl.value;
+//   addBubble("recv", mess);
+//   storeNewMessage(currChatId, mess);
+//   inputEl.value = "";
+// }
 
 //fake chat data structure - testing
-class Chat {
-  id: string;
-  recipientName: string;
-  avatar: string;
-  messages: { sender: boolean; receiver: boolean; content: string }[];
+// class Chat {
+//   id: string;
+//   recipientName: string;
+//   avatar: string;
+//   messages: { sender: boolean; receiver: boolean; content: string }[];
 
-  constructor(
-    id: string,
-    rec: string,
-    avatar: string,
-    messages: { sender: boolean; receiver: boolean; content: string }[],
-  ) {
-    this.id = id;
-    this.recipientName = rec;
-    this.avatar = avatar;
-    this.messages = messages;
-  }
-}
+//   constructor(
+//     id: string,
+//     rec: string,
+//     avatar: string,
+//     messages: { sender: boolean; receiver: boolean; content: string }[],
+//   ) {
+//     this.id = id;
+//     this.recipientName = rec;
+//     this.avatar = avatar;
+//     this.messages = messages;
+//   }
+// }
 
-let chatList: Chat[] = [];
-let messages1: { sender: boolean; receiver: boolean; content: string }[] = [];
-let message1: { sender: boolean; receiver: boolean; content: string } = {
-  sender: true,
-  receiver: false,
-  content: "Hello there",
-};
-let message2: { sender: boolean; receiver: boolean; content: string } = {
-  sender: false,
-  receiver: true,
-  content: "hi",
-};
-let message3: { sender: boolean; receiver: boolean; content: string } = {
-  sender: false,
-  receiver: true,
-  content: "how are you?",
-};
-messages1.push(message1);
-messages1.push(message2);
-messages1.push(message3);
-let messages2: { sender: boolean; receiver: boolean; content: string }[] = [];
-let message4: { sender: boolean; receiver: boolean; content: string } = {
-  sender: false,
-  receiver: true,
-  content: "hallo",
-};
-let message5: { sender: boolean; receiver: boolean; content: string } = {
-  sender: true,
-  receiver: false,
-  content: "guten abend",
-};
-let message6: { sender: boolean; receiver: boolean; content: string } = {
-  sender: true,
-  receiver: false,
-  content: "tschussi",
-};
-messages2.push(message4);
-messages2.push(message5);
-messages2.push(message6);
-chatList.push(
-  new Chat("1", "Mafalda ", "images/profile/purple.png", messages1),
-);
-chatList.push(new Chat("2", "Kevin", "images/profile/green.png", messages2));
+// let chatList: Chat[] = [];
+// let messages1: { sender: boolean; receiver: boolean; content: string }[] = [];
+// let message1: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: true,
+//   receiver: false,
+//   content: "Hello there",
+// };
+// let message2: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: false,
+//   receiver: true,
+//   content: "hi",
+// };
+// let message3: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: false,
+//   receiver: true,
+//   content: "how are you?",
+// };
+// messages1.push(message1);
+// messages1.push(message2);
+// messages1.push(message3);
+// let messages2: { sender: boolean; receiver: boolean; content: string }[] = [];
+// let message4: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: false,
+//   receiver: true,
+//   content: "hallo",
+// };
+// let message5: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: true,
+//   receiver: false,
+//   content: "guten abend",
+// };
+// let message6: { sender: boolean; receiver: boolean; content: string } = {
+//   sender: true,
+//   receiver: false,
+//   content: "tschussi",
+// };
+// messages2.push(message4);
+// messages2.push(message5);
+// messages2.push(message6);
+// chatList.push(
+//   new Chat("1", "Mafalda ", "images/profile/purple.png", messages1),
+// );
+// chatList.push(new Chat("2", "Kevin", "images/profile/green.png", messages2));
 
-//create chat box in left sidebar
-for (let step = 0; step < chatList.length; step++) {
-  addElement(
-    chatList[step].recipientName,
-    chatList[step].id,
-    chatList[step].avatar,
-  );
-}
-//events
-inputEl.addEventListener("keydown", (event: KeyboardEvent) => {
-  if (event.key == "Enter") {
-    captureInput();
-  }
-});
+// //create chat box in left sidebar
+// for (let step = 0; step < chatList.length; step++) {
+//   addElement(
+//     chatList[step].recipientName,
+//     chatList[step].id,
+//     chatList[step].avatar,
+//   );
+// }
+// //events
+// inputEl.addEventListener("keydown", (event: KeyboardEvent) => {
+//   if (event.key == "Enter") {
+//     captureInput();
+//   }
+// });
 
 function displayProf() {
   startConvDiv.classList.add("hidden");

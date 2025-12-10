@@ -70,6 +70,22 @@
   background-color: mediumaquamarine;
 }
 
+.chat-right__bubble-sent-time {
+  display: block;
+  position: relative;
+  height: auto;
+  max-width: 75%;
+}
+
+.chat-right__bubble-received-time {
+  display: block;
+  margin-left: auto;
+  position: relative;
+  max-width: 75%;
+  height: auto;
+  justify-content: flex-end;
+}
+
 .chat-tab button:hover {
   background-color: grey;
 }
