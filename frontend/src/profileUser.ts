@@ -297,6 +297,11 @@ function displayPreview() {
 }
 
 const friendsList = document.getElementById("friendsList") as HTMLDivElement;
+console.log("before list");
+let friendListStorage : string[];
+friendListStorage = [];
+console.log(`after list ${friendListStorage.length}`);
+
 async function requestFriendsList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -313,12 +318,17 @@ async function requestFriendsList() {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
+       console.log(`before loop length id ${friendListStorage.length}`);
+      friendListStorage = [];
       friendsPage.classList.add("flex");
       friendsPage.classList.remove("hidden");
       for (const friend of friends) {
+          console.log(`friend id ${friend.id}`);
+          friendListStorage.push(friend.id);
+          console.log(`length id ${friendListStorage.length}`);
+          console.log("it doesnt exist");
           if (!document.querySelector(`[data-friendid="${friend.id}"]`))
           {
-            console.log("it doesnt exist");
             const friendDiv = document.createElement("div");
             const friendInfoDiv = document.createElement("div");
             const friendNameDiv = document.createElement("div");
@@ -390,6 +400,30 @@ async function requestFriendsList() {
   }
 }
 
+async function addFriend(id: string) {
+  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  console.log(completeUrl);
+  const myRequest = new Request(completeUrl, {
+    method: "POST",
+    credentials: "include",
+    body : JSON.stringify({}),
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      let data;
+      if (response.status != 204) {
+        data = await response.json(); //to check errors?
+      }
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+}
+
 const friendsBlockedList = document.getElementById(
   "blockedList",
 ) as HTMLDivElement;
@@ -438,16 +472,18 @@ async function blockFriend(id: string) {
       if (response.status != 204) {
         data = await response.json();
       }
-      const friend = document.querySelector(
-        `[data-friendid="${id}"]`,
-      ) as HTMLDivElement;
-      friend.remove();
+      // const friend = document.querySelector(
+      //   `[data-friendid="${id}"]`,
+      // ) as HTMLDivElement;
+      // friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
 }
 
+let blockListStorage : string[];
+blockListStorage = [];
 async function requestBlockedList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -467,7 +503,9 @@ async function requestBlockedList() {
     } else {
       friendsPage.classList.add("flex");
       friendsPage.classList.remove("hidden");
+      blockListStorage = [];
       for (const friend of friends) {
+        blockListStorage.push(friend.id);
         if (!document.querySelector(`[data-friendblockedid="${friend.id}"]`))
           {
             const friendBlockedDiv = document.createElement("div");

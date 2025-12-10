@@ -32,6 +32,7 @@ function displayList(event: any, text: string) {
     listDmsDiv.classList.remove("flex");
     listUsersDiv.classList.add("flex");
     listUsersDiv.classList.remove("hidden");
+    requestUsers();
   }
   event.currentTarget.className += " active";
 }
