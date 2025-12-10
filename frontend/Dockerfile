@@ -10,5 +10,9 @@ COPY . .
 ENV PORT=8080
 EXPOSE 8080
 
+RUN npm run compile && \
+	npm run bundle && \
+	npm run compile-css
+
 # now simple just builds—no command override there
 CMD ["npm", "run", "serve"]
