@@ -5,6 +5,7 @@ FROM node:24-alpine
 #(Alena) added also bash (container  needs bash)
 RUN apk add --no-cache sqlite bash
 
+# (Alena) ROOTles - run  as user
 # Create a group and user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
