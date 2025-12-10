@@ -10,7 +10,7 @@ WORKDIR /app
 
 # copy only package json and npm i to optimize image build speed
 COPY package*.json .
-RUN npm ci
+RUN npm i
 
 
 # copy all sources now
@@ -18,13 +18,6 @@ COPY . .
 
 #(Alena) added chmod, was not building container
 RUN chmod +x ./db/setup_db.sh
-
-# (Luis) create a volume for persistent DB storage
-VOLUME /data
-
-# (Luis) initialize the database if it doesn't exist
-ENV DB_PATH=/data/pong.db
-# (Alena) moved to CMD # RUN sh src/db/setup_db.sh
 
 
 # application will listen to port 3000
