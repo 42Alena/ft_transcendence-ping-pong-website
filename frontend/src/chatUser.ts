@@ -214,6 +214,8 @@ sendMessageButton.addEventListener("click", async () => {
       const userData = JSON.parse(userDataString);
       const senderId = userData.id;
       const receiverId = id;
+      const inputHiddenForm = document.getElementById('recv-id') as HTMLInputElement;
+      inputHiddenForm.value = receiverId;
       conversationDiv.classList.add("flex");
       conversationDiv.classList.remove("hidden");
       const existingBubble = document.getElementById("history-conv");
@@ -235,12 +237,13 @@ sendMessageButton.addEventListener("click", async () => {
           addBubble("sender", message.content, timeStampMess);
           continue;
         }
-        if (message.senderId == senderId) {
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
-          addBubble("sender", message.content, timeStampMess);
-        } else {
+       console.log(`send: ${message.senderId} - receive: ${message.receiverId}`);
+        if (message.senderId == userData.id) {
           timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
           addBubble("recv", message.content, timeStampMess);
+        } else {
+          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          addBubble("sender", message.content, timeStampMess);
         }
       }
       //remove profile
@@ -260,8 +263,46 @@ sendMessageButton.addEventListener("click", async () => {
   } catch (error) {
     console.error("Error during registration:", error);
   }
-  //add header
-
   //swtich tab to chats
   //highlight current chat
 });
+
+const messageForm = document.getElementById("message") as HTMLFormElement;
+
+messageForm.addEventListener("submit", async (event : any) => {
+  event.preventDefault();
+  console.log("submit message");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(messageForm);
+
+  const messageBody = {
+    receiverId: formData.get("receiverId") as string,
+    content: formData.get("input-chat") as string,
+  };
+  console.log(messageBody.receiverId);
+  const myRequest = new Request("http://127.0.0.1:3000/chat/messages", {
+    method: "POST",
+    body: JSON.stringify(messageBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const inputMessage = document.getElementById("textArea") as HTMLInputElement;
+      inputMessage.value = "";
+      const timeStampDiv = document.createElement("div") as HTMLDivElement;
+      const currentDate = new Date();
+      const readableTimestamp = currentDate.toLocaleString();
+      timeStampDiv.textContent = readableTimestamp;
+      timeStampDiv.classList.add("text-sm", "chat-right__bubble-received-time");
+      addBubble("recv", messageBody.content, timeStampDiv);
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+})

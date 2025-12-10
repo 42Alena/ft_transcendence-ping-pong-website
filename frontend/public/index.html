@@ -9,7 +9,7 @@
     <style></style>
   </head>
 
-<body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
+  <body class="m-0 box-border grid min-h-screen grid-rows-[auto_1fr_auto]">
     <header class="flex justify-center bg-[#DFF7FF]">
       <div class="w-full max-w-6xl border">
         <div
@@ -54,25 +54,25 @@
                   </li>
                 </div>
                 <div id="dropdown-menu_user" class="hidden">
-                <li>
-                  <a href="#" onclick="setAccountPage('profile')"
-                    ><span></span>Profile</a
-                  >
-                </li>
-                <li>
-                  <a href="#" onclick="setAccountPage('settings')"
-                    ><span></span>Settings</a
-                  >
-                </li>
-                <li>
-                  <a href="#" onclick="setAccountPage('friends')"
-                    ><span></span>Friends</a
-                  >
-                </li>
+                  <li>
+                    <a href="#" onclick="setAccountPage('profile')"
+                      ><span></span>Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" onclick="setAccountPage('settings')"
+                      ><span></span>Settings</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" onclick="setAccountPage('friends')"
+                      ><span></span>Friends</a
+                    >
+                  </li>
 
-                <li>
-                  <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
-                </li>
+                  <li>
+                    <a rel="nofollow" href="#"><span></span> <b>Logout</b></a>
+                  </li>
                 </div>
               </ul>
             </span>
@@ -155,26 +155,11 @@
                   class="relative flex h-[60px] grow flex-col overflow-auto"
                   id="list-dms"
                 ></div>
-                <!-- no need to do list-users since it will be created by js -->
                 <div
                   class="relative flex h-[60px] grow flex-col overflow-auto"
                   id="list-users"
                 >
-                  <div
-                    class="flex items-center gap-2.5 border bg-white p-2.5"
-                    onclick="displayProf()"
-                  >
-                    <div>
-                      <img
-                        src="images/profile/blue.png"
-                        width="30"
-                        height="30"
-                      />
-                    </div>
-                    <div>Eos</div>
-                  </div>
                 </div>
-                <!-- no need to do list-users since it will be created by js -->
               </div>
             </div>
             <div class="flex flex-col">
@@ -200,24 +185,23 @@
                       id="bubble"
                     ></div>
                     <div class="flex h-auto gap-2.5 border p-[1em]">
-                      <div
-                        class="block grow content-center border bg-white p-[0.5em]"
-                      >
-                        <div class="w-full border" id="input">
-                          <input
-                            id="text-box"
-                            type="text"
-                            class="w-full border"
-                            placeholder="Send message"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="ml-auto block content-center border bg-[#0fffff]"
-                        onclick="captureInput()"
-                      >
-                        Send
-                      </div>
+                    <form action="http://127.0.0.1:3000/chat/messages" method="post" class="w-full border flex-row flex" id="message">
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="text"
+                        id="textArea"
+                        name="input-chat"
+                        autocomplete="off"
+                        placeholder="Send message"
+                      />
+                      <input type="hidden" name="receiverId" id="recv-id" value="">
+                      <button
+                          type="submit"
+                          class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        >
+                          Send
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -241,10 +225,12 @@
                 action="http://127.0.0.1:3000/auth/register"
                 method="post"
                 id="register"
-                class="flex flex-col justify-center items-center rounded-xl p-1 absolute z-1"
+                class="absolute z-1 flex flex-col items-center justify-center rounded-xl p-1"
               >
                 <div class="mb-3" id="usernameInput">
-                  <label class="text-xl font-bold text-heading" for="reg-username"
+                  <label
+                    class="text-heading text-xl font-bold"
+                    for="reg-username"
                     >Username (login)</label
                   >
                   <input
@@ -260,8 +246,10 @@
                     class="hidden text-sm text-red-600"
                   ></div>
                 </div>
-                 <div class="mb-3">
-                  <label class="text-xl font-bold text-heading" for="reg-displayName"
+                <div class="mb-3">
+                  <label
+                    class="text-heading text-xl font-bold"
+                    for="reg-displayName"
                     >Display Name (public)</label
                   >
                   <input
@@ -278,7 +266,9 @@
                   ></div>
                 </div>
                 <div class="mb-3">
-                  <label class="text-xl font-bold text-heading" for="reg-password"
+                  <label
+                    class="text-heading text-xl font-bold"
+                    for="reg-password"
                     >Password</label
                   >
                   <input
@@ -301,13 +291,22 @@
                   Submit
                 </button>
               </form>
-              <div class="relative hidden justify-center items-center w-full h-full" id="success-display">
-              <img
-              src="images/registration_success/pong_registrtion_success.png"
-              alt="register success page"
-              class="absolute inset-0 z-0 h-full w-full"
-            />
-              <button type="button" class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700" id="login-button">Login</button>
+              <div
+                class="relative hidden h-full w-full items-center justify-center"
+                id="success-display"
+              >
+                <img
+                  src="images/registration_success/pong_registrtion_success.png"
+                  alt="register success page"
+                  class="absolute inset-0 z-0 h-full w-full"
+                />
+                <button
+                  type="button"
+                  class="absolute z-1 flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  id="login-button"
+                >
+                  Login
+                </button>
               </div>
             </div>
             <div
@@ -323,7 +322,7 @@
                 action="http://127.0.0.1:3000/auth/login"
                 method="post"
                 id="login"
-                class="flex flex-col items-center justify-center rounded-xl p-1 absolute z-1"
+                class="absolute z-1 flex flex-col items-center justify-center rounded-xl p-1"
               >
                 <div class="mb-3">
                   <label
@@ -373,10 +372,7 @@
               class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
               id="profilePage"
             >
-              <div
-                class="grid grid-cols-3 border bg-amber-500"
-                id="profile"
-              >
+              <div class="grid grid-cols-3 border bg-amber-500" id="profile">
                 <div
                   class="flex items-center justify-center border"
                   id="profile-avatar"
@@ -391,26 +387,26 @@
                 </div>
                 <div class="flex flex-col border" id="profile-info">
                   <div
-                    class="flex flex-1 items-center border "
+                    class="flex flex-1 items-center border"
                     id="profile-info-username"
-                  >
-
-                  </div>
+                  ></div>
                   <div
                     class="flex flex-1 items-center border"
                     id="profile-info-displayName"
-                  >
-                  </div>
+                  ></div>
                 </div>
-                <div class="flex flex-col border" id="acc-options;">
-                  <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
-                    <!-- <div
+                <div
+                  class="flex flex-col justify-center border"
+                  id="acc-options"
+                >
+                  <!-- <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
+                    <div
                       class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
                     ></div>
-                    <div class="">ONLINE</div> -->
-                  </div>
+                    <div class="">ONLINE</div>
+                  </div> -->
                   <div
-                    class="mt-2.5 hidden grid-cols-4 gap-[5px] text-xs"
+                    class="mt-2.5 flex flex-row justify-center gap-[5px] text-xs"
                     id="acc-actions"
                   >
                     <button
@@ -418,7 +414,7 @@
                       type="button"
                       id="add-remove-friend__header"
                     >
-                      Remove
+                      Add
                     </button>
                     <button
                       class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
@@ -509,17 +505,21 @@
                   id="avatarEdit"
                   class="relative flex h-full w-full flex-1 items-center justify-center"
                 >
-                <div class="cursor-pointer flex justify-center items-center object-cover relative">
-                  <div class="cursor-pointer flex justify-center items-center object-cover relative w-52 h-52">
-                    <img
+                  <div
+                    class="relative flex cursor-pointer items-center justify-center object-cover"
+                  >
+                    <div
+                      class="relative flex h-52 w-52 cursor-pointer items-center justify-center object-cover"
+                    >
+                      <img
                         id="avatar-image"
                         src="/images/profile/blue.png"
                         alt="default avatar"
-                        class="rounded-full w-full h-full object-cover"
+                        class="h-full w-full rounded-full object-cover"
                         onclick="showPopUp()"
                       />
-                      </div>
-                      <div
+                    </div>
+                    <div
                       id="svgIcon"
                       class="absolute bottom-0 left-1/2 z-3 -translate-x-1/2 transform cursor-pointer rounded-full p-1 hover:bg-blue-600"
                     >
@@ -537,7 +537,7 @@
                         ></path>
                       </svg>
                     </div>
-                 </div>
+                  </div>
                   <form
                     action="http://127.0.0.1:3000/users/me/avatar"
                     method="post"
@@ -548,8 +548,8 @@
                       type="file"
                       id="avatarImgEdit"
                       alt="Avatar"
-                      class="cursor-pointer hidden"
-                      onchange="previewImage(event)" 
+                      class="hidden cursor-pointer"
+                      onchange="previewImage(event)"
                     />
                     <input type="hidden" id="existingAvatar" value="" />
                   </form>
@@ -571,7 +571,13 @@
                         <div
                           class="flex h-12 w-12 items-center justify-center rounded-full"
                         >
-                          <img src="images/avatars/pong_avatar_creatures_g.png" alt="Avatar G" id="G" class="h-full w-full rounded-full" onclick="displayPreview()"/>
+                          <img
+                            src="images/avatars/pong_avatar_creatures_g.png"
+                            alt="Avatar G"
+                            id="G"
+                            class="h-full w-full rounded-full"
+                            onclick="displayPreview()"
+                          />
                         </div>
                         <span></span>
                       </li>
@@ -664,21 +670,23 @@
                   >
                     <h2 class="mb-3 text-2xl font-bold">Password</h2>
                     <div class="mb-3">
-                    <label class="text-heading text-xl font-medium" for="settings-current-password"
-                    >Current password</label
-                  >
-                  <input
-                    class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                    type="password"
-                    id="settings-current-password"
-                    name="settings-user_current-password"
-                    autocomplete="off"
-                  />
-                  <div
-                    id="settings-current-password_error"
-                    class="hidden text-sm text-red-600"
-                  ></div>
-                </div>
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-current-password"
+                        >Current password</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="password"
+                        id="settings-current-password"
+                        name="settings-user_current-password"
+                        autocomplete="off"
+                      />
+                      <div
+                        id="settings-current-password_error"
+                        class="hidden text-sm text-red-600"
+                      ></div>
+                    </div>
                     <div class="mb-3">
                       <label
                         class="text-heading text-xl font-medium"
@@ -736,10 +744,14 @@
                   See blocked users
                 </button>
               </div>
-              <div id="friendsList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
-              </div>
-              <div id="blockedList" class="flex flex-wrap p-[5px] gap-2 max-h-screen overflow-y-auto overflow-x-hidden border border-gray-300">
-              </div>
+              <div
+                id="friendsList"
+                class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
+              ></div>
+              <div
+                id="blockedList"
+                class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
+              ></div>
             </div>
           </div>
           <div
@@ -1070,6 +1082,7 @@
     <script src="dist/registerUser.js"></script>
     <script src="dist/loginUser.js"></script>
     <script src="dist/profileUser.js"></script>
+    <script src="dist/chatUser.js"></script>
     <!-- <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script> -->
   </body>
