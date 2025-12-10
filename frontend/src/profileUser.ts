@@ -17,8 +17,10 @@ let firstView: boolean = false;
 async function requestProfile() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
-  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+	//Luis I added to make it work with certs
+  //const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+    const SERVER = window?.location?.origin ?? 'http://localhost:3000'
+    const myRequest = new Request(`${SERVER}/users/me/blocks`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",

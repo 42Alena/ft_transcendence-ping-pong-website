@@ -5,8 +5,9 @@
 
 import type *  as Types from './types.js';
 
-
-const SERVER = 'http://localhost:3000'
+//(luis added to make it work with certs)
+//const SERVER = 'http://localhost:3000'
+const SERVER = window?.location?.origin ?? 'http://localhost:3000'
 
 
 //called "CLIENT SDK" or API BACKEND INTEGRATION, function that caled backend

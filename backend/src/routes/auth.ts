@@ -104,9 +104,12 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		await userManager.saveLoginSession(loginSessionId, user.id);
 
-
-		reply.header('set-cookie', `auth=${loginSessionId}; Path=/;  HttpOnly;`); //`backtig is a literal string to put value
-
+		//(luis commented out to make it work with certs )	
+		//reply.header('set-cookie', `auth=${loginSessionId}; Path=/;  HttpOnly;`); //`backtig is a literal string to put value
+		reply.header(
++			'set-cookie',
++			`auth=${loginSessionId}; Path=/; HttpOnly; Secure; SameSite=None;`
++		);
 
 		return sendOK(reply, toUserSelf(user))
 	});
