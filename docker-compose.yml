@@ -1,4 +1,12 @@
 services:
+
+  # caddy:https://caddyserver.com/docs/quick-starts/reverse-proxy
+  caddy:
+    image: caddy
+    ports: 
+      - "443:443"
+
+
   backend:
     build:
       context: ./backend
