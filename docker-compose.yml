@@ -6,7 +6,8 @@ services:
       - PORT=3000
     volumes:
       - ./backend:/app
-      - pong_data:/app/db      
+      - pong_data:/app/db  
+      - avatars:/app/avatars/users   
 
     ports:
       - "3000:3000"
@@ -18,4 +19,5 @@ services:
       - "8080:8080"
 volumes:
   pong_data:
+  avatars:
 # pong_data: with no fields means: create a local volume using the default driver, no special options.
