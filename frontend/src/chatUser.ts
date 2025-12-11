@@ -39,9 +39,6 @@ async function requestUsers() {
             requestUserProfile(user.id);
           };
           const tabChat = document.getElementsByClassName("chat-div");
-          for (let i = 0; i < tabChat.length; i++) {
-            tabChat[i].className = tabChat[i].className.replace(" active", "");
-          }
           newDiv.classList.add(
             "chat-div",
             "flex",
@@ -50,20 +47,27 @@ async function requestUsers() {
             "border",
             "p-2.5",
             "bg-white",
-            "hover:gray-200",
             "transition",
             "duration-300",
             "outline-none",
-            "active"
           );
           listUsers.append(newDiv);
+          for (let i = 0; i < tabChat.length; i++) {
+            tabChat[i].addEventListener("click", function () {
+              console.log(`user: ${user.displayName}`);
+              for (let j = 0; j < tabChat.length; j++) {
+                tabChat[j].classList.remove("active"); // Base active class for clicked element
+              }
+              tabChat[i].classList.add("active");
+            });
+          }
         }
       }
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
-};
+}
 
 async function requestChats() {
   const myHeaders = new Headers();
@@ -82,7 +86,10 @@ async function requestChats() {
     } else {
       const users = await response.json();
       for (const chat_user of users) {
-        if (!document.querySelector(`[data-chatid="${chat_user.id}"]`)) {
+        console.log(`${chat_user.userId}`);
+        console.log(`${chat_user.displayName}`);
+        console.log(`${chat_user.avatarUrl}`);
+        if (!document.querySelector(`[data-chatid="${chat_user.userId}"]`)) {
           const newDiv = document.createElement("div");
           const avatDiv = document.createElement("div");
           const avatImg = document.createElement("img");
@@ -91,21 +98,23 @@ async function requestChats() {
           avatImg.height = 30;
           avatDiv.appendChild(avatImg);
           newDiv.appendChild(avatDiv);
-          newDiv.dataset.chatid = chat_user.id;
+          newDiv.dataset.chatid = chat_user.userId;
           newDiv.dataset.chatdisplayname = chat_user.displayName;
-          newDiv.dataset.chatavatarurl = chat_user.avatarUrl || "default-avatar.png";
+          newDiv.dataset.chatavatarurl =
+            chat_user.avatarUrl || "default-avatar.png";
           const userDiv = document.createElement("div");
           userDiv.setAttribute("id", chat_user.displayName);
           const newContent = document.createTextNode(chat_user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
           newDiv.onclick = function () {
-            requestConversation(chat_user.id, chat_user.displayName, chat_user.avatarUrl);
+            requestConversation(
+              chat_user.userId,
+              chat_user.displayName,
+              chat_user.avatarUrl,
+            );
           };
-           const tabChat = document.getElementsByClassName("chat-div");
-          for (let i = 0; i < tabChat.length; i++) {
-            tabChat[i].className = tabChat[i].className.replace(" active", "");
-          }
+          const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
             "chat-div",
             "flex",
@@ -114,21 +123,26 @@ async function requestChats() {
             "border",
             "p-2.5",
             "bg-white",
-            "hover:gray-200",
             "transition",
             "duration-300",
             "outline-none",
-            "active"
           );
           listChats.append(newDiv);
-
+          for (let i = 0; i < tabChat.length; i++) {
+            tabChat[i].addEventListener("click", function () {
+              for (let j = 0; j < tabChat.length; j++) {
+                tabChat[j].classList.remove("active"); // Base active class for clicked element
+              }
+              tabChat[i].classList.add("active");
+            });
+          }
         }
       }
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
-};
+}
 
 const usernameOSpan: HTMLSpanElement = document.createElement("span");
 const usernameOData: HTMLSpanElement = document.createElement("span");
@@ -264,7 +278,9 @@ sendMessageButton.addEventListener("click", async () => {
       const userDataString = localStorage.getItem("userData") as string;
       const userData = JSON.parse(userDataString);
       const receiverId = id;
-      const inputHiddenForm = document.getElementById('recv-id') as HTMLInputElement;
+      const inputHiddenForm = document.getElementById(
+        "recv-id",
+      ) as HTMLInputElement;
       inputHiddenForm.value = receiverId;
       conversationDiv.classList.add("flex");
       conversationDiv.classList.remove("hidden");
@@ -283,24 +299,39 @@ sendMessageButton.addEventListener("click", async () => {
         timeStampMess.textContent = readableTime;
         if (message.type == "PrivateGameInviteMessage") {
           console.log("change style");
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
-           if (message.senderId != userData.id) {
-             timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-sent-time",
+          );
+          if (message.senderId != userData.id) {
+            timeStampMess.classList.add(
+              "text-sm",
+              "chat-right__bubble-sent-time",
+            );
             addBubbleTournament("sender", message.content, timeStampMess);
-           }
-           else
-           {
-            timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
+          } else {
+            timeStampMess.classList.add(
+              "text-sm",
+              "chat-right__bubble-received-time",
+            );
             addBubbleTournament("recv", message.content, timeStampMess);
-           }
+          }
           continue;
         }
-       console.log(`send: ${message.senderId} - receive: ${message.receiverId}`);
+        console.log(
+          `send: ${message.senderId} - receive: ${message.receiverId}`,
+        );
         if (message.senderId == userData.id) {
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-received-time",
+          );
           addBubble("recv", message.content, timeStampMess);
         } else {
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-sent-time",
+          );
           addBubble("sender", message.content, timeStampMess);
         }
       }
@@ -317,10 +348,9 @@ sendMessageButton.addEventListener("click", async () => {
       console.log(displayName, avatarUrl);
       //header
       fillConversationInfo(displayName, avatarUrl);
-       //swtich tab to chats
-       displayList({ currentTarget: chatTab }, 'chat');
+      //swtich tab to chats
+      displayList({ currentTarget: chatTab }, "chat");
       //highlight current chat
-
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -329,7 +359,7 @@ sendMessageButton.addEventListener("click", async () => {
 
 const messageForm = document.getElementById("message") as HTMLFormElement;
 
-messageForm.addEventListener("submit", async (event : any) => {
+messageForm.addEventListener("submit", async (event: any) => {
   event.preventDefault();
   console.log("submit message");
   const myHeaders = new Headers();
@@ -353,7 +383,9 @@ messageForm.addEventListener("submit", async (event : any) => {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
-      const inputMessage = document.getElementById("textArea") as HTMLInputElement;
+      const inputMessage = document.getElementById(
+        "textArea",
+      ) as HTMLInputElement;
       inputMessage.value = "";
       const timeStampDiv = document.createElement("div") as HTMLDivElement;
       const currentDate = new Date();
@@ -367,8 +399,12 @@ messageForm.addEventListener("submit", async (event : any) => {
   }
 });
 
-async function requestConversation(id : string, displayName : string, avatarUrl : string)
-{
+async function requestConversation(
+  id: string,
+  displayName: string,
+  avatarUrl: string,
+) {
+  console.log(`request chat for ${id}`);
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -390,7 +426,9 @@ async function requestConversation(id : string, displayName : string, avatarUrl 
       const userDataString = localStorage.getItem("userData") as string;
       const userData = JSON.parse(userDataString);
       const receiverId = id;
-      const inputHiddenForm = document.getElementById('recv-id') as HTMLInputElement;
+      const inputHiddenForm = document.getElementById(
+        "recv-id",
+      ) as HTMLInputElement;
       inputHiddenForm.value = receiverId;
       conversationDiv.classList.add("flex");
       conversationDiv.classList.remove("hidden");
@@ -409,16 +447,27 @@ async function requestConversation(id : string, displayName : string, avatarUrl 
         timeStampMess.textContent = readableTime;
         if (message.type == "PrivateGameInviteMessage") {
           console.log("change style");
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-sent-time",
+          );
           addBubble("sender", message.content, timeStampMess);
           continue;
         }
-       console.log(`send: ${message.senderId} - receive: ${message.receiverId}`);
+        console.log(
+          `send: ${message.senderId} - receive: ${message.receiverId}`,
+        );
         if (message.senderId == userData.id) {
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-received-time",
+          );
           addBubble("recv", message.content, timeStampMess);
         } else {
-          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          timeStampMess.classList.add(
+            "text-sm",
+            "chat-right__bubble-sent-time",
+          );
           addBubble("sender", message.content, timeStampMess);
         }
       }
@@ -435,12 +484,11 @@ async function requestConversation(id : string, displayName : string, avatarUrl 
       console.log(displayName, avatarUrl);
       //header
       fillConversationInfo(displayName, avatarUrl);
-       //swtich tab to chats
-       displayList({ currentTarget: chatTab }, 'chat');
+      //swtich tab to chats
+      displayList({ currentTarget: chatTab }, "chat");
       //highlight current chat
-
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
-};
+}

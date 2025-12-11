@@ -94,6 +94,13 @@
   background-color: #ccc;
 }
 
+.chat-div:hover{
+  background-color: grey;
+}
+
+.chat-div.active{
+  background-color: #ccc;
+}
 .ai-button-on:hover {
   background-color: darkgreen;
 }
