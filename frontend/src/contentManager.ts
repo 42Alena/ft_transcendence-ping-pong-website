@@ -15,6 +15,7 @@ function displayPage(text: string): void {
   successRegPage.classList.add("hidden");
   successRegPage.classList.remove("flex");
   if (text == "chat") {
+    requestChats();
     chatP.classList.add("grid");
     chatP.classList.remove("hidden");
     welcP.classList.add("hidden");

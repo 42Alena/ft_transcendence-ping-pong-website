@@ -1,25 +1,5 @@
 const listUsers = document.getElementById("list-users") as HTMLDivElement;
-async function requestChat() {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  const myRequest = new Request("http://127.0.0.1:3000/chat/conversations", {
-    method: "GET",
-    headers: myHeaders,
-    credentials: "include",
-  });
-  try {
-    const response = await fetch(myRequest);
-    console.log(response);
-    // const data = await response.json();
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}`);
-    } else {
-    }
-  } catch (error) {
-    console.error("Error during registration:", error);
-  }
-}
+const listChats = document.getElementById("list-dms") as HTMLDivElement;
 
 async function requestUsers() {
   const myHeaders = new Headers();
@@ -58,13 +38,23 @@ async function requestUsers() {
           newDiv.onclick = function () {
             requestUserProfile(user.id);
           };
+          const tabChat = document.getElementsByClassName("chat-div");
+          for (let i = 0; i < tabChat.length; i++) {
+            tabChat[i].className = tabChat[i].className.replace(" active", "");
+          }
           newDiv.classList.add(
+            "chat-div",
             "flex",
             "items-center",
             "gap-2.5",
             "border",
             "p-2.5",
             "bg-white",
+            "hover:gray-200",
+            "transition",
+            "duration-300",
+            "outline-none",
+            "active"
           );
           listUsers.append(newDiv);
         }
@@ -73,7 +63,72 @@ async function requestUsers() {
   } catch (error) {
     console.error("Error during registration:", error);
   }
-}
+};
+
+async function requestChats() {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request("http://127.0.0.1:3000/chat/conversations", {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const users = await response.json();
+      for (const chat_user of users) {
+        if (!document.querySelector(`[data-chatid="${chat_user.id}"]`)) {
+          const newDiv = document.createElement("div");
+          const avatDiv = document.createElement("div");
+          const avatImg = document.createElement("img");
+          avatImg.src = chat_user.avatarUrl;
+          avatImg.width = 30;
+          avatImg.height = 30;
+          avatDiv.appendChild(avatImg);
+          newDiv.appendChild(avatDiv);
+          newDiv.dataset.chatid = chat_user.id;
+          newDiv.dataset.chatdisplayname = chat_user.displayName;
+          newDiv.dataset.chatavatarurl = chat_user.avatarUrl || "default-avatar.png";
+          const userDiv = document.createElement("div");
+          userDiv.setAttribute("id", chat_user.displayName);
+          const newContent = document.createTextNode(chat_user.displayName);
+          userDiv.appendChild(newContent);
+          newDiv.appendChild(userDiv);
+          newDiv.onclick = function () {
+            requestConversation(chat_user.id, chat_user.displayName, chat_user.avatarUrl);
+          };
+           const tabChat = document.getElementsByClassName("chat-div");
+          for (let i = 0; i < tabChat.length; i++) {
+            tabChat[i].className = tabChat[i].className.replace(" active", "");
+          }
+          newDiv.classList.add(
+            "chat-div",
+            "flex",
+            "items-center",
+            "gap-2.5",
+            "border",
+            "p-2.5",
+            "bg-white",
+            "hover:gray-200",
+            "transition",
+            "duration-300",
+            "outline-none",
+            "active"
+          );
+          listChats.append(newDiv);
+
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+};
 
 const usernameOSpan: HTMLSpanElement = document.createElement("span");
 const usernameOData: HTMLSpanElement = document.createElement("span");
@@ -84,12 +139,6 @@ const startConversationDiv = document.getElementById(
   "start-chat",
 ) as HTMLDivElement;
 const buttonsOptions = document.getElementById("acc-options") as HTMLDivElement;
-// const addandRemoveUserButton: any = document.getElementById(
-//   "add-remove-friend__header",
-// );
-// const blockandUnblockButton: any = document.getElementById(
-//   "block-unblock-friend__header",
-// );
 
 async function requestUserProfile(id: string) {
   const myHeaders = new Headers();
@@ -112,6 +161,8 @@ async function requestUserProfile(id: string) {
       while (displayNameDiv.firstChild) {
         displayNameDiv.removeChild(displayNameDiv.firstChild);
       }
+      conversationDiv.classList.add("hidden");
+      conversationDiv.classList.remove("flex");
       startConversationDiv.classList.add("hidden");
       startConversationDiv.classList.remove("flex");
       userProfile.dataset.profileuserid = user.id;
@@ -153,7 +204,7 @@ async function requestUserProfile(id: string) {
       usernameDiv.classList.add("hidden");
       usernameDiv.classList.remove("flex");
       displayNameOSpan.classList.add("font-bold", "text-xl");
-      displayNameOSpan.textContent = "Username:";
+      displayNameOSpan.textContent = "Display name:";
       displayNameOData.classList.add("text-xl");
       displayNameOData.textContent = user.displayName;
       displayNameDiv.appendChild(displayNameOSpan);
@@ -212,7 +263,132 @@ sendMessageButton.addEventListener("click", async () => {
       const messages = await response.json();
       const userDataString = localStorage.getItem("userData") as string;
       const userData = JSON.parse(userDataString);
-      const senderId = userData.id;
+      const receiverId = id;
+      const inputHiddenForm = document.getElementById('recv-id') as HTMLInputElement;
+      inputHiddenForm.value = receiverId;
+      conversationDiv.classList.add("flex");
+      conversationDiv.classList.remove("hidden");
+      const existingBubble = document.getElementById("history-conv");
+      if (existingBubble) existingBubble.remove();
+      historyConversation = document.createElement("div");
+      historyConversation.className = "chat-right__bubble border";
+      historyConversation.setAttribute("id", "history-conv");
+
+      for (const message of messages) {
+        const timeStampMess = document.createElement("div");
+        const timestamp: number = message.createdAt;
+        const milliseconds: number = timestamp * 1000;
+        const date: Date = new Date(milliseconds);
+        const readableTime: string = date.toLocaleString();
+        timeStampMess.textContent = readableTime;
+        if (message.type == "PrivateGameInviteMessage") {
+          console.log("change style");
+          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+           if (message.senderId != userData.id) {
+             timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+            addBubbleTournament("sender", message.content, timeStampMess);
+           }
+           else
+           {
+            timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
+            addBubbleTournament("recv", message.content, timeStampMess);
+           }
+          continue;
+        }
+       console.log(`send: ${message.senderId} - receive: ${message.receiverId}`);
+        if (message.senderId == userData.id) {
+          timeStampMess.classList.add("text-sm", "chat-right__bubble-received-time");
+          addBubble("recv", message.content, timeStampMess);
+        } else {
+          timeStampMess.classList.add("text-sm", "chat-right__bubble-sent-time");
+          addBubble("sender", message.content, timeStampMess);
+        }
+      }
+      //remove profile
+      const userProfileDiv = document.getElementById(
+        "userProfile",
+      ) as HTMLDivElement;
+      if (userProfileDiv)
+        while (userProfileDiv.firstChild) {
+          userProfileDiv.removeChild(userProfileDiv.firstChild);
+        }
+      userProfileDiv.classList.add("hidden");
+      userProfileDiv.classList.remove("flex");
+      console.log(displayName, avatarUrl);
+      //header
+      fillConversationInfo(displayName, avatarUrl);
+       //swtich tab to chats
+       displayList({ currentTarget: chatTab }, 'chat');
+      //highlight current chat
+
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+});
+
+const messageForm = document.getElementById("message") as HTMLFormElement;
+
+messageForm.addEventListener("submit", async (event : any) => {
+  event.preventDefault();
+  console.log("submit message");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(messageForm);
+
+  const messageBody = {
+    receiverId: formData.get("receiverId") as string,
+    content: formData.get("input-chat") as string,
+  };
+  console.log(messageBody.receiverId);
+  const myRequest = new Request("http://127.0.0.1:3000/chat/messages", {
+    method: "POST",
+    body: JSON.stringify(messageBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const inputMessage = document.getElementById("textArea") as HTMLInputElement;
+      inputMessage.value = "";
+      const timeStampDiv = document.createElement("div") as HTMLDivElement;
+      const currentDate = new Date();
+      const readableTimestamp = currentDate.toLocaleString();
+      timeStampDiv.textContent = readableTimestamp;
+      timeStampDiv.classList.add("text-sm", "chat-right__bubble-received-time");
+      addBubble("recv", messageBody.content, timeStampDiv);
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+});
+
+async function requestConversation(id : string, displayName : string, avatarUrl : string)
+{
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request(
+    `http://127.0.0.1:3000/chat/conversations/${id}`,
+    {
+      method: "GET",
+      headers: myHeaders,
+      credentials: "include",
+    },
+  );
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const messages = await response.json();
+      const userDataString = localStorage.getItem("userData") as string;
+      const userData = JSON.parse(userDataString);
       const receiverId = id;
       const inputHiddenForm = document.getElementById('recv-id') as HTMLInputElement;
       inputHiddenForm.value = receiverId;
@@ -259,50 +435,12 @@ sendMessageButton.addEventListener("click", async () => {
       console.log(displayName, avatarUrl);
       //header
       fillConversationInfo(displayName, avatarUrl);
+       //swtich tab to chats
+       displayList({ currentTarget: chatTab }, 'chat');
+      //highlight current chat
+
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
-  //swtich tab to chats
-  //highlight current chat
-});
-
-const messageForm = document.getElementById("message") as HTMLFormElement;
-
-messageForm.addEventListener("submit", async (event : any) => {
-  event.preventDefault();
-  console.log("submit message");
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  const formData = new FormData(messageForm);
-
-  const messageBody = {
-    receiverId: formData.get("receiverId") as string,
-    content: formData.get("input-chat") as string,
-  };
-  console.log(messageBody.receiverId);
-  const myRequest = new Request("http://127.0.0.1:3000/chat/messages", {
-    method: "POST",
-    body: JSON.stringify(messageBody),
-    credentials: "include",
-    headers: myHeaders,
-  });
-  try {
-    const response = await fetch(myRequest);
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}`);
-    } else {
-      const inputMessage = document.getElementById("textArea") as HTMLInputElement;
-      inputMessage.value = "";
-      const timeStampDiv = document.createElement("div") as HTMLDivElement;
-      const currentDate = new Date();
-      const readableTimestamp = currentDate.toLocaleString();
-      timeStampDiv.textContent = readableTimestamp;
-      timeStampDiv.classList.add("text-sm", "chat-right__bubble-received-time");
-      addBubble("recv", messageBody.content, timeStampDiv);
-    }
-  } catch (error) {
-    console.error("Error during registration:", error);
-  }
-})
+};

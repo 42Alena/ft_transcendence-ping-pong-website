@@ -52,6 +52,16 @@ function addBubble(role: string, content: string, timeStamp : HTMLDivElement) {
   bubbleDiv.appendChild(historyConversation);
 }
 
+function addBubbleTournament(role: string, content: string, timeStamp : HTMLDivElement) {
+  const newBubble = document.createElement("div");
+  const newContent = document.createTextNode(content);
+  newBubble.append(newContent);
+  newBubble.classList.add("bg-yellow-200", "block", "h-auto", "max-w-[75%]", "relative", "border");
+  historyConversation.append(newBubble);
+  historyConversation.append(timeStamp);
+  bubbleDiv.appendChild(historyConversation);
+}
+
 // function displayConversationHistory(
 //   id: string,
 //   list: Chat[],
