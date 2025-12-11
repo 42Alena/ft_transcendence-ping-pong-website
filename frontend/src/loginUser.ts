@@ -5,6 +5,13 @@ const logUserHeaderDiv: any = document.getElementById("logged-user");
 const logAvatHeaderDiv: any = document.querySelector("#logged-user-avatar img");
 const dropMenuGuestDiv: any = document.getElementById("dropdown-menu_guests");
 const dropMenuUserDiv: any = document.getElementById("dropdown-menu_user");
+const settingsUsernameInput2 = document.getElementById(
+  "settings-username",
+) as HTMLInputElement;
+
+const settingsDisplayInput2 = document.getElementById(
+  "settings-displayName",
+) as HTMLInputElement;
 
 let loggedUser: boolean = false;
 
@@ -23,8 +30,8 @@ if (localStorage.getItem("userData")) {
     if (logAvatHeaderDiv.src !== userData.avatarUrl) {
       logAvatHeaderDiv.src = userData.avatarUrl; //need to fix
     }
-    settingsUsernameInput.value = userData.username;
-    settingsDisplayNameInput.value = userData.displayName;
+    settingsUsernameInput2.value = userData.username;
+    settingsDisplayInput2.value = userData.displayName;
   }
 }
 
@@ -93,34 +100,4 @@ log.addEventListener("submit", async (event: any) => {
 
 //need to change fastify.register(require('@fastify/cors'), { origin: '*' })
 //fastify.register(require('@fastify/cors'), { origin: ['http://127.0.0.1:8081', 'http://localhost:8081'], credentials: true}) //https://github.com/fastify/fastify-cors
-// //test profile for cookies
-// async function handleRequest() {
-//   const myHeaders = new Headers();
-//   myHeaders.append("Content-Type", "application/json");
-//   const formData = new FormData(log);
 
-//   const profileBody = {
-//     username: formData.get("login-user_username"),
-//     passwordPlain: formData.get("login-user_password"),
-//   };
-//   const myRequest = new Request("http://127.0.0.1:3000/users/me", {
-//     method: "GET",
-//     headers: myHeaders,
-//     credentials : "include",
-//   });
-//   try {
-//     const response = await fetch(myRequest);
-//     console.log(response);
-//     const data = await response.json();
-//     if (!response.ok) {
-//       throw new Error(`Error ${response.status}`);
-//     }
-//     else
-//     {
-//       displayPersonalProfile();
-//         console.log("login user:", data);
-//     }
-//   } catch (error) {
-//     console.error("Error during registration:", error);
-//   }
-// }
