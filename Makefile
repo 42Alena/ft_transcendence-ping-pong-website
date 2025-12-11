@@ -100,7 +100,10 @@ check-tools:
 
 # Run when starting the whole stack for development or evaluation (builds images and starts containers in background).
 up:        ## build + start (detached)
-	$(DC) up -d --build
+	$(DC) up -d --remove-orphans
+
+build-docker:        ## build + start (detached)
+	$(DC) build --no-cache
 
 # Run when stopping the stack but keeping the named volumes (so the SQLite DB persists).
 down:      ## stop (keep DB volume)
