@@ -7,9 +7,9 @@ import type * as API from '../lib/types/api';
 //for file upload
 // import { createWriteStream } from 'node:fs';
 // import { pipeline } from 'node:stream/promises';
-import { rename, unlink } from 'node:fs/promises';
+import { copyFile, unlink } from 'node:fs/promises';
 import { extname, join } from 'node:path';
-import { UPLOAD_DIR, URL_AVATAR_PREFIX } from '../config';
+import { UPLOAD_DIR, URL_AVATAR_PREFIX, URL_DEFAULT_AVATAR } from '../config';
 
 
 
@@ -346,12 +346,12 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 		const extention = extname(files[0].filename)
 		const fileName = `${meId}${extention}`;
-		const dst = join(UPLOAD_DIR, fileName);              // uses global UPLOAD_DIR
-		const publicUrl = `${URL_AVATAR_PREFIX}${fileName}`; // uses global prefix
-	
+		const dst = join(UPLOAD_DIR, '/users/', fileName);              // uses global UPLOAD_DIR
+		const publicUrl = join(URL_AVATAR_PREFIX, '/users/', fileName); // uses global prefix
+
 
 		console.log("avatar saving to ", dst)
-		await rename(
+		await copyFile(
 			files[0].filepath, // src
 			dst // dst
 		);
@@ -362,16 +362,16 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 		if (result.ok) {
 
-			if (oldAvatarUrl && (oldAvatarUrl !== publicUrl)) {
+			if (oldAvatarUrl && oldAvatarUrl !== URL_DEFAULT_AVATAR && (oldAvatarUrl !== publicUrl)) {
 				if (oldAvatarUrl.startsWith(URL_AVATAR_PREFIX)) {             // NEW: only delete if old avatar was an uploaded file
 					const oldFileName = oldAvatarUrl.slice(URL_AVATAR_PREFIX.length) // NEW: strip prefix to get filename
 					const oldFsPath = join(UPLOAD_DIR, oldFileName)           // NEW: build old FS path from filename
 					await unlink(oldFsPath);                                  // CHANGED: unlink FS path, not URL
 				}
-				
+
 
 			}
-			
+
 			return sendOK(reply, { avatarUrl: publicUrl });  //   url where saved, return URL (usable in <img src>
 
 
