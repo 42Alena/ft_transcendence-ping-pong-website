@@ -31,6 +31,7 @@ logoutButton.addEventListener("click", async (event: any) => {
       dropMenuUserDiv.classList.remove("block");
       dropMenuGuestDiv.classList.add("block");
       dropMenuGuestDiv.classList.remove("hidden");
+      document.cookie = "auth=; path=/auth; expires=Thu, 01 Jan 1970 00:00:00 GMT;"; // delete empty cookie
     }
   } catch (error: any) {
     console.error("Error during logout:", error.message);
