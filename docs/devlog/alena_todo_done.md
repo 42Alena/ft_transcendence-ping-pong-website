@@ -29,6 +29,7 @@ FROM node:24-bullseye -->
 ### UserManager
 ### User_routes
   - changed logout to delete cookie with 
+  - save the file to dst (filesystem) and build publicUrl for the browser.
 ### domain types
 
 ### api types
