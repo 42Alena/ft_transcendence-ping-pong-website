@@ -1,4 +1,14 @@
 services:
+  # caddy:https://caddyserver.com/docs/quick-starts/reverse-proxy
+  caddy:
+    image: caddy
+    ports:
+      - "8443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
   backend:
     build:
       context: ./backend
@@ -6,16 +16,21 @@ services:
       - PORT=3000
     volumes:
       - ./backend:/app
-      - pong_data:/app/db      
+      - pong_data:/app/db
+      - avatars:/app/avatars/users
 
-    ports:
-      - "3000:3000"
- 
+    # ports:
+    #   - "3000:3000"
+
   frontend:
-    build: 
+    build:
       context: ./frontend
-    ports:
-      - "8080:8080"
+    # ports:
+    #   - "8080:8080"
+
 volumes:
   pong_data:
+  avatars:
+  caddy_data:
+  caddy_config:
 # pong_data: with no fields means: create a local volume using the default driver, no special options.
