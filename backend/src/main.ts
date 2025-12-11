@@ -19,9 +19,13 @@ const chatManager = new ChatManager(userManager)
 const gameStatsManager = new GameStatsManager(userManager)
 
 fastify.register(require('@fastify/cors'), {
-  origin: true,
+  origin: ['http://127.0.0.1:8080', 'http://localhost:8080'],
   credentials: true,
+  methods : ["GET", "POST", "PATCH", "DELETE"]
+  // origin: true,
+  // credentials: true,
 }) //https://github.com/fastify/fastify-cors
+// fastify.register(require('@fastify/cors'), { origin: ['http://127.0.0.1:8080', 'http://localhost:8080'], credentials: true, methods : ["GET", "POST", "DELETE", "PATCH"]}) //https://github.com/fastify/fastify-cors
 
 //for file upload
 fastify.register(require('@fastify/multipart'))
