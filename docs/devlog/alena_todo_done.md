@@ -61,6 +61,12 @@ added avatar url prefix
 ### api types
 ## FRONTEND
 
+ 
+- must all after adding https all routes must be changed to:
+
+  // const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
+  const myRequest = new Request(`${(window as any).BACKEND_URL}/auth/login`, {
+
 ### TESTS
 
 ## 📘 DOCUMENTATION

@@ -1,0 +1,16 @@
+localhost {
+
+    # https://caddyserver.com/docs/caddyfile/directives/handle_path
+    handle_path /backend/* {
+    	reverse_proxy backend:3000
+    }
+
+    reverse_proxy frontend:8080
+
+}
+
+# localhost - caddy top level listens to 443 (8443 on host)
+
+# 1. backend:3000 - everything starting with /backend/
+
+# 2. frontend:8080 - everything else (frontend)
