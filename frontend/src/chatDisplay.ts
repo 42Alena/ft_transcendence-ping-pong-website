@@ -13,7 +13,7 @@ let currChatId: string;
 
 //tabs chat/user chat left
 const chatTab: any = document.getElementById("defaultOpen");
-chatTab.click();
+// chatTab.click();
 
 function displayList(event: any, text: string) {
   var i, tablinks;
@@ -27,6 +27,7 @@ function displayList(event: any, text: string) {
     listDmsDiv.classList.remove("hidden");
     listUsersDiv.classList.add("hidden");
     listUsersDiv.classList.remove("flex");
+    requestChats();
   } else {
     listDmsDiv.classList.add("hidden");
     listDmsDiv.classList.remove("flex");
@@ -57,6 +58,11 @@ function addBubbleTournament(role: string, content: string, timeStamp : HTMLDivE
   const newContent = document.createTextNode(content);
   newBubble.append(newContent);
   newBubble.classList.add("bg-yellow-200", "block", "h-auto", "max-w-[75%]", "relative", "border");
+  if (role == "sender") {
+    newBubble.classList.add("chat-right__bubble-sent-time", "bg-yellow-200");
+  } else {
+    newBubble.classList.add("chat-right__bubble-received-time", "bg-yellow-200");
+  }
   historyConversation.append(newBubble);
   historyConversation.append(timeStamp);
   bubbleDiv.appendChild(historyConversation);

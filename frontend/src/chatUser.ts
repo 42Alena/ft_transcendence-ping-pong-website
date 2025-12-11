@@ -297,6 +297,9 @@ sendMessageButton.addEventListener("click", async () => {
         const date: Date = new Date(milliseconds);
         const readableTime: string = date.toLocaleString();
         timeStampMess.textContent = readableTime;
+          console.log(
+          `send: ${message.senderId} - receive: ${message.receiverId}`,
+        );
         if (message.type == "PrivateGameInviteMessage") {
           console.log("change style");
           timeStampMess.classList.add(
@@ -318,9 +321,6 @@ sendMessageButton.addEventListener("click", async () => {
           }
           continue;
         }
-        console.log(
-          `send: ${message.senderId} - receive: ${message.receiverId}`,
-        );
         if (message.senderId == userData.id) {
           timeStampMess.classList.add(
             "text-sm",
@@ -346,11 +346,7 @@ sendMessageButton.addEventListener("click", async () => {
       userProfileDiv.classList.add("hidden");
       userProfileDiv.classList.remove("flex");
       console.log(displayName, avatarUrl);
-      //header
       fillConversationInfo(displayName, avatarUrl);
-      //swtich tab to chats
-      displayList({ currentTarget: chatTab }, "chat");
-      //highlight current chat
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -447,16 +443,21 @@ async function requestConversation(
         timeStampMess.textContent = readableTime;
         if (message.type == "PrivateGameInviteMessage") {
           console.log("change style");
-          timeStampMess.classList.add(
-            "text-sm",
-            "chat-right__bubble-sent-time",
-          );
-          addBubble("sender", message.content, timeStampMess);
+          if (message.senderId != userData.id) {
+            timeStampMess.classList.add(
+              "text-sm",
+              "chat-right__bubble-sent-time",
+            );
+            addBubbleTournament("sender", message.content, timeStampMess);
+          } else {
+            timeStampMess.classList.add(
+              "text-sm",
+              "chat-right__bubble-received-time",
+            );
+            addBubbleTournament("recv", message.content, timeStampMess);
+          }
           continue;
         }
-        console.log(
-          `send: ${message.senderId} - receive: ${message.receiverId}`,
-        );
         if (message.senderId == userData.id) {
           timeStampMess.classList.add(
             "text-sm",
@@ -492,3 +493,39 @@ async function requestConversation(
     console.error("Error during registration:", error);
   }
 }
+
+const invitePlayForm = document.getElementById("invite") as HTMLFormElement;
+
+invitePlayForm.addEventListener("submit", async (event: any) => {
+  event.preventDefault();
+    const buttonsDiv = document.getElementById(
+    "acc-options",
+  ) as HTMLButtonElement;
+  const inviteInputId = document.getElementById("invite-recv-id") as HTMLInputElement;
+  inviteInputId.value = buttonsDiv.dataset.userid as string;
+  console.log("send invitation message");
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(invitePlayForm);
+
+  const invited = {
+    receiverId: formData.get("inviteRecvId") as string,
+  };
+  console.log(invited.receiverId);
+  const myRequest = new Request("http://127.0.0.1:3000/chat/messages/game-invite", {
+    method: "POST",
+    body: JSON.stringify(invited),
+    credentials: "include",
+    headers: myHeaders,
+  });
+  try {
+    const response = await fetch(myRequest);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+       console.log(response);
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+});

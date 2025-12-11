@@ -180,7 +180,6 @@
                   <div
                     class="flex h-[60px] grow flex-col gap-2.5 border bg-white p-[1em]"
                   >
-                    <!-- <div class="chat-right__stamp border">stamp</div> -->
                     <div
                       class="flex max-w-full grow flex-col gap-2.5 overflow-auto border bg-white p-[1em]"
                       id="bubble"
@@ -432,12 +431,15 @@
                       Send message
                     </button>
                     <button
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="invite-friend__header"
-                    >
-                      Invite now
-                    </button>
+                          form="invite"
+                          type="submit"
+                          class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        >
+                          Invite game
+                        </button>
+                    <form action="http://127.0.0.1:3000/chat/messages/game-invite" method="post" id="invite">
+                      <input type="hidden" name="inviteRecvId" id="invite-recv-id" value="">
+                      </form>
                   </div>
                 </div>
               </div>
