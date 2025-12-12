@@ -183,3 +183,21 @@ export type GetUserProfileGamesAndStatsResponse = {
   matches: UserProfileMatchRow[];
   stats: UserProfileStats;
 };
+
+
+//__________________API: ALIAS CHECK  ______________
+
+export type CheckMatchAliasesBody = {
+	player1Alias: Domain.Alias;
+	player2Alias: Domain.Alias;
+};
+
+export type CheckTournamentAliasesBody = {
+	player1Alias: Domain.Alias;
+	player2Alias: Domain.Alias;
+	player3Alias: Domain.Alias;
+	player4Alias: Domain.Alias;
+};
+
+export type CheckMatchAliasesResponse = Domain.CheckMatchAliasesResult;
+export type CheckTournamentAliasesResponse = Domain.CheckTournamentAliasesResult;
