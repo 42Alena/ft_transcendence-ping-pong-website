@@ -19,10 +19,17 @@ added avatar url prefix
   added static for avatars
 ## DB
 
+<!-- TODO -->
+<!-- ##Dockerfile. changed form alpine to bulsye to check if solves on some computers problaem with sqlite
+FROM node:24-bullseye -->
+
 
 ## BACKEND
+
 ### UserManager
 ### User_routes
+  - changed logout to delete cookie with 
+  - save the file to dst (filesystem) and build publicUrl for the browser.
 ### domain types
 
 ### api types

@@ -1,7 +1,30 @@
 localhost {
 
-    # https://caddyserver.com/docs/caddyfile/directives/handle_path
-    handle_path /backend/* {
+    # https://caddyserver.com/docs/caddyfile/directives/handle_path  - strips prefix
+    # https://caddyserver.com/docs/caddyfile/directives/handle  - doesn't strip prefix
+    
+    handle /auth/* {
+    	reverse_proxy backend:3000
+    }
+    handle /users/* {
+    	reverse_proxy backend:3000
+    }
+    handle /chat/* {
+    	reverse_proxy backend:3000
+    }
+    handle /games/* {
+    	reverse_proxy backend:3000
+    }
+    handle /friends/* {
+    	reverse_proxy backend:3000
+    }
+    handle /blocks/* {
+    	reverse_proxy backend:3000
+    }
+    handle /healthz {
+    	reverse_proxy backend:3000
+    }
+    handle /avatars/* {
     	reverse_proxy backend:3000
     }
 
