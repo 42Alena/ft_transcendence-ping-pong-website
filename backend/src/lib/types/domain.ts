@@ -445,3 +445,29 @@ export type UserProfileStats = {
 	place3: number;           // how many times 3rd place
 };
 
+//__________________GAME: ALIAS CHECK (MIN)______________
+
+export type CheckMatchAliasesResult =
+	| {
+		ok: true;
+		player1Alias: Alias;
+		player2Alias: Alias;
+	}
+	| {
+		ok: false;
+		error: string;
+	};
+
+	
+export type CheckTournamentAliasesResult =
+	| {
+		ok: true;
+		player1Alias: Alias;
+		player2Alias: Alias;
+		player3Alias: Alias;
+		player4Alias: Alias;
+	}
+	| {
+		ok: false;
+		error: string;
+	};
