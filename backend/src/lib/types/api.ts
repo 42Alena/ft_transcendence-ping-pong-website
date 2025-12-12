@@ -85,10 +85,10 @@ export type UserAwareRequest = FastifyRequest & {
 //____________________CHAT_____________________
 
 export type PrivateSenderId = UserId;
+export type ReceiverDisplayname = DisplayName;
 
 export type SenderId = PrivateSenderId;
 export type ReceiverId = PrivateSenderId;
-export type ReceiverDisplayname = PrivateSenderId;
 
 export type MessageContent = string;
 
@@ -119,10 +119,8 @@ export type SendPrivateMessageBody = {
 	// no type, no senderId
 };
 
-
 export type SendTournamentMessageBody = {
-	receiverDisplayname: ReceiverDisplayname;
-	// receiverId: ReceiverId;
+	receiverDisplayname: DisplayName;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 

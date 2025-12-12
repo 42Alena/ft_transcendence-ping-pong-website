@@ -201,7 +201,7 @@ export type MessageId = number;
 // 	| null  //for game invite and priate message
 // 	| MetaTournamentNextMatch;
 
-
+export type ReceiverDisplayname = DisplayName;
 
 export type PrivateSenderId = UserId;
 export type PrivateReceiverId = UserId;

@@ -75,16 +75,17 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 		});
 
-//TODO: change from receiverId to check displayname
+		
+	//NEW: change from receiverId to check displayname
 	/* send tournament message  fromn System */
 	fastify.post<{ Body: API.SendTournamentMessageBody }>(
 		"/chat/messages/tournament",
 		authRequiredOptions,
 		async (req, reply) => {
 
-			const { receiverId } = req.body;  // targetId : string (UserId)
+			const { receiverDisplayname } = req.body;  // targetId : string (UserId)
 
-			const result = await chatManager.sendTournamentMessage(receiverId);
+			const result = await chatManager.sendTournamentMessage(receiverDisplayname);
 
 			if (result.ok)
 				return sendNoContent(reply);                  // 204
@@ -121,9 +122,9 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 	/* 
 	get conversation between  me and other user or notification from system 
 	*/
-	fastify.get<{ 
+	fastify.get<{
 		Params: API.GetUserParams;
-		Reply: API.GetChatConversationWithResult 
+		Reply: API.GetChatConversationWithResult
 	}>(
 		"/chat/conversations/:userId",
 		authRequiredOptions,
@@ -131,7 +132,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 
 			const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
-			const { userId: receiverId } = req.params;   
+			const { userId: receiverId } = req.params;
 
 			const result = await chatManager.getConversationWith(meId, receiverId);
 
