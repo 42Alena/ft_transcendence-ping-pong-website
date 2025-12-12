@@ -400,12 +400,7 @@
                   class="flex flex-col justify-center border"
                   id="acc-options"
                 >
-                  <!-- <div class="mt-2.5 flex h-[50px] items-center gap-2.5">
-                    <div
-                      class="ml-[5px] h-[15px] w-[15px] rounded-full border-2 border-black bg-green-700"
-                    ></div>
-                    <div class="">ONLINE</div>
-                  </div> -->
+                  <div class="mt-2.5 flex h-[50px] items-center gap-2.5" id="status"></div>
                   <div
                     class="mt-2.5 flex flex-row justify-center gap-[5px] text-xs"
                     id="acc-actions"
@@ -451,7 +446,7 @@
                 STATS
               </div>
               <div id="acc-profile-page">
-                <div class="flex-col gap-2.5" id="matches">
+                <div class="flex-col gap-2.5" id="stats">
                   <div id="dashboards" class="flex flex-wrap">
                     <div
                       id="winPercentage"
@@ -467,12 +462,23 @@
                     </div>
                   </div>
                   <div
-                    class="grid-rows[50px_1fr] grid border"
+                    class="w-full" id="matches"
                   >
                     <div class="flex w-full justify-center border">
                       <strong>Matches</strong>
                     </div>
-                    <div class="grid w-full grid-cols-3 border" id="list-matches"></div>
+                    <div class="grid w-full grid-cols-3 border font-bold">
+                      <div class="flex items-center justify-center border">
+                        Opponent
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        Date
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        Score
+                      </div>
+                    </div>
+                    <div id="list-matches"></div>
                 </div>
               </div>
             </div>
@@ -1029,6 +1035,7 @@
             </div>
           </div>
         </div>
+        </div>
       </section>
       <div class="relative flex-1">
         <img
@@ -1064,7 +1071,7 @@
     <script src="dist/charts.js"></script>
     <script src="dist/registerUser.js"></script>
     <script src="dist/loginUser.js"></script>
-    <script src="dist/profileUser.js" type="module"></script>
+    <script src="dist/profileUser.js"></script>
     <script src="dist/logoutUser.js"></script>
     <script src="dist/chatUser.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->

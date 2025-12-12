@@ -193,6 +193,7 @@ async function requestUserProfile(id: string) {
           break;
         }
       }
+      await requestOnlineStatus(id);
       if (friendFlag) {
         profileAddRemFriend.textContent = "Remove";
         isFriend = true;
@@ -530,3 +531,54 @@ invitePlayForm.addEventListener("submit", async (event: any) => {
     console.error("Error during registration:", error);
   }
 });
+const statusUser = document.getElementById("status") as HTMLDivElement;
+
+async function requestOnlineStatus(id : string) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request(`http://127.0.0.1:3000/users/${id}/status`, {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    const status = await response.json();
+    console.log(`status: ${status.status}`);
+    if (!response.ok) {
+      while (statusUser.firstChild) {
+            statusUser.removeChild(statusUser.firstChild);}
+      throw new Error(`Error ${response.status}`);
+    } else {
+       while (statusUser.firstChild) {
+            statusUser.removeChild(statusUser.firstChild);}
+      if (status.status == "online")
+      {
+        const setStatus = document.createElement("div");
+        const circle = document.createElement("div");
+        circle.classList.add("ml-[5px]", "h-[15px]", "w-[15px]", "rounded-full", "border-2", "border-black", "bg-green-700");
+        setStatus.textContent = status.status;
+        statusUser.appendChild(circle);
+        statusUser.appendChild(setStatus);
+        statusUser.classList.add("flex");
+        statusUser.classList.remove("hidden");
+      }
+      else if (status.status == "offline")
+      {
+        console.log("here");
+        const setStatus = document.createElement("div");
+        const circle = document.createElement("div");
+        circle.classList.add("ml-[5px]", "h-[15px]", "w-[15px]", "rounded-full", "border-2", "border-black", "bg-grey-700");
+        setStatus.textContent = status.status;
+        statusUser.appendChild(circle);
+        statusUser.appendChild(setStatus);
+        statusUser.classList.add("flex");
+        statusUser.classList.remove("hidden");
+      }
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+}
