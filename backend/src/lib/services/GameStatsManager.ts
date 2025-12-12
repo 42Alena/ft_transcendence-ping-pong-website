@@ -7,6 +7,7 @@ import { db } from "./DB";
 import { User } from "./User";
 import { UserManager } from "./UserManager";
 import { GameDbRow } from "../types/db";
+import { normalizeName, validateName } from "../utils/validators";
 
 
 
@@ -234,7 +235,7 @@ export class GameStatsManager {
 			lossRatePercent = 100 - winRatePercent;
 		}
 
-		
+
 		return {
 			totalGames,
 			wins,
@@ -281,6 +282,83 @@ export class GameStatsManager {
 		const stats = this.buildUserProfileStats(games, userId);
 
 		return { ok: true, matches, stats };
+	}
+
+
+	//______NEW _ CHECK PLAYERS BEFORE MATCH OR TOURNAMENT_________
+
+
+	private hasAliasDuplicates(names: string[]): boolean {
+		const keys = names.map(n => n.toLowerCase());
+		return new Set(keys).size !== keys.length;
+	}
+
+	private async anyTaken(names: string[]): Promise<boolean> {
+		for (const n of names) {
+			const taken = await this.userManager.isDisplayNameTaken(n as any);
+			if (taken) return true;
+		}
+		return false;
+	}
+
+	private async checkNames(namesRaw: string[]): Promise<
+		{ ok: true; names: string[] } | { ok: false; error: string }
+	> {
+		const names = namesRaw.map(normalizeName);
+
+		// validate each (length, reserved, chars, etc.)
+		for (const n of names) {
+			const err = validateName(n);
+			if (err) return { ok: false, error: err };
+		}
+
+		// combined: duplicate OR already exists
+		if (this.hasAliasDuplicates(names) || (await this.anyTaken(names)))
+			return { ok: false, error: "Name already exists or is duplicated." };
+
+		return { ok: true, names };
+	}
+
+	// 2 players
+	public async checkMatchAliases(body: {
+		player1Alias: Domain.Alias;
+		player2Alias: Domain.Alias;
+	}): Promise<Domain.CheckMatchAliasesResult> {
+
+		// Must provide exactly 2 aliases (both required fields)
+		if (!body || body.player1Alias == null || body.player2Alias == null)
+			return { ok: false, error: "Please enter 2 player names." };
+
+		const r = await this.checkNames([body.player1Alias, body.player2Alias]);
+		if (!r.ok) return { ok: false, error: r.error };
+
+		return { ok: true, player1Alias: r.names[0], player2Alias: r.names[1] };
+	}
+
+
+	// 4 players
+	public async checkTournamentAliases(body: {
+		player1Alias: Domain.Alias;
+		player2Alias: Domain.Alias;
+		player3Alias: Domain.Alias;
+		player4Alias: Domain.Alias;
+	}): Promise<Domain.CheckTournamentAliasesResult> {
+
+		const r = await this.checkNames([
+			body.player1Alias,
+			body.player2Alias,
+			body.player3Alias,
+			body.player4Alias
+		]);
+		if (!r.ok) return { ok: false, error: r.error };
+
+		return {
+			ok: true,
+			player1Alias: r.names[0],
+			player2Alias: r.names[1],
+			player3Alias: r.names[2],
+			player4Alias: r.names[3],
+		};
 	}
 
 

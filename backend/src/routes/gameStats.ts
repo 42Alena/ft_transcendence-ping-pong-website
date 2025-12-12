@@ -110,6 +110,20 @@ tournamentRound:   "semi" | "final";
 
 		});
 
+
+
+		fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
+			"/games/match/aliases/check",
+			async (req, reply) => sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
+		);
+
+		
+		fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
+			"/games/tournament/aliases/check",
+			async (req, reply) => sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
+		);
+	
+
 }
 
 
