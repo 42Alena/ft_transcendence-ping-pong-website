@@ -1,7 +1,8 @@
 .PHONY: all setup check-tools frontend backend db backend-tests \
         up down logs reset-db ps rebuild-backend db-tables db-ping\
 		 db-fill db-wipe-users db-show-users db-count\
-		 git-help git-main-update git-branch-update git-stats git-changes
+		 git-help git-main-update git-branch-update git-stats git-changes \
+		 start restart re re-hard banner
 SHELL := /bin/bash
 
 FRONTEND_DIR := frontend
@@ -19,9 +20,6 @@ GIT_MAIN   ?= main
 # Detect lockfiles to prefer reproducible installs
 FRONT_LOCK := $(FRONTEND_DIR)/package-lock.json
 BACK_LOCK  := $(BACKEND_DIR)/package-lock.json
-
-#  builds + runs in detached mode
-all: up 
 
 # Install deps and initialize local SQLite DB (non-Docker flow)
 setup: check-tools
@@ -204,3 +202,57 @@ git-changes:
 	git fetch --prune $(GIT_REMOTE) >/dev/null; \
 	echo "Files changed vs $(GIT_REMOTE)/$(GIT_MAIN):"; \
 	git diff --name-status $(GIT_REMOTE)/$(GIT_MAIN)...HEAD || true
+
+
+#_________START: NEW: make, re, re hard
+
+#  MAKE :) Subject: builds + runs in detached mode
+all: start 
+
+
+# Default: one-command start
+all: start
+
+# --- Docker Compose (evaluation / subject flow) ------------------------------
+start: check-tools banner
+	$(DC) up --build
+
+# Soft restart (keep DB/data)
+restart: check-tools banner
+	@echo "🔁 Restart (keep DB volume)"
+	$(DC) down --remove-orphans
+	$(DC) up --build
+
+# Hard reset (wipe DB/data completely)
+re: check-tools banner
+	@printf "\033[1;31m🧹 Hard reset:\033[0m removing volumes (wipe DB) and restarting...\n\n"
+	$(DC) down -v --remove-orphans
+	$(DC) up --build
+
+# Nuclear reset: wipe volumes + remove local images
+re-hard: check-tools banner
+	@printf "\033[1;31m🔥 Nuclear reset:\033[0m removing volumes + local images and restarting...\n\n"
+	$(DC) down -v --remove-orphans --rmi local
+	$(DC) up --build
+
+banner:
+	@printf "\n"
+	@printf "\033[1;35m╔══════════════════════════════════════════════╗\033[0m\n"
+	@printf "\033[1;35m║              🏓 ft_transcendence             ║\033[0m\n"
+	@printf "\033[1;35m╚══════════════════════════════════════════════╝\033[0m\n"
+	@printf "\n"
+	@printf "\033[1;32m✅ Subject requirement:\033[0m start everything with ONE command\n"
+	@printf "   \033[1;36mdocker-compose up --build\033[0m\n"
+	@printf "\n"
+	@printf "\033[1;34m🔒 Public entry point (HTTPS):\033[0m\n"
+	@printf "   \033[1;34mhttps://localhost:8443/\033[0m\n"
+	@printf "\n"
+	@printf "\033[1;33m🛡️  Browser note (self-signed cert):\033[0m\n"
+	@printf "   Click \033[1mAdvanced\033[0m → \033[1mProceed\033[0m / \033[1mTrust\033[0m to open secure Pong :)\n"
+	@printf "\n"
+	@printf "\033[2mℹ️  Internal services (Docker network only; logs may show these):\033[0m\n"
+	@printf "\033[2m   • backend:  http://127.0.0.1:3000\033[0m\n"
+	@printf "\033[2m   • frontend: http://127.0.0.1:8080\033[0m\n"
+	@printf "\n"
+	@printf "\033[35m✨ Have fun and may your ping always pong ✨\033[0m\n"
+	@printf "\n"
