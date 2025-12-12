@@ -614,6 +614,9 @@ async function requestStats(id : string) {
       throw new Error(`Error ${response.status}`);
     } else {
       const data = await response.json();
+      while (matchesDiv.firstChild) {
+        matchesDiv.removeChild(matchesDiv.firstChild);
+      }
       for (const match of data.matches)
       {
         const singleMatch = document.createElement("div");
