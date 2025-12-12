@@ -39,6 +39,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 		const validateUsernameError = Validate.validateName(username);
 		if (validateUsernameError) { return sendError(reply, validateUsernameError, "username") }
 
+		if (await userManager.existsByUsername(username)) { return sendError(reply, "Username is taken", "username") }
+
+
 		//display name
 		if (!displayName) { return sendError(reply, "No display name", "displayName") }
 		const validateDisplayNameError = Validate.validateName(displayName);
@@ -95,7 +98,7 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		if (!user) { return sendError(reply, "No user", "username", 401) }
 
-		if (! (await verifyPassword(passwordPlain, user.passwordHash))) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
+		if (!(await verifyPassword(passwordPlain, user.passwordHash))) { return sendError(reply, "incorrect password", "passwordPlain", 401) }
 
 		const loginSessionId = generateSessionToken();
 
@@ -118,16 +121,9 @@ add to db  one table for access token. userId, expireDate/valid(if experid, hten
 
 		// console.log(loginSessionId, userId);
 
-
-		try {
-
-			await userManager.deleteLoginSession(loginSessionId, userId)
-			reply.header('set-cookie', "auth="); //`backtig is a literal string to put value
-			return sendNoContent(reply);
-		} catch (e: any) {
-
-			return reply.status(400).send({ error: e.message }) //Json:{"error":"user \"Alena\" already logout"}%   
-		}
+		await userManager.deleteLoginSession(loginSessionId, userId)
+		reply.header(`set-cookie`, "auth=; Path=/; Max-Age=0; HttpOnly"); //`backtig is a literal string to put value
+		return sendNoContent(reply);
 
 	});
 }

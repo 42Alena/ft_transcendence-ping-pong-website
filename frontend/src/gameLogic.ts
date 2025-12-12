@@ -2,9 +2,7 @@ const canvas: any = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 const gameScreenDiv: any = document.getElementById("gameScreen");
 const resultDiv: any = document.getElementById("result");
-const inputFieldPlayerOne: any = document.getElementById(
-  "displayNamePlayerOne",
-);
+const inputFieldPlayerOne: any = document.getElementById("displayNamePlayerOne");
 const inputPlayerTwo: any = document.getElementById("displayNamePlayerTwo");
 const winnerTextDiv: any = document.getElementById("winner-text");
 const startGameButtonDiv: any = document.getElementById("startButton");
@@ -15,6 +13,10 @@ const newGameButton: any = document.getElementById("newGameButton");
 const nextMatchButton: any = document.getElementById("nextMatch");
 const gameOverDiv: any = document.getElementById("gameOverScreen");
 const runButton: any = document.getElementById("runButton");
+const girlImgLeft : any = document.getElementById("happy_a");
+const girlImgRight : any = document.getElementById("happy_s");
+const girlImgLeftLoser : any = document.getElementById("sad_a");
+const girlImgRightLoser : any = document.getElementById("sad_s");
 
 //variables used for single game and tournament game: flags, lists. To be cleaned before each game session
 let gameisOn: boolean = false;
@@ -29,6 +31,14 @@ lastGameTournament = [];
 //buttons
 //new game from game over screen
 newGameButton.addEventListener("click", () => {
+  girlImgLeft.classList.add("block");
+  girlImgLeft.classList.remove("hidden");
+  girlImgLeftLoser.classList.remove("block");
+  girlImgLeftLoser.classList.add("hidden");
+  girlImgRight.classList.add("block");
+  girlImgRight.classList.remove("hidden");
+  girlImgRightLoser.classList.remove("block");
+  girlImgRightLoser.classList.add("hidden");
   let singleMatch: boolean = false;
   if (!isTournament) singleMatch = true;
   gameP.classList.add("flex");
@@ -39,11 +49,20 @@ newGameButton.addEventListener("click", () => {
 
 //next game in tournament mode
 nextGameButton.addEventListener("click", () => {
+  girlImgLeft.classList.add("block");
+  girlImgLeft.classList.remove("hidden");
+  girlImgLeftLoser.classList.remove("block");
+  girlImgLeftLoser.classList.add("hidden");
+  girlImgRight.classList.add("block");
+  girlImgRight.classList.remove("hidden");
+  girlImgRightLoser.classList.remove("block");
+  girlImgRightLoser.classList.add("hidden");
   showGamePreview();
 });
 
 //start game button
 runButton.addEventListener("click", () => {
+  imgElement.src = "images/pages_images/black.jpg"
   setUpCanva();
   startGame();
 });
@@ -475,6 +494,7 @@ class Game {
     }
     if (!isTournament) {
       //return game over screen
+      imgElement.src = "images/pages_images/pong_happy_sky.png"
       gameOverDiv.classList.add("flex");
       gameOverDiv.classList.remove("hidden");
       gameOverOptionsButtons.classList.add("flex");
@@ -484,9 +504,40 @@ class Game {
       matchPlayed = 0;
       players = [];
       gameisOn = false;
+      //change side girl
+      if (this.loser == this.player1)
+      {
+        girlImgLeft.classList.add("hidden");
+        girlImgLeft.classList.remove("block");
+        girlImgLeftLoser.classList.add("block");
+        girlImgLeftLoser.classList.remove("hidden");
+      }
+      else
+      {
+        girlImgRight.classList.add("hidden");
+        girlImgRight.classList.remove("block");
+        girlImgRightLoser.classList.remove("hidden");
+        girlImgRightLoser.classList.add("block");
+      }
     } else {
+      //change side girl
+       if (this.loser == this.player1)
+      {
+        girlImgLeft.classList.add("hidden");
+        girlImgLeft.classList.remove("block");
+        girlImgLeftLoser.classList.add("block");
+        girlImgLeftLoser.classList.remove("hidden");
+      }
+      else
+      {
+        girlImgRight.classList.add("hidden");
+        girlImgRight.classList.remove("block");
+        girlImgRightLoser.classList.remove("hidden");
+        girlImgRightLoser.classList.add("block");
+      }
       //return next game screen
       if (matchPlayed == 3) {
+        imgElement.src = "images/pages_images/pong_happy_sky.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
         gameOverOptionsButtons.classList.add("flex");
@@ -494,7 +545,10 @@ class Game {
         gameScreenDiv.classList.add("hidden");
         gameScreenDiv.classList.remove("flex");
         matchPlayed = 0;
+        players = [];
+        gameisOn = false;
       } else {
+        imgElement.src ="images/pages_images/pong_table_game.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
         gameOverOptionsButtons.classList.add("hidden");
@@ -545,18 +599,15 @@ function startGame() {
     interval = setInterval(() => game.draw(), 20);
   } else {
     if (matchPlayed == 0) {
-      console.log("start tournament");
       tournament = new Tournament(players);
       gameQueue = tournament.getGamesList();
       tournament.playGame(gameQueue[0]);
     }
     if (matchPlayed == 1) {
-      console.log("next tournament");
       gameQueue = tournament.getGamesList();
       tournament.playGame(gameQueue[1]);
     }
     if (matchPlayed == 2) {
-      console.log("last tournament");
       gameQueue = tournament.getGamesList();
       let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
       tournament.playGame(newGame);

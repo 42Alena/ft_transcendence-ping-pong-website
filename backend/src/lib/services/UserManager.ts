@@ -11,7 +11,7 @@ import { generateId } from '../utils/randomId';
 import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
 import { unixTimeNow } from '../utils/time';
-import { ONLINE_TIMEOUT_SEC } from '../../config';
+import { ONLINE_TIMEOUT_SEC, URL_DEFAULT_AVATAR } from '../../config';
 
 
 export class UserManager {
@@ -34,14 +34,18 @@ export class UserManager {
 	//_______________bool: existence_____________________
 	async existsById(userId: Domain.UserId): Promise<boolean> {
 
-		const row = await this.dbTableUser().where({ id: userId }).first("id");
+		const row = await this.dbTableUser()
+			.where({ id: userId, deletedAt: 0 })
+			.first("id");
 
 		return !!row;
 	}
 
 	async existsByUsername(username: Domain.Username): Promise<boolean> {
 
-		const row = await this.dbTableUser().where({ username }).first("id");
+		const row = await this.dbTableUser()
+			.where({ username: username, deletedAt: 0 })
+			.first("id");
 
 		return !!row;
 	}
@@ -54,7 +58,9 @@ export class UserManager {
 	//_______________READ__________________
 	async getUserByUsername(username: Domain.Username): Promise<Domain.User | null> {
 
-		const row = await this.dbTableUser().where({ username: username }).first()
+		const row = await this.dbTableUser()
+			.where({ username: username, deletedAt: 0 })
+			.first()
 		if (!row) {
 			return null;
 		}
@@ -64,13 +70,31 @@ export class UserManager {
 
 	async getUserById(userId: Domain.UserId): Promise<Domain.User | null> {
 
-		const row = await this.dbTableUser().where({ id: userId }).first()
+		const row = await this
+			.dbTableUser()
+			.where({ id: userId, deletedAt: 0 })
+			.first()
 
 		if (!row) {
 			return null;
 		}
 		return userFromDbRow(row)
 	}
+
+	//_______________READ__________________
+	async getUserByDisplayname(displayName: Domain.DisplayName): Promise<Domain.User | null> {
+
+		const row = await this.dbTableUser()
+			.where({ displayName: displayName, deletedAt: 0 })
+			.first();
+
+		if (!row) {
+			return null;
+		}
+
+		return userFromDbRow(row);
+	}
+
 
 
 	async getAllUsers(): Promise<Domain.User[]> {
@@ -90,7 +114,7 @@ export class UserManager {
 			username: params.username,
 			displayName: params.displayName,
 			passwordHash: await hashPassword(params.passwordPlain),
-			avatarUrl: params.avatarUrl,
+			avatarUrl: URL_DEFAULT_AVATAR,
 			lastSeenAt: 0, // never seen (updated on login/activity. 0 = never seen yet)
 			deletedAt: 0,   // active (0 = active, >0 = deletion time)
 		})
@@ -211,8 +235,8 @@ export class UserManager {
 		if (this.isDeletedAccount(target))
 			return { ok: false, reason: "not_found" };
 
-		if (await this.isBlockedByMeOrByOther(meId, targetId))
-			return { ok: false, reason: "blocked" };
+		// if (await this.isBlockedByMeOrByOther(meId, targetId))
+		// 	return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
 			.insert({ userId: meId, friendId: targetId })

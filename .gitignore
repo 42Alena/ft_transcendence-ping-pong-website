@@ -151,3 +151,6 @@ backend/avatars/users/*        # ignore all avatar files
 
 # Cookies / sessions created by tests
 .tmp_cookies/
+
+#  ignore this : modified:   frontend/public/styles/output.css
+frontend/public/styles/output.css
