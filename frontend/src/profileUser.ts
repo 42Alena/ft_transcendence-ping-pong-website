@@ -610,17 +610,14 @@ async function requestStats(id : string) {
   try {
     const response = await fetch(myRequest);
     console.log(response);
-    const data = await response.json();
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
       const data = await response.json();
-      const matches = data.matches;
-      const stats = data.stats;
-
-      for (const match of matches)
+      for (const match of data.matches)
       {
         const singleMatch = document.createElement("div");
+        singleMatch.classList.add("grid", "w-full", "grid-cols-3", "border")
         const opponent = document.createElement("div");
         const date = document.createElement("div");
         const score = document.createElement("div");
@@ -638,8 +635,8 @@ async function requestStats(id : string) {
         singleMatch.appendChild(score);
         matchesDiv.appendChild(singleMatch);
       }
-      // createPieChart(stats.winRatePercent, stats.lossRatePercent);
-      // createBarChart(stats.place1, stats.place2, stats.place3);
+      // createPieChart(data.stats.data.winRatePercent, data.stats.lossRatePercent);
+      // createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
     }
   } catch (error) {
     console.error("Error during registration:", error);
