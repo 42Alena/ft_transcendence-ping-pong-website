@@ -153,7 +153,8 @@ export type DeleteAccountResult =
 
 export type AddFriendResult =
 	| { ok: true }
-	| { ok: false; reason: "self" | "not_found" | "blocked" };
+	| { ok: false; reason: "self" | "not_found"  };  // allowed to add friend even if blocked
+	// | { ok: false; reason: "self" | "not_found" | "blocked" };
 
 
 // export type RemoveFriendResult = { ok: true };

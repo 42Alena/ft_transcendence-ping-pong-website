@@ -235,8 +235,8 @@ export class UserManager {
 		if (this.isDeletedAccount(target))
 			return { ok: false, reason: "not_found" };
 
-		if (await this.isBlockedByMeOrByOther(meId, targetId))
-			return { ok: false, reason: "blocked" };
+		// if (await this.isBlockedByMeOrByOther(meId, targetId))
+		// 	return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
 			.insert({ userId: meId, friendId: targetId })

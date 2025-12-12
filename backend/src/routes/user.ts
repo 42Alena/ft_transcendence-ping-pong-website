@@ -119,9 +119,13 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
-			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
-			if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
+			if (result.reason === "self") 
+				return sendError(reply, "Cannot add yourself", "id", 400);
+
+			if (result.reason === "not_found") 
+				return sendError(reply, "User not found", "id", 404);
+			
+			// if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
 
 
 		});
