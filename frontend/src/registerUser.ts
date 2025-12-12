@@ -33,7 +33,7 @@ successRegPage.classList.remove("flex");
     passwordPlain: formData.get("reg-user_password"),
   };
 
-  const myRequest = new Request("http://127.0.0.1:3000/auth/register", {
+  const myRequest = new Request(`${BACKEND_URL}/auth/register`, {
     method: "POST",
     body: JSON.stringify(registerBody),
     headers: myHeaders,

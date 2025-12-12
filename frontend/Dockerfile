@@ -12,7 +12,7 @@ USER appuser
 WORKDIR /app
 
 COPY  --chown=appuser:appgroup package*.json ./
-RUN npm ci 
+RUN   npm ci 
 
 COPY  --chown=appuser:appgroup . . 
 

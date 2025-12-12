@@ -238,7 +238,7 @@
                 class="absolute inset-0 z-0 h-full w-full"
               />
               <form
-                action="http://127.0.0.1:3000/auth/register"
+                action="https://127.0.0.1:3000/auth/register"
                 method="post"
                 id="register"
                 class="flex flex-col justify-center items-center rounded-xl p-1 absolute z-1"
@@ -320,7 +320,7 @@
                 class="absolute inset-0 z-0 h-full w-full"
               />
               <form
-                action="http://127.0.0.1:3000/auth/login"
+                action="https://127.0.0.1:3000/auth/login"
                 method="post"
                 id="login"
                 class="flex flex-col items-center justify-center rounded-xl p-1 absolute z-1"
@@ -539,7 +539,7 @@
                     </div>
                  </div>
                   <form
-                    action="http://127.0.0.1:3000/users/me/avatar"
+                    action="https://127.0.0.1:3000/users/me/avatar"
                     method="post"
                     id="avatar"
                     enctype="multipart/form-data"
@@ -601,7 +601,7 @@
                   class="flex flex-1 flex-col items-center justify-center"
                 >
                   <form
-                    action="http://127.0.0.1:3000/users/me/display-name"
+                    action="https://127.0.0.1:3000/users/me/display-name"
                     method="post"
                     id="displayName"
                     class="flex flex-col items-center justify-center"
@@ -657,7 +657,7 @@
                   class="flex flex-1 flex-col items-center justify-center"
                 >
                   <form
-                    action="http://127.0.0.1:3000/users/me/change-password"
+                    action="https://127.0.0.1:3000/users/me/change-password"
                     method="post"
                     id="password"
                     class="flex flex-col items-center justify-center"
@@ -1062,6 +1062,31 @@
     </footer>
     <!-- config.js defines window.BACKEND_URL that detects docker and native correct url - should be used for all api calls -->
     <script src="dist/config.js"></script>
+	<script>
+		//document.addEventListener('DOMContentLoaded', () => {
+		//const base = window.BACKEND_URL || '';
+		//const set = (id, path) => { const el = document.getElementById(id); if (el) el.action = `${base}${path}`; };
+		//set('register', '/auth/register');
+		//set('login', '/auth/login');
+		//set('avatar', '/users/me/avatar');
+		//set('displayName', '/users/me/display-name');
+		//set('password', '/users/me/change-password');
+		//});
+		document.addEventListener('DOMContentLoaded', () => {
+		const base = window.BACKEND_URL || '';
+		// forms
+		const registerForm = document.getElementById('register');
+		if (registerForm) registerForm.action = `${base}/auth/register`;
+		const loginForm = document.getElementById('login');
+		if (loginForm) loginForm.action = `${base}/auth/login`;
+		const avatarForm = document.getElementById('avatar');
+		if (avatarForm) avatarForm.action = `${base}/users/me/avatar`;
+		const displayNameForm = document.getElementById('displayName');
+		if (displayNameForm) displayNameForm.action = `${base}/users/me/display-name`;
+		const passwordForm = document.getElementById('password');
+		if (passwordForm) passwordForm.action = `${base}/users/me/change-password`;
+		});
+	</script>
     <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>
