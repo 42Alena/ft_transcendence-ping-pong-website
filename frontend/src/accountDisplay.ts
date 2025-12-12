@@ -241,7 +241,7 @@ function setAccountPage(text: string) {
 //divs in menu
 const settingsDiv: any = document.getElementById("acc-settings");
 const friendsDiv: any = document.getElementById("acc-friends");
-const matchesDiv: any = document.getElementById("acc-matches");
+// const matchesDiv: any = document.getElementById("acc-matches");
 
 //page
 const matchesPage: any = document.getElementById("matches");

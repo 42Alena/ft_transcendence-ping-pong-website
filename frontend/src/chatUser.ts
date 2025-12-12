@@ -235,6 +235,7 @@ async function requestUserProfile(id: string) {
       buttonsOptions.dataset.avatar = user.avatarUrl;
       buttonsOptions.classList.add("flex");
       buttonsOptions.classList.remove("hidden");
+      requestStats(id);
     }
   } catch (error) {
     console.error("Error during registration:", error);

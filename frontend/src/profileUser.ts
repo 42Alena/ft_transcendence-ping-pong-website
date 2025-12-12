@@ -1,3 +1,5 @@
+// import { createPieChart, createBarChart } from './charts';
+
 const usernameDiv = document.getElementById(
   "profile-info-username",
 ) as HTMLDivElement;
@@ -55,6 +57,7 @@ async function requestProfile() {
         usernameData.textContent = data.username;
         displayNameData.textContent = data.displayName;
       }
+      requestStats(data.id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -588,6 +591,55 @@ async function unBlockFriend(id: string) {
         `[data-friendblockedid="${id}"]`,
       ) as HTMLDivElement;
       friend.remove();
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+}
+const matchesDiv = document.getElementById("list-matches") as HTMLDivElement;
+
+async function requestStats(id : string) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request(`http://127.0.0.1:3000/profile/${id}/stats`, {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const data = await response.json();
+      const matches = data.matches;
+      const stats = data.stats;
+
+      for (const match of matches)
+      {
+        const singleMatch = document.createElement("div");
+        const opponent = document.createElement("div");
+        const date = document.createElement("div");
+        const score = document.createElement("div");
+
+        opponent.classList.add("flex", "items-center", "justify-center", "border");
+        date.classList.add("flex", "items-center", "justify-center", "border");
+        score.classList.add("flex", "items-center", "justify-center", "border");
+
+        opponent.textContent = match.opponentAlias;
+        date.textContent = match.date;
+        score.textContent = match.scoreMeOther;
+
+        singleMatch.appendChild(opponent);
+        singleMatch.appendChild(date);
+        singleMatch.appendChild(score);
+        matchesDiv.appendChild(singleMatch);
+      }
+      // createPieChart(stats.winRatePercent, stats.lossRatePercent);
+      // createBarChart(stats.place1, stats.place2, stats.place3);
     }
   } catch (error) {
     console.error("Error during registration:", error);

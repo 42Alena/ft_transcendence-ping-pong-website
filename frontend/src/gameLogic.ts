@@ -90,6 +90,7 @@ function showGamePreview() {
   if (matchPlayed == 0) {
     playerNameLeft.textContent = players[0].name;
     playerNameRight.textContent = players[1].name;
+    // sendMatch();
   } else if (matchPlayed == 1) {
     playerNameLeft.textContent = players[2].name;
     playerNameRight.textContent = players[3].name;
