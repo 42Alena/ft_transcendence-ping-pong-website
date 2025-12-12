@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pong</title>
     <link href="styles/output.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
     <style></style>
   </head>
 
@@ -467,32 +468,11 @@
                   </div>
                   <div
                     class="grid-rows[50px_1fr] grid border"
-                    id="acc-stats-details"
                   >
                     <div class="flex w-full justify-center border">
                       <strong>Matches</strong>
                     </div>
-                    <div class="grid w-full grid-cols-3 border">
-                      <div class="flex items-center justify-center border">
-                        opponent
-                      </div>
-                      <div class="flex items-center justify-center border">
-                        date
-                      </div>
-                      <div class="flex items-center justify-center border">
-                        score
-                      </div>
-                    </div>
-                    <div class="grid w-full grid-cols-3 border">
-                      <div class="flex justify-center border p-2.5">
-                        opponent 1
-                      </div>
-                      <div class="flex justify-center border p-2.5">
-                        5/10/25
-                      </div>
-                      <div class="flex justify-center border p-2.5">3-2</div>
-                    </div>
-                  </div>
+                    <div class="grid w-full grid-cols-3 border" id="list-matches"></div>
                 </div>
               </div>
             </div>
@@ -1084,9 +1064,11 @@
     <script src="dist/charts.js"></script>
     <script src="dist/registerUser.js"></script>
     <script src="dist/loginUser.js"></script>
-    <script src="dist/profileUser.js"></script>
+    <script src="dist/profileUser.js" type="module"></script>
     <script src="dist/logoutUser.js"></script>
     <script src="dist/chatUser.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+     <script src="dist/charts.js"></script>
     <!-- <script src="dist/api/user.js" type="module"></script>
     <script src="dist/api/chat.js" type="module"></script> -->
   </body>
