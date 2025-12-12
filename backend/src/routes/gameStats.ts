@@ -112,17 +112,21 @@ tournamentRound:   "semi" | "final";
 
 
 
-		fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
-			"/games/match/aliases/check",
-			async (req, reply) => sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
-		);
+	// Check 2 aliases before starting a match (must be valid + free in DB)
+	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
+		"/games/match/aliases/check",
+		async (req, reply) =>
+			sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
+	);
 
-		
-		fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
-			"/games/tournament/aliases/check",
-			async (req, reply) => sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
-		);
-	
+	// Check 4 aliases before starting a tournament (must be valid + free in DB)
+	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
+		"/games/tournament/aliases/check",
+		async (req, reply) =>
+			sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
+	);
+
+
 
 }
 

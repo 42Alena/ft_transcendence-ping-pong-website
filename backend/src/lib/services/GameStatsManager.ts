@@ -301,6 +301,8 @@ export class GameStatsManager {
 		return false;
 	}
 
+
+	
 	private async checkNames(namesRaw: string[]): Promise<
 		{ ok: true; names: string[] } | { ok: false; error: string }
 	> {
@@ -335,39 +337,39 @@ export class GameStatsManager {
 		return { ok: true, player1Alias: r.names[0], player2Alias: r.names[1] };
 	}
 
-public async checkTournamentAliases(body: {
-	player1Alias: Domain.Alias;
-	player2Alias: Domain.Alias;
-	player3Alias: Domain.Alias;
-	player4Alias: Domain.Alias;
-}): Promise<Domain.CheckTournamentAliasesResult> {
+	public async checkTournamentAliases(body: {
+		player1Alias: Domain.Alias;
+		player2Alias: Domain.Alias;
+		player3Alias: Domain.Alias;
+		player4Alias: Domain.Alias;
+	}): Promise<Domain.CheckTournamentAliasesResult> {
 
-	// Must provide exactly 4 aliases (all required fields)
-	if (
-		!body ||
-		body.player1Alias == null ||
-		body.player2Alias == null ||
-		body.player3Alias == null ||
-		body.player4Alias == null
-	)
-		return { ok: false, error: "Please enter 4 player names." };
+		// Must provide exactly 4 aliases (all required fields)
+		if (
+			!body ||
+			body.player1Alias == null ||
+			body.player2Alias == null ||
+			body.player3Alias == null ||
+			body.player4Alias == null
+		)
+			return { ok: false, error: "Please enter 4 player names." };
 
-	const r = await this.checkNames([
-		body.player1Alias,
-		body.player2Alias,
-		body.player3Alias,
-		body.player4Alias
-	]);
-	if (!r.ok) return { ok: false, error: r.error };
+		const r = await this.checkNames([
+			body.player1Alias,
+			body.player2Alias,
+			body.player3Alias,
+			body.player4Alias
+		]);
+		if (!r.ok) return { ok: false, error: r.error };
 
-	return {
-		ok: true,
-		player1Alias: r.names[0],
-		player2Alias: r.names[1],
-		player3Alias: r.names[2],
-		player4Alias: r.names[3],
-	};
-}
+		return {
+			ok: true,
+			player1Alias: r.names[0],
+			player2Alias: r.names[1],
+			player3Alias: r.names[2],
+			player4Alias: r.names[3],
+		};
+	}
 
 
 
