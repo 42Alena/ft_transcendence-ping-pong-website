@@ -37,6 +37,7 @@ successRegPage.classList.remove("flex");
     method: "POST",
     body: JSON.stringify(registerBody),
     headers: myHeaders,
+    credentials : "include"
   });
   try {
     const response = await fetch(myRequest);

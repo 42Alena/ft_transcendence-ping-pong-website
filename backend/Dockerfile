@@ -23,12 +23,15 @@ RUN npm i
 # copy all sources now
 COPY --chown=appuser:appgroup . . 
 
+# make sure no avatars exist (remove old volumes - docker compose down -v)
+RUN rm -f /app/avatars/users/*
+
 #(Alena) added chmod, was not building container
-RUN chmod +x ./db/setup_db.sh
+RUN chmod +x /app/db/setup_db.sh
 
 
 # application will listen to port 3000
 EXPOSE 3000
 
 # (Alena) on container start: run DB init (creates /data/pong.db if missing), then start the backend
-CMD ["sh","-c","./db/setup_db.sh && npm run start"]
+CMD ["sh","-c","/app/db/setup_db.sh && npm run start"]

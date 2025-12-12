@@ -11,7 +11,7 @@ import { generateId } from '../utils/randomId';
 import { hashPassword, verifyPassword } from '../utils/password';
 import { normalizeName, validateName, validatePassword } from '../utils/validators';
 import { unixTimeNow } from '../utils/time';
-import { ONLINE_TIMEOUT_SEC } from '../../config';
+import { ONLINE_TIMEOUT_SEC, URL_DEFAULT_AVATAR } from '../../config';
 
 
 export class UserManager {
@@ -114,7 +114,7 @@ export class UserManager {
 			username: params.username,
 			displayName: params.displayName,
 			passwordHash: await hashPassword(params.passwordPlain),
-			avatarUrl: params.avatarUrl,
+			avatarUrl: URL_DEFAULT_AVATAR,
 			lastSeenAt: 0, // never seen (updated on login/activity. 0 = never seen yet)
 			deletedAt: 0,   // active (0 = active, >0 = deletion time)
 		})
@@ -235,8 +235,8 @@ export class UserManager {
 		if (this.isDeletedAccount(target))
 			return { ok: false, reason: "not_found" };
 
-		if (await this.isBlockedByMeOrByOther(meId, targetId))
-			return { ok: false, reason: "blocked" };
+		// if (await this.isBlockedByMeOrByOther(meId, targetId))
+		// 	return { ok: false, reason: "blocked" };
 
 		await this.dbTableFriends()
 			.insert({ userId: meId, friendId: targetId })

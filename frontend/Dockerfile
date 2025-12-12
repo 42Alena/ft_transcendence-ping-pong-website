@@ -14,7 +14,7 @@ WORKDIR /app
 COPY  --chown=appuser:appgroup package*.json ./
 RUN npm ci 
 
-COPY  --chown=appuser:appgroup . .
+COPY  --chown=appuser:appgroup . . 
 
 #  cd frontend | npm run serve | Available on:  http://127.0.0.1:8080
 ENV PORT=8080

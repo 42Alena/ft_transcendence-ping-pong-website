@@ -11,11 +11,11 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: backend
     environment:
       - PORT=3000
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
       - pong_data:/app/db
       - avatars:/app/avatars/users
 
