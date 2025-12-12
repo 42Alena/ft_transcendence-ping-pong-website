@@ -75,7 +75,7 @@ export function registerChatRoutes(fastify: FastifyInstance, chatManager: ChatMa
 
 		});
 
-
+//TODO: change from receiverId to check displayname
 	/* send tournament message  fromn System */
 	fastify.post<{ Body: API.SendTournamentMessageBody }>(
 		"/chat/messages/tournament",

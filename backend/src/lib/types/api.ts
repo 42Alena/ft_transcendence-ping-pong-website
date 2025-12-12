@@ -88,6 +88,7 @@ export type PrivateSenderId = UserId;
 
 export type SenderId = PrivateSenderId;
 export type ReceiverId = PrivateSenderId;
+export type ReceiverDisplayname = PrivateSenderId;
 
 export type MessageContent = string;
 
@@ -118,8 +119,10 @@ export type SendPrivateMessageBody = {
 	// no type, no senderId
 };
 
+
 export type SendTournamentMessageBody = {
-	receiverId: ReceiverId;
+	receiverDisplayname: ReceiverDisplayname;
+	// receiverId: ReceiverId;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
