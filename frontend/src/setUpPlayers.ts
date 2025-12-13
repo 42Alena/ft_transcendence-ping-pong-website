@@ -59,8 +59,10 @@ function aliasSelection() {
     const playerInputFour = document.getElementById("playerFour") as HTMLDivElement;
   if (isTournament == false) {
     imgElement.src = "images/pages_images/pong_game_new.png"
-    playerInputThree.classList.add("invisible");
-    playerInputFour.classList.add("invisible");
+    playerInputThree.classList.remove("block");
+    playerInputFour.classList.remove("block");
+    playerInputThree.classList.add("hidden");
+    playerInputFour.classList.add("hidden");
   if (localStorage.getItem("userData")) {
   const userDataString: string | null = localStorage.getItem("userData");
   if (userDataString) {
@@ -71,8 +73,10 @@ function aliasSelection() {
 }
   } else {
     imgElement.src = "images/pages_images/pong_tournament_new.png"
-     playerInputThree.classList.remove("invisible");
-    playerInputFour.classList.remove("invisible");
+    playerInputThree.classList.remove("hidden");
+    playerInputFour.classList.remove("hidden");
+    playerInputThree.classList.add("block");
+    playerInputFour.classList.add("block");
   }
 }
 
@@ -130,8 +134,6 @@ playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
             addPlayer(value, AI, i);
             i++;
         }
-      // for(let i = 0; i < players.length; i++)
-      //   console.log(players[i].isAI);
       showPageBeforeGame();
       console.log("check alias user:", data);
     }
