@@ -395,7 +395,7 @@ class Game {
       if (this.paddleRight.down) {
         this.paddleRight.moveDown();
       } else if (this.paddleRight.up) {
-        this.paddleRight.moveDown();
+        this.paddleRight.moveUp();
       }
     }
     //ball collision
