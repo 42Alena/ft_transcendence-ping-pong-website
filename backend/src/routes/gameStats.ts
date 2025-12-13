@@ -115,15 +115,47 @@ tournamentRound:   "semi" | "final";
 	// Check 2 aliases before starting a match (must be valid + free in DB)
 	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
 		"/games/match/aliases/check",
-		async (req, reply) =>
-			sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
+		// async (req, reply) =>
+		// 	sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
+
+		async (req, reply) => {
+
+			const result = await gameStatsManager.checkMatchAliases(req.body);
+
+			if (result.ok) {
+				return sendOK(reply, {
+					player1Alias: result.player1Alias,
+					player2Alias: result.player2Alias,
+				});
+			}
+
+			// any invalid input => 400
+			return sendError(reply, result.error, "alias", 400);
+		}
 	);
 
+	
 	// Check 4 aliases before starting a tournament (must be valid + free in DB)
 	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
 		"/games/tournament/aliases/check",
-		async (req, reply) =>
-			sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
+		// async (req, reply) =>
+		// 	sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
+
+		async (req, reply) => {
+
+		const result = await gameStatsManager.checkTournamentAliases(req.body);
+
+		if (result.ok) {
+			return sendOK(reply, {
+				player1Alias: result.player1Alias,
+				player2Alias: result.player2Alias,
+				player3Alias: result.player3Alias,
+				player4Alias: result.player4Alias,
+			});
+		}
+
+		return sendError(reply, result.error, "alias", 400);
+	}
 	);
 
 
