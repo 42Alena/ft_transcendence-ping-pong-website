@@ -1,3 +1,5 @@
+// import { createPieChart, createBarChart } from './charts';
+
 const usernameDiv = document.getElementById(
   "profile-info-username",
 ) as HTMLDivElement;
@@ -32,6 +34,7 @@ async function requestProfile() {
     } else {
       profP.classList.add("grid");
       profP.classList.remove("hidden");
+      const buttons = document.getElementById("acc-actions") as HTMLDivElement;
       if (!firstView) {
         console.log("first load");
         usernameSpan.classList.add("font-bold", "text-xl");
@@ -55,6 +58,10 @@ async function requestProfile() {
         usernameData.textContent = data.username;
         displayNameData.textContent = data.displayName;
       }
+      buttons.classList.add("hidden");
+      buttons.classList.remove("flex");
+      await requestStats(data.id);
+      requestStats(data.id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -297,6 +304,11 @@ function displayPreview() {
 }
 
 const friendsList = document.getElementById("friendsList") as HTMLDivElement;
+console.log("before list");
+let friendListStorage: string[];
+friendListStorage = [];
+console.log(`after list ${friendListStorage.length}`);
+
 async function requestFriendsList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -313,78 +325,107 @@ async function requestFriendsList() {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
+      console.log(`before loop length id ${friendListStorage.length}`);
+      friendListStorage = [];
       friendsPage.classList.add("flex");
       friendsPage.classList.remove("hidden");
       for (const friend of friends) {
-          if (!document.querySelector(`[data-friendid="${friend.id}"]`))
-          {
-            console.log("it doesnt exist");
-            const friendDiv = document.createElement("div");
-            const friendInfoDiv = document.createElement("div");
-            const friendNameDiv = document.createElement("div");
-            const friendButtonsDiv = document.createElement("div");
-            friendDiv.classList.add("flex", "items-center", "border", "p-2.5");
-            friendDiv.dataset.friendid = friend.id;
-            friendDiv.dataset.frienddisplayname = friend.displayName;
-            friendDiv.dataset.friendurl =
-              friend.avatarUrl || "default-avatar.png";
-            const friendImg = document.createElement("img");
-            friendImg.src = friend.avatarUrl || "default-avatar.png";
-            friendImg.classList.add("h-[100px]", "w-[100px]");
-            friendDiv.appendChild(friendImg);
-            friendInfoDiv.classList.add("ml-2.5", "flex", "flex-col");
-            friendNameDiv.classList.add("flex", "items-center", "gap-2");
-            friendNameDiv.textContent = friend.displayName;
-            friendInfoDiv.appendChild(friendNameDiv);
-            friendButtonsDiv.classList.add("flex", "justify-start", "gap-1");
-            const friendRemoveButton = document.createElement("button");
-            friendRemoveButton.classList.add(
-              "flex",
-              "h-10",
-              "w-[70px]",
-              "items-center",
-              "justify-center",
-              "rounded",
-              "border-2",
-              "border-blue-950",
-              "bg-blue-500",
-              "font-bold",
-              "text-white",
-              "hover:bg-blue-700",
-            );
-            friendRemoveButton.textContent = "remove";
-            friendRemoveButton.type = "button";
-            friendRemoveButton.onclick = function () {
-              removeFriend(friend.id);
-            };
-            friendButtonsDiv.appendChild(friendRemoveButton);
-            const friendBlockButton = document.createElement("button");
-            friendBlockButton.classList.add(
-              "flex",
-              "h-10",
-              "w-[70px]",
-              "items-center",
-              "justify-center",
-              "rounded",
-              "border-2",
-              "border-blue-950",
-              "bg-blue-500",
-              "font-bold",
-              "text-white",
-              "hover:bg-blue-700",
-            );
-            friendBlockButton.textContent = "block";
-            friendBlockButton.type = "button";
-            friendBlockButton.onclick = function () {
-              blockFriend(friend.id);
-            };
-            friendButtonsDiv.appendChild(friendBlockButton);
-            friendInfoDiv.appendChild(friendButtonsDiv);
-            friendDiv.appendChild(friendInfoDiv);
-            friendsList.appendChild(friendDiv);
-      }
+        console.log(`friend id ${friend.id}`);
+        friendListStorage.push(friend.id);
+        console.log(`length id ${friendListStorage.length}`);
+        console.log("it doesnt exist");
+        if (!document.querySelector(`[data-friendid="${friend.id}"]`)) {
+          const friendDiv = document.createElement("div");
+          const friendInfoDiv = document.createElement("div");
+          const friendNameDiv = document.createElement("div");
+          const friendButtonsDiv = document.createElement("div");
+          friendDiv.classList.add("flex", "items-center", "border", "p-2.5");
+          friendDiv.dataset.friendid = friend.id;
+          friendDiv.dataset.frienddisplayname = friend.displayName;
+          friendDiv.dataset.friendurl =
+            friend.avatarUrl || "default-avatar.png";
+          const friendImg = document.createElement("img");
+          friendImg.src = friend.avatarUrl || "default-avatar.png";
+          friendImg.classList.add("h-[100px]", "w-[100px]");
+          friendDiv.appendChild(friendImg);
+          friendInfoDiv.classList.add("ml-2.5", "flex", "flex-col");
+          friendNameDiv.classList.add("flex", "items-center", "gap-2");
+          friendNameDiv.textContent = friend.displayName;
+          friendInfoDiv.appendChild(friendNameDiv);
+          friendButtonsDiv.classList.add("flex", "justify-start", "gap-1");
+          const friendRemoveButton = document.createElement("button");
+          friendRemoveButton.classList.add(
+            "flex",
+            "h-10",
+            "w-[70px]",
+            "items-center",
+            "justify-center",
+            "rounded",
+            "border-2",
+            "border-blue-950",
+            "bg-blue-500",
+            "font-bold",
+            "text-white",
+            "hover:bg-blue-700",
+          );
+          friendRemoveButton.textContent = "remove";
+          friendRemoveButton.type = "button";
+          friendRemoveButton.onclick = function () {
+            removeFriend(friend.id);
+          };
+          friendButtonsDiv.appendChild(friendRemoveButton);
+          // const friendBlockButton = document.createElement("button");
+          // friendBlockButton.classList.add(
+          //   "flex",
+          //   "h-10",
+          //   "w-[70px]",
+          //   "items-center",
+          //   "justify-center",
+          //   "rounded",
+          //   "border-2",
+          //   "border-blue-950",
+          //   "bg-blue-500",
+          //   "font-bold",
+          //   "text-white",
+          //   "hover:bg-blue-700",
+          // );
+          // friendBlockButton.textContent = "block";
+          // friendBlockButton.type = "button";
+          // friendBlockButton.onclick = function () {
+          //   blockFriend(friend.id);
+          // };
+          // friendButtonsDiv.appendChild(friendBlockButton);
+          friendInfoDiv.appendChild(friendButtonsDiv);
+          friendDiv.appendChild(friendInfoDiv);
+          friendsList.appendChild(friendDiv);
         }
       }
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+}
+
+async function addFriend(id: string) {
+  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  console.log(completeUrl);
+  const myRequest = new Request(completeUrl, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify({}),
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      let data;
+      if (response.status != 204) {
+        data = await response.json(); //to check errors?
+      }
+      await requestOnlineStatus(id);
+    }
   } catch (error) {
     console.error("Error during registration:", error);
   }
@@ -411,10 +452,12 @@ async function removeFriend(id: string) {
       if (response.status != 204) {
         data = await response.json(); //to check errors?
       }
+      await requestOnlineStatus(id);
       const friend = document.querySelector(
         `[data-friendid="${id}"]`,
       ) as HTMLDivElement;
-      friend.remove();
+      console.log(id);
+      if (friend) friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -438,16 +481,18 @@ async function blockFriend(id: string) {
       if (response.status != 204) {
         data = await response.json();
       }
-      const friend = document.querySelector(
-        `[data-friendid="${id}"]`,
-      ) as HTMLDivElement;
-      friend.remove();
+      // const friend = document.querySelector(
+      //   `[data-friendid="${id}"]`,
+      // ) as HTMLDivElement;
+      // friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);
   }
 }
 
+let blockListStorage: string[];
+blockListStorage = [];
 async function requestBlockedList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -467,63 +512,64 @@ async function requestBlockedList() {
     } else {
       friendsPage.classList.add("flex");
       friendsPage.classList.remove("hidden");
+      blockListStorage = [];
       for (const friend of friends) {
-        if (!document.querySelector(`[data-friendblockedid="${friend.id}"]`))
-          {
-            const friendBlockedDiv = document.createElement("div");
-            const friendBlockedImg = document.createElement("img");
-            const friendInfoBlockedDiv = document.createElement("div");
-            const friendNameBlockedDiv = document.createElement("div");
-            const friendButtonsBlockedDiv = document.createElement("div");
-            const friendRemoveBlockedButton = document.createElement("button");
-            friendBlockedDiv.classList.add(
-              "flex",
-              "items-center",
-              "border",
-              "p-2.5",
-            );
-            friendBlockedDiv.dataset.friendblockedid = friend.id;
-            friendBlockedDiv.dataset.frienddisplayname = friend.displayName;
-            friendBlockedDiv.dataset.friendurl = friend.avatarUrl;
-            friendBlockedImg.src = friend.avatarUrl || "default-avatar.png";
-            friendBlockedImg.classList.add("h-[100px]", "w-[100px]");
-            friendBlockedDiv.appendChild(friendBlockedImg);
-            friendInfoBlockedDiv.classList.add("ml-2.5", "flex", "flex-col");
-            friendNameBlockedDiv.classList.add("flex", "items-center", "gap-2");
-            friendNameBlockedDiv.textContent = friend.displayName;
-            friendInfoBlockedDiv.appendChild(friendNameBlockedDiv);
-            friendButtonsBlockedDiv.classList.add(
-              "flex",
-              "justify-start",
-              "gap-1",
-            );
-            friendButtonsBlockedDiv.dataset.friendblockedid = friend.id;
-            friendRemoveBlockedButton.classList.add(
-              "flex",
-              "h-10",
-              "w-[70px]",
-              "items-center",
-              "justify-center",
-              "rounded",
-              "border-2",
-              "border-blue-950",
-              "bg-blue-500",
-              "font-bold",
-              "text-white",
-              "hover:bg-blue-700",
-            );
-            friendRemoveBlockedButton.textContent = "unblock";
-            friendRemoveBlockedButton.setAttribute("type", "button");
-            friendRemoveBlockedButton.onclick = function () {
-              unBlockFriend(friend.id);
-            };
-            friendButtonsBlockedDiv.appendChild(friendRemoveBlockedButton);
-            friendInfoBlockedDiv.appendChild(friendButtonsBlockedDiv);
-            friendBlockedDiv.appendChild(friendInfoBlockedDiv);
-            friendsBlockedList.appendChild(friendBlockedDiv); // Append the new block to the list
-          }
+        blockListStorage.push(friend.id);
+        if (!document.querySelector(`[data-friendblockedid="${friend.id}"]`)) {
+          const friendBlockedDiv = document.createElement("div");
+          const friendBlockedImg = document.createElement("img");
+          const friendInfoBlockedDiv = document.createElement("div");
+          const friendNameBlockedDiv = document.createElement("div");
+          const friendButtonsBlockedDiv = document.createElement("div");
+          const friendRemoveBlockedButton = document.createElement("button");
+          friendBlockedDiv.classList.add(
+            "flex",
+            "items-center",
+            "border",
+            "p-2.5",
+          );
+          friendBlockedDiv.dataset.friendblockedid = friend.id;
+          friendBlockedDiv.dataset.frienddisplayname = friend.displayName;
+          friendBlockedDiv.dataset.friendurl = friend.avatarUrl;
+          friendBlockedImg.src = friend.avatarUrl || "default-avatar.png";
+          friendBlockedImg.classList.add("h-[100px]", "w-[100px]");
+          friendBlockedDiv.appendChild(friendBlockedImg);
+          friendInfoBlockedDiv.classList.add("ml-2.5", "flex", "flex-col");
+          friendNameBlockedDiv.classList.add("flex", "items-center", "gap-2");
+          friendNameBlockedDiv.textContent = friend.displayName;
+          friendInfoBlockedDiv.appendChild(friendNameBlockedDiv);
+          friendButtonsBlockedDiv.classList.add(
+            "flex",
+            "justify-start",
+            "gap-1",
+          );
+          friendButtonsBlockedDiv.dataset.friendblockedid = friend.id;
+          friendRemoveBlockedButton.classList.add(
+            "flex",
+            "h-10",
+            "w-[70px]",
+            "items-center",
+            "justify-center",
+            "rounded",
+            "border-2",
+            "border-blue-950",
+            "bg-blue-500",
+            "font-bold",
+            "text-white",
+            "hover:bg-blue-700",
+          );
+          friendRemoveBlockedButton.textContent = "unblock";
+          friendRemoveBlockedButton.setAttribute("type", "button");
+          friendRemoveBlockedButton.onclick = function () {
+            unBlockFriend(friend.id);
+          };
+          friendButtonsBlockedDiv.appendChild(friendRemoveBlockedButton);
+          friendInfoBlockedDiv.appendChild(friendButtonsBlockedDiv);
+          friendBlockedDiv.appendChild(friendInfoBlockedDiv);
+          friendsBlockedList.appendChild(friendBlockedDiv); // Append the new block to the list
+        }
       }
-      }
+    }
   } catch (error) {
     console.error("Error during registration:", error);
   }
@@ -549,7 +595,60 @@ async function unBlockFriend(id: string) {
       const friend = document.querySelector(
         `[data-friendblockedid="${id}"]`,
       ) as HTMLDivElement;
-      friend.remove();
+      if (friend) friend.remove();
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+  }
+}
+const matchesDiv = document.getElementById("list-matches") as HTMLDivElement;
+
+async function requestStats(id: string) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  const myRequest = new Request(`http://127.0.0.1:3000/profile/${id}/stats`, {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}`);
+    } else {
+      const data = await response.json();
+      while (matchesDiv.firstChild) {
+        matchesDiv.removeChild(matchesDiv.firstChild);
+      }
+      for (const match of data.matches) {
+        const singleMatch = document.createElement("div");
+        singleMatch.classList.add("grid", "w-full", "grid-cols-3", "border");
+        const opponent = document.createElement("div");
+        const date = document.createElement("div");
+        const score = document.createElement("div");
+
+        opponent.classList.add(
+          "flex",
+          "items-center",
+          "justify-center",
+          "border",
+        );
+        date.classList.add("flex", "items-center", "justify-center", "border");
+        score.classList.add("flex", "items-center", "justify-center", "border");
+
+        opponent.textContent = match.opponentAlias;
+        date.textContent = match.date;
+        score.textContent = match.scoreMeOther;
+
+        singleMatch.appendChild(opponent);
+        singleMatch.appendChild(date);
+        singleMatch.appendChild(score);
+        matchesDiv.appendChild(singleMatch);
+      }
+      // createPieChart(data.stats.data.winRatePercent, data.stats.lossRatePercent);
+      // createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
     }
   } catch (error) {
     console.error("Error during registration:", error);

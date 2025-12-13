@@ -85,6 +85,7 @@ function showGamePreview() {
   if (matchPlayed == 0) {
     playerNameLeft.textContent = players[0].name;
     playerNameRight.textContent = players[1].name;
+    // sendMatch();
   } else if (matchPlayed == 1) {
     playerNameLeft.textContent = players[2].name;
     playerNameRight.textContent = players[3].name;
@@ -479,16 +480,20 @@ class Game {
       this.winner = this.player1;
       this.loser = this.player2;
       winnerTextDiv.textContent = this.winner.name + " won";
-      this.score.playerLeft++;
+      // this.score.playerLeft++;
     } else {
       lastGameTournament.push(this.player2);
       this.winner = this.player2;
       this.loser = this.player1;
       winnerTextDiv.textContent = this.winner.name + " won";
-      this.score.playerRight++;
+      // this.score.playerRight++;
     }
     if (!isTournament) {
-      //return game over screen
+      console.log(this.player1.name);
+      console.log(this.player2.name);
+      console.log(this.score.playerLeft);
+      console.log(this.score.playerRight);
+      sendMatchResult("normal", "", this.player1.name, this.player2.name, String(this.score.playerLeft), String(this.score.playerRight))
       imgElement.src = "images/pages_images/pong_happy_sky.png"
       gameOverDiv.classList.add("flex");
       gameOverDiv.classList.remove("hidden");
@@ -499,7 +504,6 @@ class Game {
       matchPlayed = 0;
       players = [];
       gameisOn = false;
-      //change side girl
       if (this.loser == this.player1)
       {
         girlImgLeft.classList.add("hidden");
@@ -515,7 +519,6 @@ class Game {
         girlImgRightLoser.classList.add("block");
       }
     } else {
-      //change side girl
        if (this.loser == this.player1)
       {
         girlImgLeft.classList.add("hidden");
@@ -530,8 +533,8 @@ class Game {
         girlImgRightLoser.classList.remove("hidden");
         girlImgRightLoser.classList.add("block");
       }
-      //return next game screen
       if (matchPlayed == 3) {
+        sendMatchTournamentResult("tournament", "final", this.player1.name, this.player2.name, this.score.playerLeft, this.score.playerRight)
         imgElement.src = "images/pages_images/pong_happy_sky.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
@@ -543,6 +546,7 @@ class Game {
         players = [];
         gameisOn = false;
       } else {
+        sendMatchTournamentResult("tournament", "semi", this.player1.name, this.player2.name, this.score.playerLeft, this.score.playerRight)
         imgElement.src ="images/pages_images/pong_table_game.png"
         gameOverDiv.classList.add("flex");
         gameOverDiv.classList.remove("hidden");
@@ -596,15 +600,21 @@ function startGame() {
     if (matchPlayed == 0) {
       tournament = new Tournament(players);
       gameQueue = tournament.getGamesList();
+      tournamentNotification(gameQueue[0].player1.name);
+      tournamentNotification(gameQueue[0].player2.name);
       tournament.playGame(gameQueue[0]);
     }
     if (matchPlayed == 1) {
       gameQueue = tournament.getGamesList();
+      tournamentNotification(gameQueue[1].player1.name);
+      tournamentNotification(gameQueue[1].player2.name);
       tournament.playGame(gameQueue[1]);
     }
     if (matchPlayed == 2) {
       gameQueue = tournament.getGamesList();
       let newGame = new Game(lastGameTournament[0], lastGameTournament[1]);
+      tournamentNotification(lastGameTournament[0].name);
+      tournamentNotification(lastGameTournament[1].name);
       tournament.playGame(newGame);
     }
   }

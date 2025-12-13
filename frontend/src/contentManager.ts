@@ -17,6 +17,7 @@ function displayPage(text: string): void {
   playersNameForm.reset();
   errorNamesDiv.classList.add("invisible");
   if (text == "chat") {
+    requestChats();
     chatP.classList.add("grid");
     chatP.classList.remove("hidden");
     welcP.classList.add("hidden");

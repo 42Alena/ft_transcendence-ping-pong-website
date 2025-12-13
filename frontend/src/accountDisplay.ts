@@ -17,29 +17,43 @@ const profileAddRemFriend: any = document.getElementById(
 const profileBlockUnbFriend: any = document.getElementById(
   "block-unblock-friend__header",
 );
-const tempdisplayN: any = document.getElementById("temp-displayname");
+// const tempdisplayN: any = document.getElementById("temp-displayname");
 
 let isFriend = false;
 let isBlocked = true;
 
 profileAddRemFriend.addEventListener("click", (event: any) => {
-  if (isFriend == false) {
-    profileAddRemFriend.textContent = "Add";
-    isFriend = true;
-  } else {
-    profileAddRemFriend.textContent = "Remove";
-    isFriend = false;
-  }
+  const buttonsDiv = document.getElementById("acc-options");
+  if (buttonsDiv)
+  {
+    const userId = buttonsDiv.dataset.userid as string;
+    if (isFriend == false) {
+      profileAddRemFriend.textContent = "Remove";
+      isFriend = true;
+      addFriend(userId);
+    } else {
+      profileAddRemFriend.textContent = "Add";
+       isFriend = false;
+      removeFriend(userId);
+    }
+}
 });
 
 profileBlockUnbFriend.addEventListener("click", (event: any) => {
+  const buttonsDiv = document.getElementById("acc-options");
+  if (buttonsDiv)
+  {
+     const userId = buttonsDiv.dataset.userid as string;
   if (isBlocked == false) {
-    profileBlockUnbFriend.textContent = "Block";
-    isBlocked = true;
-  } else {
     profileBlockUnbFriend.textContent = "Unblock";
+    isBlocked = true;
+    blockFriend(userId);
+  } else {
+    profileBlockUnbFriend.textContent = "Block";
     isBlocked = false;
+    unBlockFriend(userId)
   }
+}
 });
 function setAccountPage(text: string) {
   reg.reset();
@@ -227,10 +241,10 @@ function setAccountPage(text: string) {
 //divs in menu
 const settingsDiv: any = document.getElementById("acc-settings");
 const friendsDiv: any = document.getElementById("acc-friends");
-const matchesDiv: any = document.getElementById("acc-matches");
+// const matchesDiv: any = document.getElementById("acc-matches");
 
 //page
-const matchesPage: any = document.getElementById("matches");
+const matchesPage: any = document.getElementById("stats");
 
 /* Releated to friend page*/
 
@@ -249,7 +263,7 @@ function displayBlockedFriends() {
     requestBlockedList();
     toggle = true;
   } else {
-    blockButton.textContent = "See blocked users";
+    blockButton.textContent = "See blocked chats";
     blockedList.classList.add("hidden");
     blockedList.classList.remove("flex");
     friendList.classList.add("flex");
@@ -285,7 +299,7 @@ function displayBlockedFriends() {
 // });
 
 function displayPersonalProfile() {
-  tempdisplayN.innerHTML = "Display name: Pallo";
+  // tempdisplayN.innerHTML = "Display name: Pallo";
   profileActions.classList.add("hidden");
   profileActions.classList.remove("flex");
 
@@ -311,7 +325,7 @@ function displayPersonalProfile() {
 }
 
 function displayUserProfile() {
-  tempdisplayN.innerHTML = "Display name: Eos";
+  // tempdisplayN.innerHTML = "Display name: Eos";
   profileActions.classList.add("flex");
   profileActions.classList.remove("hidden");
   // matchesPage.classList.add("hidden");
