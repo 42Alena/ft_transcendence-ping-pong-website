@@ -118,18 +118,31 @@ function setGameType(text: string) {
 
 //set page for 2 players or 4 players (tournament)
 function aliasSelection() {
+  const playerInputOne = document.getElementById("player-one") as HTMLInputElement;
+  const playerInputThree = document.getElementById("playerThree") as HTMLDivElement;
+    const playerInputFour = document.getElementById("playerFour") as HTMLDivElement;
   if (isTournament == false) {
     imgElement.src = "images/pages_images/pong_game_new.png"
-    aliasPlayerThreeDiv.classList.add("hidden");
-    aliasPlayerThreeDiv.classList.remove("block");
-    aliasPlayerFourDiv.classList.add("hidden");
-    aliasPlayerFourDiv.classList.remove("block");
+    // playerInputThree.classList.add("hidden");
+    playerInputThree.classList.add("invisible");
+    playerInputFour.classList.add("invisible");
+  if (localStorage.getItem("userData")) {
+  const userDataString: string | null = localStorage.getItem("userData");
+  if (userDataString) {
+    const userData = JSON.parse(userDataString);
+    playerInputOne.value = userData.displayName;
+    playerInputOne.classList.add("disable");
+  }
+}
+    // aliasPlayerFourDiv.classList.remove("block");
   } else {
     imgElement.src = "images/pages_images/pong_tournament_new.png"
-    aliasPlayerThreeDiv.classList.add("block");
-    aliasPlayerThreeDiv.classList.remove("hidden");
-    aliasPlayerFourDiv.classList.add("block");
-    aliasPlayerFourDiv.classList.remove("hidden");
+     playerInputThree.classList.remove("invisible");
+    playerInputFour.classList.remove("invisible");
+    // aliasPlayerThreeDiv.classList.add("block");
+    // aliasPlayerThreeDiv.classList.remove("hidden");
+    // aliasPlayerFourDiv.classList.add("block");
+    // aliasPlayerFourDiv.classList.remove("hidden");
   }
 }
 
@@ -297,6 +310,54 @@ aliasPlayerFourButton.addEventListener("click", () => {
   if (startGame == true) {
      aliasPlayerFourButton.disabled = true;
      showPageBeforeGame();
+  }
+});
+
+const playersNameForm = document.getElementById("playersName") as HTMLFormElement;
+const errorNamesDiv = document.getElementById("playersName_error") as HTMLDivElement;
+
+playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
+  event.preventDefault();
+
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  const formData = new FormData(playersNameForm);
+  const playersNames = {
+    player1Alias: formData.get("player-one_name"),
+    player2Alias: formData.get("player-two_name"),
+    player3Alias: formData.get("player-three_name"),
+    player4Alias: formData.get("player-four_name"),
+  };
+  let url;
+  if (!isTournament)
+    url = "http://127.0.0.1:3000/games/match/aliases/check";
+  else
+    url = "http://127.0.0.1:3000/games/tournament/aliases/check";
+  const myRequest = new Request(url, {
+    method: "POST",
+    body: JSON.stringify(playersNames),
+    headers: myHeaders,
+    credentials : "include"
+  });
+  try {
+    const response = await fetch(myRequest);
+    console.log(response);
+    console.log(response.json);
+    const data = await response.json();
+    if (!response.ok) {
+        errorNamesDiv.classList.add("block");
+        errorNamesDiv.classList.remove("invisible");
+        errorNamesDiv.textContent = data.error;
+        playersNameForm.reset();
+      throw new Error(`Response status ${response.status}`);
+    } else {
+        errorNamesDiv.classList.add("invisible");
+        errorNamesDiv.classList.remove("block");
+      playersNameForm.reset();
+      console.log("check alias user:", data);
+    }
+  } catch (error: any) {
+    console.error("Error during registration:", error.message);
   }
 });
 
