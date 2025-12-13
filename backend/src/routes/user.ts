@@ -7,9 +7,9 @@ import type * as API from '../lib/types/api';
 //for file upload
 // import { createWriteStream } from 'node:fs';
 // import { pipeline } from 'node:stream/promises';
-import { rename, unlink } from 'node:fs/promises';
+import { copyFile, unlink } from 'node:fs/promises';
 import { extname, join } from 'node:path';
-import { UPLOAD_DIR } from '../config';
+import { UPLOAD_DIR, URL_AVATAR_PREFIX, URL_DEFAULT_AVATAR } from '../config';
 
 
 
@@ -42,11 +42,11 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 	fastify.get("/users/me", authRequiredOptions, async (req, reply) => {
 
 		const meId = (req as API.UserAwareRequest).userId;  // set by preHandler
-		if (!meId) 
+		if (!meId)
 			return sendError(reply, "need cookies", "auth", 401);
 
 		const me = await userManager.getUserById(meId);
-		if (!me) 
+		if (!me)
 			return sendError(reply, "User not found", "userId", 404);
 
 		return sendOK(reply, toUserSelf(me));
@@ -119,9 +119,13 @@ export function registerUserRoutes(fastify: FastifyInstance, userManager: UserMa
 				return sendNoContent(reply);                  // 204
 
 			// map domain reasons to HTTP
-			if (result.reason === "self") return sendError(reply, "Cannot add yourself", "id", 400);
-			if (result.reason === "not_found") return sendError(reply, "User not found", "id", 404);
-			if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
+			if (result.reason === "self") 
+				return sendError(reply, "Cannot add yourself", "id", 400);
+
+			if (result.reason === "not_found") 
+				return sendError(reply, "User not found", "id", 404);
+			
+			// if (result.reason === "blocked") return sendError(reply, "Blocked relationship", "blocked", 403);
 
 
 		});
@@ -345,29 +349,37 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 		//get userId for path
 
 		const extention = extname(files[0].filename)
-		const dst = join(
-			UPLOAD_DIR,
-			'/',
-			`${meId}${extention}`
-		);
+		const fileName = `${meId}${extention}`;
+		const dst = join(UPLOAD_DIR, '/users/', fileName);              // uses global UPLOAD_DIR
+		const publicUrl = join(URL_AVATAR_PREFIX, '/users/', fileName); // uses global prefix
+
 
 		console.log("avatar saving to ", dst)
-		await rename(
+		await copyFile(
 			files[0].filepath, // src
 			dst // dst
 		);
 
 		console.log('Change avatar', req.body)
 
-		const result = await userManager.changeAvatar(meId, dst);
+		const result = await userManager.changeAvatar(meId, publicUrl);
 
 		if (result.ok) {
-			if (oldAvatarUrl && (oldAvatarUrl !== dst))
-				await unlink(oldAvatarUrl);
 
-			return sendOK(reply, { avatarUrl: dst });  //   url where saved
+			if (oldAvatarUrl && oldAvatarUrl !== URL_DEFAULT_AVATAR && (oldAvatarUrl !== publicUrl)) {
+				if (oldAvatarUrl.startsWith(URL_AVATAR_PREFIX)) {             // NEW: only delete if old avatar was an uploaded file
+					const oldFileName = oldAvatarUrl.slice(URL_AVATAR_PREFIX.length) // NEW: strip prefix to get filename
+					const oldFsPath = join(UPLOAD_DIR, oldFileName)           // NEW: build old FS path from filename
+					await unlink(oldFsPath);                                  // CHANGED: unlink FS path, not URL
+				}
+
+
+			}
+
+			return sendOK(reply, { avatarUrl: publicUrl });  //   url where saved, return URL (usable in <img src>
+
+
 		}
-
 
 		// map domain reasons to HTTP
 		if (result.reason === "not_me")
@@ -375,6 +387,7 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 
 
 	});
+
 
 	//_________________/ME/SETTINGS: DELETE USER____________
 
@@ -411,29 +424,29 @@ https://nodejs.org/docs/latest/api/fs.html#fspromisesrenameoldpath-newpath
 	fastify.get<{ Params: API.TargetIdParams }>(
 		"/users/:id/status", authRequiredOptions, async (req, reply) => {
 
-		const viewerId = (req as API.UserAwareRequest).userId;
+			const viewerId = (req as API.UserAwareRequest).userId;
 
-		const { id: targetId } = req.params;   
+			const { id: targetId } = req.params;
 
-		const result = await userManager.getUserOnlineStatus(viewerId, targetId);
+			const result = await userManager.getUserOnlineStatus(viewerId, targetId);
 
-		// map domain result to HTTP
-		if (!result.ok) {
-			if (result.reason === "not_me")
-				return sendError(reply, "User not found or not authenticated", "auth", 401);
+			// map domain result to HTTP
+			if (!result.ok) {
+				if (result.reason === "not_me")
+					return sendError(reply, "User not found or not authenticated", "auth", 401);
 
-			if (result.reason === "not_found")
-				return sendError(reply, "User not found", "userId", 404);
+				if (result.reason === "not_found")
+					return sendError(reply, "User not found", "userId", 404);
 
-			if (result.reason === "not_friend")
-				return sendError(reply, "User not my friend", "userId", 403);
+				if (result.reason === "not_friend")
+					return sendError(reply, "User not my friend", "userId", 403);
 
-			return;
-		}
+				return;
+			}
 
-		// here result.ok === true
-		return sendOK(reply, { status: result.status });  // online | offline
-	});
+			// here result.ok === true
+			return sendOK(reply, { status: result.status });  // online | offline
+		});
 
 }
 

@@ -85,6 +85,7 @@ export type UserAwareRequest = FastifyRequest & {
 //____________________CHAT_____________________
 
 export type PrivateSenderId = UserId;
+export type ReceiverDisplayname = DisplayName;
 
 export type SenderId = PrivateSenderId;
 export type ReceiverId = PrivateSenderId;
@@ -119,7 +120,7 @@ export type SendPrivateMessageBody = {
 };
 
 export type SendTournamentMessageBody = {
-	receiverId: ReceiverId;
+	receiverDisplayname: DisplayName;
 	// no content, backend will use MESSAGE_GAME_INVITE
 };
 
@@ -182,3 +183,21 @@ export type GetUserProfileGamesAndStatsResponse = {
   matches: UserProfileMatchRow[];
   stats: UserProfileStats;
 };
+
+
+//__________________API: ALIAS CHECK  ______________
+
+export type CheckMatchAliasesBody = {
+	player1Alias: Domain.Alias;
+	player2Alias: Domain.Alias;
+};
+
+export type CheckTournamentAliasesBody = {
+	player1Alias: Domain.Alias;
+	player2Alias: Domain.Alias;
+	player3Alias: Domain.Alias;
+	player4Alias: Domain.Alias;
+};
+
+export type CheckMatchAliasesResponse = Domain.CheckMatchAliasesResult;
+export type CheckTournamentAliasesResponse = Domain.CheckTournamentAliasesResult;

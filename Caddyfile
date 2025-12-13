@@ -1,0 +1,39 @@
+localhost {
+
+    # https://caddyserver.com/docs/caddyfile/directives/handle_path  - strips prefix
+    # https://caddyserver.com/docs/caddyfile/directives/handle  - doesn't strip prefix
+    
+    handle /auth/* {
+    	reverse_proxy backend:3000
+    }
+    handle /users/* {
+    	reverse_proxy backend:3000
+    }
+    handle /chat/* {
+    	reverse_proxy backend:3000
+    }
+    handle /games/* {
+    	reverse_proxy backend:3000
+    }
+    handle /friends/* {
+    	reverse_proxy backend:3000
+    }
+    handle /blocks/* {
+    	reverse_proxy backend:3000
+    }
+    handle /healthz {
+    	reverse_proxy backend:3000
+    }
+    handle /avatars/* {
+    	reverse_proxy backend:3000
+    }
+
+    reverse_proxy frontend:8080
+
+}
+
+# localhost - caddy top level listens to 443 (8443 on host)
+
+# 1. backend:3000 - everything starting with /backend/
+
+# 2. frontend:8080 - everything else (frontend)

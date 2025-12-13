@@ -50,7 +50,8 @@ log.addEventListener("submit", async (event: any) => {
     username: formData.get("login-user_username"),
     passwordPlain: formData.get("login-user_password"),
   };
-  const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
+  // const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
+  const myRequest = new Request(`${BACKEND_URL}/auth/login`, {
     method: "POST",
     body: JSON.stringify(LoginBody),
     credentials: "include",
