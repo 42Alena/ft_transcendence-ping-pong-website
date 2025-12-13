@@ -120,6 +120,7 @@ function setAccountPage(text: string) {
     errorDisplayName.classList.remove("block");
     errorPaassword.classList.add("hidden");
     errorPaassword.classList.remove("block");
+    errorNamesDiv.classList.add("invisible");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");

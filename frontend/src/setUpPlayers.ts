@@ -318,7 +318,7 @@ const errorNamesDiv = document.getElementById("playersName_error") as HTMLDivEle
 
 playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
   event.preventDefault();
-
+  errorNamesDiv.classList.add("invisible");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   const formData = new FormData(playersNameForm);
@@ -345,15 +345,12 @@ playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
     console.log(response.json);
     const data = await response.json();
     if (!response.ok) {
-        errorNamesDiv.classList.add("block");
         errorNamesDiv.classList.remove("invisible");
         errorNamesDiv.textContent = data.error;
-        playersNameForm.reset();
       throw new Error(`Response status ${response.status}`);
     } else {
-        errorNamesDiv.classList.add("invisible");
-        errorNamesDiv.classList.remove("block");
       playersNameForm.reset();
+      errorNamesDiv.classList.add("invisible");
       console.log("check alias user:", data);
     }
   } catch (error: any) {
