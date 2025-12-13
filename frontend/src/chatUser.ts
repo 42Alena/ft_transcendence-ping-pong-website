@@ -247,6 +247,8 @@ async function requestUserProfile(id: string) {
       profileOptions.dataset.avatar = user.avatarUrl;
       profileOptions.classList.add("flex");
       profileOptions.classList.remove("hidden");
+      buttons.classList.add("flex");
+        buttons.classList.remove("hidden");
       if (isMe)
       {
         console.log("here");

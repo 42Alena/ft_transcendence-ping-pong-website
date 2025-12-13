@@ -263,7 +263,7 @@ function displayBlockedFriends() {
     requestBlockedList();
     toggle = true;
   } else {
-    blockButton.textContent = "See blocked users";
+    blockButton.textContent = "See blocked chats";
     blockedList.classList.add("hidden");
     blockedList.classList.remove("flex");
     friendList.classList.add("flex");
