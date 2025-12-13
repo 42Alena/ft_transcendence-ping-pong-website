@@ -288,6 +288,14 @@ export class GameStatsManager {
 	//______NEW _ CHECK PLAYERS BEFORE MATCH OR TOURNAMENT_________
 
 
+	private isAiAlias(normalizedName: string): boolean {
+
+		const key = normalizedName.toUpperCase();
+
+		return (Domain.TOURNAMENT_AI_ALIASES as readonly string[])
+			.some(ai => ai.toUpperCase() === key);
+	}
+
 	private hasAliasDuplicates(names: string[]): boolean {
 		const keys = names.map(n => n.toLowerCase());
 		return new Set(keys).size !== keys.length;
@@ -302,7 +310,7 @@ export class GameStatsManager {
 	}
 
 
-	
+
 	private async checkNames(namesRaw: string[]): Promise<
 		{ ok: true; names: string[] } | { ok: false; error: string }
 	> {
@@ -320,6 +328,7 @@ export class GameStatsManager {
 
 		return { ok: true, names };
 	}
+
 
 	// 2 players
 	public async checkMatchAliases(body: {
