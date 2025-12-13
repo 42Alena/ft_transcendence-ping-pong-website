@@ -296,19 +296,7 @@ export class GameStatsManager {
 			.some(ai => ai.toUpperCase() === key);
 	}
 
-	private hasAliasDuplicates(names: string[]): boolean {
-		const keys = names.map(n => n.toLowerCase());
-		return new Set(keys).size !== keys.length;
-	}
-
-	private async anyTaken(names: string[]): Promise<boolean> {
-		for (const n of names) {
-			const taken = await this.userManager.isDisplayNameTaken(n as any);
-			if (taken) return true;
-		}
-		return false;
-	}
-
+	
 
 
 	private async checkNames(namesRaw: string[]): Promise<
@@ -316,18 +304,51 @@ export class GameStatsManager {
 	> {
 		const names = namesRaw.map(normalizeName);
 
-		// validate each (length, reserved, chars, etc.)
-		for (const n of names) {
-			const err = validateName(n);
-			if (err) return { ok: false, error: err };
+		// 1) empty after normalize
+		for (let i = 0; i < names.length; i++) {
+			if (names[i].length === 0)
+				return { ok: false, error: `Player ${i + 1}: name is empty.` };
 		}
 
-		// combined: duplicate OR already exists
-		if (this.hasAliasDuplicates(names) || (await this.anyTaken(names)))
-			return { ok: false, error: "Name already exists or is duplicated." };
+		// 2) validate each:
+		//    - AI aliases are allowed (skip validateName for them)
+		//    - all non-AI aliases must pass validateName
+		for (let i = 0; i < names.length; i++) {
+			if (this.isAiAlias(names[i]))
+				continue;
+
+			const err = validateName(names[i]);
+			if (err)
+				return { ok: false, error: `Player ${i + 1}: ${err}` };
+		}
+
+		// 3) duplicates (case-insensitive) for ALL names (including AI)
+		{
+			const seen = new Set<string>();
+
+			for (const n of names) {
+				const k = n.toLowerCase();
+
+				if (seen.has(k))
+					return { ok: false, error: `Duplicate: "${n}" is used more than once.` };
+
+				seen.add(k);
+			}
+		}
+
+		// 4) taken in DB ONLY for non-AI names
+		for (let i = 0; i < names.length; i++) {
+			if (this.isAiAlias(names[i]))
+				continue;
+
+			const taken = await this.userManager.isDisplayNameTaken(names[i] as any);
+			if (taken)
+				return { ok: false, error: `Player ${i + 1}: name "${names[i]}" already exists.` };
+		}
 
 		return { ok: true, names };
 	}
+
 
 
 	// 2 players
