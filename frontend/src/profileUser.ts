@@ -371,27 +371,27 @@ async function requestFriendsList() {
               removeFriend(friend.id);
             };
             friendButtonsDiv.appendChild(friendRemoveButton);
-            const friendBlockButton = document.createElement("button");
-            friendBlockButton.classList.add(
-              "flex",
-              "h-10",
-              "w-[70px]",
-              "items-center",
-              "justify-center",
-              "rounded",
-              "border-2",
-              "border-blue-950",
-              "bg-blue-500",
-              "font-bold",
-              "text-white",
-              "hover:bg-blue-700",
-            );
-            friendBlockButton.textContent = "block";
-            friendBlockButton.type = "button";
-            friendBlockButton.onclick = function () {
-              blockFriend(friend.id);
-            };
-            friendButtonsDiv.appendChild(friendBlockButton);
+            // const friendBlockButton = document.createElement("button");
+            // friendBlockButton.classList.add(
+            //   "flex",
+            //   "h-10",
+            //   "w-[70px]",
+            //   "items-center",
+            //   "justify-center",
+            //   "rounded",
+            //   "border-2",
+            //   "border-blue-950",
+            //   "bg-blue-500",
+            //   "font-bold",
+            //   "text-white",
+            //   "hover:bg-blue-700",
+            // );
+            // friendBlockButton.textContent = "block";
+            // friendBlockButton.type = "button";
+            // friendBlockButton.onclick = function () {
+            //   blockFriend(friend.id);
+            // };
+            // friendButtonsDiv.appendChild(friendBlockButton);
             friendInfoDiv.appendChild(friendButtonsDiv);
             friendDiv.appendChild(friendInfoDiv);
             friendsList.appendChild(friendDiv);
