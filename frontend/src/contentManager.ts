@@ -14,6 +14,8 @@ function displayPage(text: string): void {
   girlImgRightLoser.classList.add("hidden");
   successRegPage.classList.add("hidden");
   successRegPage.classList.remove("flex");
+  playersNameForm.reset();
+  errorNamesDiv.classList.add("invisible");
   if (text == "chat") {
     chatP.classList.add("grid");
     chatP.classList.remove("hidden");

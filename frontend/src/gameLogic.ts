@@ -69,15 +69,10 @@ runButton.addEventListener("click", () => {
 
 //show page of whom is playing, commands and score
 function showPageBeforeGame() {
-  if (players.length == 2 && !isTournament) {
-    setGame.classList.add("hidden");
-    setGame.classList.remove("flex");
-    showGamePreview();
-  } else if (players.length == 4 && isTournament) {
-    setGame.classList.add("hidden");
-    setGame.classList.remove("flex");
-    showGamePreview();
-  }
+ 
+  setGame.classList.add("hidden");
+  setGame.classList.remove("flex");
+  showGamePreview();
 }
 
 function showGamePreview() {
@@ -400,7 +395,7 @@ class Game {
       if (this.paddleRight.down) {
         this.paddleRight.moveDown();
       } else if (this.paddleRight.up) {
-        this.paddleRight.moveDown();
+        this.paddleRight.moveUp();
       }
     }
     //ball collision

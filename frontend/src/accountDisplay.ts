@@ -44,6 +44,7 @@ profileBlockUnbFriend.addEventListener("click", (event: any) => {
 function setAccountPage(text: string) {
   reg.reset();
   log.reset();
+  playersNameForm.reset();
   displayNameForm.reset();
   passwordForm.reset();
   avatarForm.reset();
@@ -93,8 +94,6 @@ function setAccountPage(text: string) {
       gameisOn = false;
     }
   } else if (text == "register") {
-    reg.reset();
-    log.reset();
     regP.classList.add("flex");
     regP.classList.remove("hidden");
     reg.classList.add("flex");
@@ -121,6 +120,7 @@ function setAccountPage(text: string) {
     errorDisplayName.classList.remove("block");
     errorPaassword.classList.add("hidden");
     errorPaassword.classList.remove("block");
+    errorNamesDiv.classList.add("invisible");
     if (gameisOn) {
       clearInterval(interval);
       canvas.classList.add("hidden");
