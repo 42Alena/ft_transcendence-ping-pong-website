@@ -757,8 +757,80 @@
             >
               <div
                 id="setUpPlayers"
-                class="flex h-full flex-wrap items-center justify-center gap-5"
+                class="relative hidden h-full w-full flex-row items-center justify-center bg-inherit"
               >
+              <form
+  method="post"
+  id="playersName"
+  class="flex flex-wrap justify-center items-center rounded-xl p-1 absolute z-1"
+>
+    <div class="shrink-0 w-1/2 p-2" id="playerOne">
+      <label
+        class="text-heading text-xl font-bold"
+        for="player-one"
+        >Player one</label
+      >
+      <input
+        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white pl-2 py-2 text-lg shadow-xs"
+        type="text"
+        id="player-one"
+        name="player-one_name"
+      />
+    </div>
+    <div class="shrink-0 w-1/2 p-2">
+      <label
+        class="text-heading text-xl font-bold"
+        for="player-two"
+        >Player two</label
+      >
+      <input
+        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white pl-2 py-2 text-lg shadow-xs"
+        type="text"
+        id="player-two"
+        name="player-two_name"
+      />
+    </div>
+      <div class="shrink-0 w-1/2 p-2" id="playerThree">
+      <label
+        class="text-heading text-xl font-bold"
+        for="player-three"
+        >Player three</label
+      >
+      <input
+        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white pl-2 py-2 text-lg shadow-xs"
+        type="text"
+        id="player-three"
+        name="player-three_name"
+      />
+    </div>
+    <div class="shrink-0 w-1/2 p-2" id="playerFour">
+      <label
+        class="text-heading text-xl font-bold"
+        for="player-four"
+        >Player four</label
+      >
+      <input
+        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white pl-2 py-2 text-lg shadow-xs"
+        type="text"
+        id="player-four"
+        name="player-four_name"
+      />
+    </div>
+<div class="flex-col flex w-full items-center justify-center">
+  <div id="playersName_error" class="invisiable text-sm text-red-600 h-10"></div>
+
+  <button
+    type="submit"
+    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+  >
+    Submit
+  </button>
+</div>
+</form>
+
+
+                </div>
+                <div class="hidden delete">
                 <div id="aliasPlayerOne">
                   <label
                     for="namePlayerOne"
