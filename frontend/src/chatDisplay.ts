@@ -1,7 +1,7 @@
 //HTML elements
 const listDmsDiv: any = document.getElementById("list-dms");
 const bubbleDiv: any = document.getElementById("bubble");
-const inputEl: any = document.getElementById("text-box");
+// const inputEl: any = document.getElementById("text-box");
 const SendEl: any = document.getElementById("send-button");
 const listUsersDiv: any = document.getElementById("list-users");
 const conversationDiv: any = document.getElementById("conversation");

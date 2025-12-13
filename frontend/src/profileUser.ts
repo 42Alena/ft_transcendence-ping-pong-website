@@ -421,6 +421,7 @@ async function addFriend(id: string) {
       if (response.status != 204) {
         data = await response.json(); //to check errors?
       }
+      await requestOnlineStatus(id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -448,10 +449,13 @@ async function removeFriend(id: string) {
       if (response.status != 204) {
         data = await response.json(); //to check errors?
       }
+      await requestOnlineStatus(id);
       const friend = document.querySelector(
-        `[data-friendid="${id}"]`,
+        `[data-friendid="${id}"]`
       ) as HTMLDivElement;
-      friend.remove();
+      console.log(id);
+      if (friend)
+        friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -590,7 +594,8 @@ async function unBlockFriend(id: string) {
       const friend = document.querySelector(
         `[data-friendblockedid="${id}"]`,
       ) as HTMLDivElement;
-      friend.remove();
+      if (friend)
+        friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);

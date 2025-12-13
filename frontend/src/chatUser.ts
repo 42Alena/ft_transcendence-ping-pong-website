@@ -152,12 +152,13 @@ const userProfile = document.getElementById("userProfile") as HTMLDivElement;
 const startConversationDiv = document.getElementById(
   "start-chat",
 ) as HTMLDivElement;
-const buttonsOptions = document.getElementById("acc-options") as HTMLDivElement;
+const profileOptions = document.getElementById("acc-options") as HTMLDivElement;
+const buttons = document.getElementById("acc-actions") as HTMLDivElement;
 
 async function requestUserProfile(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
+  let isMe = false;
   const myRequest = new Request(`http://127.0.0.1:3000/users/${id}`, {
     method: "GET",
     headers: myHeaders,
@@ -183,6 +184,16 @@ async function requestUserProfile(id: string) {
       userProfile.dataset.profileusername = user.displayName;
       userProfile.dataset.profileuseravatar = user.avatarUrl;
       // console.log(`before request ${friendListStorage.length}`);
+      //check myself
+      if (localStorage.getItem("userData")) {
+        const userDataString: string | null = localStorage.getItem("userData");
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          console.log(`${userData.displayName} - ${user.id} checking myself`);
+          if (userData.displayName == user.displayName)
+            isMe = true;
+        }
+      }
       await requestFriendsList();
       // console.log(`after request ${friendListStorage.length}`);
       for (let i = 0; i < friendListStorage.length; i++) {
@@ -213,7 +224,7 @@ async function requestUserProfile(id: string) {
         profileBlockUnbFriend.textContent = "Unblock";
         isBlocked = true;
       } else {
-        profileBlockUnbFriend.textContent = "Block";
+        profileBlockUnbFriend.textContent = "Block chat";
         isBlocked = false;
       }
       usernameDiv.classList.add("hidden");
@@ -231,12 +242,18 @@ async function requestUserProfile(id: string) {
       userProfile.classList.remove("hidden");
       profP.classList.remove("hidden");
       profP.classList.add("grid");
-      buttonsOptions.dataset.userid = user.id;
-      buttonsOptions.dataset.username = user.displayName;
-      buttonsOptions.dataset.avatar = user.avatarUrl;
-      buttonsOptions.classList.add("flex");
-      buttonsOptions.classList.remove("hidden");
-      requestStats(id);
+      profileOptions.dataset.userid = user.id;
+      profileOptions.dataset.username = user.displayName;
+      profileOptions.dataset.avatar = user.avatarUrl;
+      profileOptions.classList.add("flex");
+      profileOptions.classList.remove("hidden");
+      if (isMe)
+      {
+        console.log("here");
+        buttons.classList.add("hidden");
+        buttons.classList.remove("flex");
+      }
+      await requestStats(id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
