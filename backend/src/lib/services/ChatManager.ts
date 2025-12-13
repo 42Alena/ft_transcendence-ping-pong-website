@@ -173,23 +173,23 @@ Example meta JSON of the message:
 
   */
   async sendTournamentMessage(
-    receiverId: Domain.PrivateReceiverId,
+    receiverDisplayname: Domain.ReceiverDisplayname,
     // meta: Domain.MetaTournamentNextMatch,
 
   ): Promise<Domain.SendMessageResult> {
 
 
-    const receiver = await this.userManager.getUserById(receiverId);
+    const receiver = await this.userManager.getUserByDisplayname(receiverDisplayname);
 
     if (!receiver)
       return { ok: false, reason: "no_receiver" };
 
-
+     
 
     const msg: Domain.NewTournamentMessage = {
       type: "TournamentMessage",
       senderId: Domain.SYSTEM_ID,
-      receiverId,
+      receiverId: receiver.id,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
       // meta,
     };

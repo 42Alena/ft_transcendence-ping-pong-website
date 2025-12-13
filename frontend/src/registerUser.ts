@@ -25,7 +25,7 @@ successRegPage.classList.remove("flex");
   console.log("button pressed");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const formData = new FormData(event.target);
+  const formData = new FormData(reg);
   const registerBody = {
     username: formData.get("reg-user_username"),
     displayName: formData.get("reg-user_displayName"),
@@ -37,6 +37,7 @@ successRegPage.classList.remove("flex");
     method: "POST",
     body: JSON.stringify(registerBody),
     headers: myHeaders,
+    credentials : "include"
   });
   try {
     const response = await fetch(myRequest);

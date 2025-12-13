@@ -1,0 +1,9 @@
+frontend/src:
+
+REPLACE ALL 'http://127.0.0.1:3000' -> BACKEND_URL
+
+for example:
+const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
+	-->
+const myRequest = new Request(`${BACKEND_URL}/users/me/avatar`, {
+

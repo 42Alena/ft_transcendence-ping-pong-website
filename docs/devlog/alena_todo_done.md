@@ -7,6 +7,57 @@ Not required for evaluation — used for organization and pull request preparati
 ---------------------
 ------------------------
 ### ======    NEW PULLREQUESTS   ================================================================
+change from absolute path
+ "avatarUrl": "my_storage/.../backend/avatars/users/56f3d15ff268eb0ab0b48415.png"
+  to 
+  /avatars/users/56f3d15ff268eb0ab0b48415.png
+
+### config.ts
+added avatar url prefix
+
+  ### main.ts
+  added static for avatars
+## DB
+
+<!-- TODO -->
+<!-- ##Dockerfile. changed form alpine to bulsye to check if solves on some computers problaem with sqlite
+FROM node:24-bullseye -->
+
+
+## BACKEND
+
+### UserManager
+### User_routes
+  - changed logout to delete cookie with 
+  - save the file to dst (filesystem) and build publicUrl for the browser.
+### domain types
+
+### api types
+## FRONTEND
+
+### TESTS
+
+## 📘 DOCUMENTATION
+
+## 🔗 LINKS / HELP
+
+# HOW TO TEST: 
+```bash
+	#  1. in 1.terminal 
+	make backend
+
+	# 2. in 2.terminal: 
+	make tests_user_settings
+```
+ 
+
+--------------------------
+### ======    OLD PULLREQUESTS   ================================================================
+---------------------------------
+
+---------------------
+------------------------
+### ======    NEW PULLREQUESTS   ================================================================
 ## DB
 
 ## BACKEND
@@ -16,6 +67,12 @@ Not required for evaluation — used for organization and pull request preparati
 
 ### api types
 ## FRONTEND
+
+ 
+- must all after adding https all routes must be changed to:
+
+  // const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
+  const myRequest = new Request(`${(window as any).BACKEND_URL}/auth/login`, {
 
 ### TESTS
 

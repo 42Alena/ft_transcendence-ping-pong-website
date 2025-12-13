@@ -771,206 +771,98 @@
               </div>
               
           </div>
-          <div
-              id="gamePage"
-              class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+           <div
+            id="gamePage"
+            class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+          >
+            <img
+              src="images/pages_images/pong_game_new.png"
+              alt="welcome page"
+              class="absolute z-0 h-full w-full"
+            />
+            <div
+              id="setUpGame"
+              class="absolute z-2 flex h-[480px] max-h-full w-[640px] justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
-              <img
-                src="images/pages_images/pong_game_new.png"
-                alt="welcome page"
-                class="absolute z-0 h-full w-full"
-              />
               <div
-                id="setUpGame"
-                class="absolute z-2 flex h-[480px] max-h-full w-[640px] justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+                id="setUpPlayers"
+                class="relative hidden h-full w-full flex-row items-center justify-center bg-inherit"
               >
-                <div
-                  id="setUpPlayers"
-                  class="flex h-full flex-wrap items-center justify-center gap-5"
+                <form
+                  method="post"
+                  id="playersName"
+                  class="absolute z-1 flex flex-wrap items-center justify-center rounded-xl p-1"
                 >
-                  <div id="aliasPlayerOne">
+                  <div class="w-1/2 shrink-0 p-2" id="playerOne">
                     <label
-                      for="namePlayerOne"
-                      class="text-xl font-bold text-black"
+                      class="text-heading text-xl font-bold"
+                      for="player-one"
                       >Player one</label
                     >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerOne"
-                        type="text"
-                        name="playerOne"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        id="okPlayerOne"
-                      >
-                        OK
-                      </button>
-                    </div>
-                    <div
-                      id="AIPlayerOne"
-                      class="invisible mt-0.5 flex flex-row"
-                    >
-                      <button
-                        class="flex h-6 w-6 items-center justify-center bg-inherit"
-                      >
-                        <span class="text-lg">AI</span>
-                      </button>
-                      <div class="flex flex-row">
-                        <button
-                          id="AIOnPlayerOne"
-                          onclick="turnOn(this, 'AIoffPlayerOne', 'playerOne')"
-                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
-                        >
-                          <span class="text-sm">on</span>
-                        </button>
-                        <button
-                          id="AIoffPlayerOne"
-                          onclick="turnOff(this, 'AIOnPlayerOne', 'playerOne')"
-                          class="ai-button-off flex h-6 w-6 items-center justify-center border bg-gray-500"
-                        >
-                          <span class="text-sm">off</span>
-                        </button>
-                      </div>
-                    </div>
+                    <input
+                      class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white py-2 pl-2 text-lg shadow-xs"
+                      type="text"
+                      id="player-one"
+                      name="player-one_name"
+                      autocomplete="off"
+                    />
                   </div>
-                  <div id="aliasPlayerTwo">
+                  <div class="w-1/2 shrink-0 p-2">
                     <label
-                      for="namePlayerTwo"
-                      class="text-xl font-bold text-black"
+                      class="text-heading text-xl font-bold"
+                      for="player-two"
                       >Player two</label
                     >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerTwo"
-                        type="text"
-                        name="playerTwo"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        id="okPlayerTwo"
-                      >
-                        OK
-                      </button>
-                    </div>
-                    <div id="AIPlayerTwo" class="mt-0.5 flex flex-row">
-                      <button
-                        class="flex h-6 w-6 items-center justify-center bg-inherit"
-                      >
-                        <span class="text-lg">AI</span>
-                      </button>
-                      <div class="flex flex-row">
-                        <button
-                          id="AIonPlayerTwo"
-                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
-                        >
-                          <span class="text-sm">on</span>
-                        </button>
-                        <button
-                          id="AIoffPlayerTwo"
-                          class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
-                        >
-                          <span class="text-sm">off</span>
-                        </button>
-                      </div>
-                    </div>
+                    <input
+                      class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white py-2 pl-2 text-lg shadow-xs"
+                      type="text"
+                      id="player-two"
+                      name="player-two_name"
+                      autocomplete="off"
+                    />
                   </div>
-                  <div id="aliasPlayerThree" class="-mt-50">
+                  <div class="w-1/2 shrink-0 p-2" id="playerThree">
                     <label
-                      for="namePlayerThree"
-                      class="text-xl font-bold text-black"
+                      class="text-heading text-xl font-bold"
+                      for="player-three"
                       >Player three</label
                     >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerThree"
-                        type="text"
-                        name="playerThree"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        id="okPlayerThree"
-                      >
-                        OK
-                      </button>
-                    </div>
-                    <div id="AIPlayerThree" class="mt-0.5 flex flex-row">
-                      <button
-                        class="flex h-6 w-6 items-center justify-center bg-inherit"
-                      >
-                        <span class="text-lg">AI</span>
-                      </button>
-                      <div class="flex flex-row">
-                        <button
-                          id="AIonPlayerThree"
-                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
-                        >
-                          <span class="text-sm">on</span>
-                        </button>
-                        <button
-                          id="AIoffPlayerThree"
-                          class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
-                        >
-                          <span class="text-sm">off</span>
-                        </button>
-                      </div>
-                    </div>
+                    <input
+                      class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white py-2 pl-2 text-lg shadow-xs"
+                      type="text"
+                      id="player-three"
+                      name="player-three_name"
+                      autocomplete="off"
+                    />
                   </div>
-                  <div id="aliasPlayerFour" class="-mt-50">
+                  <div class="w-1/2 shrink-0 p-2" id="playerFour">
                     <label
-                      for="namePlayerFour"
-                      class="text-xl font-bold text-black"
+                      class="text-heading text-xl font-bold"
+                      for="player-four"
                       >Player four</label
                     >
-                    <div class="flex flex-row">
-                      <input
-                        id="namePlayerFour"
-                        type="text"
-                        name="playerFour"
-                        placeholder="Enter your display name"
-                        class="flex-2 bg-white"
-                      />
-                      <button
-                        class="black border-2 border-white bg-blue-500 hover:bg-blue-700"
-                        type="button"
-                        id="okPlayerFour"
-                      >
-                        OK
-                      </button>
-                    </div>
-                    <div id="AIPlayerFour" class="mt-0.5 flex flex-row">
-                      <button
-                        class="flex h-6 w-6 items-center justify-center bg-inherit"
-                      >
-                        <span class="text-lg">AI</span>
-                      </button>
-                      <div class="flex flex-row">
-                        <button
-                          id="AIonPlayerFour"
-                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
-                        >
-                          <span class="text-sm">on</span>
-                        </button>
-                        <button
-                          id="AIoffPlayerFour"
-                          class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
-                        >
-                          <span class="text-sm">off</span>
-                        </button>
-                      </div>
-                    </div>
+                    <input
+                      class="text-heading focus:ring-brand focus:border-brand block w-full rounded-md bg-white py-2 pl-2 text-lg shadow-xs"
+                      type="text"
+                      id="player-four"
+                      name="player-four_name"
+                      autocomplete="off"
+                    />
                   </div>
-                </div>
+                  <div class="flex w-full flex-col items-center justify-center">
+                    <div
+                      id="playersName_error"
+                      class="invisible block h-10 text-sm text-red-600"
+                    ></div>
+
+                    <button
+                      type="submit"
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    >Play</button>
+                  </div>
+                </form>
               </div>
+            </div>
               <div
                 id="setInstructions"
                 class="absolute z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
@@ -1085,6 +977,8 @@
         <div class="border text-center">🧩 Alena 🎨 Sveva 🔐 Luis | 2025</div>
       </div>
     </footer>
+    <!-- config.js defines window.BACKEND_URL that detects docker and native correct url - should be used for all api calls -->
+    <script src="dist/config.js"></script>
     <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>
     <script src="dist/chatDisplay.js"></script>

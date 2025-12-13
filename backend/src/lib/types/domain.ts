@@ -153,7 +153,8 @@ export type DeleteAccountResult =
 
 export type AddFriendResult =
 	| { ok: true }
-	| { ok: false; reason: "self" | "not_found" | "blocked" };
+	| { ok: false; reason: "self" | "not_found"  };  // allowed to add friend even if blocked
+	// | { ok: false; reason: "self" | "not_found" | "blocked" };
 
 
 // export type RemoveFriendResult = { ok: true };
@@ -200,7 +201,7 @@ export type MessageId = number;
 // 	| null  //for game invite and priate message
 // 	| MetaTournamentNextMatch;
 
-
+export type ReceiverDisplayname = DisplayName;
 
 export type PrivateSenderId = UserId;
 export type PrivateReceiverId = UserId;
@@ -444,3 +445,29 @@ export type UserProfileStats = {
 	place3: number;           // how many times 3rd place
 };
 
+//__________________GAME: ALIAS CHECK  ______________
+
+export type CheckMatchAliasesResult =
+	| {
+		ok: true;
+		player1Alias: Alias;
+		player2Alias: Alias;
+	}
+	| {
+		ok: false;
+		error: string;
+	};
+
+
+export type CheckTournamentAliasesResult =
+	| {
+		ok: true;
+		player1Alias: Alias;
+		player2Alias: Alias;
+		player3Alias: Alias;
+		player4Alias: Alias;
+	}
+	| {
+		ok: false;
+		error: string;
+	};

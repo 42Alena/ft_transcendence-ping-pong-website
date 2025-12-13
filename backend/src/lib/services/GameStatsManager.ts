@@ -7,6 +7,7 @@ import { db } from "./DB";
 import { User } from "./User";
 import { UserManager } from "./UserManager";
 import { GameDbRow } from "../types/db";
+import { normalizeName, validateName } from "../utils/validators";
 
 
 
@@ -234,7 +235,7 @@ export class GameStatsManager {
 			lossRatePercent = 100 - winRatePercent;
 		}
 
-		
+
 		return {
 			totalGames,
 			wins,
@@ -282,6 +283,124 @@ export class GameStatsManager {
 
 		return { ok: true, matches, stats };
 	}
+
+
+	//______NEW _ CHECK PLAYERS BEFORE MATCH OR TOURNAMENT_________
+
+
+	private isAiAlias(normalizedName: string): boolean {
+
+		const key = normalizedName.toUpperCase();
+
+		return (Domain.TOURNAMENT_AI_ALIASES as readonly string[])
+			.some(ai => ai.toUpperCase() === key);
+	}
+
+	
+
+
+	private async checkNames(namesRaw: string[]): Promise<
+		{ ok: true; names: string[] } | { ok: false; error: string }
+	> {
+		const names = namesRaw.map(normalizeName);
+
+		// 1) empty after normalize
+		for (let i = 0; i < names.length; i++) {
+			if (names[i].length === 0)
+				return { ok: false, error: `Player ${i + 1}: name is empty.` };
+		}
+
+		// 2) validate each:
+		//    - AI aliases are allowed (skip validateName for them)
+		//    - all non-AI aliases must pass validateName
+		for (let i = 0; i < names.length; i++) {
+			if (this.isAiAlias(names[i]))
+				continue;
+
+			const err = validateName(names[i]);
+			if (err)
+				return { ok: false, error: `Player ${i + 1}: ${err}` };
+		}
+
+		// 3) duplicates (case-insensitive) for ALL names (including AI)
+		{
+			const seen = new Set<string>();
+
+			for (const n of names) {
+				const k = n.toLowerCase();
+
+				if (seen.has(k))
+					return { ok: false, error: `Duplicate: "${n}" is used more than once.` };
+
+				seen.add(k);
+			}
+		}
+
+		// 4) taken in DB ONLY for non-AI names
+		for (let i = 0; i < names.length; i++) {
+			if (this.isAiAlias(names[i]))
+				continue;
+
+			const taken = await this.userManager.isDisplayNameTaken(names[i] as any);
+			if (taken)
+				return { ok: false, error: `Player ${i + 1}: name "${names[i]}" already exists.` };
+		}
+
+		return { ok: true, names };
+	}
+
+
+
+	// 2 players
+	public async checkMatchAliases(body: {
+		player1Alias: Domain.Alias;
+		player2Alias: Domain.Alias;
+	}): Promise<Domain.CheckMatchAliasesResult> {
+
+		// Must provide exactly 2 aliases (both required fields)
+		if (!body || body.player1Alias == null || body.player2Alias == null)
+			return { ok: false, error: "Please enter 2 player names." };
+
+		const r = await this.checkNames([body.player1Alias, body.player2Alias]);
+		if (!r.ok) return { ok: false, error: r.error };
+
+		return { ok: true, player1Alias: r.names[0], player2Alias: r.names[1] };
+	}
+
+	public async checkTournamentAliases(body: {
+		player1Alias: Domain.Alias;
+		player2Alias: Domain.Alias;
+		player3Alias: Domain.Alias;
+		player4Alias: Domain.Alias;
+	}): Promise<Domain.CheckTournamentAliasesResult> {
+
+		// Must provide exactly 4 aliases (all required fields)
+		if (
+			!body ||
+			body.player1Alias == null ||
+			body.player2Alias == null ||
+			body.player3Alias == null ||
+			body.player4Alias == null
+		)
+			return { ok: false, error: "Please enter 4 player names." };
+
+		const r = await this.checkNames([
+			body.player1Alias,
+			body.player2Alias,
+			body.player3Alias,
+			body.player4Alias
+		]);
+		if (!r.ok) return { ok: false, error: r.error };
+
+		return {
+			ok: true,
+			player1Alias: r.names[0],
+			player2Alias: r.names[1],
+			player3Alias: r.names[2],
+			player4Alias: r.names[3],
+		};
+	}
+
 
 
 }
