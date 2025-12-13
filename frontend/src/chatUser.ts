@@ -251,7 +251,6 @@ async function requestUserProfile(id: string) {
         buttons.classList.remove("hidden");
       if (isMe)
       {
-        console.log("here");
         buttons.classList.add("hidden");
         buttons.classList.remove("flex");
       }
