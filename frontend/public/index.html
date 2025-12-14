@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pong</title>
     <link href="styles/output.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script> -->
     <style></style>
   </head>
 
@@ -17,8 +17,8 @@
           id="header-navbar"
           class="flex flex-1 flex-row items-center justify-between"
         >
-          <div id="header-navbar-logo" class="p-2.5">
-            <a href="#" onclick="displayPage('welcome')">
+          <div id="logo" class="sideBarButtons p-2.5">
+            <a href="#">
               <img
                 src="images/logo.png"
                 alt="logo of the page"
@@ -41,34 +41,24 @@
                   />
                 </div>
               </a>
-              <ul class="dropdown-menu" role="menu">
+              <ul class="dropdown-menu" id="menu" role="menu">
                 <div id="dropdown-menu_guests">
                   <li>
-                    <a href="#" onclick="setAccountPage('register')"
-                      ><span></span>Register</a
-                    >
+                    <a id="register"><span></span>Register</a>
                   </li>
                   <li>
-                    <a href="#" onclick="setAccountPage('login')"
-                      ><span></span>Login</a
-                    >
+                    <a id="login"><span></span>Login</a>
                   </li>
                 </div>
                 <div id="dropdown-menu_user" class="hidden">
                   <li>
-                    <a href="#" onclick="setAccountPage('profile')"
-                      ><span></span>Profile</a
-                    >
+                    <a id="profile"><span></span>Profile</a>
                   </li>
                   <li>
-                    <a href="#" onclick="setAccountPage('settings')"
-                      ><span></span>Settings</a
-                    >
+                    <a id="settings"><span></span>Settings</a>
                   </li>
                   <li>
-                    <a href="#" onclick="setAccountPage('friends')"
-                      ><span></span>Friends / Blocked chats</a
-                    >
+                    <a id="friends"><span></span>Friends / Blocked chats</a>
                   </li>
 
                   <li>
@@ -111,17 +101,17 @@
         <nav class="grid grid-rows-[1fr] border bg-[#FFF3CC]">
           <ul class="flex flex-col items-center justify-start p-2.5">
             <li class="p-1 text-center leading-none">
-              <a href="#" onclick="displayPage('chat')">
+              <a href="#" id="chat" class="sideBarButtons">
                 <img src="images/icons/chat.png" alt="chat page"
               /></a>
             </li>
             <li class="p-1 text-center leading-none">
-              <a href="#" onclick="displayPage('game')">
+              <a href="#" id="game" class="sideBarButtons">
                 <img src="images/icons/play.png" alt="chat page"
               /></a>
             </li>
             <li class="p-1 text-center leading-none">
-              <a href="#" onclick="displayPage('tournament')">
+              <a href="#" id="tournament" class="sideBarButtons">
                 <img src="images/icons/tournament.png" alt="chat page"
               /></a>
             </li>
@@ -129,7 +119,7 @@
         </nav>
         <div class="relative h-full w-full border" id="board">
           <div
-            class="relative flex h-full w-full items-center justify-center"
+            class="page relative flex h-full w-full items-center justify-center"
             id="welcomePage"
           >
             <img
@@ -139,8 +129,9 @@
             />
           </div>
           <div
-            class="relative hidden h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="page relative grid h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
             id="chatPage"
+            hidden="false"
           >
             <div class="flex flex-col border" id="sideBar">
               <div
@@ -175,12 +166,12 @@
             <div class="flex flex-col" id="chatDisplay">
               <div
                 id="start-chat"
-                class="flex h-full items-center justify-center bg-white"
+                class="flex h-full items-center justify-center bg-white" hidden="false"
               >
                 Start a converstion
               </div>
-              <div id="userProfile" class="hidden h-full"></div>
-              <div id="conversation" class="hidden h-full flex-col border">
+              <div id="userProfile" class="h-full hidden"></div>
+              <div id="conversation" class="h-full flex-col border" hidden="true">
                 <div
                   class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
                   id="chat-info"
@@ -228,12 +219,14 @@
             </div>
           </div>
           <div
-            class="relative hidden h-full w-full items-center justify-center bg-sky-200"
+            class="page relative flex h-full w-full items-center justify-center bg-sky-200"
             id="accountPage"
+            hidden="false"
           >
             <div
-              class="relative hidden h-full w-full items-center justify-center bg-inherit"
+              class="page relative flex h-full w-full items-center justify-center bg-inherit"
               id="registerPage"
+              hidden="false"
             >
               <img
                 src="images/pages_images/pong_registration_new.png"
@@ -243,7 +236,7 @@
               <form
                 action="http://127.0.0.1:3000/auth/register"
                 method="post"
-                id="register"
+                id="registerForm"
                 class="absolute z-1 flex flex-col items-center justify-center rounded-xl p-1"
               >
                 <div class="mb-3" id="usernameInput">
@@ -262,7 +255,7 @@
                   />
                   <div
                     id="reg-usernama_error"
-                    class="hidden text-sm text-red-600"
+                    class="text-sm text-red-600"
                   ></div>
                 </div>
                 <div class="mb-3">
@@ -281,7 +274,7 @@
                   />
                   <div
                     id="reg-displayName_error"
-                    class="hidden text-sm text-red-600"
+                    class="text-sm text-red-600"
                   ></div>
                 </div>
                 <div class="mb-3">
@@ -300,7 +293,7 @@
                   />
                   <div
                     id="reg-password_error"
-                    class="hidden text-sm text-red-600"
+                    class="text-sm text-red-600"
                   ></div>
                 </div>
                 <button
@@ -329,8 +322,9 @@
               </div>
             </div>
             <div
-              class="relative hidden h-full w-full items-center justify-center"
+              class="page flex relative h-full w-full items-center justify-center"
               id="loginPage"
+              hidden="false"
             >
               <img
                 src="images/pages_images/pong_login_new.png"
@@ -340,7 +334,7 @@
               <form
                 action="http://127.0.0.1:3000/auth/login"
                 method="post"
-                id="login"
+                id="loginForm"
                 class="absolute z-1 flex flex-col items-center justify-center rounded-xl p-1"
               >
                 <div class="mb-3">
@@ -358,7 +352,7 @@
                   />
                   <div
                     id="log-username_error"
-                    class="hidden text-sm text-red-600"
+                    class="text-sm text-red-600"
                   ></div>
                 </div>
                 <div class="mb-3">
@@ -376,7 +370,7 @@
                   />
                   <div
                     id="log-password_error"
-                    class="hidden text-sm text-red-600"
+                    class="text-sm text-red-600"
                   ></div>
                 </div>
                 <button
@@ -388,10 +382,14 @@
               </form>
             </div>
             <div
-              class="hidden h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              class="page grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
               id="profilePage"
+              hidden="false"
             >
-              <div class="grid grid-cols-3 border bg-amber-500" id="profile">
+              <div
+                class="grid grid-cols-3 border bg-amber-500"
+                id="profileDisplay"
+              >
                 <div
                   class="flex items-center justify-center border"
                   id="profile-avatar"
@@ -509,271 +507,274 @@
                 </div>
               </div>
             </div>
+            <div
+              id="settingsPage"
+              class="page relative flex h-full w-full flex-col items-center justify-center bg-yellow-200"
+              hidden="false"
+            >
               <div
-                id="settingsPage"
-                class="relative hidden h-full w-full flex-col items-center justify-center bg-yellow-200"
+                id="editInformation"
+                class="relative flex h-full w-full flex-1 flex-row"
               >
                 <div
-                  id="editInformation"
-                  class="relative flex h-full w-full flex-1 flex-row"
+                  id="avatarEdit"
+                  class="relative flex h-full w-full flex-1 items-center justify-center"
                 >
                   <div
-                    id="avatarEdit"
-                    class="relative flex h-full w-full flex-1 items-center justify-center"
+                    class="relative flex cursor-pointer items-center justify-center object-cover"
                   >
                     <div
-                      class="relative flex cursor-pointer items-center justify-center object-cover"
+                      class="relative flex h-52 w-52 cursor-pointer items-center justify-center object-cover"
                     >
-                      <div
-                        class="relative flex h-52 w-52 cursor-pointer items-center justify-center object-cover"
-                      >
-                        <img
-                          id="avatar-image"
-                          src="/images/profile/blue.png"
-                          alt="default avatar"
-                          class="h-full w-full rounded-full object-cover"
-                          onclick="showPopUp()"
-                        />
-                      </div>
-                      <div
-                        id="svgIcon"
-                        class="absolute bottom-0 left-1/2 z-3 -translate-x-1/2 transform cursor-pointer rounded-full p-1 hover:bg-blue-600"
-                      >
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          focusable="false"
-                          class="rounded-full fill-current text-white"
-                          onclick="showPopUp()"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 14H4V7h16v12zM12 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <form
-                      action="http://127.0.0.1:3000/users/me/avatar"
-                      method="post"
-                      id="avatar"
-                      enctype="multipart/form-data"
-                    >
-                      <input
-                        type="file"
-                        id="avatarImgEdit"
-                        alt="Avatar"
-                        class="hidden cursor-pointer"
-                        onchange="previewImage(event)"
+                      <img
+                        id="avatar-image"
+                        src="/images/profile/blue.png"
+                        alt="default avatar"
+                        class="h-full w-full rounded-full object-cover"
+                        onclick="showPopUp()"
                       />
-                      <input type="hidden" id="existingAvatar" value="" />
-                    </form>
+                    </div>
                     <div
-                      id="avatarOptions"
-                      class="absolute top-[75%] z-10 m-auto hidden h-60 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                      id="svgIcon"
+                      class="absolute bottom-0 left-1/2 z-3 -translate-x-1/2 transform cursor-pointer rounded-full p-1 hover:bg-blue-600"
                     >
-                      <button
-                        class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
-                        id="closePopUp"
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        focusable="false"
+                        class="rounded-full fill-current text-white"
+                        onclick="showPopUp()"
+                        aria-hidden="true"
                       >
-                        &times;
-                      </button>
-                      <h2>Select avatar</h2>
-                      <ul
-                        class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
-                      >
-                        <li class="w-1/4 cursor-pointer p-1">
-                          <div
-                            class="flex h-12 w-12 items-center justify-center rounded-full"
-                          >
-                            <img
-                              src="images/avatars/pong_avatar_creatures_g.png"
-                              alt="Avatar G"
-                              id="G"
-                              class="h-full w-full rounded-full"
-                              onclick="displayPreview()"
-                            />
-                          </div>
-                          <span></span>
-                        </li>
-                        <li class="w-1/4 cursor-pointer p-1" data-url="upload">
-                          <label
-                            for="avatarImgEdit"
-                            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                            >&plus;</label
-                          >
-                        </li>
-                        <span></span>
-                      </ul>
-                      <div class="mt-6 flex items-center justify-center">
-                        <button
-                          class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                          type="sumbit"
-                          id="save-avatar"
-                          form="avatar"
-                        >
-                          Save
-                        </button>
-                      </div>
+                        <path
+                          d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 14H4V7h16v12zM12 9c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"
+                        ></path>
+                      </svg>
                     </div>
                   </div>
-                  <div
-                    id="displayNameEdit"
-                    class="flex flex-1 flex-col items-center justify-center"
+                  <form
+                    action="http://127.0.0.1:3000/users/me/avatar"
+                    method="post"
+                    id="avatar"
+                    enctype="multipart/form-data"
                   >
-                    <form
-                      action="http://127.0.0.1:3000/users/me/display-name"
-                      method="post"
-                      id="displayName"
-                      class="flex flex-col items-center justify-center"
+                    <input
+                      type="file"
+                      id="avatarImgEdit"
+                      alt="Avatar"
+                      class="hidden cursor-pointer"
+                      onchange="previewImage(event)"
+                    />
+                    <input type="hidden" id="existingAvatar" value="" />
+                  </form>
+                  <div
+                    id="avatarOptions"
+                    class="absolute top-[75%] z-10 m-auto flex h-60 w-64 flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                    hidden="true"
+                  >
+                    <button
+                      class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
+                      id="closePopUp"
                     >
-                      <h2 class="mb-3 text-2xl font-bold">
-                        Personal information
-                      </h2>
-                      <div class="mb-3">
-                        <label
-                          class="text-heading text-xl font-medium"
-                          for="settings-username"
-                          >Username</label
-                        >
-                        <input
-                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                          type="text"
-                          id="settings-username"
-                          name="settings-user_username"
-                          autocomplete="off"
-                          value=""
-                          readonly
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          class="text-heading text-xl font-medium"
-                          for="settings-displayName"
-                          >Display name</label
-                        >
-                        <input
-                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                          type="text"
-                          id="settings-displayName"
-                          name="settings-user_displayName"
-                          autocomplete="off"
-                          value=""
-                        />
+                      &times;
+                    </button>
+                    <h2>Select avatar</h2>
+                    <ul
+                      class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                    >
+                      <li class="w-1/4 cursor-pointer p-1">
                         <div
-                          id="settings-displayName_error"
-                          class="hidden text-sm text-red-600"
-                        ></div>
-                      </div>
+                          class="flex h-12 w-12 items-center justify-center rounded-full"
+                        >
+                          <img
+                            src="images/avatars/pong_avatar_creatures_g.png"
+                            alt="Avatar G"
+                            id="G"
+                            class="h-full w-full rounded-full"
+                            onclick="displayPreview()"
+                          />
+                        </div>
+                        <span></span>
+                      </li>
+                      <li class="w-1/4 cursor-pointer p-1" data-url="upload">
+                        <label
+                          for="avatarImgEdit"
+                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          >&plus;</label
+                        >
+                      </li>
+                      <span></span>
+                    </ul>
+                    <div class="mt-6 flex items-center justify-center">
                       <button
-                        type="submit"
-                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="sumbit"
+                        id="save-avatar"
+                        form="avatar"
                       >
                         Save
                       </button>
-                    </form>
-                  </div>
-                  <div
-                    id="passwordEdit"
-                    class="flex flex-1 flex-col items-center justify-center"
-                  >
-                    <form
-                      action="http://127.0.0.1:3000/users/me/change-password"
-                      method="post"
-                      id="password"
-                      class="flex flex-col items-center justify-center"
-                    >
-                      <h2 class="mb-3 text-2xl font-bold">Password</h2>
-                      <div class="mb-3">
-                        <label
-                          class="text-heading text-xl font-medium"
-                          for="settings-current-password"
-                          >Current password</label
-                        >
-                        <input
-                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                          type="password"
-                          id="settings-current-password"
-                          name="settings-user_current-password"
-                          autocomplete="off"
-                        />
-                        <div
-                          id="settings-current-password_error"
-                          class="hidden text-sm text-red-600"
-                        ></div>
-                      </div>
-                      <div class="mb-3">
-                        <label
-                          class="text-heading text-xl font-medium"
-                          for="settings-new-password"
-                          >New password</label
-                        >
-                        <input
-                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
-                          type="password"
-                          id="settings-new-password"
-                          name="settings-user_new-password"
-                          autocomplete="off"
-                        />
-                        <div
-                          id="settings-new-password_error"
-                          class="hidden text-sm text-red-600"
-                        ></div>
-                      </div>
-                      <button
-                        type="submit"
-                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      >
-                        Save
-                      </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
                 <div
-                  id="deleteAccount"
-                  class="flex flex-1 items-center justify-center"
+                  id="displayNameEdit"
+                  class="flex flex-1 flex-col items-center justify-center"
                 >
-                  <fieldset class="rounded border-2 border-red-500 p-4">
-                    <legend class="text-red-600">DANGER ZONE</legend>
+                  <form
+                    action="http://127.0.0.1:3000/users/me/display-name"
+                    method="post"
+                    id="displayName"
+                    class="flex flex-col items-center justify-center"
+                  >
+                    <h2 class="mb-3 text-2xl font-bold">
+                      Personal information
+                    </h2>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-username"
+                        >Username</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="text"
+                        id="settings-username"
+                        name="settings-user_username"
+                        autocomplete="off"
+                        value=""
+                        readonly
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-displayName"
+                        >Display name</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="text"
+                        id="settings-displayName"
+                        name="settings-user_displayName"
+                        autocomplete="off"
+                        value=""
+                      />
+                      <div
+                        id="settings-displayName_error"
+                        class="text-sm text-red-600"
+                      ></div>
+                    </div>
                     <button
-                      type="button"
-                      class="flex h-10 w-[140px] items-center justify-center rounded border-2 border-red-950 bg-red-500 font-bold text-white hover:bg-red-700"
-                      id="delete-account-button"
+                      type="submit"
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                     >
-                      Delete Account
+                      Save
                     </button>
-                  </fieldset>
+                  </form>
+                </div>
+                <div
+                  id="passwordEdit"
+                  class="flex flex-1 flex-col items-center justify-center"
+                >
+                  <form
+                    action="http://127.0.0.1:3000/users/me/change-password"
+                    method="post"
+                    id="password"
+                    class="flex flex-col items-center justify-center"
+                  >
+                    <h2 class="mb-3 text-2xl font-bold">Password</h2>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-current-password"
+                        >Current password</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="password"
+                        id="settings-current-password"
+                        name="settings-user_current-password"
+                        autocomplete="off"
+                      />
+                      <div
+                        id="settings-current-password_error"
+                        class="text-sm text-red-600"
+                      ></div>
+                    </div>
+                    <div class="mb-3">
+                      <label
+                        class="text-heading text-xl font-medium"
+                        for="settings-new-password"
+                        >New password</label
+                      >
+                      <input
+                        class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                        type="password"
+                        id="settings-new-password"
+                        name="settings-user_new-password"
+                        autocomplete="off"
+                      />
+                      <div
+                        id="settings-new-password_error"
+                        class="text-sm text-red-600"
+                      ></div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                    >
+                      Save
+                    </button>
+                  </form>
                 </div>
               </div>
               <div
-                id="friendsPage"
-                class="relative hidden h-full w-full flex-col bg-purple-200"
+                id="deleteAccount"
+                class="flex flex-1 items-center justify-center"
               >
-                <div class="block p-2">
+                <fieldset class="rounded border-2 border-red-500 p-4">
+                  <legend class="text-red-600">DANGER ZONE</legend>
                   <button
-                    class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                     type="button"
-                    id="blockButton"
-                    onclick="displayBlockedFriends()"
+                    class="flex h-10 w-[140px] items-center justify-center rounded border-2 border-red-950 bg-red-500 font-bold text-white hover:bg-red-700"
+                    id="delete-account-button"
                   >
-                    See blocked chats
+                    Delete Account
                   </button>
-                </div>
-                <div
-                  id="friendsList"
-                  class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
-                ></div>
-                <div
-                  id="blockedList"
-                  class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
-                ></div>
+                </fieldset>
               </div>
-              
+            </div>
+            <div
+              id="friendsPage"
+              class="page relative flex h-full w-full flex-col bg-purple-200"
+              hidden="false"
+            >
+              <div class="block p-2">
+                <button
+                  class="flex h-10 w-40 items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                  type="button"
+                  id="blockButton"
+                  onclick="displayBlockedFriends()"
+                >
+                  See blocked chats
+                </button>
+              </div>
+              <div
+                id="friendsList"
+                class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
+              ></div>
+              <div
+                id="blockedList"
+                class="flex max-h-screen flex-wrap gap-2 overflow-x-hidden overflow-y-auto border border-gray-300 p-[5px]"
+              ></div>
+            </div>
           </div>
-           <div
+          <div
             id="gamePage"
-            class="relative hidden h-full w-full flex-col items-center justify-center bg-black"
+            class="page relative flex h-full w-full flex-col items-center justify-center bg-black"
+            hidden="false"
           >
             <img
               src="images/pages_images/pong_game_new.png"
@@ -786,7 +787,7 @@
             >
               <div
                 id="setUpPlayers"
-                class="relative hidden h-full w-full flex-row items-center justify-center bg-inherit"
+                class="relative h-full w-full flex-row items-center justify-center bg-inherit"
               >
                 <form
                   method="post"
@@ -858,97 +859,99 @@
                     <button
                       type="submit"
                       class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    >Play</button>
+                    >
+                      Play
+                    </button>
                   </div>
                 </form>
               </div>
             </div>
+            <div
+              id="setInstructions"
+              class="absolute z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+            >
               <div
-                id="setInstructions"
-                class="absolute z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+                id="rules"
+                class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div
-                  id="rules"
-                  class="flex h-full w-full flex-col items-center gap-4.5"
+                  class="flex w-full flex-1 items-center justify-center text-5xl font-bold"
                 >
+                  First to score to 3 wins
+                </div>
+                <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex w-full flex-1 items-center justify-center text-5xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
-                    First to score to 3 wins
+                    <div id="playerLeftName"></div>
+                    <div>w - up</div>
+                    <div>s - down</div>
                   </div>
-                  <div class="flex w-full flex-1 flex-row items-center">
-                    <div
-                      class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
-                    >
-                      <div id="playerLeftName"></div>
-                      <div>w - up</div>
-                      <div>s - down</div>
-                    </div>
-                    <div class="flex items-center text-4xl font-bold">vs</div>
-                    <div
-                      class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
-                    >
-                      <div id="playerRightName"></div>
-                      <div>arrow up - up</div>
-                      <div>arrow down - down</div>
-                    </div>
-                  </div>
+                  <div class="flex items-center text-4xl font-bold">vs</div>
                   <div
-                    id="startButton"
-                    class="flex w-full flex-1 items-center justify-center"
+                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
                   >
-                    <button
-                      id="runButton"
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    >
-                      Start game
-                    </button>
+                    <div id="playerRightName"></div>
+                    <div>arrow up - up</div>
+                    <div>arrow down - down</div>
                   </div>
                 </div>
-              </div>
-              <div
-                id="gameScreen"
-                class="abosolute z-10 hidden h-[600px] w-[800px] items-center justify-center bg-black"
-              >
-                <canvas
-                  id="myCanvas"
-                  class="hidden; border-2 border-blue-950 bg-black"
-                  width="800"
-                  height="600"
-                ></canvas>
-              </div>
-              <div
-                id="gameOverScreen"
-                class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
-              >
                 <div
-                  id="result"
-                  class="flex flex-col items-center justify-center text-center text-5xl font-bold"
+                  id="startButton"
+                  class="flex w-full flex-1 items-center justify-center"
                 >
-                  GAME OVER
-                  <div
-                    id="winner-text"
-                    class="bg-white/30 text-5xl font-bold backdrop-invert backdrop-opacity-10"
-                  ></div>
-                </div>
-                <div id="gameOptions" class="flex flex-row gap-2.5">
                   <button
-                    id="newGameButton"
-                    type="button"
+                    id="runButton"
                     class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                   >
-                    New Game
-                  </button>
-                </div>
-                <div id="nextGameButton" class="hidden">
-                  <button
-                    type="button"
-                    class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                  >
-                    Next Game
+                    Start game
                   </button>
                 </div>
               </div>
+            </div>
+            <div
+              id="gameScreen"
+              class="abosolute z-10 hidden h-[600px] w-[800px] items-center justify-center bg-black"
+            >
+              <canvas
+                id="myCanvas"
+                class="hidden; border-2 border-blue-950 bg-black"
+                width="800"
+                height="600"
+              ></canvas>
+            </div>
+            <div
+              id="gameOverScreen"
+              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+            >
+              <div
+                id="result"
+                class="flex flex-col items-center justify-center text-center text-5xl font-bold"
+              >
+                GAME OVER
+                <div
+                  id="winner-text"
+                  class="bg-white/30 text-5xl font-bold backdrop-invert backdrop-opacity-10"
+                ></div>
+              </div>
+              <div id="gameOptions" class="flex flex-row gap-2.5">
+                <button
+                  id="newGameButton"
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  New Game
+                </button>
+              </div>
+              <div id="nextGameButton">
+                <button
+                  type="button"
+                  class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                >
+                  Next Game
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -978,6 +981,7 @@
       </div>
     </footer>
     <!-- config.js defines window.BACKEND_URL that detects docker and native correct url - should be used for all api calls -->
+    <script src="dist/routes.js"></script>
     <script src="dist/config.js"></script>
     <script src="dist/accountDisplay.js"></script>
     <script src="dist/contentManager.js"></script>

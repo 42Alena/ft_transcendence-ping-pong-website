@@ -1,4 +1,4 @@
-const reg: any = document.getElementById("register");
+const reg: any = document.getElementById("registerForm");
 const errorUsername: any = document.getElementById("reg-usernama_error");
 const errorDisplayName: any = document.getElementById("reg-displayName_error");
 const errorPaassword : any = document.getElementById("reg-password_error");
@@ -10,7 +10,7 @@ const loginButtonRedirect : any = document.getElementById("login-button");
 loginButtonRedirect.addEventListener("click", () => {
   successRegPage.classList.add("hidden");
   successRegPage.classList.remove("flex");
-  setAccountPage('login');
+  handleClickEvent('login');
 })
 reg.addEventListener("submit", async (event: any) => {
   event.preventDefault();

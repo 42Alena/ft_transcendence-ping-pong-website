@@ -1,4 +1,4 @@
-const log: any = document.getElementById("login");
+const log: any = document.getElementById("loginForm");
 const errorUsernameLog: any = document.getElementById("log-username_error");
 const errorPasswordLog: any = document.getElementById("log-password_error");
 const logUserHeaderDiv: any = document.getElementById("logged-user");
@@ -41,7 +41,6 @@ log.addEventListener("submit", async (event: any) => {
   errorUsernameLog.classList.remove("block");
   errorPasswordLog.classList.remove("block");
   errorPasswordLog.classList.add("hidden");
-  console.log("button login pressed");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   const formData = new FormData(log);
@@ -59,7 +58,6 @@ log.addEventListener("submit", async (event: any) => {
   });
   try {
     const response = await fetch(myRequest);
-    console.log(response);
     const data = await response.json();
     if (!response.ok) {
       if (data.field == "username") {
@@ -90,12 +88,12 @@ log.addEventListener("submit", async (event: any) => {
         dropMenuUserDiv.classList.remove("hidden");
         dropMenuGuestDiv.classList.add("hidden");
         dropMenuGuestDiv.classList.remove("block");
-        displayPage("welcome");
+        handleClickEvent("welcome");
       }
       console.log("login user:", data);
     }
   } catch (error) {
-    console.error("Error during registration:", error);
+    console.error("Error during login:", error);
   }
 });
 

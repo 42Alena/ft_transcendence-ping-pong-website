@@ -129,8 +129,7 @@ function fillConversationInfo(name: string, avatar: string) {
 
   conversationDiv.classList.add("flex");
   conversationDiv.classList.remove("hidden");
-  startConvDiv.classList.add("hidden");
-  startConvDiv.classList.remove("flex");
+  startConvDiv.hidden = true;
 }
 
 // function addElement(name: string, id: string, avatar: string) {

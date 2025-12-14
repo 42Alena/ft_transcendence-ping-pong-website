@@ -121,7 +121,6 @@ playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
         errorNamesDiv.textContent = data.error;
       throw new Error(`Response status ${response.status}`);
     } else {
-      playersNameForm.reset();
       errorNamesDiv.classList.add("invisible");
       let i = 0;
       for (const key in data) {

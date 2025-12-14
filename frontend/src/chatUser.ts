@@ -70,6 +70,19 @@ async function requestUsers() {
 }
 
 async function requestChats() {
+  // const existingBubble = document.getElementById("history-conv");
+  // const existingContactDiv = document.getElementById("contact-name");
+  // const existingAvatarDiv = document.getElementById("contact-avatar");
+
+  // if (existingContactDiv) {
+  //   existingContactDiv.remove();
+  // }
+  // if (existingAvatarDiv) {
+  //   existingAvatarDiv.remove();
+  // }
+  // if (existingBubble)
+  //   existingBubble.remove();
+  
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -107,13 +120,21 @@ async function requestChats() {
           const newContent = document.createTextNode(chat_user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
-          newDiv.onclick = function () {
-            requestConversation(
-              chat_user.userId,
-              chat_user.displayName,
-              chat_user.avatarUrl,
-            );
-          };
+          // newDiv.onclick = function () {
+          //   requestConversation(
+          //     chat_user.userId,
+          //     chat_user.displayName,
+          //     chat_user.avatarUrl,
+          //   );
+          // };
+          newDiv.addEventListener("click", event => {
+            event.preventDefault();
+            const state = {page: "chat", userId: chat_user.userId, userDisplayName: chat_user.displayName, userAvatarUrl: chat_user.avatarUrl};
+            history.pushState(state, "");
+            requestConversation(chat_user.userId, chat_user.displayName, chat_user.avatarUrl)
+            console.log("after request conversation");
+            // handleClickEvent('chat', chat_user.userId);
+          })
           const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
             "chat-div",
@@ -176,10 +197,8 @@ async function requestUserProfile(id: string) {
       while (displayNameDiv.firstChild) {
         displayNameDiv.removeChild(displayNameDiv.firstChild);
       }
-      conversationDiv.classList.add("hidden");
-      conversationDiv.classList.remove("flex");
-      startConversationDiv.classList.add("hidden");
-      startConversationDiv.classList.remove("flex");
+      conversationDiv.hidden = true;
+      startConversationDiv.hidden = true;
       userProfile.dataset.profileuserid = user.id;
       userProfile.dataset.profileusername = user.displayName;
       userProfile.dataset.profileuseravatar = user.avatarUrl;
@@ -273,6 +292,7 @@ sendMessageButton.addEventListener("click", async () => {
   const conversationDiv = document.getElementById(
     "conversation",
   ) as HTMLDivElement;
+  conversationDiv.hidden = false;
   const id = buttonsDiv.dataset.userid as string;
   const displayName = buttonsDiv.dataset.username as string;
   const avatarUrl = buttonsDiv.dataset.avatar as string;
@@ -301,9 +321,8 @@ sendMessageButton.addEventListener("click", async () => {
       const inputHiddenForm = document.getElementById(
         "recv-id",
       ) as HTMLInputElement;
-      inputHiddenForm.value = receiverId;
-      conversationDiv.classList.add("flex");
-      conversationDiv.classList.remove("hidden");
+      if (receiverId)
+        inputHiddenForm.value = receiverId;
       const existingBubble = document.getElementById("history-conv");
       if (existingBubble) existingBubble.remove();
       historyConversation = document.createElement("div");
@@ -421,6 +440,7 @@ async function requestConversation(
   avatarUrl: string,
 ) {
   console.log(`request chat for ${id}`);
+  conversationDiv.hidden = false;
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -445,11 +465,11 @@ async function requestConversation(
       const inputHiddenForm = document.getElementById(
         "recv-id",
       ) as HTMLInputElement;
-      inputHiddenForm.value = receiverId;
-      conversationDiv.classList.add("flex");
-      conversationDiv.classList.remove("hidden");
+      if (receiverId)
+        inputHiddenForm.value = receiverId;
       const existingBubble = document.getElementById("history-conv");
-      if (existingBubble) existingBubble.remove();
+      if (existingBubble)
+        existingBubble.remove();
       historyConversation = document.createElement("div");
       historyConversation.className = "chat-right__bubble border";
       historyConversation.setAttribute("id", "history-conv");

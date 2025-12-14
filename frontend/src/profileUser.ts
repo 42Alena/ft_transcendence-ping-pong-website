@@ -32,8 +32,8 @@ async function requestProfile() {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
-      profP.classList.add("grid");
-      profP.classList.remove("hidden");
+      // profP.classList.add("grid");
+      // profP.classList.remove("hidden");
       const buttons = document.getElementById("acc-actions") as HTMLDivElement;
       if (!firstView) {
         console.log("first load");
