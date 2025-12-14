@@ -1,56 +1,61 @@
 
 
-import Chart from 'chart.js/auto'
+import Chart from 'chart.js/auto';
 
-const dataPie = {
-  labels: [
-    'wins',
-    'loses',
-  ],
-  datasets: [{
-    label: 'Wins %',
-    data: [51, 49],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-    ],
-    hoverOffset: 4
-  }]
-};
-
-	const pie = document.getElementById('pieChart') as HTMLCanvasElement;
-	new Chart(pie, {
-		type: 'pie',
-		data: dataPie,
-		options: {
-            parsing: false,
-            normalized: true,
-            animation: false,
-            responsive: true,
-            maintainAspectRatio: false,
-            aspectRatio: 1,
-        }
-	});
-
+const pie = document.getElementById('pieChart') as HTMLCanvasElement;
 const bar = document.getElementById('barChart') as HTMLCanvasElement;
 
-const dataBar = {
-  labels: ["01.12", "02.12", "03.12", "04.12", "05.12", "06.12", "07.12"],
+export function createPieChart(wins: string, loses: string) {
+  const winsNum = Number(wins);
+  const losesNum = Number(loses);
+
+  const dataPie = {
+    labels: ['wins', 'loses'],
+    datasets: [{
+      label: 'Wins and loses percentage',
+      data: [winsNum, losesNum], // Use numbers here
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+      ],
+      hoverOffset: 4
+    }]
+  };
+
+  new Chart(pie, {
+    type: 'pie',
+    data: dataPie,
+    options: {
+      parsing: false,
+      normalized: true,
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 1,
+    }
+  });
+}
+
+export function createBarChart(first : string, second : string, third : string)
+{
+  const dataBar = {
+  labels: ["1st place", "2nd place", "3rd place"],
   datasets: [
     {
       label: 'Wins',
-      data: [3, 0, 4, 2, 5, 1, 6],
-      backgroundColor: 'rgba(75, 192, 192, 0.6)',
-      borderColor: 'rgb(75, 192, 192)',
+      data: [first, second, third],
+     backgroundColor: [
+        'rgba(255, 99, 132, 0.6)',
+        'rgba(54, 162, 235, 0.6)',
+        'rgba(255, 206, 86, 0.6)'
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 206, 86)'
+      ],
       borderWidth: 1
     },
-    {
-      label: 'Losses',
-      data: [2, 4, 1, 9, 1, 0, 5], 
-      backgroundColor: 'rgba(255, 99, 132, 0.6)', 
-      borderColor: 'rgb(255, 99, 132)', 
-      borderWidth: 1
-    }
   ]
 };
 
@@ -73,3 +78,6 @@ new Chart(bar, {
         aspectRatio: 1,
   }
 });
+}
+
+
