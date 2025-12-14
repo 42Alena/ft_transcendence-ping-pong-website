@@ -114,7 +114,6 @@ avatarForm.addEventListener("submit", async (event: any) => {
       console.log(response.json);
       const data = await response.json();
       if (!response.ok) {
-        avatarForm.reset();
         throw new Error(`Response status ${response.status}`);
       } else {
         const userDataString: string | null = localStorage.getItem("userData");

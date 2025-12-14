@@ -29,6 +29,8 @@ function displayPage(text: string): void {
   });
   reg.reset();
   log.reset();
+  avatarForm.reset();
+  passwordForm.reset();
   playersNameForm.reset();
   if (gameisOn && !(text == "game" || text == "tournament")) {
     clearInterval(interval);
