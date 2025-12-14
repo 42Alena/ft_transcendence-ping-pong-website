@@ -55,7 +55,8 @@ profileBlockUnbFriend.addEventListener("click", (event: any) => {
   }
 }
 });
-function setAccountPage(text: string) {
+function setAccountPage(text: string, shouldUpdateNav = true) {
+  updateUrl("account", text, shouldUpdateNav);
   reg.reset();
   log.reset();
   playersNameForm.reset();
