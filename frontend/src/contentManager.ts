@@ -3,7 +3,8 @@ const welcP: any = document.getElementById("welcomePage");
 const accP: any = document.getElementById("accountPage");
 const gameP: any = document.getElementById("gamePage");
 
-function displayPage(text: string): void {
+function displayPage(text: string, shouldUpdateNav = true): void {
+  updateUrl("pong", text, shouldUpdateNav);
   girlImgLeft.classList.add("block");
   girlImgLeft.classList.remove("hidden");
   girlImgLeftLoser.classList.remove("block");
@@ -69,5 +70,34 @@ function displayPage(text: string): void {
     chatP.classList.add("hidden");
     accP.classList.add("hidden");
     accP.classList.remove("flex");
+  }
+}
+
+
+// on load check if we need to show specific page
+// `/pong-$name` for general pages
+// `/account-$name` for account relate pages
+window.addEventListener("load", () => navToPage());
+// whenever history state changes (back <> forward buttons in browser)
+window.addEventListener("popstate", () => setTimeout(() => navToPage(), 0));
+
+function navToPage() {
+  const [pageType, pageName] = window.location.pathname.split("-");
+  console.log("Page type:", pageType, "Page name:", pageName);
+  if (!pageName) {
+    return;
+  }
+  if (pageType === "/pong") {
+    displayPage(pageName, false); // go to page but don't update nav state
+  } else if (pageType === "/account") {
+    setAccountPage(pageName, false); // go to page but don't update nav state
+  }
+}
+
+// only push new state when it differes from active
+function updateUrl(pageType: string, pageName: string, shouldUpdateNav = true) {
+  const newUrl = `/${pageType}-${pageName}`;
+  if (shouldUpdateNav && !window.location.pathname.startsWith(newUrl)) {
+    history.pushState({ pageName }, "", newUrl);
   }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "bundle": "esbuild public/dist/charts.js --bundle --outfile=public/dist/charts.js --allow-overwrite",
-    "serve": "http-server public/",
+    "serve": "http-server --proxy http://localhost:8080? public/",
     "compile-css": "npx @tailwindcss/cli -i ./public/styles/input.css -o ./public/styles/output.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
