@@ -237,6 +237,7 @@ async function requestUserProfile(id: string) {
       displayNameOData.classList.add("text-xl");
       displayNameOData.textContent = user.displayName;
       displayNameDiv.appendChild(displayNameOSpan);
+      displayNameDiv.appendChild(document.createTextNode("\u00A0"));
       displayNameDiv.appendChild(displayNameOData);
       avatarImg.src = user.avatarUrl; //need to be fixed
       userProfile.append(profP);
@@ -508,7 +509,6 @@ async function requestConversation(
           userProfileDiv.removeChild(userProfileDiv.firstChild);
         }
       userProfile.hidden=true;
-      console.log(displayName, avatarUrl);
       //header
       fillConversationInfo(displayName, avatarUrl);
       //swtich tab to chats

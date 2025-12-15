@@ -18,6 +18,7 @@ logoutButton.addEventListener("click", async (event: any) => {
       throw new Error(`Response status ${response.status}`);
     } else {
       localStorage.clear();
+      console.log("logout");
       dropMenuUserDiv.classList.add("hidden");
       dropMenuUserDiv.classList.remove("block");
       dropMenuGuestDiv.classList.add("block");

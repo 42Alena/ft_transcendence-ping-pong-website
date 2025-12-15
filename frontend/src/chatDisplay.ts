@@ -67,6 +67,37 @@ function addBubbleTournament(role: string, content: string, timeStamp : HTMLDivE
   bubbleDiv.appendChild(historyConversation);
 }
 
+// function displayConversationHistory(
+//   id: string,
+//   list: Chat[],
+//   name: string,
+//   avatar: string,
+// ) {
+//   userProfileDiv.classList.add("hidden");
+//   userProfileDiv.classList.remove("block");
+//   fillConversationInfo(name, avatar);
+//   currChatId = id;
+//   const existingBubble = document.getElementById("history-conv");
+//   if (existingBubble) existingBubble.remove();
+//   historyConversation = document.createElement("div");
+//   historyConversation.className = "chat-right__bubble border";
+//   historyConversation.setAttribute("id", "history-conv");
+//   for (let step = 0; step < list.length; step++) {
+//     if (list[step].id == id) {
+//       let historyMex: {
+//         sender: boolean;
+//         receiver: boolean;
+//         content: string;
+//       }[] = list[step].messages;
+//       for (let step = 0; step < historyMex.length; step++) {
+//         if (historyMex[step].receiver == true)
+//           addBubble("sender", historyMex[step].content);
+//         else addBubble("recv", historyMex[step].content);
+//       }
+//     }
+//   }
+// }
+
 function fillConversationInfo(name: string, avatar: string) {
   const existingContactDiv = document.getElementById("contact-name");
   const existingAvatarDiv = document.getElementById("contact-avatar");
