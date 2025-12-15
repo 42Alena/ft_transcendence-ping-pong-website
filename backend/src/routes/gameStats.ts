@@ -112,12 +112,14 @@ tournamentRound:   "semi" | "final";
 
 
 
-	// Check 2 aliases before starting a match (must be valid + free in DB)
+	/* GAME PLAYERS 
+	Check 2 aliases before starting a match (must be valid + free in DB) 
+		player1Alias: result.player1Alias is always my displayname
+	*/
 	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
 		"/games/match/aliases/check",
-		// async (req, reply) =>
-		// 	sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
-
+		authRequiredOptions,
+	
 		async (req, reply) => {
 
 			const result = await gameStatsManager.checkMatchAliases(req.body);
@@ -135,11 +137,13 @@ tournamentRound:   "semi" | "final";
 	);
 
 	
-	// Check 4 aliases before starting a tournament (must be valid + free in DB)
+	/* ToURNAMENT PLAYERS  
+	Check 4 aliases before starting a tournament (must be valid + free in DB)
+		player1Alias: result.player1Alias is always my displayname
+	*/
 	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
 		"/games/tournament/aliases/check",
-		// async (req, reply) =>
-		// 	sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
+	authRequiredOptions,
 
 		async (req, reply) => {
 
