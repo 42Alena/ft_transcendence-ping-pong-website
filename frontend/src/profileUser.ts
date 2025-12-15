@@ -32,12 +32,24 @@ async function requestProfile() {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
-      // profP.classList.add("grid");
-      // profP.classList.remove("hidden");
       const buttons = document.getElementById("acc-actions") as HTMLDivElement;
-      if (!firstView) {
-        console.log("first load");
+      const personalProfile = document.getElementById("personalProfilePage") as HTMLDivElement;
+      console.log(`${personalProfile.children.length}`);
+        console.log("append content");
+        usernameDiv.hidden=false;
+        while (usernameDiv.firstChild)
+          usernameDiv.firstChild.remove();
+        while (displayNameDiv.firstChild)
+          displayNameDiv.firstChild.remove();
+        const userNameCheck = document.getElementById("profile-user");
+        if (userNameCheck) userNameCheck.remove();
+        const displayNameCheck = document.getElementById("profile-display");
+        if (displayNameCheck) displayNameCheck.remove();
+        const whiteSpace = document.createTextNode("\u00A0");
+        if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
+        if (displayNameDiv.contains(whiteSpace)) displayNameDiv.removeChild(whiteSpace);
         usernameSpan.classList.add("font-bold", "text-xl");
+        usernameSpan.setAttribute("id", "profile-user");
         usernameSpan.textContent = "Username:";
         usernameData.classList.add("text-xl");
         usernameData.textContent = data.username;
@@ -45,23 +57,18 @@ async function requestProfile() {
         usernameDiv.appendChild(document.createTextNode("\u00A0"));
         usernameDiv.appendChild(usernameData);
         displayNameSpan.classList.add("font-bold", "text-xl");
-        displayNameSpan.textContent = "Username:";
+        displayNameSpan.setAttribute("id", "profile-display");
+        displayNameSpan.textContent = "Display name:";
         displayNameData.classList.add("text-xl");
         displayNameData.textContent = data.displayName;
         displayNameDiv.appendChild(displayNameSpan);
         displayNameDiv.appendChild(document.createTextNode("\u00A0"));
         displayNameDiv.appendChild(displayNameData);
-        avatarImg.src = "images/profile/blue.png"; //need to be fixed
-        firstView = true;
-      } else {
-        console.log("second load");
-        usernameData.textContent = data.username;
-        displayNameData.textContent = data.displayName;
-      }
-      buttons.classList.add("hidden");
-      buttons.classList.remove("flex");
-      await requestStats(data.id);
-      requestStats(data.id);
+        avatarImg.src = data.avatarUrl;
+        personalProfile.append(profP);
+        buttons.classList.add("hidden");
+        buttons.classList.remove("flex");
+        await requestStats(data.id);
     }
   } catch (error) {
     console.error("Error during registration:", error);

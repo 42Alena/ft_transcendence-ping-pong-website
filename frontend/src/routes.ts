@@ -1,11 +1,12 @@
 window.addEventListener("popstate", (event) => {
   console.log(`state: ${JSON.stringify(event.state)}`);
   const page = event.state.page;
+  // check if id is not null
+  // call displayChat page
+  // otherwise
   displayPage(page);
   if (page == "chat" && event.state.userId != null)
     requestConversation(event.state.userId, event.state.userDisplayName, event.state.userAvatarUrl);
-  // else if (page == "user")
-    //
 });
 
 window.addEventListener("DOMContentLoaded", () => {

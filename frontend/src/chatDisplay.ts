@@ -1,7 +1,6 @@
 //HTML elements
 const listDmsDiv: any = document.getElementById("list-dms");
 const bubbleDiv: any = document.getElementById("bubble");
-// const inputEl: any = document.getElementById("text-box");
 const SendEl: any = document.getElementById("send-button");
 const listUsersDiv: any = document.getElementById("list-users");
 const conversationDiv: any = document.getElementById("conversation");
@@ -67,37 +66,6 @@ function addBubbleTournament(role: string, content: string, timeStamp : HTMLDivE
   historyConversation.append(timeStamp);
   bubbleDiv.appendChild(historyConversation);
 }
-
-// function displayConversationHistory(
-//   id: string,
-//   list: Chat[],
-//   name: string,
-//   avatar: string,
-// ) {
-//   userProfileDiv.classList.add("hidden");
-//   userProfileDiv.classList.remove("block");
-//   fillConversationInfo(name, avatar);
-//   currChatId = id;
-//   const existingBubble = document.getElementById("history-conv");
-//   if (existingBubble) existingBubble.remove();
-//   historyConversation = document.createElement("div");
-//   historyConversation.className = "chat-right__bubble border";
-//   historyConversation.setAttribute("id", "history-conv");
-//   for (let step = 0; step < list.length; step++) {
-//     if (list[step].id == id) {
-//       let historyMex: {
-//         sender: boolean;
-//         receiver: boolean;
-//         content: string;
-//       }[] = list[step].messages;
-//       for (let step = 0; step < historyMex.length; step++) {
-//         if (historyMex[step].receiver == true)
-//           addBubble("sender", historyMex[step].content);
-//         else addBubble("recv", historyMex[step].content);
-//       }
-//     }
-//   }
-// }
 
 function fillConversationInfo(name: string, avatar: string) {
   const existingContactDiv = document.getElementById("contact-name");
@@ -262,22 +230,3 @@ function fillConversationInfo(name: string, avatar: string) {
 //   }
 // });
 
-function displayProf() {
-  startConvDiv.classList.add("hidden");
-  startConvDiv.classList.remove("flex");
-  conversationDiv.classList.add("hidden");
-  conversationDiv.classList.remove("flex");
-  blockedList.classList.add("hidden");
-  blockedList.classList.remove("flex");
-  friendList.classList.add("flex");
-  friendList.classList.remove("hidden");
-  displayUserProfile();
-  userProfileDiv.appendChild(profP);
-  userProfileDiv.classList.add("block");
-  userProfileDiv.classList.remove("hidden");
-  profP.classList.add("grid");
-  profP.classList.remove("hidden");
-  friendsPage.classList.add("flex");
-  friendsPage.classList.remove("hidden");
-  toggle = true;
-}

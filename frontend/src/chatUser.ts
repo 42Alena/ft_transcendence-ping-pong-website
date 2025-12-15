@@ -69,20 +69,7 @@ async function requestUsers() {
   }
 }
 
-async function requestChats() {
-  // const existingBubble = document.getElementById("history-conv");
-  // const existingContactDiv = document.getElementById("contact-name");
-  // const existingAvatarDiv = document.getElementById("contact-avatar");
-
-  // if (existingContactDiv) {
-  //   existingContactDiv.remove();
-  // }
-  // if (existingAvatarDiv) {
-  //   existingAvatarDiv.remove();
-  // }
-  // if (existingBubble)
-  //   existingBubble.remove();
-  
+async function requestChats() {  
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -120,20 +107,11 @@ async function requestChats() {
           const newContent = document.createTextNode(chat_user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
-          // newDiv.onclick = function () {
-          //   requestConversation(
-          //     chat_user.userId,
-          //     chat_user.displayName,
-          //     chat_user.avatarUrl,
-          //   );
-          // };
           newDiv.addEventListener("click", event => {
             event.preventDefault();
             const state = {page: "chat", userId: chat_user.userId, userDisplayName: chat_user.displayName, userAvatarUrl: chat_user.avatarUrl};
             history.pushState(state, "");
-            requestConversation(chat_user.userId, chat_user.displayName, chat_user.avatarUrl)
-            console.log("after request conversation");
-            // handleClickEvent('chat', chat_user.userId);
+            requestConversation(chat_user.userId, chat_user.displayName, chat_user.avatarUrl);
           })
           const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
@@ -194,16 +172,12 @@ async function requestUserProfile(id: string) {
       throw new Error(`Error ${response.status}`);
     } else {
       const user = await response.json();
-      while (displayNameDiv.firstChild) {
-        displayNameDiv.removeChild(displayNameDiv.firstChild);
-      }
       conversationDiv.hidden = true;
       startConversationDiv.hidden = true;
+      userProfile.hidden = false;
       userProfile.dataset.profileuserid = user.id;
       userProfile.dataset.profileusername = user.displayName;
       userProfile.dataset.profileuseravatar = user.avatarUrl;
-      // console.log(`before request ${friendListStorage.length}`);
-      //check myself
       if (localStorage.getItem("userData")) {
         const userDataString: string | null = localStorage.getItem("userData");
         if (userDataString) {
@@ -214,7 +188,6 @@ async function requestUserProfile(id: string) {
         }
       }
       await requestFriendsList();
-      // console.log(`after request ${friendListStorage.length}`);
       for (let i = 0; i < friendListStorage.length; i++) {
         if (user.id == friendListStorage[i]) {
           profileAddRemFriend.textContent = "Remove";
@@ -246,21 +219,31 @@ async function requestUserProfile(id: string) {
         profileBlockUnbFriend.textContent = "Block chat";
         isBlocked = false;
       }
-      usernameDiv.classList.add("hidden");
-      usernameDiv.classList.remove("flex");
+      while (usernameDiv.firstChild)
+          usernameDiv.removeChild(usernameDiv.firstChild)
+      while (displayNameDiv.firstChild)
+          displayNameDiv.removeChild(displayNameDiv.firstChild)
+      const userNameCheck = document.getElementById("profile-user");
+      if (userNameCheck) userNameCheck.remove();
+      const displayNameCheck = document.getElementById("profile-display");
+      if (displayNameCheck) displayNameCheck.remove();
+      const whiteSpace = document.createTextNode("\u00A0");
+      if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
+      if (displayNameDiv.contains(whiteSpace)) displayNameDiv.removeChild(whiteSpace);
+      usernameDiv.hidden=true;
       displayNameOSpan.classList.add("font-bold", "text-xl");
+      displayNameSpan.setAttribute("id", "profile-display");
       displayNameOSpan.textContent = "Display name:";
       displayNameOData.classList.add("text-xl");
       displayNameOData.textContent = user.displayName;
       displayNameDiv.appendChild(displayNameOSpan);
-      displayNameDiv.appendChild(document.createTextNode("\u00A0"));
       displayNameDiv.appendChild(displayNameOData);
       avatarImg.src = user.avatarUrl; //need to be fixed
       userProfile.append(profP);
       userProfile.classList.add("grid");
       userProfile.classList.remove("hidden");
-      profP.classList.remove("hidden");
-      profP.classList.add("grid");
+      profP.hidden = false;
+      console.log("profile user");
       profileOptions.dataset.userid = user.id;
       profileOptions.dataset.username = user.displayName;
       profileOptions.dataset.avatar = user.avatarUrl;
@@ -520,8 +503,7 @@ async function requestConversation(
         while (userProfileDiv.firstChild) {
           userProfileDiv.removeChild(userProfileDiv.firstChild);
         }
-      userProfileDiv.classList.add("hidden");
-      userProfileDiv.classList.remove("flex");
+      userProfile.hidden=true;
       console.log(displayName, avatarUrl);
       //header
       fillConversationInfo(displayName, avatarUrl);

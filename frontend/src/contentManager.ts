@@ -2,6 +2,7 @@ const chatP: any = document.getElementById("chatPage");
 const welcP: any = document.getElementById("welcomePage");
 const accP: any = document.getElementById("accountPage");
 const gameP: any = document.getElementById("gamePage");
+const personalP = document.getElementById("personalProfilePage") as HTMLDivElement;
 
 function handleClickEvent(text: string) {
   const state = { page: text};
@@ -45,6 +46,13 @@ function displayPage(text: string): void {
     conversationDiv.hidden = true;
     const startConversationPage = document.getElementById("start-chat") as HTMLDivElement;
     startConversationPage.hidden = false;
+    const userProfileDiv = document.getElementById("userProfile") as HTMLDivElement;
+    userProfileDiv.hidden = true;
+    if (userProfileDiv)
+    {
+      while(userProfileDiv.firstChild)
+        userProfileDiv.removeChild(userProfileDiv.firstChild);
+    }
     requestChats();
   } else if (text == "welcome" || text == "logo") {
     welcP.hidden = false;
@@ -59,6 +67,7 @@ function displayPage(text: string): void {
     regP.hidden = false;
   } else if (text == "profile") {
     accP.hidden = false;
+    personalP.hidden = false;
     profP.hidden = false;
     requestProfile();
   } else if (text == "settings") {
