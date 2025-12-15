@@ -33,42 +33,43 @@ async function requestProfile() {
       throw new Error(`Error ${response.status}`);
     } else {
       const buttons = document.getElementById("acc-actions") as HTMLDivElement;
-      const personalProfile = document.getElementById("personalProfilePage") as HTMLDivElement;
+      const personalProfile = document.getElementById(
+        "personalProfilePage",
+      ) as HTMLDivElement;
       console.log(`${personalProfile.children.length}`);
-        console.log("append content");
-        usernameDiv.hidden=false;
-        while (usernameDiv.firstChild)
-          usernameDiv.firstChild.remove();
-        while (displayNameDiv.firstChild)
-          displayNameDiv.firstChild.remove();
-        const userNameCheck = document.getElementById("profile-user");
-        if (userNameCheck) userNameCheck.remove();
-        const displayNameCheck = document.getElementById("profile-display");
-        if (displayNameCheck) displayNameCheck.remove();
-        const whiteSpace = document.createTextNode("\u00A0");
-        if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
-        if (displayNameDiv.contains(whiteSpace)) displayNameDiv.removeChild(whiteSpace);
-        usernameSpan.classList.add("font-bold", "text-xl");
-        usernameSpan.setAttribute("id", "profile-user");
-        usernameSpan.textContent = "Username:";
-        usernameData.classList.add("text-xl");
-        usernameData.textContent = data.username;
-        usernameDiv.appendChild(usernameSpan);
-        usernameDiv.appendChild(document.createTextNode("\u00A0"));
-        usernameDiv.appendChild(usernameData);
-        displayNameSpan.classList.add("font-bold", "text-xl");
-        displayNameSpan.setAttribute("id", "profile-display");
-        displayNameSpan.textContent = "Display name:";
-        displayNameData.classList.add("text-xl");
-        displayNameData.textContent = data.displayName;
-        displayNameDiv.appendChild(displayNameSpan);
-        displayNameDiv.appendChild(document.createTextNode("\u00A0"));
-        displayNameDiv.appendChild(displayNameData);
-        avatarImg.src = data.avatarUrl || "images/avatars/pong_default.png";
-        personalProfile.append(profP);
-        buttons.classList.add("hidden");
-        buttons.classList.remove("flex");
-        await requestStats(data.id);
+      console.log("append content");
+      usernameDiv.hidden = false;
+      while (usernameDiv.firstChild) usernameDiv.firstChild.remove();
+      while (displayNameDiv.firstChild) displayNameDiv.firstChild.remove();
+      const userNameCheck = document.getElementById("profile-user");
+      if (userNameCheck) userNameCheck.remove();
+      const displayNameCheck = document.getElementById("profile-display");
+      if (displayNameCheck) displayNameCheck.remove();
+      const whiteSpace = document.createTextNode("\u00A0");
+      if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
+      if (displayNameDiv.contains(whiteSpace))
+        displayNameDiv.removeChild(whiteSpace);
+      usernameSpan.classList.add("font-bold", "text-xl");
+      usernameSpan.setAttribute("id", "profile-user");
+      usernameSpan.textContent = "Username:";
+      usernameData.classList.add("text-xl");
+      usernameData.textContent = data.username;
+      usernameDiv.appendChild(usernameSpan);
+      usernameDiv.appendChild(document.createTextNode("\u00A0"));
+      usernameDiv.appendChild(usernameData);
+      displayNameSpan.classList.add("font-bold", "text-xl");
+      displayNameSpan.setAttribute("id", "profile-display");
+      displayNameSpan.textContent = "Display name:";
+      displayNameData.classList.add("text-xl");
+      displayNameData.textContent = data.displayName;
+      displayNameDiv.appendChild(displayNameSpan);
+      displayNameDiv.appendChild(document.createTextNode("\u00A0"));
+      displayNameDiv.appendChild(displayNameData);
+      avatarImg.src = data.avatarUrl || "images/avatars/pong_default.png";
+      personalProfile.append(profP);
+      buttons.classList.add("hidden");
+      buttons.classList.remove("flex");
+      await requestStats(data.id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -216,15 +217,12 @@ passwordForm.addEventListener("submit", async (event: any) => {
   };
   console.log(passwordBody.currentPassword);
   console.log(passwordBody.newPassword);
-  const myRequest = new Request(
-    `${BACKEND_URL}/users/me/change-password`,
-    {
-      method: "PATCH",
-      body: JSON.stringify(passwordBody),
-      credentials: "include",
-      headers: myHeaders,
-    },
-  );
+  const myRequest = new Request(`${BACKEND_URL}/users/me/change-password`, {
+    method: "PATCH",
+    body: JSON.stringify(passwordBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
   try {
     const response = await fetch(myRequest);
     console.log(response);
@@ -512,7 +510,8 @@ async function requestBlockedList() {
           friendBlockedDiv.dataset.friendblockedid = friend.id;
           friendBlockedDiv.dataset.frienddisplayname = friend.displayName;
           friendBlockedDiv.dataset.friendurl = friend.avatarUrl;
-          friendBlockedImg.src = friend.avatarUrl || "images/avatars/pong_default.png";
+          friendBlockedImg.src =
+            friend.avatarUrl || "images/avatars/pong_default.png";
           friendBlockedImg.classList.add("h-[100px]", "w-[100px]");
           friendBlockedDiv.appendChild(friendBlockedImg);
           friendInfoBlockedDiv.classList.add("ml-2.5", "flex", "flex-col");
@@ -588,7 +587,7 @@ async function requestStats(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(`http://127.0.0.1:3000/profile/${id}/stats`, {
+  const myRequest = new Request(`${BACKEND_URL}/profile/${id}/stats`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",

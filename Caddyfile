@@ -6,7 +6,7 @@ localhost {
     handle /auth/* {
     	reverse_proxy backend:3000
     }
-    handle /users{
+    handle /users {
     	reverse_proxy backend:3000
     }
     handle /users/* {

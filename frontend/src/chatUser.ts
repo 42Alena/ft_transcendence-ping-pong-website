@@ -29,7 +29,8 @@ async function requestUsers() {
           newDiv.appendChild(avatDiv);
           newDiv.dataset.userid = user.id;
           newDiv.dataset.userdisplayname = user.displayName;
-          newDiv.dataset.useravatarurl = user.avatarUrl || "images/avatars/pong_default.png";
+          newDiv.dataset.useravatarurl =
+            user.avatarUrl || "images/avatars/pong_default.png";
           const userDiv = document.createElement("div");
           userDiv.setAttribute("id", user.displayName);
           const newContent = document.createTextNode(user.displayName);
@@ -69,7 +70,7 @@ async function requestUsers() {
   }
 }
 
-async function requestChats() {  
+async function requestChats() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -107,12 +108,21 @@ async function requestChats() {
           const newContent = document.createTextNode(chat_user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
-          newDiv.addEventListener("click", event => {
+          newDiv.addEventListener("click", (event) => {
             event.preventDefault();
-            const state = {page: "chat", userId: chat_user.userId, userDisplayName: chat_user.displayName, userAvatarUrl: chat_user.avatarUrl};
+            const state = {
+              page: "chat",
+              userId: chat_user.userId,
+              userDisplayName: chat_user.displayName,
+              userAvatarUrl: chat_user.avatarUrl,
+            };
             history.pushState(state, "");
-            requestConversation(chat_user.userId, chat_user.displayName, chat_user.avatarUrl);
-          })
+            requestConversation(
+              chat_user.userId,
+              chat_user.displayName,
+              chat_user.avatarUrl,
+            );
+          });
           const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
             "chat-div",
@@ -158,7 +168,7 @@ async function requestUserProfile(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   let isMe = false;
-  const myRequest = new Request(`http://127.0.0.1:3000/users/${id}`, {
+  const myRequest = new Request(`${BACKEND_URL}/users/${id}`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -183,8 +193,7 @@ async function requestUserProfile(id: string) {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           console.log(`${userData.displayName} - ${user.id} checking myself`);
-          if (userData.displayName == user.displayName)
-            isMe = true;
+          if (userData.displayName == user.displayName) isMe = true;
         }
       }
       await requestFriendsList();
@@ -220,17 +229,18 @@ async function requestUserProfile(id: string) {
         isBlocked = false;
       }
       while (usernameDiv.firstChild)
-          usernameDiv.removeChild(usernameDiv.firstChild)
+        usernameDiv.removeChild(usernameDiv.firstChild);
       while (displayNameDiv.firstChild)
-          displayNameDiv.removeChild(displayNameDiv.firstChild)
+        displayNameDiv.removeChild(displayNameDiv.firstChild);
       const userNameCheck = document.getElementById("profile-user");
       if (userNameCheck) userNameCheck.remove();
       const displayNameCheck = document.getElementById("profile-display");
       if (displayNameCheck) displayNameCheck.remove();
       const whiteSpace = document.createTextNode("\u00A0");
       if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
-      if (displayNameDiv.contains(whiteSpace)) displayNameDiv.removeChild(whiteSpace);
-      usernameDiv.hidden=true;
+      if (displayNameDiv.contains(whiteSpace))
+        displayNameDiv.removeChild(whiteSpace);
+      usernameDiv.hidden = true;
       displayNameOSpan.classList.add("font-bold", "text-xl");
       displayNameSpan.setAttribute("id", "profile-display");
       displayNameOSpan.textContent = "Display name:";
@@ -251,9 +261,8 @@ async function requestUserProfile(id: string) {
       profileOptions.classList.add("flex");
       profileOptions.classList.remove("hidden");
       buttons.classList.add("flex");
-        buttons.classList.remove("hidden");
-      if (isMe)
-      {
+      buttons.classList.remove("hidden");
+      if (isMe) {
         buttons.classList.add("hidden");
         buttons.classList.remove("flex");
       }
@@ -284,14 +293,11 @@ sendMessageButton.addEventListener("click", async () => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(
-    `http://127.0.0.1:3000/chat/conversations/${id}`,
-    {
-      method: "GET",
-      headers: myHeaders,
-      credentials: "include",
-    },
-  );
+  const myRequest = new Request(`${BACKEND_URL}/chat/conversations/${id}`, {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
   try {
     const response = await fetch(myRequest);
     console.log(response);
@@ -305,8 +311,7 @@ sendMessageButton.addEventListener("click", async () => {
       const inputHiddenForm = document.getElementById(
         "recv-id",
       ) as HTMLInputElement;
-      if (receiverId)
-        inputHiddenForm.value = receiverId;
+      if (receiverId) inputHiddenForm.value = receiverId;
       const existingBubble = document.getElementById("history-conv");
       if (existingBubble) existingBubble.remove();
       historyConversation = document.createElement("div");
@@ -320,7 +325,7 @@ sendMessageButton.addEventListener("click", async () => {
         const date: Date = new Date(milliseconds);
         const readableTime: string = date.toLocaleString();
         timeStampMess.textContent = readableTime;
-          console.log(
+        console.log(
           `send: ${message.senderId} - receive: ${message.receiverId}`,
         );
         if (message.type == "PrivateGameInviteMessage") {
@@ -426,20 +431,16 @@ async function requestConversation(
   console.log(`request chat for ${id}`);
   conversationDiv.hidden = false;
   const chatDisplay = document.getElementById("chatDisplay") as HTMLDivElement;
-  if (chatDisplay.hidden)
-    chatDisplay.hidden = false;
+  if (chatDisplay.hidden) chatDisplay.hidden = false;
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(
-    `http://127.0.0.1:3000/chat/conversations/${id}`,
-    {
-      method: "GET",
-      headers: myHeaders,
-      credentials: "include",
-    },
-  );
+  const myRequest = new Request(`${BACKEND_URL}/chat/conversations/${id}`, {
+    method: "GET",
+    headers: myHeaders,
+    credentials: "include",
+  });
   try {
     const response = await fetch(myRequest);
     console.log(response);
@@ -453,11 +454,9 @@ async function requestConversation(
       const inputHiddenForm = document.getElementById(
         "recv-id",
       ) as HTMLInputElement;
-      if (receiverId)
-        inputHiddenForm.value = receiverId;
+      if (receiverId) inputHiddenForm.value = receiverId;
       const existingBubble = document.getElementById("history-conv");
-      if (existingBubble)
-        existingBubble.remove();
+      if (existingBubble) existingBubble.remove();
       historyConversation = document.createElement("div");
       historyConversation.className = "chat-right__bubble border";
       historyConversation.setAttribute("id", "history-conv");
@@ -508,7 +507,7 @@ async function requestConversation(
         while (userProfileDiv.firstChild) {
           userProfileDiv.removeChild(userProfileDiv.firstChild);
         }
-      userProfile.hidden=true;
+      userProfile.hidden = true;
       //header
       fillConversationInfo(displayName, avatarUrl);
       //swtich tab to chats
@@ -524,10 +523,12 @@ const invitePlayForm = document.getElementById("invite") as HTMLFormElement;
 
 invitePlayForm.addEventListener("submit", async (event: any) => {
   event.preventDefault();
-    const buttonsDiv = document.getElementById(
+  const buttonsDiv = document.getElementById(
     "acc-options",
   ) as HTMLButtonElement;
-  const inviteInputId = document.getElementById("invite-recv-id") as HTMLInputElement;
+  const inviteInputId = document.getElementById(
+    "invite-recv-id",
+  ) as HTMLInputElement;
   inviteInputId.value = buttonsDiv.dataset.userid as string;
   console.log("send invitation message");
   const myHeaders = new Headers();
@@ -549,7 +550,7 @@ invitePlayForm.addEventListener("submit", async (event: any) => {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
-       console.log(response);
+      console.log(response);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -557,11 +558,11 @@ invitePlayForm.addEventListener("submit", async (event: any) => {
 });
 const statusUser = document.getElementById("status") as HTMLDivElement;
 
-async function requestOnlineStatus(id : string) {
+async function requestOnlineStatus(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(`http://127.0.0.1:3000/users/${id}/status`, {
+  const myRequest = new Request(`${BACKEND_URL}/${id}/status`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -573,28 +574,43 @@ async function requestOnlineStatus(id : string) {
     console.log(`status: ${status.status}`);
     if (!response.ok) {
       while (statusUser.firstChild) {
-            statusUser.removeChild(statusUser.firstChild);}
+        statusUser.removeChild(statusUser.firstChild);
+      }
       throw new Error(`Error ${response.status}`);
     } else {
-       while (statusUser.firstChild) {
-            statusUser.removeChild(statusUser.firstChild);}
-      if (status.status == "online")
-      {
+      while (statusUser.firstChild) {
+        statusUser.removeChild(statusUser.firstChild);
+      }
+      if (status.status == "online") {
         const setStatus = document.createElement("div");
         const circle = document.createElement("div");
-        circle.classList.add("ml-[5px]", "h-[15px]", "w-[15px]", "rounded-full", "border-2", "border-black", "bg-green-700");
+        circle.classList.add(
+          "ml-[5px]",
+          "h-[15px]",
+          "w-[15px]",
+          "rounded-full",
+          "border-2",
+          "border-black",
+          "bg-green-700",
+        );
         setStatus.textContent = status.status;
         statusUser.appendChild(circle);
         statusUser.appendChild(setStatus);
         statusUser.classList.add("flex");
         statusUser.classList.remove("hidden");
-      }
-      else if (status.status == "offline")
-      {
+      } else if (status.status == "offline") {
         console.log("here");
         const setStatus = document.createElement("div");
         const circle = document.createElement("div");
-        circle.classList.add("ml-[5px]", "h-[15px]", "w-[15px]", "rounded-full", "border-2", "border-black", "bg-grey-700");
+        circle.classList.add(
+          "ml-[5px]",
+          "h-[15px]",
+          "w-[15px]",
+          "rounded-full",
+          "border-2",
+          "border-black",
+          "bg-grey-700",
+        );
         setStatus.textContent = status.status;
         statusUser.appendChild(circle);
         statusUser.appendChild(setStatus);
