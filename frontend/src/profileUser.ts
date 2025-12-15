@@ -20,7 +20,7 @@ async function requestProfile() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -32,36 +32,44 @@ async function requestProfile() {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
-      profP.classList.add("grid");
-      profP.classList.remove("hidden");
       const buttons = document.getElementById("acc-actions") as HTMLDivElement;
-      if (!firstView) {
-        console.log("first load");
-        usernameSpan.classList.add("font-bold", "text-xl");
-        usernameSpan.textContent = "Username:";
-        usernameData.classList.add("text-xl");
-        usernameData.textContent = data.username;
-        usernameDiv.appendChild(usernameSpan);
-        usernameDiv.appendChild(document.createTextNode("\u00A0"));
-        usernameDiv.appendChild(usernameData);
-        displayNameSpan.classList.add("font-bold", "text-xl");
-        displayNameSpan.textContent = "Username:";
-        displayNameData.classList.add("text-xl");
-        displayNameData.textContent = data.displayName;
-        displayNameDiv.appendChild(displayNameSpan);
-        displayNameDiv.appendChild(document.createTextNode("\u00A0"));
-        displayNameDiv.appendChild(displayNameData);
-        avatarImg.src = "images/profile/blue.png"; //need to be fixed
-        firstView = true;
-      } else {
-        console.log("second load");
-        usernameData.textContent = data.username;
-        displayNameData.textContent = data.displayName;
-      }
+      const personalProfile = document.getElementById(
+        "personalProfilePage",
+      ) as HTMLDivElement;
+      console.log(`${personalProfile.children.length}`);
+      console.log("append content");
+      usernameDiv.hidden = false;
+      while (usernameDiv.firstChild) usernameDiv.firstChild.remove();
+      while (displayNameDiv.firstChild) displayNameDiv.firstChild.remove();
+      const userNameCheck = document.getElementById("profile-user");
+      if (userNameCheck) userNameCheck.remove();
+      const displayNameCheck = document.getElementById("profile-display");
+      if (displayNameCheck) displayNameCheck.remove();
+      const whiteSpace = document.createTextNode("\u00A0");
+      if (usernameDiv.contains(whiteSpace)) usernameDiv.removeChild(whiteSpace);
+      if (displayNameDiv.contains(whiteSpace))
+        displayNameDiv.removeChild(whiteSpace);
+      usernameSpan.classList.add("font-bold", "text-xl");
+      usernameSpan.setAttribute("id", "profile-user");
+      usernameSpan.textContent = "Username:";
+      usernameData.classList.add("text-xl");
+      usernameData.textContent = data.username;
+      usernameDiv.appendChild(usernameSpan);
+      usernameDiv.appendChild(document.createTextNode("\u00A0"));
+      usernameDiv.appendChild(usernameData);
+      displayNameSpan.classList.add("font-bold", "text-xl");
+      displayNameSpan.setAttribute("id", "profile-display");
+      displayNameSpan.textContent = "Display name:";
+      displayNameData.classList.add("text-xl");
+      displayNameData.textContent = data.displayName;
+      displayNameDiv.appendChild(displayNameSpan);
+      displayNameDiv.appendChild(document.createTextNode("\u00A0"));
+      displayNameDiv.appendChild(displayNameData);
+      avatarImg.src = data.avatarUrl || "images/avatars/pong_default.png";
+      personalProfile.append(profP);
       buttons.classList.add("hidden");
       buttons.classList.remove("flex");
       await requestStats(data.id);
-      requestStats(data.id);
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -103,7 +111,7 @@ avatarForm.addEventListener("submit", async (event: any) => {
   const formData = new FormData();
   if (avatarInput.files.length > 0) {
     formData.append("avatar", avatarInput.files[0]);
-    const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
+    const myRequest = new Request(`${BACKEND_URL}/users/me/avatar`, {
       method: "POST",
       body: formData,
       credentials: "include",
@@ -114,7 +122,6 @@ avatarForm.addEventListener("submit", async (event: any) => {
       console.log(response.json);
       const data = await response.json();
       if (!response.ok) {
-        avatarForm.reset();
         throw new Error(`Response status ${response.status}`);
       } else {
         const userDataString: string | null = localStorage.getItem("userData");
@@ -152,7 +159,7 @@ displayNameForm.addEventListener("submit", async (event: any) => {
   const displayNameBody = {
     displayName: formData.get("settings-user_displayName"),
   };
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/display-name", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/display-name`, {
     method: "PATCH",
     body: JSON.stringify(displayNameBody),
     credentials: "include",
@@ -210,15 +217,12 @@ passwordForm.addEventListener("submit", async (event: any) => {
   };
   console.log(passwordBody.currentPassword);
   console.log(passwordBody.newPassword);
-  const myRequest = new Request(
-    "http://127.0.0.1:3000/users/me/change-password",
-    {
-      method: "PATCH",
-      body: JSON.stringify(passwordBody),
-      credentials: "include",
-      headers: myHeaders,
-    },
-  );
+  const myRequest = new Request(`${BACKEND_URL}/users/me/change-password`, {
+    method: "PATCH",
+    body: JSON.stringify(passwordBody),
+    credentials: "include",
+    headers: myHeaders,
+  });
   try {
     const response = await fetch(myRequest);
     console.log(response);
@@ -256,7 +260,7 @@ deleteAccountButton.addEventListener("click", async () => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me`, {
     method: "DELETE",
     credentials: "include",
   });
@@ -313,7 +317,7 @@ async function requestFriendsList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/friends", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/friends`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -343,9 +347,9 @@ async function requestFriendsList() {
           friendDiv.dataset.friendid = friend.id;
           friendDiv.dataset.frienddisplayname = friend.displayName;
           friendDiv.dataset.friendurl =
-            friend.avatarUrl || "default-avatar.png";
+            friend.avatarUrl || "images/avatars/pong_default.png";
           const friendImg = document.createElement("img");
-          friendImg.src = friend.avatarUrl || "default-avatar.png";
+          friendImg.src = friend.avatarUrl || "images/avatars/pong_default.png";
           friendImg.classList.add("h-[100px]", "w-[100px]");
           friendDiv.appendChild(friendImg);
           friendInfoDiv.classList.add("ml-2.5", "flex", "flex-col");
@@ -374,27 +378,6 @@ async function requestFriendsList() {
             removeFriend(friend.id);
           };
           friendButtonsDiv.appendChild(friendRemoveButton);
-          // const friendBlockButton = document.createElement("button");
-          // friendBlockButton.classList.add(
-          //   "flex",
-          //   "h-10",
-          //   "w-[70px]",
-          //   "items-center",
-          //   "justify-center",
-          //   "rounded",
-          //   "border-2",
-          //   "border-blue-950",
-          //   "bg-blue-500",
-          //   "font-bold",
-          //   "text-white",
-          //   "hover:bg-blue-700",
-          // );
-          // friendBlockButton.textContent = "block";
-          // friendBlockButton.type = "button";
-          // friendBlockButton.onclick = function () {
-          //   blockFriend(friend.id);
-          // };
-          // friendButtonsDiv.appendChild(friendBlockButton);
           friendInfoDiv.appendChild(friendButtonsDiv);
           friendDiv.appendChild(friendInfoDiv);
           friendsList.appendChild(friendDiv);
@@ -407,7 +390,7 @@ async function requestFriendsList() {
 }
 
 async function addFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  const completeUrl: string = `${BACKEND_URL}/friends/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "POST",
@@ -436,7 +419,7 @@ const friendsBlockedList = document.getElementById(
 ) as HTMLDivElement;
 
 async function removeFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  const completeUrl: string = `${BACKEND_URL}/friends/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "DELETE",
@@ -465,7 +448,7 @@ async function removeFriend(id: string) {
 }
 
 async function blockFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/blocks/" + id;
+  const completeUrl: string = `${BACKEND_URL}/blocks/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "POST",
@@ -481,10 +464,6 @@ async function blockFriend(id: string) {
       if (response.status != 204) {
         data = await response.json();
       }
-      // const friend = document.querySelector(
-      //   `[data-friendid="${id}"]`,
-      // ) as HTMLDivElement;
-      // friend.remove();
     }
   } catch (error) {
     console.error("Error during registration:", error);
@@ -497,7 +476,7 @@ async function requestBlockedList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/blocks", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/blocks`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -531,7 +510,8 @@ async function requestBlockedList() {
           friendBlockedDiv.dataset.friendblockedid = friend.id;
           friendBlockedDiv.dataset.frienddisplayname = friend.displayName;
           friendBlockedDiv.dataset.friendurl = friend.avatarUrl;
-          friendBlockedImg.src = friend.avatarUrl || "default-avatar.png";
+          friendBlockedImg.src =
+            friend.avatarUrl || "images/avatars/pong_default.png";
           friendBlockedImg.classList.add("h-[100px]", "w-[100px]");
           friendBlockedDiv.appendChild(friendBlockedImg);
           friendInfoBlockedDiv.classList.add("ml-2.5", "flex", "flex-col");
@@ -576,7 +556,7 @@ async function requestBlockedList() {
 }
 
 async function unBlockFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/blocks/" + id;
+  const completeUrl: string = `${BACKEND_URL}/blocks/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "DELETE",
@@ -607,7 +587,7 @@ async function requestStats(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(`http://127.0.0.1:3000/profile/${id}/stats`, {
+  const myRequest = new Request(`${BACKEND_URL}/profile/${id}/stats`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",

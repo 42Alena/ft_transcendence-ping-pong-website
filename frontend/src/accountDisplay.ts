@@ -4,7 +4,6 @@ const regP: any = document.getElementById("registerPage");
 const logP: any = document.getElementById("loginPage");
 const profP: any = document.getElementById("profilePage");
 //register form
-const registerForm: any = document.getElementById("register");
 // const regAvatar: any = document.getElementById("reg-avatar");
 //profile page
 const profileUsername: any = document.getElementById("acc-username");
@@ -55,182 +54,183 @@ profileBlockUnbFriend.addEventListener("click", (event: any) => {
   }
 }
 });
-function setAccountPage(text: string, shouldUpdateNav = true) {
-  updateUrl("account", text, shouldUpdateNav);
-  reg.reset();
-  log.reset();
-  playersNameForm.reset();
-  displayNameForm.reset();
-  passwordForm.reset();
-  avatarForm.reset();
-  accP.classList.add("flex");
-  accP.classList.remove("hidden");
-  chatP.classList.remove("grid");
-  chatP.classList.add("hidden");
-  welcP.classList.add("hidden");
-  welcP.classList.remove("flex");
-  girlImgLeft.classList.add("block");
-  girlImgLeft.classList.remove("hidden");
-  girlImgLeftLoser.classList.remove("block");
-  girlImgLeftLoser.classList.add("hidden");
-  girlImgRight.classList.add("block");
-  girlImgRight.classList.remove("hidden");
-  girlImgRightLoser.classList.remove("block");
-  girlImgRightLoser.classList.add("hidden");
-  successRegPage.classList.add("hidden");
-  successRegPage.classList.remove("flex");
-  if (text == "login") {
-    logP.classList.add("flex");
-    logP.classList.remove("hidden");
-    regP.classList.add("hidden");
-    regP.classList.remove("flex");
-    profP.classList.add("hidden");
-    profP.classList.remove("grid");
-    settingsPage.classList.add("hidden");
-    settingsPage.classList.remove("flex");
-    friendsPage.classList.add("hidden");
-    friendsPage.classList.remove("flex");
-    gameP.classList.add("hidden");
-    gameP.classList.remove("flex");
-    setGame.classList.add("hidden");
-    setGame.classList.remove("block");
-    gameOverDiv.classList.add("hidden");
-    gameOverDiv.classList.remove("flex");
-    instruction.classList.add("hidden");
-    instruction.classList.remove("flex");
-    errorUsernameLog.classList.add("hidden");
-    errorUsernameLog.classList.remove("block");
-    errorPasswordLog.classList.remove("block");
-    errorPasswordLog.classList.add("hidden");
-    if (gameisOn) {
-      clearInterval(interval);
-      canvas.classList.add("hidden");
-      canvas.classList.remove("block");
-      gameisOn = false;
-    }
-  } else if (text == "register") {
-    regP.classList.add("flex");
-    regP.classList.remove("hidden");
-    reg.classList.add("flex");
-    reg.classList.remove("hidden");
-    logP.classList.add("hidden");
-    logP.classList.remove("flex");
-    profP.classList.add("hidden");
-    profP.classList.remove("grid");
-    settingsPage.classList.add("hidden");
-    settingsPage.classList.remove("flex");
-    friendsPage.classList.add("hidden");
-    friendsPage.classList.remove("flex");
-    gameP.classList.add("hidden");
-    gameP.classList.remove("flex");
-    setGame.classList.add("hidden");
-    setGame.classList.remove("block");
-    gameOverDiv.classList.add("hidden");
-    gameOverDiv.classList.remove("flex");
-    instruction.classList.add("hidden");
-    instruction.classList.remove("flex");
-    errorUsername.classList.add("hidden");
-    errorUsername.classList.remove("block");
-    errorDisplayName.classList.add("hidden");
-    errorDisplayName.classList.remove("block");
-    errorPaassword.classList.add("hidden");
-    errorPaassword.classList.remove("block");
-    errorNamesDiv.classList.add("invisible");
-    if (gameisOn) {
-      clearInterval(interval);
-      canvas.classList.add("hidden");
-      canvas.classList.remove("block");
-      gameisOn = false;
-    }
-  } else if (text == "profile") {
-    logP.classList.add("hidden");
-    logP.classList.remove("flex");
-    regP.classList.add("hidden");
-    regP.classList.remove("flex");
-    settingsPage.classList.add("hidden");
-    settingsPage.classList.remove("flex");
-    friendsPage.classList.add("hidden");
-    friendsPage.classList.remove("flex");
-    gameP.classList.add("hidden");
-    gameP.classList.remove("flex");
-    setGame.classList.add("hidden");
-    setGame.classList.remove("block");
-    gameOverDiv.classList.add("hidden");
-    gameOverDiv.classList.remove("flex");
-    instruction.classList.add("hidden");
-    instruction.classList.remove("flex");
-    if (gameisOn) {
-      clearInterval(interval);
-      canvas.classList.add("hidden");
-      canvas.classList.remove("block");
-      gameisOn = false;
-    }
-    requestProfile();
-  } else if (text == "settings") {
-    //add route to this?
-    settingsPage.classList.add("flex");
-    settingsPage.classList.remove("hidden");
-    console.log("here");
-    const userDataString: string | null = localStorage.getItem("userData");
-    if (localStorage.getItem("userData")) {
-      if (userDataString) {
-        const userData = JSON.parse(userDataString);
-        settingsUsernameInput.value = userData.username;
-        settingsDisplayNameInput.value = userData.displayName;
-      }
-    }
-    popup.classList.add("hidden");
-    popup.classList.remove("block");
-    profP.classList.add("hidden");
-    profP.classList.remove("grid");
-    logP.classList.add("hidden");
-    logP.classList.remove("flex");
-    regP.classList.add("hidden");
-    regP.classList.remove("flex");
-    friendsPage.classList.add("hidden");
-    friendsPage.classList.remove("flex");
-    gameP.classList.add("hidden");
-    gameP.classList.remove("flex");
-    setGame.classList.add("hidden");
-    setGame.classList.remove("block");
-    gameOverDiv.classList.add("hidden");
-    gameOverDiv.classList.remove("flex");
-    instruction.classList.add("hidden");
-    instruction.classList.remove("flex");
-    if (gameisOn) {
-      clearInterval(interval);
-      canvas.classList.add("hidden");
-      canvas.classList.remove("block");
-      gameisOn = false;
-    }
-  } else if (text == "friends") {
-    requestFriendsList();
-    blockedList.classList.add("hidden");
-    blockedList.classList.remove("flex");
-    profP.classList.add("hidden");
-    profP.classList.remove("grid");
-    logP.classList.add("hidden");
-    logP.classList.remove("flex");
-    regP.classList.add("hidden");
-    regP.classList.remove("flex");
-    settingsPage.classList.add("hidden");
-    settingsPage.classList.remove("flex");
-    gameP.classList.add("hidden");
-    gameP.classList.remove("flex");
-    setGame.classList.add("hidden");
-    setGame.classList.remove("block");
-    gameOverDiv.classList.add("hidden");
-    gameOverDiv.classList.remove("flex");
-    instruction.classList.add("hidden");
-    instruction.classList.remove("flex");
-    if (gameisOn) {
-      clearInterval(interval);
-      canvas.classList.add("hidden");
-      canvas.classList.remove("block");
-      gameisOn = false;
-    }
-  }
-}
+// function setAccountPage(text: string, shouldUpdateNav = true) {
+//   updateUrl("account", text, shouldUpdateNav);
+//   reg.reset();
+//   log.reset();
+//   playersNameForm.reset();
+//   displayNameForm.reset();
+//   passwordForm.reset();
+//   avatarForm.reset();
+//   accP.classList.add("flex");
+//   accP.classList.remove("hidden");
+//   chatP.classList.remove("grid");
+//   chatP.classList.add("hidden");
+//   welcP.classList.add("hidden");
+//   welcP.classList.remove("flex");
+//   girlImgLeft.classList.add("block");
+//   girlImgLeft.classList.remove("hidden");
+//   girlImgLeftLoser.classList.remove("block");
+//   girlImgLeftLoser.classList.add("hidden");
+//   girlImgRight.classList.add("block");
+//   girlImgRight.classList.remove("hidden");
+//   girlImgRightLoser.classList.remove("block");
+//   girlImgRightLoser.classList.add("hidden");
+//   successRegPage.classList.add("hidden");
+//   successRegPage.classList.remove("flex");
+//   if (text == "login") {
+//     logP.classList.add("flex");
+//     logP.classList.remove("hidden");
+//     regP.classList.add("hidden");
+//     regP.classList.remove("flex");
+//     profP.classList.add("hidden");
+//     profP.classList.remove("grid");
+//     settingsPage.classList.add("hidden");
+//     settingsPage.classList.remove("flex");
+//     friendsPage.classList.add("hidden");
+//     friendsPage.classList.remove("flex");
+//     gameP.classList.add("hidden");
+//     gameP.classList.remove("flex");
+//     setGame.classList.add("hidden");
+//     setGame.classList.remove("block");
+//     gameOverDiv.classList.add("hidden");
+//     gameOverDiv.classList.remove("flex");
+//     instruction.classList.add("hidden");
+//     instruction.classList.remove("flex");
+//     errorUsernameLog.classList.add("hidden");
+//     errorUsernameLog.classList.remove("block");
+//     errorPasswordLog.classList.remove("block");
+//     errorPasswordLog.classList.add("hidden");
+//     if (gameisOn) {
+//       clearInterval(interval);
+//       canvas.classList.add("hidden");
+//       canvas.classList.remove("block");
+//       gameisOn = false;
+//     }
+//   } else if (text == "register") {
+//     regP.classList.add("flex");
+//     regP.classList.remove("hidden");
+//     reg.classList.add("flex");
+//     reg.classList.remove("hidden");
+//     logP.classList.add("hidden");
+//     logP.classList.remove("flex");
+//     profP.classList.add("hidden");
+//     profP.classList.remove("grid");
+//     settingsPage.classList.add("hidden");
+//     settingsPage.classList.remove("flex");
+//     friendsPage.classList.add("hidden");
+//     friendsPage.classList.remove("flex");
+//     gameP.classList.add("hidden");
+//     gameP.classList.remove("flex");
+//     setGame.classList.add("hidden");
+//     setGame.classList.remove("block");
+//     gameOverDiv.classList.add("hidden");
+//     gameOverDiv.classList.remove("flex");
+//     instruction.classList.add("hidden");
+//     instruction.classList.remove("flex");
+//     errorUsername.classList.add("hidden");
+//     errorUsername.classList.remove("block");
+//     errorDisplayName.classList.add("hidden");
+//     errorDisplayName.classList.remove("block");
+//     errorPaassword.classList.add("hidden");
+//     errorPaassword.classList.remove("block");
+//     errorNamesDiv.classList.add("invisible");
+//     if (gameisOn) {
+//       clearInterval(interval);
+//       canvas.classList.add("hidden");
+//       canvas.classList.remove("block");
+//       gameisOn = false;
+//     }
+//   } else if (text == "profile") {
+//     logP.classList.add("hidden");
+//     logP.classList.remove("flex");
+//     regP.classList.add("hidden");
+//     regP.classList.remove("flex");
+//     settingsPage.classList.add("hidden");
+//     settingsPage.classList.remove("flex");
+//     friendsPage.classList.add("hidden");
+//     friendsPage.classList.remove("flex");
+//     gameP.classList.add("hidden");
+//     gameP.classList.remove("flex");
+//     setGame.classList.add("hidden");
+//     setGame.classList.remove("block");
+//     gameOverDiv.classList.add("hidden");
+//     gameOverDiv.classList.remove("flex");
+//     instruction.classList.add("hidden");
+//     instruction.classList.remove("flex");
+//     if (gameisOn) {
+//       clearInterval(interval);
+//       canvas.classList.add("hidden");
+//       canvas.classList.remove("block");
+//       gameisOn = false;
+//     }
+//     requestProfile();
+//   } else if (text == "settings") {
+//     //add route to this?
+//     settingsPage.classList.add("flex");
+//     settingsPage.classList.remove("hidden");
+//     console.log("here");
+//     const userDataString: string | null = localStorage.getItem("userData");
+//     if (localStorage.getItem("userData")) {
+//       if (userDataString) {
+//         const userData = JSON.parse(userDataString);
+//         settingsUsernameInput.value = userData.username;
+//         settingsDisplayNameInput.value = userData.displayName;
+//       }
+//     }
+//     popup.classList.add("hidden");
+//     popup.classList.remove("block");
+//     profP.classList.add("hidden");
+//     profP.classList.remove("grid");
+//     logP.classList.add("hidden");
+//     logP.classList.remove("flex");
+//     regP.classList.add("hidden");
+//     regP.classList.remove("flex");
+//     friendsPage.classList.add("hidden");
+//     friendsPage.classList.remove("flex");
+//     gameP.classList.add("hidden");
+//     gameP.classList.remove("flex");
+//     setGame.classList.add("hidden");
+//     setGame.classList.remove("block");
+//     gameOverDiv.classList.add("hidden");
+//     gameOverDiv.classList.remove("flex");
+//     instruction.classList.add("hidden");
+//     instruction.classList.remove("flex");
+//     if (gameisOn) {
+//       clearInterval(interval);
+//       canvas.classList.add("hidden");
+//       canvas.classList.remove("block");
+//       gameisOn = false;
+//     }
+//   } else if (text == "friends") {
+//     requestFriendsList();
+//     blockedList.classList.add("hidden");
+//     blockedList.classList.remove("flex");
+//     profP.classList.add("hidden");
+//     profP.classList.remove("grid");
+//     logP.classList.add("hidden");
+//     logP.classList.remove("flex");
+//     regP.classList.add("hidden");
+//     regP.classList.remove("flex");
+//     settingsPage.classList.add("hidden");
+//     settingsPage.classList.remove("flex");
+//     gameP.classList.add("hidden");
+//     gameP.classList.remove("flex");
+//     setGame.classList.add("hidden");
+//     setGame.classList.remove("block");
+//     gameOverDiv.classList.add("hidden");
+//     gameOverDiv.classList.remove("flex");
+//     instruction.classList.add("hidden");
+//     instruction.classList.remove("flex");
+//     if (gameisOn) {
+//       clearInterval(interval);
+//       canvas.classList.add("hidden");
+//       canvas.classList.remove("block");
+//       gameisOn = false;
+//     }
+//   }
+// }
+// });
 
 // It makes the preview of the avatar the user wants to upload
 // regAvatar.addEventListener("change", (event: any) => {
@@ -273,104 +273,6 @@ function displayBlockedFriends() {
     toggle = false;
   }
 }
-
-// blockButton.classList.add("block");
-//event on each menu div
-// settingsDiv.addEventListener("click", (event: any) => {
-//   settingsPage.classList.add("flex");
-//   settingsPage.classList.remove("hidden");
-//   friendsPage.classList.add("hidden");
-//   friendsPage.classList.remove("flex");
-//   matchesPage.classList.add("hidden");
-//   matchesPage.classList.remove("flex");
-// });
-
-// friendsDiv.addEventListener("click", (event: any) => {
-//   friendsPage.classList.add("flex");
-//   friendsPage.classList.remove("hidden");
-//   matchesPage.classList.add("hidden");
-//   matchesPage.classList.remove("flex");
-// });
-
-// matchesDiv.addEventListener("click", (event: any) => {
-//   matchesPage.classList.add("flex");
-//   matchesPage.classList.remove("hidden");
-//   friendsPage.classList.add("hidden");
-//   friendsPage.classList.remove("flex");
-// });
-
-function displayPersonalProfile() {
-  // tempdisplayN.innerHTML = "Display name: Pallo";
-  profileActions.classList.add("hidden");
-  profileActions.classList.remove("flex");
-
-  profileUsername.classList.add("flex");
-  profileUsername.classList.remove("hidden");
-
-  // profileMenuSettings.classList.add("block");
-  // profileMenuSettings.classList.remove("hidden");
-  // profileSettingsPage.classList.add("flex");
-  // profileSettingsPage.classList.remove("hidden");
-
-  //friends button requests in friend page
-  const friendsButtons: NodeListOf<Element> =
-    document.querySelectorAll(".friend-action");
-  friendsButtons.forEach((button) => {
-    const element = button as HTMLElement;
-    element.classList.add("flex");
-    element.classList.remove("hidden");
-  });
-  profileAvatarImg.src = "images/profile/orange.png";
-  blockButton.classList.add("block");
-  blockButton.classList.remove("hidden");
-}
-
-function displayUserProfile() {
-  // tempdisplayN.innerHTML = "Display name: Eos";
-  profileActions.classList.add("flex");
-  profileActions.classList.remove("hidden");
-  // matchesPage.classList.add("hidden");
-  // matchesPage.classList.remove("flex");
-  profileUsername.classList.add("hidden");
-  profileUsername.classList.remove("flex");
-  // profileMenuSettings.classList.add("hidden");
-  // profileMenuSettings.classList.remove("block");
-  // profileSettingsPage.classList.add("hidden");
-  // profileSettingsPage.classList.remove("flex");
-  const friendsButtons: NodeListOf<Element> =
-    document.querySelectorAll(".friend-action");
-  friendsButtons.forEach((button) => {
-    const element = button as HTMLElement;
-    element.classList.add("hidden");
-    element.classList.remove("flex");
-  });
-  profileAvatarImg.src = "images/profile/blue.png"; //blue.png for others' view
-  blockButton.classList.add("hidden");
-  blockButton.classList.remove("block");
-}
-
-// const registerForm: any = document.getElementById("register");
-// const registerSuccessPage: any = document.getElementById("register-success");
-// const loginButton: any = document.getElementById("login-button");
-// const loginForm: any = document.getElementById("login");
-
-// registerForm.addEventListener("click", (event: any) => {
-//   event.preventDefault();
-//   regP.classList.add("hidden");
-//   regP.classList.remove("flex");
-//   registerSuccessPage.classList.add("flex");
-//   registerSuccessPage.classList.remove("hidden");
-// });
-
-// loginButton.addEventListener("click", () => {
-//   registerSuccessPage.classList.add("hidden");
-//   registerSuccessPage.classList.remove("flex");
-//   setAccountPage("login");
-// });
-
-// loginForm.addEventListener("submit", (event: any) => {
-//   event.preventDefault();
-// });
 
 // const settingsPage: any = document.getElementById("settingsPage");
 const friendsPage: any = document.getElementById("friendsPage");
