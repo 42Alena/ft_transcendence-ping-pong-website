@@ -1,5 +1,5 @@
 import { GameStatsManager } from "../lib/services/GameStatsManager";
-import { authRequiredOptions } from './utils';
+import { authOptionalOptions, authRequiredOptions } from './utils';
 import type * as API from '../lib/types/api';
 import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { FastifyInstance } from "fastify";
@@ -8,7 +8,7 @@ export function registerGameStatsRoutes(fastify: FastifyInstance, gameStatsManag
 
 	/* 
 	mode: "normalGame";
-tournamentRound: null;
+tournamentRound: null;F
 	*/
 	fastify.post<{ Body: API.SaveNormalGameBody }>(
 		"/games/normal/save",
@@ -118,7 +118,7 @@ tournamentRound:   "semi" | "final";
 	*/
 	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
 		"/games/match/aliases/check",
-		authRequiredOptions,
+		authOptionalOptions,
 	
 		async (req, reply) => {
 
@@ -143,7 +143,7 @@ tournamentRound:   "semi" | "final";
 	*/
 	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
 		"/games/tournament/aliases/check",
-	authRequiredOptions,
+	authOptionalOptions,
 
 		async (req, reply) => {
 

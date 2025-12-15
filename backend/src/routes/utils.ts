@@ -38,3 +38,26 @@ export const authRequiredOptions = {
 	}
 };
 
+/* Optional auth preHandler:
+   - If cookie/session is valid -> sets req.userId
+   - If missing/invalid -> do nothing (guest allowed)
+*/
+export const authOptionalOptions = {
+  preHandler: async (req: FastifyRequest, reply: FastifyReply) => {
+    const loginSessionId = (req as API.UserAwareRequest).loginSessionId;
+
+    //  guest: no cookie => just continue, no error
+    if (!loginSessionId) return;
+
+    const userManager = (req.server as any).userManager;
+    const userId = await userManager.getUserIdByLoginSession(loginSessionId);
+
+    //  guest/expired: invalid session => treat as guest, no error
+    if (!userId) return;
+
+    await userManager.touchLastSeenAt(userId);
+
+    //  authenticated path: attach userId
+    (req as API.UserAwareRequest).userId = userId;
+  }
+};
