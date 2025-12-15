@@ -49,7 +49,6 @@ log.addEventListener("submit", async (event: any) => {
     username: formData.get("login-user_username"),
     passwordPlain: formData.get("login-user_password"),
   };
-  // const myRequest = new Request("http://127.0.0.1:3000/auth/login", {
   const myRequest = new Request(`${BACKEND_URL}/auth/login`, {
     method: "POST",
     body: JSON.stringify(LoginBody),
@@ -81,7 +80,8 @@ log.addEventListener("submit", async (event: any) => {
       const userDataString: string | null = localStorage.getItem("userData");
       if (userDataString) {
         const userData = JSON.parse(userDataString);
-        userData.avatarUrl = data.avatarUrl || "images/avatars/pong_default.png";
+        userData.avatarUrl =
+          data.avatarUrl || "images/avatars/pong_default.png";
         logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
         logAvatHeaderDiv.src = userData.avatarUrl;
         dropMenuUserDiv.classList.add("block");
@@ -99,4 +99,3 @@ log.addEventListener("submit", async (event: any) => {
 
 //need to change fastify.register(require('@fastify/cors'), { origin: '*' })
 //fastify.register(require('@fastify/cors'), { origin: ['http://127.0.0.1:8081', 'http://localhost:8081'], credentials: true}) //https://github.com/fastify/fastify-cors
-

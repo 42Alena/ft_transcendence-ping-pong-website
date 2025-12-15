@@ -4,7 +4,7 @@ logoutButton.addEventListener("click", async (event: any) => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/auth/logout", {
+  const myRequest = new Request(`${BACKEND_URL}/auth/logout`, {
     method: "POST",
     headers: myHeaders,
     body: JSON.stringify({}),

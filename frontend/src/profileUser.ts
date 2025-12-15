@@ -20,7 +20,7 @@ async function requestProfile() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -110,7 +110,7 @@ avatarForm.addEventListener("submit", async (event: any) => {
   const formData = new FormData();
   if (avatarInput.files.length > 0) {
     formData.append("avatar", avatarInput.files[0]);
-    const myRequest = new Request("http://127.0.0.1:3000/users/me/avatar", {
+    const myRequest = new Request(`${BACKEND_URL}/users/me/avatar`, {
       method: "POST",
       body: formData,
       credentials: "include",
@@ -158,7 +158,7 @@ displayNameForm.addEventListener("submit", async (event: any) => {
   const displayNameBody = {
     displayName: formData.get("settings-user_displayName"),
   };
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/display-name", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/display-name`, {
     method: "PATCH",
     body: JSON.stringify(displayNameBody),
     credentials: "include",
@@ -217,7 +217,7 @@ passwordForm.addEventListener("submit", async (event: any) => {
   console.log(passwordBody.currentPassword);
   console.log(passwordBody.newPassword);
   const myRequest = new Request(
-    "http://127.0.0.1:3000/users/me/change-password",
+    `${BACKEND_URL}/users/me/change-password`,
     {
       method: "PATCH",
       body: JSON.stringify(passwordBody),
@@ -262,7 +262,7 @@ deleteAccountButton.addEventListener("click", async () => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me`, {
     method: "DELETE",
     credentials: "include",
   });
@@ -319,7 +319,7 @@ async function requestFriendsList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/friends", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/friends`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -392,7 +392,7 @@ async function requestFriendsList() {
 }
 
 async function addFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  const completeUrl: string = `${BACKEND_URL}/friends/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "POST",
@@ -421,7 +421,7 @@ const friendsBlockedList = document.getElementById(
 ) as HTMLDivElement;
 
 async function removeFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/friends/" + id;
+  const completeUrl: string = `${BACKEND_URL}/friends/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "DELETE",
@@ -450,7 +450,7 @@ async function removeFriend(id: string) {
 }
 
 async function blockFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/blocks/" + id;
+  const completeUrl: string = `${BACKEND_URL}/blocks/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "POST",
@@ -478,7 +478,7 @@ async function requestBlockedList() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users/me/blocks", {
+  const myRequest = new Request(`${BACKEND_URL}/users/me/blocks`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -557,7 +557,7 @@ async function requestBlockedList() {
 }
 
 async function unBlockFriend(id: string) {
-  const completeUrl: string = "http://127.0.0.1:3000/blocks/" + id;
+  const completeUrl: string = `${BACKEND_URL}/blocks/${id}`;
   console.log(completeUrl);
   const myRequest = new Request(completeUrl, {
     method: "DELETE",

@@ -11,7 +11,7 @@ async function sendMatchResult(type : string, round : string, player1 : string, 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/games/normal/save", {
+  const myRequest = new Request(`${BACKEND_URL}/games/normal/save`, {
     method: "POST",
     body: JSON.stringify(match),
     credentials: "include",
@@ -46,7 +46,7 @@ async function sendMatchTournamentResult(type : string, round : string, player1 
   };
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const myRequest = new Request("http://127.0.0.1:3000/games/tournament/save", {
+  const myRequest = new Request(`${BACKEND_URL}/games/tournament/save`, {
     method: "POST",
     body: JSON.stringify(match),
     credentials: "include",
@@ -76,7 +76,7 @@ async function tournamentNotification(player : string)
   };
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const myRequest = new Request("http://127.0.0.1:3000/chat/messages/tournament", {
+  const myRequest = new Request(`${BACKEND_URL}/chat/messages/tournament`, {
     method: "POST",
     body: JSON.stringify(playerToNotify),
     credentials: "include",

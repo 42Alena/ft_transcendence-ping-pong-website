@@ -5,7 +5,7 @@ async function requestUsers() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/users", {
+  const myRequest = new Request(`${BACKEND_URL}/users`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -73,7 +73,7 @@ async function requestChats() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request("http://127.0.0.1:3000/chat/conversations", {
+  const myRequest = new Request(`${BACKEND_URL}/chat/conversations`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
@@ -390,7 +390,7 @@ messageForm.addEventListener("submit", async (event: any) => {
     content: formData.get("input-chat") as string,
   };
   console.log(messageBody.receiverId);
-  const myRequest = new Request("http://127.0.0.1:3000/chat/messages", {
+  const myRequest = new Request(`${BACKEND_URL}/chat/messages`, {
     method: "POST",
     body: JSON.stringify(messageBody),
     credentials: "include",
@@ -538,7 +538,7 @@ invitePlayForm.addEventListener("submit", async (event: any) => {
     receiverId: formData.get("inviteRecvId") as string,
   };
   console.log(invited.receiverId);
-  const myRequest = new Request("http://127.0.0.1:3000/chat/messages/game-invite", {
+  const myRequest = new Request(`${BACKEND_URL}/chat/messages/game-invite`, {
     method: "POST",
     body: JSON.stringify(invited),
     credentials: "include",
