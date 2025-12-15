@@ -424,6 +424,10 @@ async function requestConversation(
 ) {
   console.log(`request chat for ${id}`);
   conversationDiv.hidden = false;
+  const chatDisplay = document.getElementById("chatDisplay") as HTMLDivElement;
+  if (chatDisplay.hidden)
+    chatDisplay.hidden = false;
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 

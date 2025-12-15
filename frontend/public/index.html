@@ -96,23 +96,37 @@
         />
       </div>
       <section
-        class="grid w-full max-w-6xl grid-cols-[100px_1fr] grid-rows-[1fr] border bg-white"
+        class="grid w-full max-w-6xl grid-rows-[100px_1fr] border bg-white sm:grid-cols-[100px_1fr] sm:grid-rows-none"
       >
-        <nav class="grid grid-rows-[1fr] border bg-[#FFF3CC]">
-          <ul class="flex flex-col items-center justify-start p-2.5">
-            <li class="p-1 text-center leading-none">
+        <nav class="border bg-[#FFF3CC]">
+          <ul
+            class="m-0 flex flex-row items-center justify-between p-0 sm:flex-col sm:justify-between"
+          >
+            <li class="text-center leading-none">
               <a href="#" id="chat" class="sideBarButtons">
-                <img src="images/icons/chat.png" alt="chat page"
+                <img
+                  src="images/icons/chat.png"
+                  alt="chat page"
+                  width="80"
+                  height="80"
               /></a>
             </li>
-            <li class="p-1 text-center leading-none">
+            <li class="text-center leading-none">
               <a href="#" id="game" class="sideBarButtons">
-                <img src="images/icons/play.png" alt="chat page"
+                <img
+                  src="images/icons/play.png"
+                  alt="chat page"
+                  width="80"
+                  height="80"
               /></a>
             </li>
-            <li class="p-1 text-center leading-none">
+            <li class="text-center leading-none">
               <a href="#" id="tournament" class="sideBarButtons">
-                <img src="images/icons/tournament.png" alt="chat page"
+                <img
+                  src="images/icons/tournament.png"
+                  alt="chat page"
+                  width="80"
+                  height="80"
               /></a>
             </li>
           </ul>
@@ -129,7 +143,7 @@
             />
           </div>
           <div
-            class="page relative grid h-full w-full grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="page relative grid h-full w-full sm:grid-cols-[300px_1fr] bg-[#ffb6c1]"
             id="chatPage"
             hidden="false"
           >
@@ -166,12 +180,17 @@
             <div class="flex flex-col" id="chatDisplay">
               <div
                 id="start-chat"
-                class="flex h-full items-center justify-center bg-white" hidden="false"
+                class="flex h-full items-center justify-center bg-white"
+                hidden="false"
               >
                 Start a converstion
               </div>
-              <div id="userProfile" class="h-full" hidden="true"></div> 
-              <div id="conversation" class="h-full flex-col border" hidden="true">
+              <div id="userProfile" class="h-full" hidden="true"></div>
+              <div
+                id="conversation"
+                class="h-full flex-col border hidden sm:flex"
+                hidden="true"
+              >
                 <div
                   class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
                   id="chat-info"
@@ -322,7 +341,7 @@
               </div>
             </div>
             <div
-              class="page flex relative h-full w-full items-center justify-center"
+              class="page relative flex h-full w-full items-center justify-center"
               id="loginPage"
               hidden="false"
             >
@@ -381,133 +400,137 @@
                 </button>
               </form>
             </div>
-            <div class="page h-full w-full relative" id="personalProfilePage" hidden="false">
             <div
-              class="grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
-              id="profilePage"
+              class="page relative h-full w-full"
+              id="personalProfilePage"
               hidden="false"
             >
               <div
-                class="grid grid-cols-3 border bg-amber-500"
-                id="profileDisplay"
+                class="grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+                id="profilePage"
+                hidden="false"
               >
                 <div
-                  class="flex items-center justify-center border"
-                  id="profile-avatar"
+                  class="grid grid-cols-3 border bg-amber-500"
+                  id="profileDisplay"
                 >
-                  <img
-                    src="images/profile/orange.png"
-                    alt="profile page"
-                    width="100px"
-                    height="100px"
-                    class="rounded-full"
-                  />
-                </div>
-                <div class="flex flex-col border" id="profile-info">
                   <div
-                    class="flex flex-1 items-center border"
-                    id="profile-info-username"
-                  ></div>
+                    class="flex items-center justify-center border"
+                    id="profile-avatar"
+                  >
+                    <img
+                      src="images/profile/orange.png"
+                      alt="profile page"
+                      width="100px"
+                      height="100px"
+                      class="rounded-full"
+                    />
+                  </div>
+                  <div class="flex flex-col border" id="profile-info">
+                    <div
+                      class="flex flex-1 items-center border"
+                      id="profile-info-username"
+                    ></div>
+                    <div
+                      class="flex flex-1 items-center border"
+                      id="profile-info-displayName"
+                    ></div>
+                  </div>
                   <div
-                    class="flex flex-1 items-center border"
-                    id="profile-info-displayName"
-                  ></div>
+                    class="flex flex-col justify-center border"
+                    id="acc-options"
+                  >
+                    <div
+                      class="mt-2.5 flex h-[50px] items-center gap-2.5"
+                      id="status"
+                    ></div>
+                    <div
+                      class="mt-2.5 flex flex-row justify-center gap-[5px] text-xs"
+                      id="acc-actions"
+                    >
+                      <button
+                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                        id="add-remove-friend__header"
+                      >
+                        Add
+                      </button>
+                      <button
+                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                        id="block-unblock-friend__header"
+                      >
+                        Block chat
+                      </button>
+                      <button
+                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                        type="button"
+                        id="send-message__header"
+                      >
+                        Send message
+                      </button>
+                      <button
+                        form="invite"
+                        type="submit"
+                        class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                      >
+                        Invite game
+                      </button>
+                      <form
+                        action="http://127.0.0.1:3000/chat/messages/game-invite"
+                        method="post"
+                        id="invite"
+                      >
+                        <input
+                          type="hidden"
+                          name="inviteRecvId"
+                          id="invite-recv-id"
+                          value=""
+                        />
+                      </form>
+                    </div>
+                  </div>
                 </div>
                 <div
-                  class="flex flex-col justify-center border"
-                  id="acc-options"
+                  class="flex items-center justify-center border bg-amber-100 text-center"
+                  id="acc-profile-menu"
                 >
-                  <div
-                    class="mt-2.5 flex h-[50px] items-center gap-2.5"
-                    id="status"
-                  ></div>
-                  <div
-                    class="mt-2.5 flex flex-row justify-center gap-[5px] text-xs"
-                    id="acc-actions"
-                  >
-                    <button
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="add-remove-friend__header"
+                  STATS
+                </div>
+                <div class="flex-col gap-2.5" id="stats">
+                  <div id="dashboards" class="flex flex-wrap">
+                    <div
+                      id="winPercentage"
+                      class="flex flex-1 items-center justify-center border"
                     >
-                      Add
-                    </button>
-                    <button
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="block-unblock-friend__header"
+                      <canvas id="pieChart"></canvas>
+                    </div>
+                    <div
+                      id="wAndLMonthly"
+                      class="flex flex-1 items-center justify-center border"
                     >
-                      Block chat
-                    </button>
-                    <button
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                      type="button"
-                      id="send-message__header"
-                    >
-                      Send message
-                    </button>
-                    <button
-                      form="invite"
-                      type="submit"
-                      class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                    >
-                      Invite game
-                    </button>
-                    <form
-                      action="http://127.0.0.1:3000/chat/messages/game-invite"
-                      method="post"
-                      id="invite"
-                    >
-                      <input
-                        type="hidden"
-                        name="inviteRecvId"
-                        id="invite-recv-id"
-                        value=""
-                      />
-                    </form>
+                      <canvas id="barChart"></canvas>
+                    </div>
+                  </div>
+                  <div class="w-full" id="matches">
+                    <div class="flex w-full justify-center border">
+                      <strong>Matches</strong>
+                    </div>
+                    <div class="grid w-full grid-cols-3 border font-bold">
+                      <div class="flex items-center justify-center border">
+                        Opponent
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        Date
+                      </div>
+                      <div class="flex items-center justify-center border">
+                        Score
+                      </div>
+                    </div>
+                    <div id="list-matches"></div>
                   </div>
                 </div>
               </div>
-              <div
-                class="flex items-center justify-center border bg-amber-100 text-center"
-                id="acc-profile-menu"
-              >
-                STATS
-              </div>
-              <div class="flex-col gap-2.5" id="stats">
-                <div id="dashboards" class="flex flex-wrap">
-                  <div
-                    id="winPercentage"
-                    class="flex flex-1 items-center justify-center border"
-                  >
-                    <canvas id="pieChart"></canvas>
-                  </div>
-                  <div
-                    id="wAndLMonthly"
-                    class="flex flex-1 items-center justify-center border"
-                  >
-                    <canvas id="barChart"></canvas>
-                  </div>
-                </div>
-                <div class="w-full" id="matches">
-                  <div class="flex w-full justify-center border">
-                    <strong>Matches</strong>
-                  </div>
-                  <div class="grid w-full grid-cols-3 border font-bold">
-                    <div class="flex items-center justify-center border">
-                      Opponent
-                    </div>
-                    <div class="flex items-center justify-center border">
-                      Date
-                    </div>
-                    <div class="flex items-center justify-center border">
-                      Score
-                    </div>
-                  </div>
-                  <div id="list-matches"></div>
-                </div>
-              </div>
-            </div>
             </div>
             <div
               id="settingsPage"
@@ -516,7 +539,7 @@
             >
               <div
                 id="editInformation"
-                class="relative flex h-full w-full flex-1 flex-row"
+                class="relative flex h-full w-full flex-1 flex-col lg:flex-row"
               >
                 <div
                   id="avatarEdit"
@@ -785,7 +808,7 @@
             />
             <div
               id="setUpGame"
-              class="absolute z-2 flex h-[480px] max-h-full w-[640px] justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-2 flex h-[480px] max-h-full w-[640px] max-w-full justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="setUpPlayers"
@@ -870,37 +893,37 @@
             </div>
             <div
               id="setInstructions"
-              class="absolute z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute max-h-full z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div
-                  class="flex w-full flex-1 items-center justify-center text-5xl font-bold"
+                  class="flex w-full flex-1 items-center justify-center text-4xl sm:text-5xl font-bold"
                 >
                   First to score to 3 wins
                 </div>
                 <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
                   >
                     <div id="playerLeftName"></div>
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center text-4xl font-bold">vs</div>
+                  <div class="flex items-center text-2xl sm:text-4xl font-bold">vs</div>
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-3xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
                   >
                     <div id="playerRightName"></div>
-                    <div>arrow up - up</div>
-                    <div>arrow down - down</div>
+                    <div>&uarr; - up</div>
+                    <div>&darr; - down</div>
                   </div>
                 </div>
                 <div
                   id="startButton"
-                  class="flex w-full flex-1 items-center justify-center"
+                  class="flex w-full max-h-full flex-1 items-center justify-center"
                 >
                   <button
                     id="runButton"
