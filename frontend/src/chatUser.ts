@@ -29,7 +29,7 @@ async function requestUsers() {
           newDiv.appendChild(avatDiv);
           newDiv.dataset.userid = user.id;
           newDiv.dataset.userdisplayname = user.displayName;
-          newDiv.dataset.useravatarurl = user.avatarUrl || "default-avatar.png";
+          newDiv.dataset.useravatarurl = user.avatarUrl || "images/avatars/pong_default.png";
           const userDiv = document.createElement("div");
           userDiv.setAttribute("id", user.displayName);
           const newContent = document.createTextNode(user.displayName);
@@ -101,7 +101,7 @@ async function requestChats() {
           newDiv.dataset.chatid = chat_user.userId;
           newDiv.dataset.chatdisplayname = chat_user.displayName;
           newDiv.dataset.chatavatarurl =
-            chat_user.avatarUrl || "default-avatar.png";
+            chat_user.avatarUrl || "images/avatars/pong_default.png";
           const userDiv = document.createElement("div");
           userDiv.setAttribute("id", chat_user.displayName);
           const newContent = document.createTextNode(chat_user.displayName);

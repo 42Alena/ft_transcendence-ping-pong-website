@@ -29,7 +29,6 @@ successRegPage.classList.remove("flex");
   const registerBody = {
     username: formData.get("reg-user_username"),
     displayName: formData.get("reg-user_displayName"),
-    avatarUrl: formData.get("reg-user_avatar"),
     passwordPlain: formData.get("reg-user_password"),
   };
 

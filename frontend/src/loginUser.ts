@@ -81,7 +81,7 @@ log.addEventListener("submit", async (event: any) => {
       const userDataString: string | null = localStorage.getItem("userData");
       if (userDataString) {
         const userData = JSON.parse(userDataString);
-        userData.avatarUrl = "/images/profile/blue.png"; //default img
+        userData.avatarUrl = data.avatarUrl || "images/avatars/pong_default.png";
         logUserHeaderDiv.textContent = `Hello, ${userData.username}`;
         logAvatHeaderDiv.src = userData.avatarUrl;
         dropMenuUserDiv.classList.add("block");

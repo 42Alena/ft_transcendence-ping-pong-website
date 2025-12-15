@@ -64,7 +64,7 @@ async function requestProfile() {
         displayNameDiv.appendChild(displayNameSpan);
         displayNameDiv.appendChild(document.createTextNode("\u00A0"));
         displayNameDiv.appendChild(displayNameData);
-        avatarImg.src = data.avatarUrl;
+        avatarImg.src = data.avatarUrl || "images/avatars/pong_default.png";
         personalProfile.append(profP);
         buttons.classList.add("hidden");
         buttons.classList.remove("flex");
@@ -349,9 +349,9 @@ async function requestFriendsList() {
           friendDiv.dataset.friendid = friend.id;
           friendDiv.dataset.frienddisplayname = friend.displayName;
           friendDiv.dataset.friendurl =
-            friend.avatarUrl || "default-avatar.png";
+            friend.avatarUrl || "images/avatars/pong_default.png";
           const friendImg = document.createElement("img");
-          friendImg.src = friend.avatarUrl || "default-avatar.png";
+          friendImg.src = friend.avatarUrl || "images/avatars/pong_default.png";
           friendImg.classList.add("h-[100px]", "w-[100px]");
           friendDiv.appendChild(friendImg);
           friendInfoDiv.classList.add("ml-2.5", "flex", "flex-col");
@@ -537,7 +537,7 @@ async function requestBlockedList() {
           friendBlockedDiv.dataset.friendblockedid = friend.id;
           friendBlockedDiv.dataset.frienddisplayname = friend.displayName;
           friendBlockedDiv.dataset.friendurl = friend.avatarUrl;
-          friendBlockedImg.src = friend.avatarUrl || "default-avatar.png";
+          friendBlockedImg.src = friend.avatarUrl || "images/avatars/pong_default.png";
           friendBlockedImg.classList.add("h-[100px]", "w-[100px]");
           friendBlockedDiv.appendChild(friendBlockedImg);
           friendInfoBlockedDiv.classList.add("ml-2.5", "flex", "flex-col");
