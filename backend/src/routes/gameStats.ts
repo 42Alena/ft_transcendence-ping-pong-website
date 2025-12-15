@@ -111,57 +111,42 @@ tournamentRound:   "semi" | "final";
 		});
 
 
-
-	/* GAME PLAYERS 
-	Check 2 aliases before starting a match (must be valid + free in DB) 
-		player1Alias: result.player1Alias is always my displayname
+	/* GAME PLAYERS
+	   - guest: validate both aliases from body
+	   - logged in: player1 = me.displayName (server), allow it even if taken
 	*/
 	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
 		"/games/match/aliases/check",
 		authOptionalOptions,
-	
 		async (req, reply) => {
+			const meId = (req as API.UserAwareRequest).userId; // may be undefined (guest)
 
-			const result = await gameStatsManager.checkMatchAliases(req.body);
+			const result = await gameStatsManager.checkMatchAliasesWithMe(meId, req.body);
 
-			if (result.ok) {
-				return sendOK(reply, {
-					player1Alias: result.player1Alias,
-					player2Alias: result.player2Alias,
-				});
-			}
-
-			// any invalid input => 400
+			if (result.ok) return sendOK(reply, result);
 			return sendError(reply, result.error, "alias", 400);
 		}
 	);
 
-	
-	/* ToURNAMENT PLAYERS  
-	Check 4 aliases before starting a tournament (must be valid + free in DB)
-		player1Alias: result.player1Alias is always my displayname
+
+
+
+	/* TOURNAMENT PLAYERS
+	   - guest: validate all 4 aliases from body
+	   - logged in: player1 = me.displayName (server), allow it even if taken
 	*/
 	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
 		"/games/tournament/aliases/check",
-	authOptionalOptions,
-
+		authOptionalOptions,
 		async (req, reply) => {
+			const meId = (req as API.UserAwareRequest).userId; // may be undefined (guest)
 
-		const result = await gameStatsManager.checkTournamentAliases(req.body);
+			const result = await gameStatsManager.checkTournamentAliasesWithMe(meId, req.body);
 
-		if (result.ok) {
-			return sendOK(reply, {
-				player1Alias: result.player1Alias,
-				player2Alias: result.player2Alias,
-				player3Alias: result.player3Alias,
-				player4Alias: result.player4Alias,
-			});
+			if (result.ok) return sendOK(reply, result);
+			return sendError(reply, result.error, "alias", 400);
 		}
-
-		return sendError(reply, result.error, "alias", 400);
-	}
 	);
-
 
 
 }
