@@ -170,7 +170,7 @@
               >
                 Start a converstion
               </div>
-              <div id="userProfile" class="h-full hidden"></div>
+              <div id="userProfile" class="h-full" hidden="true"></div> 
               <div id="conversation" class="h-full flex-col border" hidden="true">
                 <div
                   class="flex h-[45px] w-full items-center justify-center gap-2.5 px-4 py-3.5"
@@ -381,8 +381,9 @@
                 </button>
               </form>
             </div>
+            <div class="page h-full w-full relative" id="personalProfilePage" hidden="false">
             <div
-              class="page grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
+              class="grid h-full w-full grid-rows-[150px_30px_1fr] border bg-white"
               id="profilePage"
               hidden="false"
             >
@@ -506,6 +507,7 @@
                   <div id="list-matches"></div>
                 </div>
               </div>
+            </div>
             </div>
             <div
               id="settingsPage"
