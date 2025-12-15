@@ -63,12 +63,13 @@ function aliasSelection() {
     playerInputFour.classList.remove("block");
     playerInputThree.classList.add("hidden");
     playerInputFour.classList.add("hidden");
+    playerInputOne.readOnly = false;
   if (localStorage.getItem("userData")) {
   const userDataString: string | null = localStorage.getItem("userData");
   if (userDataString) {
     const userData = JSON.parse(userDataString);
     playerInputOne.value = userData.displayName;
-    playerInputOne.classList.add("disable");
+    playerInputOne.readOnly = true;
   }
 }
   } else {
@@ -133,6 +134,7 @@ playersNameForm.addEventListener("submit", async (event : SubmitEvent) => {
             addPlayer(value, AI, i);
             i++;
         }
+      playersNameForm.reset()
       showPageBeforeGame();
       console.log("check alias user:", data);
     }
