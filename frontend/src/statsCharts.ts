@@ -2,6 +2,28 @@
 
 import Chart from 'chart.js/auto';
 
+
+//_____________Alena____________________start
+// Make functions available globally
+declare global {
+  interface Window {
+    createPieChart: typeof createPieChart;
+    createBarChart: typeof createBarChart;
+  }
+}
+
+
+(window as any).createPieChart = createPieChart;
+(window as any).createBarChart = createBarChart;
+
+
+export function destroyExistingChart(canvas: HTMLCanvasElement) {
+  const existing = Chart.getChart(canvas);
+  if (existing) existing.destroy();
+}
+
+
+
 const pie = document.getElementById('pieChart') as HTMLCanvasElement;
 const bar = document.getElementById('barChart') as HTMLCanvasElement;
 
@@ -21,6 +43,9 @@ export function createPieChart(wins: string, loses: string) {
       hoverOffset: 4
     }]
   };
+
+ 
+destroyExistingChart(pie); 
 
   new Chart(pie, {
     type: 'pie',
@@ -58,6 +83,9 @@ export function createBarChart(first : string, second : string, third : string)
     },
   ]
 };
+
+ 
+destroyExistingChart(bar); 
 
 new Chart(bar, {
   type: 'bar',
