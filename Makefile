@@ -206,15 +206,13 @@ git-changes:
 
 #_________START: NEW: make, re, re hard
 
-#  MAKE :) Subject: builds + runs in detached mode
+#  MAKE :)  Subject: builds + runs in detached mode
 all: start 
 
 
-# Default: one-command start
-all: start
-
 # --- Docker Compose (evaluation / subject flow) ------------------------------
-start: check-tools banner
+# start: check-tools banner
+start:  banner
 	$(DC) up --build
 
 # Soft restart (keep DB/data)
