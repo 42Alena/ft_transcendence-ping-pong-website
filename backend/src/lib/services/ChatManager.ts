@@ -179,12 +179,18 @@ Example meta JSON of the message:
   ): Promise<Domain.SendMessageResult> {
 
 
+    //  if not registered / missing -> OK to skip
+    if (receiverDisplayname === undefined || receiverDisplayname === null) {
+      return { ok: true };
+    }
+
     const receiver = await this.userManager.getUserByDisplayname(receiverDisplayname);
 
-    if (!receiver)
-      return { ok: false, reason: "no_receiver" };
 
-     
+    if (!receiver)
+      return { ok: true }; // skip silently instead of returning an error
+
+
 
     const msg: Domain.NewTournamentMessage = {
       type: "TournamentMessage",
@@ -199,6 +205,9 @@ Example meta JSON of the message:
     return { ok: true };
 
   }
+
+
+  
 
   /* list Users+Avatars for conversation */
   async getConversations( //TODO change to all users who i wrote or who me wrote
