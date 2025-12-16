@@ -15,26 +15,26 @@ const chatTab: any = document.getElementById("defaultOpen");
 // chatTab.click();
 
 function displayList(event: any, text: string) {
-  var i, tablinks;
+  // var i, tablinks;
 
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
+  // tablinks = document.getElementsByClassName("tablinks");
+  // for (i = 0; i < tablinks.length; i++) {
+  //   tablinks[i].className = tablinks[i].className.replace(" active", "");
+  // }
   if (text == "chat") {
     listDmsDiv.classList.add("flex");
     listDmsDiv.classList.remove("hidden");
     listUsersDiv.classList.add("hidden");
     listUsersDiv.classList.remove("flex");
-    requestChats();
+    requestChats(event.currentTarget.id);
   } else {
     listDmsDiv.classList.add("hidden");
     listDmsDiv.classList.remove("flex");
     listUsersDiv.classList.add("flex");
     listUsersDiv.classList.remove("hidden");
-    requestUsers();
+    requestUsers(event.currentTarget.id);
   }
-  event.currentTarget.className += " active";
+  // event.currentTarget.className += " active";
 }
 
 //display

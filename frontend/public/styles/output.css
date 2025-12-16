@@ -7,8 +7,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-300: oklch(80.8% 0.114 19.571);
-    --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-red-700: oklch(50.5% 0.213 27.518);
@@ -17,7 +15,6 @@
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-yellow-200: oklch(94.5% 0.129 101.54);
     --color-green-300: oklch(87.1% 0.15 154.449);
-    --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-700: oklch(52.7% 0.154 150.069);
     --color-sky-200: oklch(90.1% 0.058 230.902);
     --color-blue-500: oklch(62.3% 0.214 259.815);
@@ -28,7 +25,6 @@
     --color-gray-100: oklch(96.7% 0.003 264.542);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
-    --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -43,8 +39,6 @@
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
-    --text-3xl: 1.875rem;
-    --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
     --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
@@ -260,14 +254,11 @@
   .mx-auto {
     margin-inline: auto;
   }
-  .-mt-50 {
-    margin-top: calc(var(--spacing) * -50);
-  }
-  .mt-0\.5 {
-    margin-top: calc(var(--spacing) * 0.5);
-  }
   .mt-2\.5 {
     margin-top: calc(var(--spacing) * 2.5);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
   }
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
@@ -350,6 +341,9 @@
   .min-h-screen {
     min-height: 100vh;
   }
+  .w-1\/2 {
+    width: calc(1/2 * 100%);
+  }
   .w-1\/4 {
     width: calc(1/4 * 100%);
   }
@@ -373,6 +367,9 @@
   }
   .w-\[45px\] {
     width: 45px;
+  }
+  .w-\[50px\] {
+    width: 50px;
   }
   .w-\[70px\] {
     width: 70px;
@@ -410,8 +407,8 @@
   .flex-1 {
     flex: 1;
   }
-  .flex-2 {
-    flex: 2;
+  .shrink-0 {
+    flex-shrink: 0;
   }
   .grow {
     flex-grow: 1;
@@ -432,14 +429,8 @@
   .grid-cols-\[1fr_1fr\] {
     grid-template-columns: 1fr 1fr;
   }
-  .grid-cols-\[100px_1fr\] {
-    grid-template-columns: 100px 1fr;
-  }
-  .grid-cols-\[300px_1fr\] {
-    grid-template-columns: 300px 1fr;
-  }
-  .grid-rows-\[1fr\] {
-    grid-template-rows: 1fr;
+  .grid-rows-\[100px_1fr\] {
+    grid-template-rows: 100px 1fr;
   }
   .grid-rows-\[150px_30px_1fr\] {
     grid-template-rows: 150px 30px 1fr;
@@ -479,9 +470,6 @@
   }
   .gap-4\.5 {
     gap: calc(var(--spacing) * 4.5);
-  }
-  .gap-5 {
-    gap: calc(var(--spacing) * 5);
   }
   .gap-\[2em\] {
     gap: 2em;
@@ -533,20 +521,11 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
-  .border-green-400 {
-    border-color: var(--color-green-400);
-  }
-  .border-red-400 {
-    border-color: var(--color-red-400);
-  }
   .border-red-500 {
     border-color: var(--color-red-500);
   }
   .border-red-950 {
     border-color: var(--color-red-950);
-  }
-  .border-white {
-    border-color: var(--color-white);
   }
   .bg-\[\#D9F7C7\] {
     background-color: #D9F7C7;
@@ -577,9 +556,6 @@
   }
   .bg-gray-300 {
     background-color: var(--color-gray-300);
-  }
-  .bg-gray-500 {
-    background-color: var(--color-gray-500);
   }
   .bg-green-300 {
     background-color: var(--color-green-300);
@@ -617,6 +593,9 @@
   .object-cover {
     object-fit: cover;
   }
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
+  }
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
@@ -647,8 +626,14 @@
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
   .py-3\.5 {
     padding-block: calc(var(--spacing) * 3.5);
+  }
+  .pl-2 {
+    padding-left: calc(var(--spacing) * 2);
   }
   .text-center {
     text-align: center;
@@ -656,10 +641,6 @@
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
-  }
-  .text-3xl {
-    font-size: var(--text-3xl);
-    line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
   .text-4xl {
     font-size: var(--text-4xl);
@@ -697,9 +678,6 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
-  .text-black {
-    color: var(--color-black);
-  }
   .text-gray-400 {
     color: var(--color-gray-400);
   }
@@ -711,16 +689,6 @@
   }
   .no-underline {
     text-decoration-line: none;
-  }
-  .placeholder-green-300 {
-    &::placeholder {
-      color: var(--color-green-300);
-    }
-  }
-  .placeholder-red-300 {
-    &::placeholder {
-      color: var(--color-red-300);
-    }
   }
   .shadow-md {
     --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
@@ -788,6 +756,53 @@
       }
     }
   }
+  .sm\:flex {
+    @media (width >= 40rem) {
+      display: flex;
+    }
+  }
+  .sm\:grid-cols-\[100px_1fr\] {
+    @media (width >= 40rem) {
+      grid-template-columns: 100px 1fr;
+    }
+  }
+  .sm\:grid-cols-\[300px_1fr\] {
+    @media (width >= 40rem) {
+      grid-template-columns: 300px 1fr;
+    }
+  }
+  .sm\:grid-rows-none {
+    @media (width >= 40rem) {
+      grid-template-rows: none;
+    }
+  }
+  .sm\:flex-col {
+    @media (width >= 40rem) {
+      flex-direction: column;
+    }
+  }
+  .sm\:justify-between {
+    @media (width >= 40rem) {
+      justify-content: space-between;
+    }
+  }
+  .sm\:text-4xl {
+    @media (width >= 40rem) {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+  .sm\:text-5xl {
+    @media (width >= 40rem) {
+      font-size: var(--text-5xl);
+      line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
+  .lg\:flex-row {
+    @media (width >= 64rem) {
+      flex-direction: row;
+    }
+  }
 }
 .dropdown {
   position: relative;
@@ -798,7 +813,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   position: absolute;
-  z-index: 1;
+  z-index: 6;
   list-style: none;
   margin: 0;
   padding: 0;
