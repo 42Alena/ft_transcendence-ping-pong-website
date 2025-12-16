@@ -31,13 +31,11 @@
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
                 <span id="logged-user" class="mr-2.5">Hello, you</span>
-                <div id="logged-user-avatar">
+                <div id="logged-user-avatar" class="h-[50px] w-[50px]">
                   <img
                     src="images/avatars/pong_default.png"
                     alt="User Avatar"
-                    width="50"
-                    height="50"
-                    class="rounded-full bg-white"
+                    class="rounded-full bg-white w-full h-full object-cover"
                   />
                 </div>
               </a>
@@ -415,16 +413,18 @@
                   id="profileDisplay"
                 >
                   <div
-                    class="flex items-center justify-center border"
+                    class="flex items-center justify-center border h-full w-full"
                     id="profile-avatar"
+                  >
+                   <div
+                    class="relative flex items-center justify-center h-[100px] w-[100px]"
                   >
                     <img
                       src="images/profile/orange.png"
                       alt="profile page"
-                      width="100px"
-                      height="100px"
-                      class="rounded-full"
+                      class="rounded-full h-full w-full object-cover"
                     />
+                  </div>
                   </div>
                   <div class="flex flex-col border" id="profile-info">
                     <div
