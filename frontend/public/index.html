@@ -141,7 +141,7 @@
             />
           </div>
           <div
-            class="page relative grid h-full w-full sm:grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="page relative grid h-full w-full bg-[#ffb6c1] sm:grid-cols-[300px_1fr]"
             id="chatPage"
             hidden="false"
           >
@@ -186,7 +186,7 @@
               <div id="userProfile" class="h-full" hidden="true"></div>
               <div
                 id="conversation"
-                class="h-full flex-col border hidden sm:flex"
+                class="hidden h-full flex-col border sm:flex"
                 hidden="true"
               >
                 <div
@@ -795,7 +795,7 @@
               ></div>
             </div>
           </div>
-           <div
+          <div
             id="gamePage"
             class="page relative flex h-full w-full flex-col items-center justify-center bg-black"
             hidden="false"
@@ -832,6 +832,27 @@
                       autocomplete="off"
                       readonly
                     />
+                    <div id="AIPlayerOne" class="invisible mt-4 flex flex-row">
+                      <button
+                        class="flex h-6 w-6 items-center justify-center bg-inherit"
+                      >
+                        <span class="text-lg">AI</span>
+                      </button>
+                      <div class="flex flex-row">
+                        <button
+                          id="AIonPlayerOne"
+                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                        >
+                          <span class="text-sm">on</span>
+                        </button>
+                        <button
+                          id="AIoffPlayerOne"
+                          class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                        >
+                          <span class="text-sm">off</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2">
                     <label
@@ -846,6 +867,27 @@
                       name="player-two_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerTwo" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerTwo"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerTwo"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2" id="playerThree">
                     <label
@@ -860,6 +902,27 @@
                       name="player-three_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerThree" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerThree"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerThree"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2" id="playerFour">
                     <label
@@ -874,6 +937,27 @@
                       name="player-four_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerFour" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerFour"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerFour"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="flex w-full flex-col items-center justify-center">
                     <div
@@ -893,28 +977,30 @@
             </div>
             <div
               id="setInstructions"
-              class="absolute max-h-full z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-1 hidden h-[480px] max-h-full w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div
-                  class="flex w-full flex-1 items-center justify-center text-4xl sm:text-5xl font-bold"
+                  class="flex w-full flex-1 items-center justify-center text-4xl font-bold sm:text-5xl"
                 >
                   First to score to 3 wins
                 </div>
                 <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl font-bold sm:text-4xl"
                   >
                     <div id="playerLeftName"></div>
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center text-2xl sm:text-4xl font-bold">vs</div>
+                  <div class="flex items-center text-2xl font-bold sm:text-4xl">
+                    vs
+                  </div>
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl font-bold sm:text-4xl"
                   >
                     <div id="playerRightName"></div>
                     <div>&uarr; - up</div>
@@ -923,7 +1009,7 @@
                 </div>
                 <div
                   id="startButton"
-                  class="flex w-full max-h-full flex-1 items-center justify-center"
+                  class="flex max-h-full w-full flex-1 items-center justify-center"
                 >
                   <button
                     id="runButton"

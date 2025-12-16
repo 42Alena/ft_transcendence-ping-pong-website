@@ -30,6 +30,9 @@ localhost {
     handle /avatars/* {
     	reverse_proxy backend:3000
     }
+    handle /profile/* {
+	reverse_proxy backend:3000
+    }
 
     reverse_proxy frontend:8080
 
