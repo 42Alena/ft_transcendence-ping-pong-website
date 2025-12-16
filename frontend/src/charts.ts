@@ -2,6 +2,21 @@
 
 import Chart from 'chart.js/auto';
 
+
+//_____________Alena____________________start
+// Make functions available globally
+declare global {
+  interface Window {
+    createPieChart: typeof createPieChart;
+    createBarChart: typeof createBarChart;
+  }
+}
+
+(window as any).createPieChart = createPieChart;
+(window as any).createBarChart = createBarChart;
+
+//_____________Alena____________________end
+
 const pie = document.getElementById('pieChart') as HTMLCanvasElement;
 const bar = document.getElementById('barChart') as HTMLCanvasElement;
 
