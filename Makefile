@@ -54,8 +54,9 @@ frontend:
 # 	cd "$(DB_DIR)" && ./setup_db.sh
 	
 
-
-db: check-tools
+# commented for school VM
+# db: check-tools
+db: 
 	@mkdir -p "$(DB_DIR)"
 	@rm -f "$(DB_DIR)/$(DB_FILE)" "$(DB_DIR)/$(DB_FILE)-wal" "$(DB_DIR)/$(DB_FILE)-shm"
 	@DB_PATH="$(DB)" "$(DB_DIR)/setup_db.sh"
