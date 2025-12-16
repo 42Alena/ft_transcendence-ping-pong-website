@@ -180,7 +180,7 @@ Example meta JSON of the message:
 
 
     await this.userManager.createTournamentUser();
-    
+
     //  if not registered / missing -> OK to skip
     if (receiverDisplayname === undefined || receiverDisplayname === null) {
       return { ok: true };
@@ -216,7 +216,8 @@ Example meta JSON of the message:
 
   ): Promise<Domain.ChatConversationsResult> {
 
-
+    await this.userManager.createTournamentUser();
+    
     const me = await this.userManager.getUserById(meId);
 
     //Sender not found or not authenticated
@@ -226,7 +227,8 @@ Example meta JSON of the message:
 
 
     const messageRows = await this.dbTableMessages()
-      .distinct()   // take unique names https://knexjs.org/guide/query-builder.html#clearhaving
+      // .distinct()   // take unique names https://knexjs.org/guide/query-builder.html#clearhaving
+      .distinct(['senderId', 'receiverId']) // <-- CHANGED (more reliable)
       .where({ senderId: meId })
       .orWhere({ receiverId: meId })
       .select(
