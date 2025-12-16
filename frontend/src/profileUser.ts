@@ -642,8 +642,8 @@ async function requestStats(id: string) {
         singleMatch.appendChild(score);
         matchesDiv.appendChild(singleMatch);
       }
-      // createPieChart(data.stats.data.winRatePercent, data.stats.lossRatePercent);
-      // createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
+      createPieChart(data.stats.data.winRatePercent, data.stats.lossRatePercent);
+      createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
     }
   } catch (error) {
     console.error("Error during stasts retrival:", error);
