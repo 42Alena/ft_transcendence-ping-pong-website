@@ -212,7 +212,8 @@ git-changes:
 
 #  MAKE :)  Subject: builds + runs in detached mode
 # all: check-tools banner up
-all: banner up
+# all: banner up
+all: up
 
 
 # Soft restart (keep DB/data)
