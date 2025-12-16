@@ -1,7 +1,7 @@
 const listUsers = document.getElementById("list-users") as HTMLDivElement;
 const listChats = document.getElementById("list-dms") as HTMLDivElement;
 
-async function requestUsers() {
+async function requestUsers(button? : string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -36,9 +36,21 @@ async function requestUsers() {
           const newContent = document.createTextNode(user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
-          newDiv.onclick = function () {
-            requestUserProfile(user.id);
-          };
+          // newDiv.onclick = function () {
+          //   requestUserProfile(user.id);
+          // };
+          newDiv.addEventListener("click", (event) => {
+            event.preventDefault();
+            const state = {
+              page: "chat",
+              userId: user.id,
+              tab: button,
+            };
+            history.pushState(state, "");
+            requestUserProfile(
+              user.id,
+            );
+          });
           const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
             "chat-div",
@@ -70,7 +82,7 @@ async function requestUsers() {
   }
 }
 
-async function requestChats() {
+async function requestChats(button?: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -115,6 +127,7 @@ async function requestChats() {
               userId: chat_user.userId,
               userDisplayName: chat_user.displayName,
               userAvatarUrl: chat_user.avatarUrl,
+              tab: buttons,
             };
             history.pushState(state, "");
             requestConversation(

@@ -26,13 +26,13 @@ function displayList(event: any, text: string) {
     listDmsDiv.classList.remove("hidden");
     listUsersDiv.classList.add("hidden");
     listUsersDiv.classList.remove("flex");
-    requestChats();
+    requestChats(event.currentTarget.id);
   } else {
     listDmsDiv.classList.add("hidden");
     listDmsDiv.classList.remove("flex");
     listUsersDiv.classList.add("flex");
     listUsersDiv.classList.remove("hidden");
-    requestUsers();
+    requestUsers(event.currentTarget.id);
   }
   event.currentTarget.className += " active";
 }
