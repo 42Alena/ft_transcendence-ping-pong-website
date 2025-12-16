@@ -128,7 +128,8 @@ errorNamesDiv.classList.add("invisible");
   } else if (text == "register") {
     accP.hidden = false;
     regP.hidden = false;
-
+    reg.classList.add("flex");
+    reg.classList.remove("hidden");
   } else if (text == "profile") {
     accP.hidden = false;
     personalP.hidden = false;
