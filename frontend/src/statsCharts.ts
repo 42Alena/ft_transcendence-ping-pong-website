@@ -16,19 +16,13 @@ declare global {
 (window as any).createPieChart = createPieChart;
 (window as any).createBarChart = createBarChart;
 
-//to fix add a function to destroy old chart before showing new:
 
 export function destroyExistingChart(canvas: HTMLCanvasElement) {
   const existing = Chart.getChart(canvas);
   if (existing) existing.destroy();
 }
 
-// // and call it before creating new like
 
-//   destroyExistingChart(pie);
-//   new Chart(pie, {
-
-//_____________Alena____________________end
 
 const pie = document.getElementById('pieChart') as HTMLCanvasElement;
 const bar = document.getElementById('barChart') as HTMLCanvasElement;
@@ -51,7 +45,7 @@ export function createPieChart(wins: string, loses: string) {
   };
 
  
-destroyExistingChart(pie); // ALENA: destroy old chart before creating new
+destroyExistingChart(pie); 
 
   new Chart(pie, {
     type: 'pie',
@@ -91,7 +85,7 @@ export function createBarChart(first : string, second : string, third : string)
 };
 
  
-destroyExistingChart(bar); // ALENA: destroy old chart before creating new
+destroyExistingChart(bar); 
 
 new Chart(bar, {
   type: 'bar',

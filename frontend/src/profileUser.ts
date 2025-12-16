@@ -642,10 +642,7 @@ async function requestStats(id: string) {
         singleMatch.appendChild(score);
         matchesDiv.appendChild(singleMatch);
       }
-      // createPieChart(data.stats.data.winRatePercent, data.stats.lossRatePercent);
-      // createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
 
-      // Alena:since you attached them to window, call via window
       window.createPieChart(data.stats.winRatePercent, data.stats.lossRatePercent);
       window.createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
     }
