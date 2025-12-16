@@ -187,7 +187,7 @@
               <div id="userProfile" class="h-full" hidden="true"></div>
               <div
                 id="conversation"
-                class="hidden h-full flex-col border sm:flex"
+                class="hidden h-full max-h-full flex-col border sm:flex"
                 hidden="true"
               >
                 <div
@@ -202,15 +202,15 @@
                       class="flex max-w-full grow flex-col gap-2.5 overflow-auto border bg-white p-[1em]"
                       id="bubble"
                     ></div>
-                    <div class="flex h-auto gap-2.5 border p-[1em]">
+                    <div class="flex h-auto gap-2 border p-[1em]">
                       <form
                         action="http://127.0.0.1:3000/chat/messages"
                         method="post"
-                        class="flex w-full flex-row border"
+                        class="flex w-full flex-row max-h-full border"
                         id="message"
                       >
                         <input
-                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-1 text-lg shadow-xs"
+                          class="text-heading focus:ring-brand focus:border-brand block w-full rounded-sm bg-white px-1 py-0.2 text-lg shadow-xs"
                           type="text"
                           id="textArea"
                           name="input-chat"
@@ -225,7 +225,7 @@
                         />
                         <button
                           type="submit"
-                          class="flex h-10 w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          class="flex h-auto w-[120px] items-center justify-center rounded border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
                         >
                           Send
                         </button>
