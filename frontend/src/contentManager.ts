@@ -117,7 +117,7 @@ function displayPage(text: string): void {
     accP.hidden = false;
     logP.hidden = false;
   } else if (text == "register") {
-     accP.hidden = false;
+    accP.hidden = false;
     regP.hidden = false;
   } else if (text == "profile") {
     accP.hidden = false;
