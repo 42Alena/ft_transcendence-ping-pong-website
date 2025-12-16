@@ -1,219 +1,200 @@
 
-#     🏓  transcendence — Real-Time Ping-Pong with Multiplayer, Chat, AI & Secure Accounts 🏓 
-_______________
-🚧 **Status: IN PROGRESS** 🚧  
-___________
+
+# 🏓 ft_transcendence — Secure Pong Platform (SPA, HTTPS)
 
 
-## Final project in the curriculum at [42 Berlin](#about-42-berlin).
 
+Final project of the **42 Berlin** Common Core curriculum.
 
-After mastering **C, C++ and Bash ...**, We’re building a **full-stack TypeScript web app**: a real-time **Ping-Pong** game with **remote multiplayer**, **live chat**, an **AI opponent**, **secure user accounts** (GDPR tools), **SQLite** persistence, and **Dockerized HTTPS/WSS** deployment.
+After mastering **C, C++ and Bash**, we are building a **full-stack TypeScript single-page web application** centered around the classic **Pong** game, with secure user accounts, AI opponent, chat, statistics, GDPR compliance, and **HTTPS-only Dockerized deployment**.
 
 ---
 
 ## 🧭 Navigation
-- [About 42 Berlin](#-about-42-berlin)
-- [Team & Responsibilities](#-team--responsibilities)
-- [Tech & Languages](#-tech--languages)
-- [Project Overview](#-project-overview)
-- [Documentation](#-documentation)
-- [Folder Structure](#-folder-structure-important-parts-only)
-- [How to Run](#-how-to-run)
-- [License](#-license)
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+* [About 42 Berlin](#-about-42-berlin)
+* [Team & Responsibilities](#-team--responsibilities)
+* [Tech & Languages](#-tech--languages)
+* [Project Overview](#-project-overview)
+* [Architecture Overview](#-architecture-overview)
+* [Modules (Subject-Compliant)](#-modules-subject-compliant)
+* [Documentation](#-documentation)
+* [Folder Structure](#-folder-structure-important-parts-only)
+* [How to Run](#-how-to-run)
+* [License](#-license)
+
 ---
+
 ## 🌍 About 42 Berlin
 
+[42 Berlin](https://42berlin.de/) is part of the international **42 Network**, a project-based software engineering school.
 
-[42 Berlin](https://42berlin.de/)  **Software Engineering** School is part of the international 42 network:  
+Core principles:
 
-* **Project-based learning** — no teachers, no lectures.
-* **Self-learning** — you plan your time and scope, set milestones, learn what’s needed just-in-time, and practice self-organization and focus on what matters now.
-* **Peer-to-peer collaboration** — students review, test, and defend each other’s work.
-* **Industry focus** — projects simulate real-world engineering challenges.
-
-[↑ back to top](#-ft_transcendence-ping-pong-website)
-
----
+* **No teachers, no lectures**
+* **Self-learning & self-organization**
+* **Peer-to-peer evaluation**
+* **Real-world engineering challenges**
 
 ---
-## 👥 Team  "We Are trAScendeLs: 🧩 Alena · 🎨 Sveva · 🔐 Luis "
 
+## 👥 Team — *“We Are trAScendeLs”*
 
-| | Member | Role | GitHub |
-|-|---------|------|--------|
-|🧩|**Alena**| Backend & Real-Time Lead (Backend, Fastify, User Management, Sockets, Chat, DB) | [@42Alena](https://github.com/42Alena) |
-|🎨| **Sveva**| Game & Frontend Lead (Canvas, AI, Tailwind, Customization) | [@svevotti](https://github.com/svevotti) |
-|🔐|  **Luis**| **Database & Data Protection Lead** (SQLite schema & migrations,   GDPR ) | [@Numbersdontlie](https://github.com/Numbersdontlie) |
+|    | Member    | Role                                                                                                                                | GitHub                                               |
+| -- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| 🧩 | **Alena** | **Project Lead & Backend Architect** — system design, task planning, Fastify API, HTTPS setup, DB logic, managers, auth, chat, GDPR | [@42Alena](https://github.com/42Alena)               |
+| 🎨 | **Sveva** | Game, Frontend & UX Lead — Canvas Pong, AI opponent, stats dashboards, responsiveness, accessibility                                | [@svevotti](https://github.com/svevotti)             |
+| 🔐 | **Luis**  | Database & GDPR — initial schema design and data-protection concepts                                                                | [@Numbersdontlie](https://github.com/Numbersdontlie) |
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+> The project organization, module selection, and integration strategy were coordinated by **Alena**.
 
 ---
 
 ## 🛠 Tech & Languages
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-4.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Fastify](https://img.shields.io/badge/Fastify-Backend-000000?logo=fastify&logoColor=white)](https://fastify.dev/)
-[![SQLite](https://img.shields.io/badge/SQLite-DB-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
-[![42 Berlin](https://img.shields.io/badge/42-Berlin-000000?logo=42&logoColor=white)](https://42berlin.de/)
+* **Languages:** TypeScript, HTML, CSS
+* **Runtime:** Node.js
+* **Backend:** Fastify (REST API, HTTPS)
+* **Frontend:** TypeScript SPA + Tailwind CSS (no framework, History API)
+* **Database:** SQLite (WAL mode, foreign keys enabled)
+* **Security:** HTTPS only, hashed passwords, server-side validation, GDPR endpoints
+* **Deployment:** Docker + Docker Compose
 
-
-- **Languages:** TypeScript, HTML, CSS  
-- **Runtime:** Node.js  
-- **Backend:** Fastify, SQLite  
-- **Frontend:** TypeScript + Tailwind (no framework; History API)  
-- **Security & Ops:** HTTPS/WSS; hashed passwords; GDPR (export/anonymize/delete) endpoints; SQLite in **WAL** mode with **foreign_keys=ON**; **Knex** idempotent migrations; `/db/healthz` (PRAGMAs + size); `.env` config (e.g., `SQLITE_PATH`, secrets)
-
-
-
-[↑ back to top](#-ft_transcendence-ping-pong-website)
-
+> ⚠️ **Important**
+> This project uses **HTTPS exclusively**.
+> There are **no WebSockets** — all communication happens via **secure HTTPS REST APIs**.
 
 ---
 
 ## 🌟 Project Overview
 
-We are developing a **production-ready, secure, single-page web application** built around the classic **Pong** game.  
+This project is a **production-style single-page web application** built around **Pong**.
 
-Key features include:
-- 🎮 **Remote Multiplayer** – WebSockets with safe reconnect, pause/resume on disconnect.  
-- 💬 **Live Chat** – Direct messages, block list, match invites, notifications.  
-- 🤖 **AI Opponent** – Subject-compliant: keyboard simulation only, refresh every 1s, same paddle speed, can win, uses power-ups.  
-- 👥 **Profiles & Stats** – Accounts, avatars, friends/online, match history.  
-- 🔐 **Privacy by Design** – GDPR endpoints for account deletion & anonymization.  
-- 🚀 **Deployment** – HTTPS/WSS via proxy, reproducible with **one Docker command**.  
-- 🎨 **Frontend** – TypeScript + Tailwind SPA (no framework, History API navigation).  
-- 🧰 **Data reliability ** — consistent schema, constraints, WAL journaling, DB health checks, safe deletes/anonymization.
+It provides:
 
-**Goal:** Run everything with one Docker command.  
-**Requirement:** Must work in Firefox (also tested in Chrome).  
+* 👤 **Secure user accounts** (register, login, profile, avatar)
+* 🤖 **AI opponent** (keyboard-input simulation, subject-compliant)
+* 💬 **Chat system** (direct messages, blocking, game invitations)
+* 🏆 **Tournaments & matchmaking** (aliases or registered users)
+* 📊 **User & game statistics dashboards**
+* 🔐 **GDPR tools** (export, anonymize, delete account)
+* 🎨 **Responsive UI** (desktop, tablet, mobile)
+* 🚀 **One-command Docker startup with HTTPS**
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+**Mandatory constraints respected:**
 
----
-
-## 📌 CURRENT Modules (Main + 7 majors)
-
-> **Current plan (subject-compliant) — may change as the project evolves.**  
-Done! I removed the **Status** column and marked undecided items with **?** in the **Counted** column.
-
-| Module (exact subject name)                                                                                             | Lead                 | Where (paths)                                          | Tools            | Evidence                      |  Points | Counted |
-| ----------------------------------------------------------------------------------------------------------------------- | -------------------- | ------------------------------------------------------ | ---------------- | ----------------------------- | ------: | :-----: |
-| **MAIN (Mandatory: SPA, Docker, HTTPS/WSS)**                                                                            | Alena  Sveva Luis  | `frontend/`, `docker-compose.yml`                      | TS SPA + proxy   | `make up`, SPA Back/Forward   |   **MUST** |    ✓    |
-| **Web — Major: Use a framework to build the backend (Fastify)**                                                         | Alena                | `backend/src/**`                                       | Fastify          | `GET /healthz` = 200          |   **1** |    ✓    |
-| **User Management — Major: Standard user management, authentication, users across tournaments**                         | Alena                | `backend/src/lib/Class/**`                             | TS + Fastify     | `POST /users`, `POST /login`  |   **1** |    ✓    |
-| **Gameplay and user experience — Major: Live chat**                                                                     | Alena                | `frontend/src/chat/**`, `backend/src/**`               | Socket.IO + TS   | chat echo/DM/block            |   **1** |    ✓    |
-| **AI-Algo — Major: Introduce an AI opponent**                                                                           | Sveva                | `frontend/src/game/**`                                 | Canvas + TS      | AI wins a round               |   **1** |    ✓    |
-| **Web — Minor: Use a framework or a toolkit to build the frontend (Tailwind CSS)**                                      | Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | responsive screenshots        | **0.5** |    ✓    |
-| **Web — Minor: Use a database for the backend (SQLite)**                                                                | Alena Luis                 | `backend/src/db/**`                                    | SQLite + TS      | PRAGMAs / health route        | **0.5** |    ✓    |
-| **Cybersecurity — Minor: GDPR compliance options with user anonymization, local data management, and Account Deletion** | Alena Luis                 | `backend/src/routes/gdpr.ts`                           | Fastify          | delete/anonymize/export demo  | **0.5** |    ✓    |
-| **Accessibility — Minor: Expanding browser compatibility**                                                              | Sveva                | `docs/compat.md`, e2e                                  | TS + Tailwind    | Chrome+Firefox matrix         | **0.5** |    ✓    |
-| **Gameplay and user experience — Minor: Game customization options**                                                    | ? Sveva                | `frontend/src/settings/**`                             | Tailwind + TS    | settings affect game & AI     | **0.5** |  **?**  |
-| **Accessibility — Minor: Support on all devices** **                                                          | ? Sveva                | `frontend/src/ui/**`                                   | Tailwind + TS    | phone/tablet/desktop checks   | **0.5** |  **?**  |
-| **Accessibility — Minor: Multiple language support** **                                                       | ?                | `frontend/src/i18n/**`                                 | TS (simple i18n) | 3 languages + switcher        | **0.5** |  **?**  |
-
-
-* Majors: **4.0** (Backend, User Mgmt, Live Chat, AI)
-* Minors: **2.0** (Tailwind, SQLite, GDPR, Browser Compatibility)
-* **Total = 7.0 majors**
-* need  **7.0**  
-
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+* Single Page Application (History API)
+* Browser back/forward navigation
+* Firefox compatibility (also tested in Chrome)
+* No unhandled console errors
+* One-command Docker execution
+* Secure HTTPS connection
 
 ---
 
-### 📘 Documentation
+## 🧱 Architecture Overview
 
-* [Resources Used](./docs/resources_used.md) — official docs, APIs, and guides referenced during development
-* [Input & Validation Policies](./docs/policies/policies_whole_project.md) — backend validation rules (username, password, avatar, etc.)
-* [HTTP response codes](./docs/policies/HTTP_response_codes.md) — backend validation rules (username, password, avatar, etc.)
-* [Learn Guides](./docs/learn/) — short explanations of technologies used (Fastify, SQLite, Tailwind, etc.)
-* [Devlogs](./docs/devlog/) — individual team worklogs and pull request notes
+The backend is structured around **clear responsibility managers**:
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+* **UserManager**
+  Handles registration, login, profiles, avatars, friends, online status, and GDPR actions.
+
+* **ChatManager**
+  Manages direct messages, blocking logic, system notifications, and game invitations.
+
+* **GameManager**
+  Handles match lifecycle, tournaments, player aliases, AI integration, and statistics storage.
+
+This separation keeps the system **maintainable, testable, and easy to explain during evaluation**.
+
 ---
 
-## 🗂️ Folder Structure (important parts only)
+## 📌 Modules (Subject-Compliant)
+
+All modules below are **implemented, demonstrable**, and aligned with the official **ft_transcendence subject**.
+
+| Module (exact subject name)                       | Lead  | Evidence                                           | Points |
+| ------------------------------------------------- | ----- | -------------------------------------------------- | ------ |
+| **Mandatory: SPA + Docker + HTTPS**               | All   | `docker-compose up --build`, HTTPS, SPA navigation | MUST   |
+| **Web — Major: Backend framework (Fastify)**      | Alena | REST API, `/healthz`                               | 1.0    |
+| **User Management — Major**                       | Alena | Accounts, profiles, match history                  | 1.0    |
+| **Gameplay — Major: Live Chat**                   | Alena | DM, block, invites, notifications                  | 1.0    |
+| **AI-Algo — Major: AI Opponent**                  | Sveva | AI can win, 1s refresh, keyboard simulation        | 1.0    |
+| **Web — Minor: Frontend toolkit (Tailwind)**      | Sveva | Responsive UI                                      | 0.5    |
+| **Web — Minor: Database (SQLite)**                | Alena | WAL, PRAGMAs, health route                         | 0.5    |
+| **Cybersecurity — Minor: GDPR**                   | Alena | Export, anonymize, delete                          | 0.5    |
+| **AI-Algo — Minor: User & Game Stats Dashboards** | Sveva | Charts, win/loss stats                             | 0.5    |
+| **Accessibility — Minor: Support on all devices** | Sveva | Mobile/tablet/desktop layouts                      | 0.5    |
+| **Accessibility — Minor: Browser compatibility**  | Sveva | Firefox + Chrome tested                            | 0.5    |
+
+### 📊 Total
+
+* **Majors:** 4.0
+* **Minors:** 3.0
+* **Total:** **7.0 (REQUIRED)** ✅
+
+---
+
+## 📘 Documentation
+
+* [`docs/resources_used.md`](./docs/resources_used.md) — official references
+* [`docs/policies/`](./docs/policies/) — validation & HTTP rules
+* [`docs/learn/`](./docs/learn/) — beginner-friendly tech explanations
+* [`docs/devlog/`](./docs/devlog/) — team development logs
+
+---
+
+## 🗂️ Folder Structure (important parts)
 
 ```
-
 .
-├─ backend/ 
-│  ├─ db/                #  migrations, sqlite helpers, pragmas, health
+├─ backend/
+│  ├─ db/            # SQLite, migrations, pragmas, health
 │  ├─ src/
-│  │  ├─ lib/Class/       # User, Chat, UserManager
-│  │  ├─ types/           # Shared backend types
-│  │  ├─ utils/           # Validation helpers
-│  │  ├─ routes/          # REST API (chat, GDPR, users,  /healthz)
-│  │  └─ main.ts          # Fastify entrypoint + sockets
-│  ├─ tests/              # Unit / integration tests
-│  ├─ Dockerfile
-│  └─ package.json
+│  │  ├─ lib/Class/  # UserManager, ChatManager, GameManager
+│  │  ├─ routes/     # REST API (users, chat, gdpr, health)
+│  │  └─ main.ts     # Fastify entrypoint (HTTPS)
+│  └─ Dockerfile
 │
 ├─ frontend/
-│  ├─ public/             # Host page + assets
-│  │  ├─ styles/index.html# SPA host page
-│  │  └─ styles/style.css # Stylesheet
-│  ├─ src/                # SPA source (chat, game, ui, settings planned)
+│  ├─ public/        # index.html, assets
+│  ├─ src/           # SPA source (game, chat, profile, ui)
 │  └─ Dockerfile
+│
 ├─ docker-compose.yml
+├─ Makefile
 └─ README.md
-
-````
-
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+```
 
 ---
 
-## 🚀 How to Run
+## 🚀 How to Run (Evaluation / Production)
 
-### Production / Evaluation
+The project follows the **mandatory requirement**:
+👉 **everything starts with ONE command**.
+
 ```bash
 git clone <this-repo>
 cd ft_transcendence
 cp .env.example .env
-make 
-
-# Open:
-https://localhost
-````
-
-### Development
-
-```bash
-# Backend
-cd backend
-npm ci
-npm run dev
-
-# Frontend
-cd frontend
-# serve /public or /dist as static content
-
-# Open (dev):
-https://localhost:5173
+docker-compose up --build
 ```
 
-**Services & Ports**
+### 🌐 Open in browser
 
-* Proxy → `443` (TLS termination, WS upgrade)
-* Backend → `3000` (proxied behind 443, WSS enabled)
-* Frontend → static via proxy (`/`)
+```
+https://localhost:8443
+```
 
-**Required env vars**
+> 🔒 The site uses **HTTPS with a self-signed certificate**.
+> Click **Advanced → Proceed / Trust** in your browser.
 
-| Var           | Where   | Example             | Purpose            |
-| ------------- | ------- | ------------------- | ------------------ |
-| `PORT`        | backend | `3000`              | API port           |
-| `APP_URL`     | backend | `https://localhost` | CORS/cookie origin |
-| `SQLITE_PATH` | backend | `./data/app.db`     | DB file path       |
+### ℹ️ Internal services (Docker network only)
 
+* Backend API → `http://backend:3000`
+* Frontend server → `http://frontend:8080`
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+All public traffic goes through the HTTPS reverse proxy.
 
 ---
 
@@ -221,5 +202,5 @@ https://localhost:5173
 
 MIT
 
-[↑ back to top](#-ft_transcendence-ping-pong-website)
+---
 
