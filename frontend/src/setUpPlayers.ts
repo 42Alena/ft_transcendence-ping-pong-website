@@ -43,6 +43,26 @@ function setGameType(text: string) {
   gameisOn = false;
   gameQueue = [];
 
+  AIPlayerTwo = AIisOff(
+    AIonButtonPlayerTwo,
+    AIoffButtonPlayerTwo,
+    playerInputTwo,
+  );
+  AIPlayerThree = AIisOff(
+    AIonButtonPlayerThree,
+    AIoffButtonPlayerThree,
+    playerInputThree,
+  );
+  AIPlayerFour = AIisOff(
+    AIonButtonPlayerFour,
+    AIoffButtonPlayerFour,
+    playerInputFour,
+  );
+
+  AIPlayerTwoButtonsDiv.classList.remove("invisible");
+  AIPlayerThreeButtonsDiv.classList.remove("invisible");
+  AIPlayerFourButtonsDiv.classList.remove("invisible");
+
   aliasPage.classList.add("flex");
   aliasPage.classList.remove("hidden");
   aliasSelection();
@@ -52,17 +72,20 @@ function setGameType(text: string) {
   instruction.classList.remove("flex");
 }
 
-//set page for 2 players or 4 players (tournament)
-function aliasSelection() {
-  const playerInputOne = document.getElementById(
+const playerInputOne = document.getElementById(
     "player-one",
   ) as HTMLInputElement;
+  const playerInputTwo = document.getElementById(
+    "player-two",
+  ) as HTMLInputElement;
   const playerInputThree = document.getElementById(
-    "playerThree",
+    "player-three",
   ) as HTMLDivElement;
   const playerInputFour = document.getElementById(
-    "playerFour",
+    "player-four",
   ) as HTMLDivElement;
+//set page for 2 players or 4 players (tournament)
+function aliasSelection() {
   playerInputOne.readOnly = false;
   if (localStorage.getItem("userData")) {
     const userDataString: string | null = localStorage.getItem("userData");
@@ -152,4 +175,92 @@ playersNameForm.addEventListener("submit", async (event: SubmitEvent) => {
   } catch (error: any) {
     console.error("Error during check alias:", error.message);
   }
+});
+
+const AIPlayerOneButtonsDiv: any = document.getElementById("AIPlayerOne");
+const AIPlayerTwoButtonsDiv: any = document.getElementById("AIPlayerTwo");
+const AIPlayerThreeButtonsDiv: any = document.getElementById("AIPlayerThree");
+const AIPlayerFourButtonsDiv: any = document.getElementById("AIPlayerFour");
+const AIonButtonPlayerOne: any = document.getElementById("AIonPlayerOne");
+const AIonButtonPlayerTwo: any = document.getElementById("AIonPlayerTwo");
+const AIonButtonPlayerThree: any = document.getElementById("AIonPlayerThree");
+const AIonButtonPlayerFour: any = document.getElementById("AIonPlayerFour");
+const AIoffButtonPlayerOne: any = document.getElementById("AIoffPlayerOne");
+const AIoffButtonPlayerTwo: any = document.getElementById("AIoffPlayerTwo");
+const AIoffButtonPlayerThree: any = document.getElementById("AIoffPlayerThree");
+const AIoffButtonPlayerFour: any = document.getElementById("AIoffPlayerFour");
+
+//Switch on/off AI button
+function AIisOn(onButton: any, offButton: any, input: any, numb : string): boolean {
+  onButton.classList.add("active");
+  offButton.classList.remove("active");
+  input.value = "AI_" + numb;
+  input.readOnly = true;
+  return true;
+}
+
+function AIisOff(onButton: any, offButton: any, input: any): boolean {
+  onButton.classList.remove("active");
+  offButton.classList.add("active");
+  input.value = "";
+  input.readOnly = false;
+  return false;
+}
+
+//buttons on/off
+AIonButtonPlayerTwo.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerTwo = AIisOn(
+    AIonButtonPlayerTwo,
+    AIoffButtonPlayerTwo,
+    playerInputTwo,
+    "ALENA",
+  );
+});
+
+AIoffButtonPlayerTwo.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerTwo = AIisOff(
+    AIonButtonPlayerTwo,
+    AIoffButtonPlayerTwo,
+    playerInputTwo,
+  );
+});
+
+AIonButtonPlayerThree.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerThree = AIisOn(
+    AIonButtonPlayerThree,
+    AIoffButtonPlayerThree,
+    playerInputThree,
+    "SVEVA",
+  );
+});
+
+AIoffButtonPlayerThree.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerThree = AIisOff(
+    AIonButtonPlayerThree,
+    AIoffButtonPlayerThree,
+    playerInputThree,
+  );
+});
+
+AIonButtonPlayerFour.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerFour = AIisOn(
+    AIonButtonPlayerFour,
+    AIoffButtonPlayerFour,
+    playerInputFour,
+    "LUIS",
+  );
+});
+
+AIoffButtonPlayerFour.addEventListener("click", (event: any) => {
+  event.preventDefault();
+  AIPlayerFour = AIisOff(
+    AIonButtonPlayerFour,
+    AIoffButtonPlayerFour,
+    playerInputFour,
+  );
 });
