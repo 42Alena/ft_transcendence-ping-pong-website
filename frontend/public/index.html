@@ -31,13 +31,11 @@
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
                 <span id="logged-user" class="mr-2.5">Hello, you</span>
-                <div id="logged-user-avatar">
+                <div id="logged-user-avatar" class="h-[50px] w-[50px]">
                   <img
                     src="images/avatars/pong_default.png"
                     alt="User Avatar"
-                    width="50"
-                    height="50"
-                    class="rounded-full bg-white"
+                    class="rounded-full bg-white w-full h-full object-cover"
                   />
                 </div>
               </a>
@@ -415,16 +413,18 @@
                   id="profileDisplay"
                 >
                   <div
-                    class="flex items-center justify-center border"
+                    class="flex items-center justify-center border h-full w-full"
                     id="profile-avatar"
+                  >
+                   <div
+                    class="relative flex items-center justify-center h-[100px] w-[100px]"
                   >
                     <img
                       src="images/profile/orange.png"
                       alt="profile page"
-                      width="100px"
-                      height="100px"
-                      class="rounded-full"
+                      class="rounded-full h-full w-full object-cover"
                     />
+                  </div>
                   </div>
                   <div class="flex flex-col border" id="profile-info">
                     <div
@@ -601,47 +601,51 @@
                       class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
                       id="closePopUp"
                     >
-                      &times;
-                    </button>
-                    <h2>Select avatar</h2>
-                    <ul
-                      class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
-                    >
-                      <li class="w-1/4 cursor-pointer p-1">
-                        <div
-                          class="flex h-12 w-12 items-center justify-center rounded-full"
-                        >
-                          <img
-                            src="images/avatars/pong_avatar_creatures_g.png"
-                            alt="Avatar G"
-                            id="G"
-                            class="h-full w-full rounded-full"
-                            onclick="displayPreview()"
-                          />
-                        </div>
-                        <span></span>
-                      </li>
-                      <li class="w-1/4 cursor-pointer p-1" data-url="upload">
-                        <label
-                          for="avatarImgEdit"
-                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                          >&plus;</label
-                        >
-                      </li>
-                      <span></span>
-                    </ul>
-                    <div class="mt-6 flex items-center justify-center">
                       <button
-                        class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="sumbit"
-                        id="save-avatar"
-                        form="avatar"
+                        class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
+                        id="closePopUp"
                       >
-                        Save
+                        &times;
                       </button>
+                      <h2>Select avatar</h2>
+                      <ul
+                        class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                      >
+                        <li class="w-1/4 cursor-pointer p-1">
+                          <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full"
+                          >
+                            <img
+                              src="images/avatars/pong_avatar_creatures_g.png"
+                              alt="Avatar G"
+                              id="G"
+                              class="h-full w-full rounded-full"
+                              onclick="displayPreview()"
+                            />
+                          </div>
+                          <span></span>
+                        </li>
+                        <li class="w-1/4 cursor-pointer p-1" data-url="upload">
+                          <label
+                            for="avatarImgEdit"
+                            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                            >&plus;</label
+                          >
+                        </li>
+                        <span></span>
+                      </ul>
+                      <div class="mt-6 flex items-center justify-center">
+                        <button
+                          class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          type="sumbit"
+                          id="save-avatar"
+                          form="avatar"
+                        >
+                          Save
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
                 <div
                   id="displayNameEdit"
                   class="flex flex-1 flex-col items-center justify-center"
