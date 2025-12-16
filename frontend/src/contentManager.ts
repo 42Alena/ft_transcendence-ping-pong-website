@@ -130,9 +130,13 @@ function displayPage(text: string): void {
     const userDataString: string | null = localStorage.getItem("userData");
     if (localStorage.getItem("userData")) {
       if (userDataString) {
+        const setUsername = document.getElementById("settings-username") as HTMLInputElement;
+        const setDisplayName = document.getElementById("settings-displayName") as HTMLInputElement;
+        const setAvatar = document.getElementById("avatar-image") as HTMLImageElement;
         const userData = JSON.parse(userDataString);
-        settingsUsernameInput.value = userData.username;
-        settingsDisplayNameInput.value = userData.displayName;
+        setUsername.value = userData.username;
+        setDisplayName.value = userData.displayName;
+        setAvatar.src = userData.avatarUrl;
       }
     }
   } else if (text == "friends") {
@@ -140,7 +144,7 @@ function displayPage(text: string): void {
     friendsPage.hidden = false;
     requestFriendsList();
   } else {
-    // error
+    console.log("smth wrong");
   }
 }
 

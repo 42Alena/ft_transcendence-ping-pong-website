@@ -106,8 +106,6 @@ popUpButton.addEventListener("click", () => {
 let pop: boolean = false;
 avatarForm.addEventListener("submit", async (event: any) => {
   event.preventDefault();
-  console.log("submiut avatar");
-
   const formData = new FormData();
   if (avatarInput.files.length > 0) {
     formData.append("avatar", avatarInput.files[0]);
@@ -128,9 +126,16 @@ avatarForm.addEventListener("submit", async (event: any) => {
         avatarForm.reset();
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          userData.url = data.avatarUrl;
+          userData.avatarUrl = data.avatarUrl;
           localStorage.setItem("userData", JSON.stringify(userData));
         }
+        const logUserAvatar = document.getElementById(
+          "logged-user-avatar",
+        ) as HTMLDivElement;
+        const avatarImg = logUserAvatar.querySelector(
+          "img",
+        ) as HTMLImageElement;
+        avatarImg.src = data.avatarUrl;
         popup.classList.add("hidden");
         popup.classList.remove("block");
         console.log("avatar uploaded:", data);
@@ -301,11 +306,20 @@ function previewImage(event: Event) {
   }
 }
 
-function displayPreview() {
-  const imgElement = document.getElementById("G") as HTMLImageElement;
-  previewNewAvatar.src = imgElement.src;
-  existingImgAvatarInput.value = imgElement.src;
-}
+// function displayPreview() {
+//   const imgElement = document.getElementById("G") as HTMLImageElement;
+//   const userDataString: string | null = localStorage.getItem("userData");
+//   if (localStorage.getItem("userData")) {
+//     if (userDataString) {
+//       const userData = JSON.parse(userDataString);
+//       previewNewAvatar.src = userData.avatarUrl;
+//       existingImgAvatarInput.value = userData.avatarUrl;
+//     }
+//   } else {
+//     previewNewAvatar.src = imgElement.src;
+//     existingImgAvatarInput.value = imgElement.src;
+//   }
+// }
 
 const friendsList = document.getElementById("friendsList") as HTMLDivElement;
 console.log("before list");
@@ -598,6 +612,7 @@ async function requestStats(id: string) {
     if (!response.ok) {
       throw new Error(`Error ${response.status}`);
     } else {
+      if (response.status == 204) return;
       const data = await response.json();
       while (matchesDiv.firstChild) {
         matchesDiv.removeChild(matchesDiv.firstChild);
@@ -631,6 +646,6 @@ async function requestStats(id: string) {
       // createBarChart(data.stats.place1, data.stats.place2, data.stats.place3);
     }
   } catch (error) {
-    console.error("Error during registration:", error);
+    console.error("Error during stasts retrival:", error);
   }
 }
