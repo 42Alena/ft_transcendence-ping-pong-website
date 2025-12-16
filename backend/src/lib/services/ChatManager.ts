@@ -193,8 +193,8 @@ Example meta JSON of the message:
     if (!receiver)
       return { ok: true }; // skip silently instead of returning an error
 
-    const msg: Domain.NewTournamentMessage = {
-      type: "TournamentMessage",
+    const msg: Domain.NewPrivateMessage = {
+      type: "PrivateMessage",
       senderId: Domain.SYSTEM_ID,
       receiverId: receiver.id,
       content: Domain.MESSAGE_TOURNAMENT_INVITE,
