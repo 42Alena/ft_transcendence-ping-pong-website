@@ -1,7 +1,8 @@
 const listUsers = document.getElementById("list-users") as HTMLDivElement;
 const listChats = document.getElementById("list-dms") as HTMLDivElement;
+const userTab = document.getElementById("userButton") as HTMLButtonElement;
 
-async function requestUsers() {
+async function requestUsers(button? : string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -17,6 +18,10 @@ async function requestUsers() {
       throw new Error(`Error ${response.status}`);
     } else {
       const users = await response.json();
+      listDmsDiv.classList.add("hidden");
+      listDmsDiv.classList.remove("flex");
+      listUsersDiv.classList.add("flex");
+      listUsersDiv.classList.remove("hidden");
       for (const user of users) {
         if (!document.querySelector(`[data-userid="${user.id}"]`)) {
           const newDiv = document.createElement("div");
@@ -36,9 +41,18 @@ async function requestUsers() {
           const newContent = document.createTextNode(user.displayName);
           userDiv.appendChild(newContent);
           newDiv.appendChild(userDiv);
-          newDiv.onclick = function () {
-            requestUserProfile(user.id);
-          };
+          newDiv.addEventListener("click", (event) => {
+            event.preventDefault();
+            const state = {
+              page: "chat",
+              userId: user.id,
+              tab: "userButton",
+            };
+            history.pushState(state, "");
+            requestUserProfile(
+              user.id,
+            );
+          });
           const tabChat = document.getElementsByClassName("chat-div");
           newDiv.classList.add(
             "chat-div",
@@ -53,24 +67,25 @@ async function requestUsers() {
             "outline-none",
           );
           listUsers.append(newDiv);
-          for (let i = 0; i < tabChat.length; i++) {
-            tabChat[i].addEventListener("click", function () {
-              console.log(`user: ${user.displayName}`);
-              for (let j = 0; j < tabChat.length; j++) {
-                tabChat[j].classList.remove("active"); // Base active class for clicked element
-              }
-              tabChat[i].classList.add("active");
-            });
-          }
+          // for (let i = 0; i < tabChat.length; i++) {
+          //   tabChat[i].addEventListener("click", function () {
+          //     console.log(`user: ${user.displayName}`);
+          //     for (let j = 0; j < tabChat.length; j++) {
+          //       tabChat[j].classList.remove("active"); // Base active class for clicked element
+          //     }
+          //     tabChat[i].classList.add("active");
+          //   });
+          // }
         }
       }
     }
+    displayList({ currentTarget: userTab }, "users");
   } catch (error) {
     console.error("Error during registration:", error);
   }
 }
 
-async function requestChats() {
+async function requestChats(button?: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -86,10 +101,11 @@ async function requestChats() {
       throw new Error(`Error ${response.status}`);
     } else {
       const users = await response.json();
+      // listDmsDiv.classList.add("flex");
+      // listDmsDiv.classList.remove("hidden");
+      // listUsersDiv.classList.add("hidden");
+      // listUsersDiv.classList.remove("flex");
       for (const chat_user of users) {
-        console.log(`${chat_user.userId}`);
-        console.log(`${chat_user.displayName}`);
-        console.log(`${chat_user.avatarUrl}`);
         if (!document.querySelector(`[data-chatid="${chat_user.userId}"]`)) {
           const newDiv = document.createElement("div");
           const avatDiv = document.createElement("div");
@@ -115,6 +131,7 @@ async function requestChats() {
               userId: chat_user.userId,
               userDisplayName: chat_user.displayName,
               userAvatarUrl: chat_user.avatarUrl,
+              tab: "defaultOpen",
             };
             history.pushState(state, "");
             requestConversation(
@@ -430,6 +447,7 @@ async function requestConversation(
 ) {
   console.log(`request chat for ${id}`);
   conversationDiv.hidden = false;
+  startConversationDiv.hidden = true;
   const chatDisplay = document.getElementById("chatDisplay") as HTMLDivElement;
   if (chatDisplay.hidden) chatDisplay.hidden = false;
 
@@ -562,7 +580,7 @@ async function requestOnlineStatus(id: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  const myRequest = new Request(`${BACKEND_URL}/${id}/status`, {
+  const myRequest = new Request(`${BACKEND_URL}/users/${id}/status`, {
     method: "GET",
     headers: myHeaders,
     credentials: "include",
