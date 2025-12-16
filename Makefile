@@ -213,8 +213,7 @@ git-changes:
 #  MAKE :)  Subject: builds + runs in detached mode
 # all: check-tools banner up
 # all: banner up
-all: up
-
+all: docker compose up --build
 
 # Soft restart (keep DB/data)
 # restart: check-tools banner
