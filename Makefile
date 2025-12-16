@@ -211,23 +211,27 @@ git-changes:
 #_________START: NEW: make, re, re hard
 
 #  MAKE :)  Subject: builds + runs in detached mode
+# all: check-tools banner up
 all: banner up
 
 
 # Soft restart (keep DB/data)
-restart: check-tools banner
+# restart: check-tools banner
+restart:  banner
 	@echo "🔁 Restart (keep DB volume)"
 	$(DC) down --remove-orphans
 	$(DC) up --build
 
 # Hard reset (wipe DB/data completely)
-re: check-tools banner
+# re: check-tools banner
+re:   banner
 	@printf "\033[1;31m🧹 Hard reset:\033[0m removing volumes (wipe DB) and restarting...\n\n"
 	$(DC) down -v --remove-orphans
 	$(DC) up --build
 
 # Nuclear reset: wipe volumes + remove local images
-re-hard: check-tools banner
+# re-hard: check-tools banner
+re-hard:   banner
 	@printf "\033[1;31m🔥 Nuclear reset:\033[0m removing volumes + local images and restarting...\n\n"
 	$(DC) down -v --remove-orphans --rmi local
 	$(DC) up --build
