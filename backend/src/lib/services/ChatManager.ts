@@ -172,7 +172,7 @@ Example meta JSON of the message:
 }
 
   */
-  async sendTournamentMessage(
+  async sendTournamentMessageOthers(
     receiverDisplayname: Domain.ReceiverDisplayname,
     // meta: Domain.MetaTournamentNextMatch,
 
@@ -207,7 +207,24 @@ Example meta JSON of the message:
   }
 
 
-  
+  async sendTournamentMessage(
+    meId: Domain.PrivateSenderId,
+  ): Promise<Domain.SendMessageResult> {
+
+    const msg: Domain.NewPrivateMessage = {
+      type: "PrivateMessage",                    // normal chat message
+      senderId: meId,                            // me
+      receiverId: meId,                          // me
+      content: Domain.MESSAGE_TOURNAMENT_INVITE, // your existing constant
+    };
+
+    return this.sendUserToUserMessage(msg);      // reuse validation + save
+  }
+
+
+
+
+
 
   /* list Users+Avatars for conversation */
   async getConversations( //TODO change to all users who i wrote or who me wrote

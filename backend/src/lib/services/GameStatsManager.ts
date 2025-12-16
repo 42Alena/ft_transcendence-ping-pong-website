@@ -415,6 +415,8 @@ export class GameStatsManager {
 			player3Alias: r.names[2],
 			player4Alias: r.names[3],
 		};
+
+		 async sendTournamentMessage
 	}
 
 
