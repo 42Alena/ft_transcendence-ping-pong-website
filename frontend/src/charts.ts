@@ -90,7 +90,7 @@ export function createBarChart(first : string, second : string, third : string)
 };
 
  
-destroyExistingChart(pie); // ALENA: destroy old chart before creating new
+destroyExistingChart(bar); // ALENA: destroy old chart before creating new
 
 new Chart(bar, {
   type: 'bar',
