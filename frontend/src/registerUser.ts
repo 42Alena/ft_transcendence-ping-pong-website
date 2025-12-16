@@ -65,10 +65,9 @@ successRegPage.classList.remove("flex");
         errorDisplayName.classList.remove("block");
         errorPaassword.classList.add("hidden");
         errorPaassword.classList.remove("block");
-      successRegPage.classList.add("flex");
-      successRegPage.classList.remove("hidden");
-      reg.classList.add("hidden");
-      reg.classList.remove("flex");
+        successRegPage.classList.add("flex");
+        successRegPage.classList.remove("hidden");
+        regP.hidden=true;
       reg.reset();
       console.log("Registered user:", data);
     }

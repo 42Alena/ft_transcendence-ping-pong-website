@@ -3,6 +3,7 @@ const welcP: any = document.getElementById("welcomePage");
 const accP: any = document.getElementById("accountPage");
 const gameP: any = document.getElementById("gamePage");
 const personalP = document.getElementById("personalProfilePage") as HTMLDivElement;
+const errors = document.querySelectorAll(".errors") as NodeListOf<HTMLDivElement>;
 
 function handleClickEvent(text: string) {
   const state = { page: text};
@@ -11,16 +12,16 @@ function handleClickEvent(text: string) {
 }
 
 function displayPage(text: string): void {
-  // girlImgLeft.classList.add("block");
-  // girlImgLeft.classList.remove("hidden");
-  // girlImgLeftLoser.classList.remove("block");
-  // girlImgLeftLoser.classList.add("hidden");
-  // girlImgRight.classList.add("block");
-  // girlImgRight.classList.remove("hidden");
-  // girlImgRightLoser.classList.remove("block");
-  // girlImgRightLoser.classList.add("hidden");
-  // successRegPage.classList.add("hidden");
-  // successRegPage.classList.remove("flex");
+  girlImgLeft.classList.add("block");
+  girlImgLeft.classList.remove("hidden");
+  girlImgLeftLoser.classList.remove("block");
+  girlImgLeftLoser.classList.add("hidden");
+  girlImgRight.classList.add("block");
+  girlImgRight.classList.remove("hidden");
+  girlImgRightLoser.classList.remove("block");
+  girlImgRightLoser.classList.add("hidden");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   // playersNameForm.reset();
   // errorNamesDiv.classList.add("invisible");
   const pages = document.querySelectorAll(".page") as NodeListOf<HTMLDivElement>;
@@ -28,10 +29,18 @@ function displayPage(text: string): void {
     element.hidden = true;
     console.log(`page: ${element.id}`);
   });
+  const errorNamesDiv = document.getElementById(
+  "playersName_error",
+) as HTMLDivElement;
+errorNamesDiv.classList.add("invisible");
   reg.reset();
   log.reset();
   avatarForm.reset();
   passwordForm.reset();
+  errors.forEach((elements) => {
+    elements.classList.add("hidden");
+    elements.classList.remove("block");
+  })
 // function displayPage(text: string, shouldUpdateNav = true): void {
 //   updateUrl("pong", text, shouldUpdateNav);
 //   girlImgLeft.classList.add("block");
@@ -117,8 +126,9 @@ function displayPage(text: string): void {
     accP.hidden = false;
     logP.hidden = false;
   } else if (text == "register") {
-     accP.hidden = false;
+    accP.hidden = false;
     regP.hidden = false;
+
   } else if (text == "profile") {
     accP.hidden = false;
     personalP.hidden = false;
