@@ -28,7 +28,7 @@ if (localStorage.getItem("userData")) {
     }
 
     if (logAvatHeaderDiv.src !== userData.avatarUrl) {
-      logAvatHeaderDiv.src = userData.avatarUrl; //need to fix
+      logAvatHeaderDiv.src = userData.avatarUrl;
     }
     settingsUsernameInput2.value = userData.username;
     settingsDisplayInput2.value = userData.displayName;

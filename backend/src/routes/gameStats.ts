@@ -1,5 +1,5 @@
 import { GameStatsManager } from "../lib/services/GameStatsManager";
-import { authRequiredOptions } from './utils';
+import { authOptionalOptions, authRequiredOptions } from './utils';
 import type * as API from '../lib/types/api';
 import { sendError, sendNoContent, sendOK } from '../lib/utils/http';
 import { FastifyInstance } from "fastify";
@@ -8,7 +8,7 @@ export function registerGameStatsRoutes(fastify: FastifyInstance, gameStatsManag
 
 	/* 
 	mode: "normalGame";
-tournamentRound: null;
+tournamentRound: null;F
 	*/
 	fastify.post<{ Body: API.SaveNormalGameBody }>(
 		"/games/normal/save",
@@ -111,53 +111,42 @@ tournamentRound:   "semi" | "final";
 		});
 
 
-
-	// Check 2 aliases before starting a match (must be valid + free in DB)
+	/* GAME PLAYERS
+	   - guest: validate both aliases from body
+	   - logged in: player1 = me.displayName (server), allow it even if taken
+	*/
 	fastify.post<{ Body: API.CheckMatchAliasesBody; Reply: API.CheckMatchAliasesResponse }>(
 		"/games/match/aliases/check",
-		// async (req, reply) =>
-		// 	sendOK(reply, await gameStatsManager.checkMatchAliases(req.body))
-
+		authOptionalOptions,
 		async (req, reply) => {
+			const meId = (req as API.UserAwareRequest).userId; // may be undefined (guest)
 
-			const result = await gameStatsManager.checkMatchAliases(req.body);
+			const result = await gameStatsManager.checkMatchAliasesWithMe(meId, req.body);
 
-			if (result.ok) {
-				return sendOK(reply, {
-					player1Alias: result.player1Alias,
-					player2Alias: result.player2Alias,
-				});
-			}
-
-			// any invalid input => 400
+			if (result.ok) return sendOK(reply, result);
 			return sendError(reply, result.error, "alias", 400);
 		}
 	);
 
-	
-	// Check 4 aliases before starting a tournament (must be valid + free in DB)
+
+
+
+	/* TOURNAMENT PLAYERS
+	   - guest: validate all 4 aliases from body
+	   - logged in: player1 = me.displayName (server), allow it even if taken
+	*/
 	fastify.post<{ Body: API.CheckTournamentAliasesBody; Reply: API.CheckTournamentAliasesResponse }>(
 		"/games/tournament/aliases/check",
-		// async (req, reply) =>
-		// 	sendOK(reply, await gameStatsManager.checkTournamentAliases(req.body))
-
+		authOptionalOptions,
 		async (req, reply) => {
+			const meId = (req as API.UserAwareRequest).userId; // may be undefined (guest)
 
-		const result = await gameStatsManager.checkTournamentAliases(req.body);
+			const result = await gameStatsManager.checkTournamentAliasesWithMe(meId, req.body);
 
-		if (result.ok) {
-			return sendOK(reply, {
-				player1Alias: result.player1Alias,
-				player2Alias: result.player2Alias,
-				player3Alias: result.player3Alias,
-				player4Alias: result.player4Alias,
-			});
+			if (result.ok) return sendOK(reply, result);
+			return sendError(reply, result.error, "alias", 400);
 		}
-
-		return sendError(reply, result.error, "alias", 400);
-	}
 	);
-
 
 
 }

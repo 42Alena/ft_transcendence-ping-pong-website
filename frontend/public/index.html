@@ -31,13 +31,11 @@
             <span class="dropdown">
               <a href="#" class="flex items-center no-underline">
                 <span id="logged-user" class="mr-2.5">Hello, you</span>
-                <div id="logged-user-avatar">
+                <div id="logged-user-avatar" class="h-[50px] w-[50px]">
                   <img
                     src="images/avatars/pong_default.png"
                     alt="User Avatar"
-                    width="50"
-                    height="50"
-                    class="rounded-full bg-white"
+                    class="rounded-full bg-white w-full h-full object-cover"
                   />
                 </div>
               </a>
@@ -143,7 +141,7 @@
             />
           </div>
           <div
-            class="page relative grid h-full w-full sm:grid-cols-[300px_1fr] bg-[#ffb6c1]"
+            class="page relative grid h-full w-full bg-[#ffb6c1] sm:grid-cols-[300px_1fr]"
             id="chatPage"
             hidden="false"
           >
@@ -188,7 +186,7 @@
               <div id="userProfile" class="h-full" hidden="true"></div>
               <div
                 id="conversation"
-                class="h-full flex-col border hidden sm:flex"
+                class="hidden h-full flex-col border sm:flex"
                 hidden="true"
               >
                 <div
@@ -415,16 +413,18 @@
                   id="profileDisplay"
                 >
                   <div
-                    class="flex items-center justify-center border"
+                    class="flex items-center justify-center border h-full w-full"
                     id="profile-avatar"
+                  >
+                   <div
+                    class="relative flex items-center justify-center h-[100px] w-[100px]"
                   >
                     <img
                       src="images/profile/orange.png"
                       alt="profile page"
-                      width="100px"
-                      height="100px"
-                      class="rounded-full"
+                      class="rounded-full h-full w-full object-cover"
                     />
+                  </div>
                   </div>
                   <div class="flex flex-col border" id="profile-info">
                     <div
@@ -601,47 +601,51 @@
                       class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
                       id="closePopUp"
                     >
-                      &times;
-                    </button>
-                    <h2>Select avatar</h2>
-                    <ul
-                      class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
-                    >
-                      <li class="w-1/4 cursor-pointer p-1">
-                        <div
-                          class="flex h-12 w-12 items-center justify-center rounded-full"
-                        >
-                          <img
-                            src="images/avatars/pong_avatar_creatures_g.png"
-                            alt="Avatar G"
-                            id="G"
-                            class="h-full w-full rounded-full"
-                            onclick="displayPreview()"
-                          />
-                        </div>
-                        <span></span>
-                      </li>
-                      <li class="w-1/4 cursor-pointer p-1" data-url="upload">
-                        <label
-                          for="avatarImgEdit"
-                          class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                          >&plus;</label
-                        >
-                      </li>
-                      <span></span>
-                    </ul>
-                    <div class="mt-6 flex items-center justify-center">
                       <button
-                        class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
-                        type="sumbit"
-                        id="save-avatar"
-                        form="avatar"
+                        class="cursor-pointer text-2xl font-bold text-gray-400 hover:text-black"
+                        id="closePopUp"
                       >
-                        Save
+                        &times;
                       </button>
+                      <h2>Select avatar</h2>
+                      <ul
+                        class="flex flex-wrap items-center overflow-auto rounded-md border border-gray-300 bg-white p-1 shadow-md"
+                      >
+                        <li class="w-1/4 cursor-pointer p-1">
+                          <div
+                            class="flex h-12 w-12 items-center justify-center rounded-full"
+                          >
+                            <img
+                              src="images/avatars/pong_avatar_creatures_g.png"
+                              alt="Avatar G"
+                              id="G"
+                              class="h-full w-full rounded-full"
+                              onclick="displayPreview()"
+                            />
+                          </div>
+                          <span></span>
+                        </li>
+                        <li class="w-1/4 cursor-pointer p-1" data-url="upload">
+                          <label
+                            for="avatarImgEdit"
+                            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                            >&plus;</label
+                          >
+                        </li>
+                        <span></span>
+                      </ul>
+                      <div class="mt-6 flex items-center justify-center">
+                        <button
+                          class="flex h-10 w-[120px] items-center justify-center rounded border border-blue-950 bg-blue-500 font-bold text-white hover:bg-blue-700"
+                          type="sumbit"
+                          id="save-avatar"
+                          form="avatar"
+                        >
+                          Save
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
                 <div
                   id="displayNameEdit"
                   class="flex flex-1 flex-col items-center justify-center"
@@ -795,7 +799,7 @@
               ></div>
             </div>
           </div>
-           <div
+          <div
             id="gamePage"
             class="page relative flex h-full w-full flex-col items-center justify-center bg-black"
             hidden="false"
@@ -832,6 +836,27 @@
                       autocomplete="off"
                       readonly
                     />
+                    <div id="AIPlayerOne" class="invisible mt-4 flex flex-row">
+                      <button
+                        class="flex h-6 w-6 items-center justify-center bg-inherit"
+                      >
+                        <span class="text-lg">AI</span>
+                      </button>
+                      <div class="flex flex-row">
+                        <button
+                          id="AIonPlayerOne"
+                          class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                        >
+                          <span class="text-sm">on</span>
+                        </button>
+                        <button
+                          id="AIoffPlayerOne"
+                          class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                        >
+                          <span class="text-sm">off</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2">
                     <label
@@ -846,6 +871,27 @@
                       name="player-two_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerTwo" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerTwo"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerTwo"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2" id="playerThree">
                     <label
@@ -860,6 +906,27 @@
                       name="player-three_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerThree" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerThree"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerThree"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="w-1/2 shrink-0 p-2" id="playerFour">
                     <label
@@ -874,6 +941,27 @@
                       name="player-four_name"
                       autocomplete="off"
                     />
+                      <div id="AIPlayerFour" class="mt-4 flex flex-row">
+                    <button
+                      class="flex h-6 w-6 items-center justify-center bg-inherit"
+                    >
+                      <span class="text-lg">AI</span>
+                    </button>
+                    <div class="flex flex-row">
+                      <button
+                        id="AIonPlayerFour"
+                        class="ai-button-on flex h-6 w-6 items-center justify-center border bg-green-300"
+                      >
+                        <span class="text-sm">on</span>
+                      </button>
+                      <button
+                        id="AIoffPlayerFour"
+                        class="ai-button-off active flex h-6 w-6 items-center justify-center border bg-gray-300"
+                      >
+                        <span class="text-sm">off</span>
+                      </button>
+                    </div>
+                  </div>
                   </div>
                   <div class="flex w-full flex-col items-center justify-center">
                     <div
@@ -893,28 +981,30 @@
             </div>
             <div
               id="setInstructions"
-              class="absolute max-h-full z-1 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-1 hidden h-[480px] max-h-full w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div
-                  class="flex w-full flex-1 items-center justify-center text-4xl sm:text-5xl font-bold"
+                  class="flex w-full flex-1 items-center justify-center text-4xl font-bold sm:text-5xl"
                 >
                   First to score to 3 wins
                 </div>
                 <div class="flex w-full flex-1 flex-row items-center">
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl font-bold sm:text-4xl"
                   >
                     <div id="playerLeftName"></div>
                     <div>w - up</div>
                     <div>s - down</div>
                   </div>
-                  <div class="flex items-center text-2xl sm:text-4xl font-bold">vs</div>
+                  <div class="flex items-center text-2xl font-bold sm:text-4xl">
+                    vs
+                  </div>
                   <div
-                    class="flex flex-1 flex-col items-center justify-center text-2xl sm:text-4xl font-bold"
+                    class="flex flex-1 flex-col items-center justify-center text-2xl font-bold sm:text-4xl"
                   >
                     <div id="playerRightName"></div>
                     <div>&uarr; - up</div>
@@ -923,7 +1013,7 @@
                 </div>
                 <div
                   id="startButton"
-                  class="flex w-full max-h-full flex-1 items-center justify-center"
+                  class="flex max-h-full w-full flex-1 items-center justify-center"
                 >
                   <button
                     id="runButton"

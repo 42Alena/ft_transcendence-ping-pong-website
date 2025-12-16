@@ -296,12 +296,16 @@ export class GameStatsManager {
 			.some(ai => ai.toUpperCase() === key);
 	}
 
-	
 
 
-	private async checkNames(namesRaw: string[]): Promise<
-		{ ok: true; names: string[] } | { ok: false; error: string }
-	> {
+	/*  allow passing my own displayName (optional)
+	 - guest call: meDisplayName is undefined -> old behavior
+	 - logged-in call: meDisplayName is "Alena" -> allow it even if taken in DB*/
+	private async checkNames(
+		namesRaw: string[],
+		meDisplayName?: string
+	): Promise<{ ok: true; names: string[] } | { ok: false; error: string }> {
+
 		const names = namesRaw.map(normalizeName);
 
 		// 1) empty after normalize
@@ -310,9 +314,7 @@ export class GameStatsManager {
 				return { ok: false, error: `Player ${i + 1}: name is empty.` };
 		}
 
-		// 2) validate each:
-		//    - AI aliases are allowed (skip validateName for them)
-		//    - all non-AI aliases must pass validateName
+		// 2) validate each (AI aliases allowed)
 		for (let i = 0; i < names.length; i++) {
 			if (this.isAiAlias(names[i]))
 				continue;
@@ -342,6 +344,11 @@ export class GameStatsManager {
 				continue;
 
 			const taken = await this.userManager.isDisplayNameTaken(names[i] as any);
+
+			// NEW: if name is taken BUT it is MY OWN displayName -> allow
+			if (taken && meDisplayName && names[i].toLowerCase() === meDisplayName.toLowerCase())
+				continue;
+
 			if (taken)
 				return { ok: false, error: `Player ${i + 1}: name "${names[i]}" already exists.` };
 		}
@@ -351,28 +358,38 @@ export class GameStatsManager {
 
 
 
+
+
 	// 2 players
-	public async checkMatchAliases(body: {
-		player1Alias: Domain.Alias;
-		player2Alias: Domain.Alias;
-	}): Promise<Domain.CheckMatchAliasesResult> {
+	public async checkMatchAliases(
+		body: { player1Alias: Domain.Alias; player2Alias: Domain.Alias; },
+		meDisplayName?: string // NEW optional
+	): Promise<Domain.CheckMatchAliasesResult> {
 
 		// Must provide exactly 2 aliases (both required fields)
 		if (!body || body.player1Alias == null || body.player2Alias == null)
 			return { ok: false, error: "Please enter 2 player names." };
 
-		const r = await this.checkNames([body.player1Alias, body.player2Alias]);
+		//pass meDisplayName (undefined for guests, string for logged-in)
+		const r = await this.checkNames([body.player1Alias, body.player2Alias], meDisplayName);
 		if (!r.ok) return { ok: false, error: r.error };
 
 		return { ok: true, player1Alias: r.names[0], player2Alias: r.names[1] };
 	}
 
-	public async checkTournamentAliases(body: {
-		player1Alias: Domain.Alias;
-		player2Alias: Domain.Alias;
-		player3Alias: Domain.Alias;
-		player4Alias: Domain.Alias;
-	}): Promise<Domain.CheckTournamentAliasesResult> {
+
+
+
+	// 4 players
+	public async checkTournamentAliases(
+		body: {
+			player1Alias: Domain.Alias;
+			player2Alias: Domain.Alias;
+			player3Alias: Domain.Alias;
+			player4Alias: Domain.Alias;
+		},
+		meDisplayName?: string //  optional
+	): Promise<Domain.CheckTournamentAliasesResult> {
 
 		// Must provide exactly 4 aliases (all required fields)
 		if (
@@ -384,12 +401,11 @@ export class GameStatsManager {
 		)
 			return { ok: false, error: "Please enter 4 player names." };
 
-		const r = await this.checkNames([
-			body.player1Alias,
-			body.player2Alias,
-			body.player3Alias,
-			body.player4Alias
-		]);
+		//  pass meDisplayName (undefined for guests, string for logged-in)
+		const r = await this.checkNames(
+			[body.player1Alias, body.player2Alias, body.player3Alias, body.player4Alias],
+			meDisplayName
+		);
 		if (!r.ok) return { ok: false, error: r.error };
 
 		return {
@@ -401,6 +417,60 @@ export class GameStatsManager {
 		};
 	}
 
+
+	//  Wrapper: guest OR authenticated
+	public async checkMatchAliasesWithMe(
+		meId: Domain.UserId | undefined,
+		body: { player1Alias: Domain.Alias; player2Alias: Domain.Alias; }
+	): Promise<Domain.CheckMatchAliasesResult> {
+
+		// guest flow: no meId => validate as-is
+		if (!meId)
+			return this.checkMatchAliases(body);
+
+		// authenticated flow: force player1Alias = my displayName
+		const me = await this.userManager.getUserById(meId);
+		if (!me)
+			return { ok: false, error: "User not found" }; // route turns into 400; if you want 404, handle in route
+
+		const forcedBody = {
+			...body,
+			player1Alias: me.displayName as any, // ignore whatever client sent
+		};
+
+		//  pass me.displayName so your checkNames() allows it even if taken
+		return this.checkMatchAliases(forcedBody, me.displayName);
+	}
+
+
+	// Wrapper: guest OR authenticated
+	public async checkTournamentAliasesWithMe(
+		meId: Domain.UserId | undefined,
+		body: {
+			player1Alias: Domain.Alias;
+			player2Alias: Domain.Alias;
+			player3Alias: Domain.Alias;
+			player4Alias: Domain.Alias;
+		}
+	): Promise<Domain.CheckTournamentAliasesResult> {
+
+		// guest flow
+		if (!meId)
+			return this.checkTournamentAliases(body);
+
+		// authenticated flow
+		const me = await this.userManager.getUserById(meId);
+		if (!me)
+			return { ok: false, error: "User not found" };
+
+		const forcedBody = {
+			...body,
+			player1Alias: me.displayName as any, // ignore client player1
+		};
+
+		// pass me.displayName so your checkNames() allows it even if taken
+		return this.checkTournamentAliases(forcedBody, me.displayName);
+	}
 
 
 }
