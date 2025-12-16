@@ -3,10 +3,21 @@ window.addEventListener("popstate", (event) => {
   const page = event.state.page;
   displayPage(page);
   if (page == "chat" && event.state.userId != null)
+  {
+    console.log("forward");
+    console.log(event.state.tab);
     if (event.state.tab == "defaultOpen")
+    {
       requestConversation(event.state.userId, event.state.userDisplayName, event.state.userAvatarUrl);
-    else
+    }
+    else if (event.state.tab == "userButton")
+    {
+      console.log("requestUsers");
+      requestUsers();
       requestUserProfile(event.state.userId);
+    }
+    
+  }
 });
 
 window.addEventListener("DOMContentLoaded", () => {
