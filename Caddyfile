@@ -6,6 +6,9 @@ localhost {
     handle /auth/* {
     	reverse_proxy backend:3000
     }
+    handle /users {
+    	reverse_proxy backend:3000
+    }
     handle /users/* {
     	reverse_proxy backend:3000
     }
@@ -26,6 +29,9 @@ localhost {
     }
     handle /avatars/* {
     	reverse_proxy backend:3000
+    }
+    handle /profile/* {
+	reverse_proxy backend:3000
     }
 
     reverse_proxy frontend:8080
