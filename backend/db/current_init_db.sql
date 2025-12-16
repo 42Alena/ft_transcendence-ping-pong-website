@@ -27,7 +27,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS u_users_username_nocase ON users (username COL
 
 CREATE UNIQUE INDEX IF NOT EXISTS u_users_display_nocase ON users (displayName COLLATE NOCASE);
 
-
+INSERT INTO users (id, username, passwordHash, displayName, avatarUrl, lastSeenAt, deletedAt)
+VALUES ('TOURNAMENT','tournament','SYSTEM_ACCOUNT_NO_LOGIN','Tournament',NULL,0,0)
+ON CONFLICT(id) DO NOTHING;
 
 
 -- ============================================
