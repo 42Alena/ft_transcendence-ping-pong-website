@@ -541,6 +541,34 @@ export class UserManager {
 	}
 
 
+	//Tournament User
+	public async createTournamentUser(): Promise<void> {
+
+		const systemId = Domain.SYSTEM_ID; // <-- CHANGED: use constant
+
+		const existingUser = await this.getUserById(systemId); // <-- CHANGED
+		if (existingUser) return;
+
+		// OPTIONAL but recommended: use reserved bot username to avoid collisions
+		const botUsername = "tournament_bot"; // <-- CHANGED (safer than 'tournament')
+		const botDisplayName = "Tournament";  // keep as you like
+
+		await this.dbTableUser()
+			.insert({
+				id: systemId,                        // <-- CHANGED
+				username: botUsername,               // <-- CHANGED (collision-safe)
+				passwordHash: "SYSTEM_ACCOUNT_NO_LOGIN",
+				displayName: botDisplayName,
+				avatarUrl: null,
+				lastSeenAt: 0,
+				deletedAt: 0,
+			})
+			.onConflict("id")
+			.ignore();
+	}
+
+
+
 }
 
 /* 
