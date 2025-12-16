@@ -129,9 +129,9 @@
             </li>
           </ul>
         </nav>
-        <div class="relative h-full w-full border" id="board">
+        <div class="relative min-h-[400px] h-full w-full border" id="board">
           <div
-            class="page relative flex h-full w-full items-center justify-center"
+            class="page relative flex h-full w-full items-center justify-center overflow-y-auto"
             id="welcomePage"
           >
             <img
@@ -977,14 +977,14 @@
             </div>
             <div
               id="setInstructions"
-              class="absolute z-1 hidden h-[480px] max-h-full w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-1 hidden h-[480px] max-h-full max-w-full w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="rules"
                 class="flex h-full w-full flex-col items-center gap-4.5"
               >
                 <div
-                  class="flex w-full flex-1 items-center justify-center text-4xl font-bold sm:text-5xl"
+                  class="flex w-full flex-1 max-h-full max-w-full items-center justify-center text-4xl font-bold sm:text-5xl"
                 >
                   First to score to 3 wins
                 </div>
@@ -1022,18 +1022,18 @@
             </div>
             <div
               id="gameScreen"
-              class="abosolute z-10 hidden h-[600px] w-[800px] items-center justify-center bg-black"
+              class="relative z-10 hidden h-auto w-full items-center justify-center bg-black"
             >
               <canvas
                 id="myCanvas"
-                class="hidden; border-2 border-blue-950 bg-black"
-                width="800"
-                height="600"
+                class="hidden border-2 border-blue-950 bg-black"
+                width="430"
+                height="400"
               ></canvas>
             </div>
             <div
               id="gameOverScreen"
-              class="absolute z-3 hidden h-[480px] w-[640px] flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
+              class="absolute z-3 hidden h-[480px] w-[640px] max-h-full max-w-full flex-col items-center justify-center bg-white/30 backdrop-invert backdrop-opacity-10"
             >
               <div
                 id="result"

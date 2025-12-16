@@ -28,3 +28,12 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+window.addEventListener("resize", (event) => { 
+  if (window.innerWidth >= 820)
+  {
+    const canva = document.getElementById("myCanvas") as HTMLCanvasElement;
+    canva.width = 800;
+    canva.height = 600;
+  }
+})

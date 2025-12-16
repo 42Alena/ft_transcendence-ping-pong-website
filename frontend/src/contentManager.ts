@@ -12,16 +12,16 @@ function handleClickEvent(text: string) {
 }
 
 function displayPage(text: string): void {
-  // girlImgLeft.classList.add("block");
-  // girlImgLeft.classList.remove("hidden");
-  // girlImgLeftLoser.classList.remove("block");
-  // girlImgLeftLoser.classList.add("hidden");
-  // girlImgRight.classList.add("block");
-  // girlImgRight.classList.remove("hidden");
-  // girlImgRightLoser.classList.remove("block");
-  // girlImgRightLoser.classList.add("hidden");
-  // successRegPage.classList.add("hidden");
-  // successRegPage.classList.remove("flex");
+  girlImgLeft.classList.add("block");
+  girlImgLeft.classList.remove("hidden");
+  girlImgLeftLoser.classList.remove("block");
+  girlImgLeftLoser.classList.add("hidden");
+  girlImgRight.classList.add("block");
+  girlImgRight.classList.remove("hidden");
+  girlImgRightLoser.classList.remove("block");
+  girlImgRightLoser.classList.add("hidden");
+  successRegPage.classList.add("hidden");
+  successRegPage.classList.remove("flex");
   // playersNameForm.reset();
   // errorNamesDiv.classList.add("invisible");
   const pages = document.querySelectorAll(".page") as NodeListOf<HTMLDivElement>;
