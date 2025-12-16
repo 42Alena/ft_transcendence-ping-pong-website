@@ -80,9 +80,15 @@ const playerInputOne = document.getElementById(
   ) as HTMLInputElement;
   const playerInputThree = document.getElementById(
     "player-three",
-  ) as HTMLDivElement;
+  ) as HTMLInputElement;
   const playerInputFour = document.getElementById(
     "player-four",
+  ) as HTMLInputElement;
+  const playerInputThreeDiv = document.getElementById(
+    "playerThree",
+  ) as HTMLDivElement;
+  const playerInputFourDiv = document.getElementById(
+    "playerFour",
   ) as HTMLDivElement;
 //set page for 2 players or 4 players (tournament)
 function aliasSelection() {
@@ -98,16 +104,16 @@ function aliasSelection() {
   }
   if (isTournament == false) {
     imgElement.src = "images/pages_images/pong_game_new.png";
-    playerInputThree.classList.remove("block");
-    playerInputFour.classList.remove("block");
-    playerInputThree.classList.add("hidden");
-    playerInputFour.classList.add("hidden");
+    playerInputThreeDiv.classList.remove("block");
+    playerInputFourDiv.classList.remove("block");
+    playerInputThreeDiv.classList.add("hidden");
+    playerInputFourDiv.classList.add("hidden");
   } else {
     imgElement.src = "images/pages_images/pong_tournament_new.png";
-    playerInputThree.classList.remove("hidden");
-    playerInputFour.classList.remove("hidden");
-    playerInputThree.classList.add("block");
-    playerInputFour.classList.add("block");
+    playerInputThreeDiv.classList.remove("hidden");
+    playerInputFourDiv.classList.remove("hidden");
+    playerInputThreeDiv.classList.add("block");
+    playerInputFourDiv.classList.add("block");
   }
 }
 
