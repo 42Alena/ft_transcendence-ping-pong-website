@@ -96,8 +96,12 @@ check-tools:
 
 # --- Docker Compose ----------------------------------------------------------
 
+
+up:
+	$(DC) up --build
+
 # Run when starting the whole stack for development or evaluation (builds images and starts containers in background).
-up:        ## build + start (detached)
+upd:        ## build + start (detached)
 	$(DC) up -d --remove-orphans
 
 build-docker:        ## build + start (detached)
@@ -207,13 +211,8 @@ git-changes:
 #_________START: NEW: make, re, re hard
 
 #  MAKE :)  Subject: builds + runs in detached mode
-all: start 
+all: banner up
 
-
-# --- Docker Compose (evaluation / subject flow) ------------------------------
-# start: check-tools banner
-start:  banner
-	$(DC) up --build
 
 # Soft restart (keep DB/data)
 restart: check-tools banner
