@@ -13,8 +13,8 @@ declare global {
 }
 
 
-// (window as any).createPieChart = createPieChart;
-// (window as any).createBarChart = createBarChart;
+(window as any).createPieChart = createPieChart;
+(window as any).createBarChart = createBarChart;
 
 //to fix add a function to destroy old chart before showing new:
 
