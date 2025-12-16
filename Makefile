@@ -87,12 +87,12 @@ tests_game_stats: db
 	@BASE_URL=http://localhost:3000 backend/tests/gameStats.sh
 
 # ---- Tooling guards ---------------------------------------------------------
-check-tools:
-	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }
-	@command -v npm     >/dev/null 2>&1 || { echo "[Ooops..] npm is not installed";  exit 1; }
-	@command -v sqlite3 >/dev/null 2>&1 || { echo "[Ooops..] sqlite3 is not installed"; exit 1; }
-	@command -v docker  >/dev/null 2>&1 || { echo "[Ooops..] docker is not installed"; exit 1; }
-	@echo "[OK] tools OK"
+# check-tools:
+# 	@command -v node    >/dev/null 2>&1 || { echo "[Ooops..] node is not installed"; exit 1; }
+# 	@command -v npm     >/dev/null 2>&1 || { echo "[Ooops..] npm is not installed";  exit 1; }
+# 	@command -v sqlite3 >/dev/null 2>&1 || { echo "[Ooops..] sqlite3 is not installed"; exit 1; }
+# 	@command -v docker  >/dev/null 2>&1 || { echo "[Ooops..] docker is not installed"; exit 1; }
+# 	@echo "[OK] tools OK"
 
 # --- Docker Compose ----------------------------------------------------------
 
